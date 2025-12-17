@@ -12,13 +12,15 @@ struct ContentView: View {
             
             Button("Test AI Service") {
                 let aiService = AIService()
-                aiService.runModel(input: "iOS test data")
-                message = "AI Service called!"
+                let input = TextInput(data: "iOS test data")
+                let result = aiService.runModel(input: input)
+                message = "AI Result: \(result.output)"
             }
             .buttonStyle(.borderedProminent)
             
             Button("Test Communication") {
-                Communication.sendMessage(to: "DOJOShared", message: "Hello from iOS")
+                let msg = TextMessage(payload: "Hello from iOS")
+                Communication.sendMessage(to: "DOJOShared", message: msg)
                 message = "Message sent!"
             }
             .buttonStyle(.bordered)
