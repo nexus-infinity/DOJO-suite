@@ -1,12 +1,41 @@
-# Universal Framework
+# DOJO-suite / Universal Framework
 
 ## Overview
 
-Universal Framework is a comprehensive, multi-platform project designed to support various deployment targets while maintaining a shared codebase. It includes modules for web, mobile, desktop, and other platforms, with a focus on modularity and extensive testing. The project is uniquely enhanced by an integrated AI management system that automates various aspects of development and maintenance.
+DOJO-suite (Universal Framework) is a comprehensive, multi-platform project designed to support various deployment targets while maintaining a shared codebase. It includes modules for web, mobile (iOS), desktop (macOS), and other platforms, with a focus on modularity and extensive testing. The project is uniquely enhanced by an integrated AI management system that automates various aspects of development and maintenance.
+
+### Platform Support
+
+- **iOS & macOS**: Native Swift applications with XcodeGen project setup - see [README_XCODE.md](./README_XCODE.md)
+- **Web**: React-based web applications
+- **Cross-platform**: Shared components and services
 
 ## Project Structure
 
 For a detailed overview of the project structure, please refer to the `project-structure.txt` file in the root directory. This file provides a comprehensive layout of all directories and key files in the project.
+
+### iOS & macOS Development
+
+The DOJO-suite includes native iOS and macOS applications built with Swift and SwiftUI:
+
+- **Sources/DOJOShared**: Cross-platform framework (iOS + macOS) with AI services, communication, and dependency injection
+- **Sources/DOJOiOSApp**: iOS application demonstrating framework integration  
+- **Sources/DOJOMacApp**: macOS application demonstrating framework integration
+- **Tests/DOJOSharedTests**: Unit tests for the shared framework
+
+For complete iOS/macOS setup instructions, see [README_XCODE.md](./README_XCODE.md).
+
+Quick start for iOS/macOS development:
+```bash
+# Install dependencies
+brew install xcodegen swiftformat swiftlint
+
+# Generate Xcode project
+xcodegen generate
+
+# Open in Xcode
+open DOJO-suite.xcodeproj
+```
 
 ## AI Management System
 
