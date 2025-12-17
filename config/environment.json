@@ -1,0 +1,10 @@
+{
+  "development": {
+    "API_URL": "http://localhost:3000",
+    "DEBUG": true
+  },
+  "production": {
+    "API_URL": "https://api.yourframework.com",
+    "DEBUG": false
+  }
+}
