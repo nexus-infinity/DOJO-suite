@@ -1,0 +1,26 @@
+{
+  "version": "1.0.0",
+  "model": "gpt-4",
+  "maxTokens": 4096,
+  "temperature": 0.7,
+  "codeReview": {
+    "enabled": true,
+    "maxFilesToReview": 10
+  },
+  "testGeneration": {
+    "enabled": true,
+    "coverageThreshold": 80
+  },
+  "documentation": {
+    "enabled": true,
+    "outputFormat": "markdown"
+  },
+  "optimization": {
+    "enabled": true,
+    "targetMetrics": ["performance", "accessibility", "bestpractices"]
+  },
+  "security": {
+    "enabled": true,
+    "scanFrequency": "daily"
+  }
+}

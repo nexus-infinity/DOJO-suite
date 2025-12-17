@@ -1,0 +1,26 @@
+{
+  "name": "tata-ai",
+  "version": "1.0.0",
+  "description": "Tata AI module for intelligent processing and integration",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "test": "jest",
+    "lint": "eslint . --ext .ts,.tsx",
+    "start": "node dist/index.js"
+  },
+  "dependencies": {
+    "openai": "^4.0.0"
+  },
+  "devDependencies": {
+    "@types/jest": "^27.0.3",
+    "@types/node": "^16.11.12",
+    "@typescript-eslint/eslint-plugin": "^5.6.0",
+    "@typescript-eslint/parser": "^5.6.0",
+    "eslint": "^8.4.1",
+    "jest": "^27.4.5",
+    "ts-jest": "^27.1.1",
+    "typescript": "^4.5.2"
+  }
+}

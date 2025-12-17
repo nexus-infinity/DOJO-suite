@@ -1,0 +1,26 @@
+echo "
+# Xcode
+*.xcodeproj/*
+!*.xcodeproj/project.pbxproj
+!*.xcodeproj/xcshareddata/
+!*.xcworkspace/contents.xcworkspacedata
+**/xcuserdata/
+*.xcscmblueprint
+*.xccheckout
+
+# Swift Package Manager
+.build/
+" >> .gitignore
+node_modules
+.next/
+modules/nexus/frontend/tsconfig.tsbuildinfo
+**/.DS_Store
+.env
+.env
+.env
+.env
+.DS_Store
+.DS_Store
+.vscode/
+bear_gemini.sh
+nexus_set_and_cleanup.sh

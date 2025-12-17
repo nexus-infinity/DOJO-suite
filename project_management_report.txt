@@ -1,0 +1,8 @@
+Project Management Report - Thu 24 Oct 2024 11:16:29 AEDT
+-----------------------------------
+shared/adapters module: Present
+modules/tata-ai module: Present
+modules/nexus module: Present
+tests/integration module: Present
+.babelrc file: Correct
+Jest config file: Correct

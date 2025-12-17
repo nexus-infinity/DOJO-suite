@@ -1,0 +1,85 @@
+# FIELD Validator Core Configuration
+# Version: 1.0.0
+# Status: INITIALIZING
+
+validator_core:
+  name: "FIELD Validator Core"
+  version: "1.0.0"
+  status: "initializing"
+  observer_mode: "active"
+  alert_threshold: "critical"
+
+prime_sequence_validator:
+  type: "foundation"
+  symbol: "◎"  # Source point
+  active_state: true
+  validation_rules:
+    prime_progression:
+      check: "sequence_follows_prime_law"
+      error_action: "revert_to_last_valid"
+      alert_level: "critical"
+    harmonic_ratios:
+      check: "ratios_maintain_coherence"
+      error_action: "quarantine_state"
+      alert_level: "high"
+    dimensional_gates:
+      check: "gates_properly_aligned"
+      error_action: "block_transition"
+      alert_level: "critical"
+
+field_address_validator:
+  type: "spatial"
+  symbol: "●"  # Active point
+  active_state: true
+  validation_rules:
+    latitude:
+      check: "valid_field_coordinate"
+      pattern: "^FIELD/[\\w-]+/[\\d]+$"
+      error_action: "reject_coordinate"
+      alert_level: "critical"
+    longitude:
+      check: "valid_domain_alignment"
+      pattern: "^(OBI-WAN|BERJAK|INFINITY)/[\\w-]+$"
+      error_action: "reject_alignment"
+      alert_level: "high"
+    temporal:
+      check: "valid_causal_sequence"
+      pattern: "^\\d{14}Z$"  # YYYYMMDDHHmmssZ
+      error_action: "reject_temporal"
+      alert_level: "critical"
+
+gate_validator:
+  type: "alchemical"
+  active_state: true
+  gate_sequence: ["🜂", "🜄", "🜃", "🜁"]
+  validation_rules:
+    sequence_integrity:
+      check: "gates_in_valid_order"
+      error_action: "block_transition"
+      alert_level: "critical"
+    domain_compatibility:
+      check: "domains_compatible"
+      error_action: "reject_incompatible"
+      alert_level: "high"
+    energy_flow:
+      check: "valid_energy_direction"
+      error_action: "block_flow"
+      alert_level: "critical"
+
+observer_interface:
+  mode: "active"
+  watch_points:
+    prime_state:
+      interval: "continuous"
+      alert_threshold: "immediate"
+    field_address:
+      interval: "on_change"
+      alert_threshold: "high"
+    gate_transitions:
+      interval: "per_transition"
+      alert_threshold: "critical"
+  alert_channels:
+    - "observer_log"
+    - "system_state"
+    - "admin_notification"
+

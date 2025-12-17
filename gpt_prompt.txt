@@ -1,0 +1,4 @@
+Generating GPT prompt recommendations...
+Detected issues and potential solutions:
+Check if the file /users/jbear/dev/universal-framework/config/jest.config.js content has been updated correctly.
+Run the following GPT prompt to analyze failed Jest tests: 'Analyze the Jest test failures in the file test-report.json located in the universal-framework project directory and suggest fixes.'

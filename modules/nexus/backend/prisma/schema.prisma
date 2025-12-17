@@ -1,0 +1,27 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model File {
+  id        String   @id @default(cuid())
+  name      String
+  path      String
+  tags      String[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Relationship {
+  id        String   @id @default(cuid())
+  fileId1   String
+  fileId2   String
+  type      String
+  strength  Float
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
