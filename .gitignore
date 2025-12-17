@@ -1,4 +1,8 @@
-echo "
+# Node.js
+node_modules
+.next/
+modules/nexus/frontend/tsconfig.tsbuildinfo
+
 # Xcode
 *.xcodeproj/*
 !*.xcodeproj/project.pbxproj
@@ -7,20 +11,24 @@ echo "
 **/xcuserdata/
 *.xcscmblueprint
 *.xccheckout
+*.xcworkspace
+DerivedData/
+*.hmap
+*.ipa
+*.dSYM.zip
+*.dSYM
 
 # Swift Package Manager
 .build/
-" >> .gitignore
-node_modules
-.next/
-modules/nexus/frontend/tsconfig.tsbuildinfo
-**/.DS_Store
-.env
-.env
-.env
-.env
+.swiftpm/
+
+# macOS
 .DS_Store
-.DS_Store
+
+# Environment
+.env
 .vscode/
+
+# Scripts
 bear_gemini.sh
 nexus_set_and_cleanup.sh

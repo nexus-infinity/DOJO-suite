@@ -1,0 +1,21 @@
+# SwiftFormat configuration for DOJO-suite
+--swiftversion 5.9
+--indent 4
+--indentcase false
+--trimwhitespace always
+--voidtype void
+--wraparguments before-first
+--wrapparameters before-first
+--wrapcollections before-first
+--maxwidth 120
+--header strip
+--decimalgrouping 3,6
+--exponentcase lowercase
+--fractiongrouping disabled
+--hexgrouping 4,8
+--octalgrouping 4,8
+--patternlet inline
+--self remove
+--importgrouping testable-bottom
+--commas always
+--semicolons never
