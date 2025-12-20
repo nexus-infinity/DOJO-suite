@@ -35,7 +35,7 @@ public struct GeometricParticle: Identifiable, Sendable {
 
 /// Particle engine for FIELD visualization
 public class ParticleEngine: @unchecked Sendable {
-    public private(set) var particles: [GeometricParticle]
+    public var particles: [GeometricParticle]
     private let particleCount: Int
     private var fieldSize: Float
     
