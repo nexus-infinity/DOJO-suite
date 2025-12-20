@@ -14,7 +14,10 @@ let package = Package(
         .library(
             name: "DOJOShared",
             targets: ["DOJOShared"]
-        )
+        ),
+        // Note: iOS/macOS executable apps are only buildable on Apple platforms
+        // They are excluded from this manifest to support Linux builds
+        // Use Xcode or xcodebuild directly on macOS to build the apps
     ],
     dependencies: [
         // No external dependencies - keeping it self-contained
@@ -35,25 +38,4 @@ let package = Package(
         )
     ]
 )
-
-// Only build iOS/macOS apps on Apple platforms
-#if os(macOS) || os(iOS)
-package.products.append(contentsOf: [
-    .executable(name: "DOJOiOSApp", targets: ["DOJOiOSApp"]),
-    .executable(name: "DOJOMacApp", targets: ["DOJOMacApp"])
-])
-
-package.targets.append(contentsOf: [
-    .executableTarget(
-        name: "DOJOiOSApp",
-        dependencies: ["DOJOShared"],
-        path: "Sources/DOJOiOSApp"
-    ),
-    .executableTarget(
-        name: "DOJOMacApp",
-        dependencies: ["DOJOShared"],
-        path: "Sources/DOJOMacApp"
-    )
-])
-#endif
 
