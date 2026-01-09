@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="800" height="900" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <defs>
+    <!-- Gradient for ATLAS -->
+    <linearGradient id="atlasGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#4A90E2;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#357ABD;stop-opacity:1" />
+    </linearGradient>
+
+    <!-- Gradient for AKRON -->
+    <linearGradient id="akronGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#7C3AED;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#5B21B6;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <!-- Title -->
+  <text x="400" y="30" font-family="monospace" font-size="18" font-weight="bold" text-anchor="middle" fill="#333">
+    Prime-Fractal Coordination Architecture
+  </text>
+  <text x="400" y="50" font-family="monospace" font-size="12" text-anchor="middle" fill="#666">
+    Geometric Data Flow Specification
+  </text>
+
+  <!-- Vertical Axis Label -->
+  <text x="50" y="250" font-family="monospace" font-size="11" fill="#666" transform="rotate(-90 50 250)">
+    Abstraction Gradient
+  </text>
+
+  <!-- ▲ ATLAS (Synthesis Layer) -->
+  <g id="atlas">
+    <polygon points="400,100 420,140 380,140" fill="url(#atlasGrad)" stroke="#357ABD" stroke-width="2"/>
+    <text x="450" y="125" font-family="monospace" font-size="14" font-weight="bold" fill="#333">▲ ATLAS</text>
+    <text x="450" y="142" font-family="monospace" font-size="10" fill="#666">Synthesis Layer</text>
+    <text x="450" y="156" font-family="monospace" font-size="9" fill="#999">Prime: 5 | Macro-pattern</text>
+  </g>
+
+  <!-- Connecting line from ATLAS to KING'S CHAMBER -->
+  <line x1="400" y1="140" x2="400" y2="280" stroke="#999" stroke-width="2" stroke-dasharray="5,5"/>
+
+  <!-- ◎ KING'S CHAMBER (Resonant Equilibrium) -->
+  <g id="kingchamber">
+    <circle cx="400" cy="300" r="25" fill="#FFA500" stroke="#FF8C00" stroke-width="2"/>
+    <circle cx="400" cy="300" r="15" fill="none" stroke="#FF8C00" stroke-width="1.5"/>
+    <text x="450" y="295" font-family="monospace" font-size="14" font-weight="bold" fill="#333">◎ KING'S CHAMBER</text>
+    <text x="450" y="312" font-family="monospace" font-size="10" fill="#666">Transfer Hub (φ⁻¹ position)</text>
+    <text x="450" y="326" font-family="monospace" font-size="9" fill="#999">Prime: 7 | Harmonic equilibrium</text>
+
+    <!-- Position annotation -->
+    <text x="340" y="305" font-family="monospace" font-size="8" fill="#FF8C00">≈ 0.382h</text>
+  </g>
+
+  <!-- Connecting line from KING'S CHAMBER to DOJO -->
+  <line x1="400" y1="325" x2="400" y2="420" stroke="#999" stroke-width="2" stroke-dasharray="5,5"/>
+
+  <!-- Central horizontal axis with three nodes -->
+  <g id="horizontal-axis">
+    <!-- ● OB1 (Observer Frame) -->
+    <g id="ob1">
+      <circle cx="200" cy="450" r="20" fill="#50C878" stroke="#3AA65D" stroke-width="2"/>
+      <text x="140" y="490" font-family="monospace" font-size="14" font-weight="bold" fill="#333">● OB1</text>
+      <text x="120" y="507" font-family="monospace" font-size="10" fill="#666">Observer Frame</text>
+      <text x="110" y="521" font-family="monospace" font-size="9" fill="#999">Prime: 2 | Micro-scale</text>
+    </g>
+
+    <!-- ◼︎ DOJO (Execution Plane) - CENTER -->
+    <g id="dojo">
+      <rect x="380" y="430" width="40" height="40" fill="#E74C3C" stroke="#C0392B" stroke-width="2"/>
+      <text x="430" y="445" font-family="monospace" font-size="14" font-weight="bold" fill="#333">◼︎ DOJO</text>
+      <text x="430" y="462" font-family="monospace" font-size="10" fill="#666">Execution Plane</text>
+      <text x="430" y="476" font-family="monospace" font-size="9" fill="#999">Prime: 11 | Bounded action</text>
+    </g>
+
+    <!-- ▼ TATA (Constraint Memory) -->
+    <g id="tata">
+      <polygon points="600,450 580,490 620,490" fill="#F39C12" stroke="#E67E22" stroke-width="2"/>
+      <text x="540" y="510" font-family="monospace" font-size="14" font-weight="bold" fill="#333">▼ TATA</text>
+      <text x="520" y="527" font-family="monospace" font-size="10" fill="#666">Constraint Memory</text>
+      <text x="510" y="541" font-family="monospace" font-size="9" fill="#999">Prime: 3 | Deep-time</text>
+    </g>
+
+    <!-- Horizontal connections -->
+    <line x1="220" y1="450" x2="380" y2="450" stroke="#666" stroke-width="2"/>
+    <line x1="420" y1="450" x2="580" y2="450" stroke="#666" stroke-width="2"/>
+  </g>
+
+  <!-- Connecting line from DOJO to AKRON -->
+  <line x1="400" y1="470" x2="400" y2="650" stroke="#999" stroke-width="2" stroke-dasharray="5,5"/>
+
+  <!-- ⬢ AKRON GATEWAY (Stability Anchor) -->
+  <g id="akron">
+    <polygon points="400,700 425,685 440,710 425,735 400,750 375,735 360,710 375,685"
+             fill="url(#akronGrad)" stroke="#5B21B6" stroke-width="2.5"/>
+    <text x="450" y="715" font-family="monospace" font-size="14" font-weight="bold" fill="#333">⬢ AKRON GATEWAY</text>
+    <text x="450" y="732" font-family="monospace" font-size="10" fill="#666">Stability Anchor (Orthogonal)</text>
+    <text x="450" y="746" font-family="monospace" font-size="9" fill="#999">Prime: {2,3,5,7,11,...} | Invariant</text>
+  </g>
+
+  <!-- Validation connections from AKRON to all other nodes (orthogonal) -->
+  <line x1="390" y1="685" x2="400" y2="140" stroke="#7C3AED" stroke-width="1.5" opacity="0.4"/>
+  <line x1="375" y1="695" x2="200" y2="460" stroke="#7C3AED" stroke-width="1.5" opacity="0.4"/>
+  <line x1="425" y1="695" x2="600" y2="460" stroke="#7C3AED" stroke-width="1.5" opacity="0.4"/>
+
+  <!-- Flow arrows -->
+  <!-- OB1 -> DOJO -->
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#333" />
+    </marker>
+  </defs>
+
+  <path d="M 220 445 Q 300 430 380 445" fill="none" stroke="#333" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+  <text x="280" y="425" font-family="monospace" font-size="9" fill="#333">observe</text>
+
+  <!-- DOJO -> TATA -->
+  <path d="M 420 455 Q 500 470 580 460" fill="none" stroke="#333" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+  <text x="480" y="480" font-family="monospace" font-size="9" fill="#333">constrain</text>
+
+  <!-- TATA -> ATLAS -->
+  <path d="M 595 450 Q 650 300 415 145" fill="none" stroke="#333" stroke-width="1.5" marker-end="url(#arrowhead)" opacity="0.6"/>
+  <text x="620" y="280" font-family="monospace" font-size="9" fill="#333">analyze</text>
+
+  <!-- ATLAS -> KING'S CHAMBER -> DOJO -->
+  <path d="M 400 325 L 400 425" fill="none" stroke="#333" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+  <text x="410" y="375" font-family="monospace" font-size="9" fill="#333">route</text>
+
+  <!-- Legend -->
+  <g id="legend" transform="translate(50, 780)">
+    <text x="0" y="0" font-family="monospace" font-size="12" font-weight="bold" fill="#333">Key Principles:</text>
+    <text x="0" y="20" font-family="monospace" font-size="10" fill="#666">• Prime-scaled layers prevent factor collapse</text>
+    <text x="0" y="38" font-family="monospace" font-size="10" fill="#666">• King's Chamber at φ⁻¹ ≈ 0.382 (harmonic equilibrium)</text>
+    <text x="0" y="56" font-family="monospace" font-size="10" fill="#666">• AKRON validates orthogonally (purple lines)</text>
+    <text x="0" y="74" font-family="monospace" font-size="10" fill="#666">• No hierarchy — only coordination through intersection</text>
+  </g>
+
+  <!-- Coordinate system annotation -->
+  <g id="coords">
+    <line x1="700" y1="450" x2="750" y2="450" stroke="#999" stroke-width="1" marker-end="url(#arrowhead)"/>
+    <text x="715" y="445" font-family="monospace" font-size="9" fill="#999">X (temporal)</text>
+
+    <line x1="700" y1="450" x2="700" y2="400" stroke="#999" stroke-width="1" marker-end="url(#arrowhead)"/>
+    <text x="660" y="415" font-family="monospace" font-size="9" fill="#999">Y (abstraction)</text>
+  </g>
+</svg>
