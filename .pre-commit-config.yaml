@@ -1,0 +1,10 @@
+repos:
+- repo: https://github.com/zricethezav/gitleaks-pre-commit
+  rev: v1.3.1
+  hooks:
+    - id: gitleaks
+      args: ['--redact']
+- repo: https://github.com/pre-commit/mirrors-rustfmt
+  rev: "v1.4.37"
+  hooks:
+    - id: rustfmt

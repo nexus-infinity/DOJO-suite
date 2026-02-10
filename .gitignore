@@ -32,3 +32,23 @@ DerivedData/
 # Scripts
 bear_gemini.sh
 nexus_set_and_cleanup.sh
+
+# Added by audit: ignore build artifacts, logs, and archives
+.build/
+dist/
+node_modules/
+*.log
+*.tgz
+*.zip
+.DS_Store
+DerivedData/
+.env
+secrets.env
+# Application support and Local artifacts
+Library/Logs/DOJO-suite/
+~/Library/Logs/DOJO-suite/
+# archives
+audit/archives/
+# Quarantine and sanitized folders (keep them out of commits to main if desired)
+audit/quarantine/
+audit/sanitized/
