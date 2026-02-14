@@ -1,0 +1,22 @@
+{
+  "app": "DOJO",
+  "frequency": 741,
+  "symbol": "◼︎",
+  "models": {
+    "primary": {
+      "name": "field-gpt-oss-20b",
+      "type": "GGUF",
+      "path": "Models/GGUF/field-gpt-oss-20b-Q5_K_M.gguf",
+      "quantization": "Q5_K_M",
+      "size_gb": 13.0,
+      "context_length": 8192,
+      "temperature": 0.7,
+      "capabilities": ["text", "code", "reasoning"]
+    }
+  },
+  "routing": {
+    "use_coreml": true,
+    "use_metal": true,
+    "prefer_local": true
+  }
+}

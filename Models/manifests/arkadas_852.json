@@ -1,0 +1,22 @@
+{
+  "app": "Arkadas",
+  "frequency": 852,
+  "symbol": "🎭",
+  "models": {
+    "primary": {
+      "name": "field-llama3-8b",
+      "type": "GGUF",
+      "path": "Models/GGUF/field-llama3-8b-Q4_K_M.gguf",
+      "quantization": "Q4_K_M",
+      "size_gb": 4.5,
+      "context_length": 8192,
+      "temperature": 0.7,
+      "capabilities": ["text", "chat", "multimodal"]
+    }
+  },
+  "routing": {
+    "use_coreml": true,
+    "use_metal": true,
+    "prefer_local": true
+  }
+}

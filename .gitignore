@@ -1,0 +1,18 @@
+# Xcode
+.DS_Store
+*.xcuserstate
+xcuserdata/
+*.xcscmblueprint
+
+# Swift Package Manager
+.build/
+.swiftpm/
+
+# Models (don't commit large files)
+Models/GGUF/*.gguf
+Models/CoreML/*.mlmodelc
+
+# Build artifacts
+*.app
+*.ipa
+DerivedData/
