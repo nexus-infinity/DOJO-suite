@@ -21,10 +21,10 @@ final class DOJOSharedTests: XCTestCase {
     }
     
     @available(iOS 15.0, macOS 12.0, *)
-    func testAIServiceAsync() async {
+    func testAIServiceAsync() async throws {
         let aiService = AIService()
         let input = TextInput(data: "async test")
-        let result = await aiService.runModelAsync(input: input)
+        let result = try await aiService.runModelAsync(input: input)
         
         // Verify async result is returned
         XCTAssertFalse(result.output.isEmpty)
