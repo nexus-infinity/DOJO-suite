@@ -1,0 +1,22 @@
+# gitleaks config - basic rules to detect common secrets
+allowlist = ['^docs/', '^README.md', '^LICENSE']
+
+[[rules]]
+  description = "AWS Access Key ID"
+  regex = '''AKIA[0-9A-Z]{16}'''
+  tags = ['key','aws']
+
+[[rules]]
+  description = "AWS Secret Access Key"
+  regex = '''(?i)(aws(.{0,20})?secret(.{0,20})?key|aws(.{0,20})?secret)\s*[:=]\s*(['\"][0-9a-zA-Z\/+=]{40}['\"])'''
+  tags = ['key','aws']
+
+[[rules]]
+  description = "Generic API Key"
+  regex = '''(?i)(api[_-]?key|apikey|apiKey)\s*[:=]\s*['\"][0-9a-zA-Z-._]{16,}['\"]'''
+  tags = ['key']
+
+[[rules]]
+  description = "Private key block"
+  regex = '''-----BEGIN\sPRIVATE\sKEY-----[\s\S]+-----END\sPRIVATE\sKEY-----'''
+  tags = ['key']
