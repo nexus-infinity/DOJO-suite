@@ -3,15 +3,15 @@ import Foundation
 // MARK: - Geometric Layer
 
 /// Sacred geometric shapes corresponding to FIELD vertices
+/// Canonical mapping per Notion Vertex Model Deployment Plan (2026-01-20)
 public enum GeometricShape: String, Codable, Sendable {
-    case circle = "●"                   // OBI-WAN (963 Hz)
-    case triangle = "▲"                 // TATA (432 Hz)
-    case square = "◼︎"                   // ATLAS (528 Hz)
-    case diamond = "◆"                  // DOJO (741 Hz)
-    case invertedTriangle = "▼"         // Akron Gateway (396 Hz)
-    case circleWithCrosshairs = "⊕"     // King's Chamber (852 Hz)
+    case circle = "●"                   // OBI-WAN (963 Hz) — Observer
+    case invertedTriangle = "▼"         // TATA (432 Hz) — Truth/Temporal
+    case triangle = "▲"                 // ATLAS (528 Hz) — Knowledge/Navigation
+    case square = "◼︎"                   // DOJO (741 Hz) — Manifestation Apex
+    case crosshairsCircle = "⊗"         // Arkadaš (852 Hz) — King's Chamber / THE BRAIN
+    case diamond = "◆"                  // Akron Gateway (396 Hz) — Archive
     case hexagon = "⬡"                  // Metatron Cube
-    case filledCircle = "◉"             // Arkadas
 }
 
 /// Sacred colors mapped to solfeggio frequencies
@@ -20,7 +20,7 @@ public enum GeometricColor: String, Codable, Sendable {
     case orange = "#FF8000"             // 432 Hz - TATA
     case green = "#00FF00"              // 528 Hz - ATLAS
     case blue = "#0000FF"               // 741 Hz - DOJO
-    case indigo = "#4B0082"             // 852 Hz - King's Chamber
+    case indigo = "#4B0082"             // 852 Hz - Arkadaš (King's Chamber)
     case violet = "#8B00FF"             // 963 Hz - OBI-WAN
 }
 
@@ -140,11 +140,11 @@ public extension OOOEntity {
         )
     )
     
-    /// TATA: Truth Anchor, Legal Record (432 Hz - Base)
+    /// ▼ TATA: Truth Anchor, Legal Record (432 Hz - Base)
     static let tata = OOOEntity(
         name: "TATA",
         geometric: GeometricProperties(
-            shape: .triangle,
+            shape: .invertedTriangle,
             color: .orange,
             frequency: 432.0,
             position: 0.0  // Base
@@ -161,11 +161,11 @@ public extension OOOEntity {
         )
     )
     
-    /// ATLAS: Geometric Wisdom, AI Access (528 Hz - Base)
+    /// ▲ ATLAS: Knowledge/Navigation, AI Access (528 Hz - Base)
     static let atlas = OOOEntity(
         name: "ATLAS",
         geometric: GeometricProperties(
-            shape: .square,
+            shape: .triangle,
             color: .green,
             frequency: 528.0,
             position: 0.0  // Base
@@ -182,11 +182,11 @@ public extension OOOEntity {
         )
     )
     
-    /// DOJO: Orchestrator, S0-S6 Router (741 Hz - Manifestation Apex)
+    /// ◼︎ DOJO: Consciousness Synthesis, Manifestation (741 Hz - Apex)
     static let dojo = OOOEntity(
         name: "DOJO",
         geometric: GeometricProperties(
-            shape: .diamond,
+            shape: .square,
             color: .blue,
             frequency: 741.0,
             position: 0.667  // 66.7% - Manifestation apex
@@ -203,11 +203,11 @@ public extension OOOEntity {
         )
     )
     
-    /// Akron Gateway: Sovereign Archive, Proof Storage (396 Hz - Foundation)
+    /// ◆ Akron Gateway: Sovereign Archive, Proof Storage (396 Hz - Foundation)
     static let akronGateway = OOOEntity(
         name: "Akron Gateway",
         geometric: GeometricProperties(
-            shape: .invertedTriangle,
+            shape: .diamond,
             color: .red,
             frequency: 396.0,
             position: 0.0  // Foundation
@@ -224,19 +224,19 @@ public extension OOOEntity {
         )
     )
     
-    /// King's Chamber: DOJO↔SOMA Translation Bridge (852 Hz - Internal to DOJO at 33.3%)
-    static let kingsChamber = OOOEntity(
-        name: "King's Chamber",
+    /// ⊗ Arkadaš / King's Chamber: THE BRAIN — Homeostasis Engine (852 Hz - 38.2% from base)
+    static let arkadas = OOOEntity(
+        name: "Arkadaš",
         geometric: GeometricProperties(
-            shape: .circleWithCrosshairs,
+            shape: .crosshairsCircle,
             color: .indigo,
             frequency: 852.0,
-            position: 0.333  // 33.3% down from DOJO apex (balance point)
+            position: 0.382  // 38.2% from base (golden ratio / King's Chamber)
         ),
         semantic: SemanticProperties(
-            domain: .translation,
+            domain: .identity,
             culturalTradition: "Third Eye Chakra / Intuition (852 Hz)",
-            intent: "DOJO↔SOMA translation, frequency conversion, lossless verification"
+            intent: "Hardware↔software bridge, homeostasis engine, frequency conversion, zero-failsafe"
         ),
         temporal: TemporalProperties(
             cadence: 852.0,
@@ -252,6 +252,9 @@ public extension OOOEntity {
         atlas,
         dojo,
         akronGateway,
-        kingsChamber
+        arkadas
     ]
+
+    /// Legacy alias
+    static let kingsChamber = arkadas
 }

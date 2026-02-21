@@ -234,20 +234,20 @@ final class AttractorTests: XCTestCase {
         // Test that vertex positions are computed correctly
         let obiWanPos = PyramidGeometry.vertexPosition(for: OOOEntity.obiWan)
         let dojoPos = PyramidGeometry.vertexPosition(for: OOOEntity.dojo)
-        let kingsChamberPos = PyramidGeometry.vertexPosition(for: OOOEntity.kingsChamber)
-        
+        let arkadasPos = PyramidGeometry.vertexPosition(for: OOOEntity.arkadas)
+
         // OBI-WAN at apex (y = 1.0)
         XCTAssertEqual(obiWanPos.y, 1.0)
-        
+
         // DOJO at manifestation apex (y = 0.667)
         XCTAssertEqual(dojoPos.y, 0.667, accuracy: 0.001)
-        
-        // King's Chamber at balance point (y = 0.333)
-        XCTAssertEqual(kingsChamberPos.y, 0.333, accuracy: 0.001)
-        
+
+        // Arkadaš at King's Chamber (y = 0.382)
+        XCTAssertEqual(arkadasPos.y, 0.382, accuracy: 0.001)
+
         // Verify vertical ordering
         XCTAssertGreaterThan(obiWanPos.y, dojoPos.y)
-        XCTAssertGreaterThan(dojoPos.y, kingsChamberPos.y)
+        XCTAssertGreaterThan(dojoPos.y, arkadasPos.y)
     }
     
     func testPyramidBaseVertices() {

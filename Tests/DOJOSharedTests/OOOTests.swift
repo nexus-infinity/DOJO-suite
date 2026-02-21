@@ -29,7 +29,7 @@ final class OOOTests: XCTestCase {
         let tata = OOOEntity.tata
         
         XCTAssertEqual(tata.name, "TATA")
-        XCTAssertEqual(tata.geometric.shape, .triangle)
+        XCTAssertEqual(tata.geometric.shape, .invertedTriangle)
         XCTAssertEqual(tata.geometric.color, .orange)
         XCTAssertEqual(tata.geometric.frequency, 432.0)
         XCTAssertEqual(tata.geometric.position, 0.0)  // Base
@@ -41,7 +41,7 @@ final class OOOTests: XCTestCase {
         let atlas = OOOEntity.atlas
         
         XCTAssertEqual(atlas.name, "ATLAS")
-        XCTAssertEqual(atlas.geometric.shape, .square)
+        XCTAssertEqual(atlas.geometric.shape, .triangle)
         XCTAssertEqual(atlas.geometric.color, .green)
         XCTAssertEqual(atlas.geometric.frequency, 528.0)
         XCTAssertEqual(atlas.geometric.position, 0.0)  // Base
@@ -53,7 +53,7 @@ final class OOOTests: XCTestCase {
         let dojo = OOOEntity.dojo
         
         XCTAssertEqual(dojo.name, "DOJO")
-        XCTAssertEqual(dojo.geometric.shape, .diamond)
+        XCTAssertEqual(dojo.geometric.shape, .square)
         XCTAssertEqual(dojo.geometric.color, .blue)
         XCTAssertEqual(dojo.geometric.frequency, 741.0)
         XCTAssertEqual(dojo.geometric.position, 0.667, accuracy: 0.001)  // Manifestation apex
@@ -65,7 +65,7 @@ final class OOOTests: XCTestCase {
         let akron = OOOEntity.akronGateway
         
         XCTAssertEqual(akron.name, "Akron Gateway")
-        XCTAssertEqual(akron.geometric.shape, .invertedTriangle)
+        XCTAssertEqual(akron.geometric.shape, .diamond)
         XCTAssertEqual(akron.geometric.color, .red)
         XCTAssertEqual(akron.geometric.frequency, 396.0)
         XCTAssertEqual(akron.geometric.position, 0.0)  // Foundation
@@ -73,16 +73,16 @@ final class OOOTests: XCTestCase {
         XCTAssertTrue(akron.temporal.observerCalibrated)
     }
     
-    func testKingsChamberVertex() {
-        let kingsChamber = OOOEntity.kingsChamber
-        
-        XCTAssertEqual(kingsChamber.name, "King's Chamber")
-        XCTAssertEqual(kingsChamber.geometric.shape, .circleWithCrosshairs)
-        XCTAssertEqual(kingsChamber.geometric.color, .indigo)
-        XCTAssertEqual(kingsChamber.geometric.frequency, 852.0)
-        XCTAssertEqual(kingsChamber.geometric.position, 0.333, accuracy: 0.001)  // 33.3% - Balance point
-        XCTAssertEqual(kingsChamber.semantic.domain, .translation)
-        XCTAssertTrue(kingsChamber.temporal.observerCalibrated)
+    func testArkadasVertex() {
+        let arkadas = OOOEntity.arkadas
+
+        XCTAssertEqual(arkadas.name, "Arkadaš")
+        XCTAssertEqual(arkadas.geometric.shape, .crosshairsCircle)
+        XCTAssertEqual(arkadas.geometric.color, .indigo)
+        XCTAssertEqual(arkadas.geometric.frequency, 852.0)
+        XCTAssertEqual(arkadas.geometric.position, 0.382, accuracy: 0.001)  // 38.2% - King's Chamber
+        XCTAssertEqual(arkadas.semantic.domain, .identity)
+        XCTAssertTrue(arkadas.temporal.observerCalibrated)
     }
     
     // MARK: - Sacred Vertices Array Test
@@ -100,8 +100,8 @@ final class OOOTests: XCTestCase {
         XCTAssertTrue(names.contains("ATLAS"))
         XCTAssertTrue(names.contains("DOJO"))
         XCTAssertTrue(names.contains("Akron Gateway"))
-        XCTAssertTrue(names.contains("King's Chamber"))
-        
+        XCTAssertTrue(names.contains("Arkadaš"))
+
         // Verify all are observer calibrated
         XCTAssertTrue(vertices.allSatisfy { $0.temporal.observerCalibrated })
         
@@ -120,7 +120,7 @@ final class OOOTests: XCTestCase {
         XCTAssertEqual(frequencies[1], 432.0)  // TATA
         XCTAssertEqual(frequencies[2], 528.0)  // ATLAS
         XCTAssertEqual(frequencies[3], 741.0)  // DOJO
-        XCTAssertEqual(frequencies[4], 852.0)  // King's Chamber
+        XCTAssertEqual(frequencies[4], 852.0)  // Arkadaš
         XCTAssertEqual(frequencies[5], 963.0)  // OBI-WAN
     }
     
@@ -145,7 +145,7 @@ final class OOOTests: XCTestCase {
         
         XCTAssertEqual(portal.repositoryName, "nexus-infinity/DOJO-suite")
         XCTAssertTrue(portal.vertexAnchor.contains("DOJO"))
-        XCTAssertTrue(portal.vertexAnchor.contains("King's Chamber"))
+        XCTAssertTrue(portal.vertexAnchor.contains("Arkadaš"))
         XCTAssertEqual(portal.platform, "iOS/macOS (SwiftPM)")
         XCTAssertEqual(portal.oooProperties.temporal.lifecyclePhase, .active)
         XCTAssertTrue(portal.oooProperties.temporal.observerCalibrated)

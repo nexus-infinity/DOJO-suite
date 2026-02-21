@@ -33,7 +33,7 @@ public extension Portal {
     /// Primary orchestration portal for particle visualization and OOO framework
     static let dojoSuite = Portal(
         repositoryName: "nexus-infinity/DOJO-suite",
-        vertexAnchor: ["DOJO", "King's Chamber"],
+        vertexAnchor: ["DOJO", "Arkadaš"],
         platform: "iOS/macOS (SwiftPM)",
         oooProperties: OOOEntity(
             name: "DOJO-suite Portal",

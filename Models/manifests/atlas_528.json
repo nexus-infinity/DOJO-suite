@@ -1,0 +1,33 @@
+{
+  "vertex": "ATLAS",
+  "frequency": 528,
+  "port": 5280,
+  "symbol": "▲",
+  "models": {
+    "primary": {
+      "name": "knowledge-graphs-7b",
+      "base_model": "Llama-3.2-7B",
+      "type": "GGUF",
+      "path": "~/Library/Application Support/DOJO/ATLAS/mcp-server/models/atlas-7b.gguf",
+      "quantization": "Q4",
+      "size_gb": 4.0,
+      "parameters": "7B",
+      "context_length": 8192,
+      "temperature": 0.7,
+      "capabilities": ["pattern_recognition", "knowledge_synthesis", "semantic_mapping"]
+    },
+    "alternatives": [
+      {
+        "name": "Qwen-7B",
+        "quantization": "Q4",
+        "size_gb": 4.0,
+        "note": "Multilingual knowledge alternative"
+      }
+    ]
+  },
+  "training": {
+    "corpus": "Knowledge patterns, semantic relationships, geometric mappings, FIELD geometry",
+    "status": "pending",
+    "next_action": "Fine-tune on FIELD geometry (Phase 4)"
+  }
+}

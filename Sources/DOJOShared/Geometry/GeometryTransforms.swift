@@ -188,8 +188,8 @@ public struct PyramidGeometry {
             // Manifestation apex at 66.7%
             return SIMD3<Float>(0, position, 0)
             
-        case "King's Chamber":
-            // Balance point at 33.3% (internal to DOJO)
+        case "Arkadaš":
+            // King's Chamber at 38.2% (THE BRAIN)
             return SIMD3<Float>(0, position, 0)
             
         default:

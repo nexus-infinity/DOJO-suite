@@ -1,0 +1,65 @@
+name: DOJO-suite
+options:
+  bundleIdPrefix: org.field
+  indentWidth: 4
+  tabWidth: 4
+
+targets:
+  DOJOShared:
+    type: framework
+    platform: macOS
+    sources: [Sources/DOJOShared]
+    settings:
+      PRODUCT_BUNDLE_IDENTIFIER: org.field.DOJOShared
+      MARKETING_VERSION: 1.0.0
+      CURRENT_PROJECT_VERSION: 1
+
+  DOJOApp:
+    type: application
+    platform: macOS
+    deploymentTarget: 13.0
+    sources: [Sources/DOJOApp]
+    dependencies:
+      - target: DOJOShared
+    settings:
+      PRODUCT_BUNDLE_IDENTIFIER: org.field.dojo
+      INFOPLIST_FILE: Sources/DOJOApp/Info.plist
+      GENERATE_INFOPLIST_FILE: YES
+      ENABLE_HARDENED_RUNTIME: YES
+
+  ArkadasApp:
+    type: application
+    platform: macOS
+    deploymentTarget: 13.0
+    sources: [Sources/ArkadašApp]
+    dependencies:
+      - target: DOJOShared
+    settings:
+      PRODUCT_BUNDLE_IDENTIFIER: org.field.arkadas
+      INFOPLIST_FILE: Sources/ArkadašApp/Info.plist
+      GENERATE_INFOPLIST_FILE: YES
+      ENABLE_HARDENED_RUNTIME: YES
+
+  OB1LinkApp:
+    type: application
+    platform: iOS
+    deploymentTarget: 15.0
+    sources: [Sources/OB1LinkApp]
+    dependencies:
+      - target: DOJOShared
+    settings:
+      PRODUCT_BUNDLE_IDENTIFIER: org.field.ob1link
+      INFOPLIST_FILE: Sources/OB1LinkApp/Info.plist
+      GENERATE_INFOPLIST_FILE: YES
+
+  DojoLinkApp:
+    type: application
+    platform: iOS
+    deploymentTarget: 15.0
+    sources: [Sources/DojoLinkApp]
+    dependencies:
+      - target: DOJOShared
+    settings:
+      PRODUCT_BUNDLE_IDENTIFIER: org.field.dojolink
+      INFOPLIST_FILE: Sources/DojoLinkApp/Info.plist
+      GENERATE_INFOPLIST_FILE: YES

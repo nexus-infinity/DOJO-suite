@@ -87,7 +87,7 @@ public class ParticleEngine: @unchecked Sendable {
     private func randomShape() -> GeometricShape {
         let shapes: [GeometricShape] = [
             .circle, .triangle, .square, .diamond,
-            .invertedTriangle, .circleWithCrosshairs
+            .invertedTriangle, .crosshairsCircle
         ]
         return shapes.randomElement() ?? .circle
     }

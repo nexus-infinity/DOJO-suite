@@ -1,17 +1,25 @@
 {
   "app": "DojoLink",
   "frequency": 717,
+  "port": 7170,
   "symbol": "◆",
+  "note": "Mobile field interface — carries lighter DOJO quant for on-device inference",
   "models": {
     "primary": {
-      "name": "field-llama3-8b",
+      "name": "gpt-oss-20b-mobile",
       "type": "CoreML",
-      "path": "Models/CoreML/field-llama3-8b.mlmodelc",
-      "quantization": "CoreML",
-      "size_gb": 4.5,
-      "context_length": 8192,
+      "path": "Models/CoreML/gpt-oss-20b-Q4_K_M.mlmodelc",
+      "quantization": "Q4_K_M",
+      "size_gb": 5.0,
+      "parameters": "20B",
+      "context_length": 4096,
       "temperature": 0.7,
-      "capabilities": ["text", "mobile", "on-device"]
+      "capabilities": ["text", "mobile", "on-device", "field_sync"]
+    },
+    "fallback": {
+      "mode": "remote",
+      "endpoint": "http://mac-studio.local:7410",
+      "note": "Falls back to Mac Studio DOJO when network available"
     }
   },
   "routing": {

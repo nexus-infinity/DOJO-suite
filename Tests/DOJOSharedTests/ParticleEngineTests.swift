@@ -198,24 +198,26 @@ final class ParticleEngineTests: XCTestCase {
     
     func testSetFieldSize() {
         let engine = ParticleEngine(count: 10, fieldSize: 20.0)
-        
-        engine.setFieldSize(40.0)
+        let newFieldSize: Float = 40.0
+        engine.setFieldSize(newFieldSize)
         engine.reset()
-        
-        // Particles should now be distributed in larger field
-        let halfSize: Float = 20.0
+
+        // Assert against the NEW field size: halfSize = newFieldSize/2 = 20; threshold 0.7*20 = 14
+        // (Particles confined to the original field would stay in [-10,10]; we require > 14.)
+        let halfSize = newFieldSize / 2.0
+        let threshold = halfSize * 0.7
         var hasLargeCoordinate = false
-        
+
         for particle in engine.particles {
-            if abs(particle.position.x) > halfSize * 0.7 ||
-               abs(particle.position.y) > halfSize * 0.7 ||
-               abs(particle.position.z) > halfSize * 0.7 {
+            if abs(particle.position.x) > threshold ||
+               abs(particle.position.y) > threshold ||
+               abs(particle.position.z) > threshold {
                 hasLargeCoordinate = true
                 break
             }
         }
-        
-        // At least some particles should use the larger field space
+
+        // At least some particles should use the larger field space (beyond original ±10)
         XCTAssertTrue(hasLargeCoordinate)
     }
     

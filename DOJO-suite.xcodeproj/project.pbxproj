@@ -1,0 +1,875 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0DDD341726277ACA4747409D /* DependencyInjector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3208A6C3C8157AD6C737E1A1 /* DependencyInjector.swift */; };
+		1028C54B2462EB8461BCC277 /* OB1LinkApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB021358F89956AFFDA69082 /* OB1LinkApp.swift */; };
+		10307B7A51F0A809212779FB /* AIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EFCE33E7A3A74EA4DD7F388 /* AIService.swift */; };
+		18221FC05E2340EFC7743D10 /* Communication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25DE45BCA6C195D8B87D4A8F /* Communication.swift */; };
+		49202E3944B721DDBB4F7A25 /* SacredGeometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F961D9BDC99BB36FDB05D45 /* SacredGeometry.swift */; };
+		5D5D147C24F81D6604FF6921 /* DOJOModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E0AA21AEF7D4FA8F5126AB8 /* DOJOModels.swift */; };
+		5E71FA5797FD24628D7BC9D3 /* ArkadašApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 215056ABE3E06A024E948B25 /* ArkadašApp.swift */; };
+		611A869AF3511327448E656C /* DOJOShared.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = EB68CC7B91C0F2241632A84F /* DOJOShared.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		64D1699B8DDB5F425E3863BC /* DOJOShared.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFEB4E63619521E8DCEC3E64 /* DOJOShared.swift */; };
+		79A9BEECF2E45F306D2A0C82 /* ModelLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E4CCE659DAB953BD66F1BEA /* ModelLoader.swift */; };
+		86B9B0E393A74258A968D463 /* DOJOShared.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = EB68CC7B91C0F2241632A84F /* DOJOShared.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		87B07D178CABC5E8E340DE5F /* GeometryTransforms.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7C3BDB34744AA43CCA4A8F4 /* GeometryTransforms.swift */; };
+		9437AA521917AF36FEBB4715 /* PortalRegistry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 428C5537B7D18119BB3661E8 /* PortalRegistry.swift */; };
+		A48651230A674057A5339FB0 /* DOJOApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A3E090081AFC7C0FC256D3 /* DOJOApp.swift */; };
+		A7D263BB4A4AD7C50E832C63 /* DOJOShared.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB68CC7B91C0F2241632A84F /* DOJOShared.framework */; };
+		B0FDD62F2C9019DB10C6FE80 /* SpinningTopClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021A1B390D71AD2130FCE588 /* SpinningTopClient.swift */; };
+		BB4542F6FF7FE3F74E97F8CD /* DOJOShared.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB68CC7B91C0F2241632A84F /* DOJOShared.framework */; };
+		CFD59B8D9B7D6DE73D160A08 /* ParticleEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555ECFAE396BC9AE36B19F59 /* ParticleEngine.swift */; };
+		D56492B1F4BE65F6BF295B42 /* DOJOShared.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = EB68CC7B91C0F2241632A84F /* DOJOShared.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		D6C3CE05E1ED3CD28BC73A63 /* DOJOShared.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB68CC7B91C0F2241632A84F /* DOJOShared.framework */; };
+		DC51D93674716E0B087AD447 /* DOJOShared.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = EB68CC7B91C0F2241632A84F /* DOJOShared.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		DEBC57EFDE38EE2436480C14 /* DojoLinkApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2074BBDBDD85BE5C9C3A254 /* DojoLinkApp.swift */; };
+		F2DCB82E941820A0358D5E4B /* DOJOShared.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB68CC7B91C0F2241632A84F /* DOJOShared.framework */; };
+		F47AACCBC8E2A628BEF43E96 /* GeometricEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F7D561AAA0D9AE7A97997F1 /* GeometricEntity.swift */; };
+		F6D69A9C8008BA71A56CECF5 /* SIMDUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18120823221505B789FEBEA6 /* SIMDUtilities.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		6F94D2EB514C5EB153B4C833 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EEB863757FC5D706FF3B991E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 563347DB469C9F06F3EAD703;
+			remoteInfo = DOJOShared;
+		};
+		A7D5412D8B95B81AE364D80B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EEB863757FC5D706FF3B991E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 563347DB469C9F06F3EAD703;
+			remoteInfo = DOJOShared;
+		};
+		A8159D788519A926211AA1DF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EEB863757FC5D706FF3B991E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 563347DB469C9F06F3EAD703;
+			remoteInfo = DOJOShared;
+		};
+		AECE6910C95ADD8B82DE484C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EEB863757FC5D706FF3B991E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 563347DB469C9F06F3EAD703;
+			remoteInfo = DOJOShared;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		000844A9FC009A7C47A91D8B /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				D56492B1F4BE65F6BF295B42 /* DOJOShared.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5540A426892BE947382334D4 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				86B9B0E393A74258A968D463 /* DOJOShared.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5F39A14DA2FDBF2607988BE4 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				611A869AF3511327448E656C /* DOJOShared.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		714A362874A60E9457932761 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				DC51D93674716E0B087AD447 /* DOJOShared.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		021A1B390D71AD2130FCE588 /* SpinningTopClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinningTopClient.swift; sourceTree = "<group>"; };
+		0F961D9BDC99BB36FDB05D45 /* SacredGeometry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SacredGeometry.swift; sourceTree = "<group>"; };
+		18120823221505B789FEBEA6 /* SIMDUtilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SIMDUtilities.swift; sourceTree = "<group>"; };
+		1E0AA21AEF7D4FA8F5126AB8 /* DOJOModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DOJOModels.swift; sourceTree = "<group>"; };
+		1EE39709C30C445BCB2647F1 /* OB1LinkApp.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = OB1LinkApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		201847129651799769370F4C /* ArkadasApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ArkadasApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		215056ABE3E06A024E948B25 /* ArkadašApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ArkadašApp.swift"; sourceTree = "<group>"; };
+		25DE45BCA6C195D8B87D4A8F /* Communication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Communication.swift; sourceTree = "<group>"; };
+		3208A6C3C8157AD6C737E1A1 /* DependencyInjector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyInjector.swift; sourceTree = "<group>"; };
+		428C5537B7D18119BB3661E8 /* PortalRegistry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortalRegistry.swift; sourceTree = "<group>"; };
+		4F7D561AAA0D9AE7A97997F1 /* GeometricEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeometricEntity.swift; sourceTree = "<group>"; };
+		555ECFAE396BC9AE36B19F59 /* ParticleEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticleEngine.swift; sourceTree = "<group>"; };
+		7E4CCE659DAB953BD66F1BEA /* ModelLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelLoader.swift; sourceTree = "<group>"; };
+		7EFCE33E7A3A74EA4DD7F388 /* AIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIService.swift; sourceTree = "<group>"; };
+		8A11802E6F074B5797D88446 /* DOJOApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DOJOApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		9D0A2561B6A8FBFBF5670BB0 /* DojoLinkApp.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = DojoLinkApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A7C3BDB34744AA43CCA4A8F4 /* GeometryTransforms.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeometryTransforms.swift; sourceTree = "<group>"; };
+		CB021358F89956AFFDA69082 /* OB1LinkApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OB1LinkApp.swift; sourceTree = "<group>"; };
+		D0A3E090081AFC7C0FC256D3 /* DOJOApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DOJOApp.swift; sourceTree = "<group>"; };
+		D2074BBDBDD85BE5C9C3A254 /* DojoLinkApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DojoLinkApp.swift; sourceTree = "<group>"; };
+		EB68CC7B91C0F2241632A84F /* DOJOShared.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DOJOShared.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FFEB4E63619521E8DCEC3E64 /* DOJOShared.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DOJOShared.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		867101C911493B4A44D76C59 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F2DCB82E941820A0358D5E4B /* DOJOShared.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C12D3D7EDAC9390B60676001 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D6C3CE05E1ED3CD28BC73A63 /* DOJOShared.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E0ADB47B1F2116BD767C424A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A7D263BB4A4AD7C50E832C63 /* DOJOShared.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EB400F2E4695C72427CF4453 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BB4542F6FF7FE3F74E97F8CD /* DOJOShared.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		1FF2AF5948D456300865BF6D /* DojoLinkApp */ = {
+			isa = PBXGroup;
+			children = (
+				D2074BBDBDD85BE5C9C3A254 /* DojoLinkApp.swift */,
+			);
+			name = DojoLinkApp;
+			path = Sources/DojoLinkApp;
+			sourceTree = "<group>";
+		};
+		344A00030CD51F7998A9A8C9 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				7EFCE33E7A3A74EA4DD7F388 /* AIService.swift */,
+				25DE45BCA6C195D8B87D4A8F /* Communication.swift */,
+				021A1B390D71AD2130FCE588 /* SpinningTopClient.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		3799A5DA2D80FEA3ECC04DE8 = {
+			isa = PBXGroup;
+			children = (
+				A516D10488B5D2E19EA93575 /* ArkadašApp */,
+				61DF02893AEF9707FD7EEE6F /* DOJOApp */,
+				1FF2AF5948D456300865BF6D /* DojoLinkApp */,
+				9847278703F9081F285D0FBE /* DOJOShared */,
+				A401EC66D380D924B597DCB1 /* OB1LinkApp */,
+				DA3F0C47D9901D85B78DEF7A /* Products */,
+			);
+			indentWidth = 4;
+			sourceTree = "<group>";
+			tabWidth = 4;
+		};
+		5700CC90A67B4F761AF00077 /* Geometry */ = {
+			isa = PBXGroup;
+			children = (
+				A7C3BDB34744AA43CCA4A8F4 /* GeometryTransforms.swift */,
+				555ECFAE396BC9AE36B19F59 /* ParticleEngine.swift */,
+				0F961D9BDC99BB36FDB05D45 /* SacredGeometry.swift */,
+			);
+			path = Geometry;
+			sourceTree = "<group>";
+		};
+		5990EE37F3441488B1A8E58E /* OOO */ = {
+			isa = PBXGroup;
+			children = (
+				4F7D561AAA0D9AE7A97997F1 /* GeometricEntity.swift */,
+				428C5537B7D18119BB3661E8 /* PortalRegistry.swift */,
+			);
+			path = OOO;
+			sourceTree = "<group>";
+		};
+		61DF02893AEF9707FD7EEE6F /* DOJOApp */ = {
+			isa = PBXGroup;
+			children = (
+				D0A3E090081AFC7C0FC256D3 /* DOJOApp.swift */,
+			);
+			name = DOJOApp;
+			path = Sources/DOJOApp;
+			sourceTree = "<group>";
+		};
+		83B137E7E02C8E8A0FDEF7DE /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				3208A6C3C8157AD6C737E1A1 /* DependencyInjector.swift */,
+				1E0AA21AEF7D4FA8F5126AB8 /* DOJOModels.swift */,
+				FFEB4E63619521E8DCEC3E64 /* DOJOShared.swift */,
+				18120823221505B789FEBEA6 /* SIMDUtilities.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		9847278703F9081F285D0FBE /* DOJOShared */ = {
+			isa = PBXGroup;
+			children = (
+				5700CC90A67B4F761AF00077 /* Geometry */,
+				E89351A3425C86EE453ADBC6 /* Models */,
+				5990EE37F3441488B1A8E58E /* OOO */,
+				344A00030CD51F7998A9A8C9 /* Services */,
+				83B137E7E02C8E8A0FDEF7DE /* Utilities */,
+			);
+			name = DOJOShared;
+			path = Sources/DOJOShared;
+			sourceTree = "<group>";
+		};
+		A401EC66D380D924B597DCB1 /* OB1LinkApp */ = {
+			isa = PBXGroup;
+			children = (
+				CB021358F89956AFFDA69082 /* OB1LinkApp.swift */,
+			);
+			name = OB1LinkApp;
+			path = Sources/OB1LinkApp;
+			sourceTree = "<group>";
+		};
+		A516D10488B5D2E19EA93575 /* ArkadašApp */ = {
+			isa = PBXGroup;
+			children = (
+				215056ABE3E06A024E948B25 /* ArkadašApp.swift */,
+			);
+			name = "ArkadašApp";
+			path = "Sources/ArkadašApp";
+			sourceTree = "<group>";
+		};
+		DA3F0C47D9901D85B78DEF7A /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				201847129651799769370F4C /* ArkadasApp.app */,
+				8A11802E6F074B5797D88446 /* DOJOApp.app */,
+				9D0A2561B6A8FBFBF5670BB0 /* DojoLinkApp.app */,
+				EB68CC7B91C0F2241632A84F /* DOJOShared.framework */,
+				1EE39709C30C445BCB2647F1 /* OB1LinkApp.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E89351A3425C86EE453ADBC6 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				7E4CCE659DAB953BD66F1BEA /* ModelLoader.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		563347DB469C9F06F3EAD703 /* DOJOShared */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = ACC744C5FACB2B68A7FD9AB8 /* Build configuration list for PBXNativeTarget "DOJOShared" */;
+			buildPhases = (
+				12C05A967ED30362F7894E53 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = DOJOShared;
+			packageProductDependencies = (
+			);
+			productName = DOJOShared;
+			productReference = EB68CC7B91C0F2241632A84F /* DOJOShared.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		5B465B52E4977C497CDE92D8 /* DOJOApp */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EBA75AA751E4345A0DAF88FA /* Build configuration list for PBXNativeTarget "DOJOApp" */;
+			buildPhases = (
+				16E2BA17BA88C4B9BBE39C33 /* Sources */,
+				867101C911493B4A44D76C59 /* Frameworks */,
+				714A362874A60E9457932761 /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				22AF71E64D8F3EBF34D8A09A /* PBXTargetDependency */,
+			);
+			name = DOJOApp;
+			packageProductDependencies = (
+			);
+			productName = DOJOApp;
+			productReference = 8A11802E6F074B5797D88446 /* DOJOApp.app */;
+			productType = "com.apple.product-type.application";
+		};
+		65A51CCC8B70C69A7805AC14 /* DojoLinkApp */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BE4F6BE4E0C3AA9C241156F9 /* Build configuration list for PBXNativeTarget "DojoLinkApp" */;
+			buildPhases = (
+				7BC5EAB4AEEBD40BCF5346A4 /* Sources */,
+				E0ADB47B1F2116BD767C424A /* Frameworks */,
+				5540A426892BE947382334D4 /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				B303A66082296598EDB8D187 /* PBXTargetDependency */,
+			);
+			name = DojoLinkApp;
+			packageProductDependencies = (
+			);
+			productName = DojoLinkApp;
+			productReference = 9D0A2561B6A8FBFBF5670BB0 /* DojoLinkApp.app */;
+			productType = "com.apple.product-type.application";
+		};
+		BF6B72E8103317D4FE72EF13 /* ArkadasApp */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AA8A62DEC5A6925CD4D6166A /* Build configuration list for PBXNativeTarget "ArkadasApp" */;
+			buildPhases = (
+				E7109CBF622466AB488DB96A /* Sources */,
+				EB400F2E4695C72427CF4453 /* Frameworks */,
+				5F39A14DA2FDBF2607988BE4 /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				C17261C76B948A18B7342FE7 /* PBXTargetDependency */,
+			);
+			name = ArkadasApp;
+			packageProductDependencies = (
+			);
+			productName = ArkadasApp;
+			productReference = 201847129651799769370F4C /* ArkadasApp.app */;
+			productType = "com.apple.product-type.application";
+		};
+		EAE5DC6CDF0476E9A8932543 /* OB1LinkApp */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F552D53B7731D07A83E1C684 /* Build configuration list for PBXNativeTarget "OB1LinkApp" */;
+			buildPhases = (
+				E6E14D95920C73DC0911887C /* Sources */,
+				C12D3D7EDAC9390B60676001 /* Frameworks */,
+				000844A9FC009A7C47A91D8B /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				54FDD131350F53DABA98ECAF /* PBXTargetDependency */,
+			);
+			name = OB1LinkApp;
+			packageProductDependencies = (
+			);
+			productName = OB1LinkApp;
+			productReference = 1EE39709C30C445BCB2647F1 /* OB1LinkApp.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		EEB863757FC5D706FF3B991E /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1430;
+			};
+			buildConfigurationList = 516900806F573D4B08832C2A /* Build configuration list for PBXProject "DOJO-suite" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = 3799A5DA2D80FEA3ECC04DE8;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				BF6B72E8103317D4FE72EF13 /* ArkadasApp */,
+				5B465B52E4977C497CDE92D8 /* DOJOApp */,
+				563347DB469C9F06F3EAD703 /* DOJOShared */,
+				65A51CCC8B70C69A7805AC14 /* DojoLinkApp */,
+				EAE5DC6CDF0476E9A8932543 /* OB1LinkApp */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		12C05A967ED30362F7894E53 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				10307B7A51F0A809212779FB /* AIService.swift in Sources */,
+				18221FC05E2340EFC7743D10 /* Communication.swift in Sources */,
+				5D5D147C24F81D6604FF6921 /* DOJOModels.swift in Sources */,
+				64D1699B8DDB5F425E3863BC /* DOJOShared.swift in Sources */,
+				0DDD341726277ACA4747409D /* DependencyInjector.swift in Sources */,
+				F47AACCBC8E2A628BEF43E96 /* GeometricEntity.swift in Sources */,
+				87B07D178CABC5E8E340DE5F /* GeometryTransforms.swift in Sources */,
+				79A9BEECF2E45F306D2A0C82 /* ModelLoader.swift in Sources */,
+				CFD59B8D9B7D6DE73D160A08 /* ParticleEngine.swift in Sources */,
+				9437AA521917AF36FEBB4715 /* PortalRegistry.swift in Sources */,
+				F6D69A9C8008BA71A56CECF5 /* SIMDUtilities.swift in Sources */,
+				49202E3944B721DDBB4F7A25 /* SacredGeometry.swift in Sources */,
+				B0FDD62F2C9019DB10C6FE80 /* SpinningTopClient.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		16E2BA17BA88C4B9BBE39C33 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A48651230A674057A5339FB0 /* DOJOApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7BC5EAB4AEEBD40BCF5346A4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DEBC57EFDE38EE2436480C14 /* DojoLinkApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E6E14D95920C73DC0911887C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1028C54B2462EB8461BCC277 /* OB1LinkApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E7109CBF622466AB488DB96A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5E71FA5797FD24628D7BC9D3 /* ArkadašApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		22AF71E64D8F3EBF34D8A09A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 563347DB469C9F06F3EAD703 /* DOJOShared */;
+			targetProxy = AECE6910C95ADD8B82DE484C /* PBXContainerItemProxy */;
+		};
+		54FDD131350F53DABA98ECAF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 563347DB469C9F06F3EAD703 /* DOJOShared */;
+			targetProxy = A8159D788519A926211AA1DF /* PBXContainerItemProxy */;
+		};
+		B303A66082296598EDB8D187 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 563347DB469C9F06F3EAD703 /* DOJOShared */;
+			targetProxy = A7D5412D8B95B81AE364D80B /* PBXContainerItemProxy */;
+		};
+		C17261C76B948A18B7342FE7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 563347DB469C9F06F3EAD703 /* DOJOShared */;
+			targetProxy = 6F94D2EB514C5EB153B4C833 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		0F361ECBA55D92D2CE2EF324 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Sources/OB1LinkApp/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = org.field.ob1link;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		559BE09D850926A094721495 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = org.field.DOJOShared;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = Release;
+		};
+		6E87A91BE35A634CF57B5419 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMBINE_HIDPI_IMAGES = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Sources/ArkadašApp/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				PRODUCT_BUNDLE_IDENTIFIER = org.field.arkadas;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		746A364FF23490862890FB67 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		7ADEE5B5A114DB997D74D120 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = org.field.DOJOShared;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = Debug;
+		};
+		7D1B2386208B13034F1E4FB6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMBINE_HIDPI_IMAGES = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Sources/DOJOApp/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				PRODUCT_BUNDLE_IDENTIFIER = org.field.dojo;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		9062C5D699746B4C06468AEA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Sources/OB1LinkApp/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = org.field.ob1link;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		90D20E63C4F32A6FCBDC22B8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		9CF8F0B424D10AF6EC4F965D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMBINE_HIDPI_IMAGES = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Sources/DOJOApp/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				PRODUCT_BUNDLE_IDENTIFIER = org.field.dojo;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		B63D718DF26FB66379085EEA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Sources/DojoLinkApp/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = org.field.dojolink;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		CFB50893183F83D92BD6E7D5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Sources/DojoLinkApp/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = org.field.dojolink;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		EBAC15A1617723583B808E61 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMBINE_HIDPI_IMAGES = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Sources/ArkadašApp/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				PRODUCT_BUNDLE_IDENTIFIER = org.field.arkadas;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		516900806F573D4B08832C2A /* Build configuration list for PBXProject "DOJO-suite" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				90D20E63C4F32A6FCBDC22B8 /* Debug */,
+				746A364FF23490862890FB67 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		AA8A62DEC5A6925CD4D6166A /* Build configuration list for PBXNativeTarget "ArkadasApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EBAC15A1617723583B808E61 /* Debug */,
+				6E87A91BE35A634CF57B5419 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		ACC744C5FACB2B68A7FD9AB8 /* Build configuration list for PBXNativeTarget "DOJOShared" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7ADEE5B5A114DB997D74D120 /* Debug */,
+				559BE09D850926A094721495 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		BE4F6BE4E0C3AA9C241156F9 /* Build configuration list for PBXNativeTarget "DojoLinkApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CFB50893183F83D92BD6E7D5 /* Debug */,
+				B63D718DF26FB66379085EEA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		EBA75AA751E4345A0DAF88FA /* Build configuration list for PBXNativeTarget "DOJOApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7D1B2386208B13034F1E4FB6 /* Debug */,
+				9CF8F0B424D10AF6EC4F965D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		F552D53B7731D07A83E1C684 /* Build configuration list for PBXNativeTarget "OB1LinkApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0F361ECBA55D92D2CE2EF324 /* Debug */,
+				9062C5D699746B4C06468AEA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = EEB863757FC5D706FF3B991E /* Project object */;
+}

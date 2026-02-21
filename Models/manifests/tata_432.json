@@ -1,0 +1,33 @@
+{
+  "vertex": "TATA",
+  "frequency": 432,
+  "port": 4320,
+  "symbol": "▼",
+  "models": {
+    "primary": {
+      "name": "legal-reasoning-7b",
+      "base_model": "Mistral-7B-Instruct",
+      "type": "GGUF",
+      "path": "~/Library/Application Support/DOJO/TATA/mcp-server/models/tata-7b.gguf",
+      "quantization": "Q4",
+      "size_gb": 4.0,
+      "parameters": "7B",
+      "context_length": 8192,
+      "temperature": 0.7,
+      "capabilities": ["truth_validation", "legal_reasoning", "timeline_integrity"]
+    },
+    "alternatives": [
+      {
+        "name": "Llama-3.2-7B",
+        "quantization": "Q4",
+        "size_gb": 4.0,
+        "note": "Strong instruction following alternative"
+      }
+    ]
+  },
+  "training": {
+    "corpus": "Legal documents, temporal reasoning, truth anchors, Jacques Rich documents",
+    "status": "pending",
+    "next_action": "Fine-tune on Jacques Rich corpus (Phase 4)"
+  }
+}

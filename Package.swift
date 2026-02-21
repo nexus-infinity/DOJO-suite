@@ -15,9 +15,16 @@ let package = Package(
             name: "DOJOShared",
             targets: ["DOJOShared"]
         ),
-        // Note: iOS/macOS executable apps are only buildable on Apple platforms
-        // They are excluded from this manifest to support Linux builds
-        // Use Xcode or xcodebuild directly on macOS to build the apps
+        // UI library product for SwiftUI views and previews
+        .library(
+            name: "DOJOUI",
+            targets: ["DOJOUI"]
+        ),
+        // Executable products for the 4 Sacred Trident apps
+        .executable(name: "DOJOApp", targets: ["DOJOApp"]),
+        .executable(name: "ArkadašApp", targets: ["ArkadašApp"]),
+        .executable(name: "OB1LinkApp", targets: ["OB1LinkApp"]),
+        .executable(name: "DojoLinkApp", targets: ["DojoLinkApp"]),
     ],
     dependencies: [
         // No external dependencies - keeping it self-contained
@@ -29,6 +36,40 @@ let package = Package(
             dependencies: [],
             path: "Sources/DOJOShared"
         ),
+        // UI library target to host SwiftUI views and previews
+        .target(
+            name: "DOJOUI",
+            dependencies: ["DOJOShared"],
+            path: "Sources/DOJOUI"
+        ),
+        
+        // ◼︎ DOJO.app (741 Hz) - Manifestation orchestrator
+        .executableTarget(
+            name: "DOJOApp",
+            dependencies: ["DOJOShared", "DOJOUI"],
+            path: "Sources/DOJOApp"
+        ),
+        
+        // 🎭 Arkadaš.app (852 Hz) - 27-agent Grand Gallery
+        .executableTarget(
+            name: "ArkadašApp",
+            dependencies: ["DOJOShared"],
+            path: "Sources/ArkadašApp"
+        ),
+        
+        // ● OB1Link.app (963 Hz) - Observer consciousness
+        .executableTarget(
+            name: "OB1LinkApp",
+            dependencies: ["DOJOShared"],
+            path: "Sources/OB1LinkApp"
+        ),
+        
+        // ◆ DojoLink.app (717 Hz) - Mobile field interface
+        .executableTarget(
+            name: "DojoLinkApp",
+            dependencies: ["DOJOShared"],
+            path: "Sources/DojoLinkApp"
+        ),
         
         // Test target
         .testTarget(
@@ -38,4 +79,3 @@ let package = Package(
         )
     ]
 )
-

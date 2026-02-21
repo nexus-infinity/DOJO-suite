@@ -1,18 +1,29 @@
 {
-  "app": "Arkadas",
+  "app": "Arkadaš",
   "frequency": 852,
-  "symbol": "🎭",
+  "port": 8520,
+  "symbol": "⊗",
+  "chamber": "King's Chamber (38.2% from base)",
+  "role": "THE BRAIN",
   "models": {
     "primary": {
-      "name": "field-llama3-8b",
+      "name": "arkadas-mac-Q8",
+      "base_model": "Phi-3-mini-3.8B",
       "type": "GGUF",
-      "path": "Models/GGUF/field-llama3-8b-Q4_K_M.gguf",
-      "quantization": "Q4_K_M",
-      "size_gb": 4.5,
+      "path": "~/Library/Application Support/DOJO/dojo_train_station/models/arkadas-mac-Q8.gguf",
+      "quantization": "Q8_0",
+      "size_gb": 4.0,
+      "parameters": "3.8B",
       "context_length": 8192,
       "temperature": 0.7,
-      "capabilities": ["text", "chat", "multimodal"]
+      "capabilities": ["biometric_transformation", "hardware_software_bridge", "homeostasis", "frequency_conversion", "zero_failsafe"]
     }
+  },
+  "training": {
+    "examples": 200,
+    "corpus": "Synthetic biometric scenarios, frequency conversion tables",
+    "status": "PRIORITY",
+    "next_action": "Train on biometric scenarios"
   },
   "routing": {
     "use_coreml": true,
