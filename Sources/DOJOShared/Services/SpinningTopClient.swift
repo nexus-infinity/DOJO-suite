@@ -1,7 +1,7 @@
 import Foundation
 
 /// HTTP client for connecting to Spinning Top HTTP Server
-/// Port: 7412 (DOJO App Interface)
+/// Port: 7410 (DOJO Free Radical MCP)
 public class SpinningTopClient {
     
     // MARK: - Configuration
@@ -9,7 +9,7 @@ public class SpinningTopClient {
     private let baseURL: URL
     private let session: URLSession
     
-    public init(baseURL: String = "http://localhost:7412") {
+    public init(baseURL: String = "http://localhost:7410") {
         self.baseURL = URL(string: baseURL)!
         self.session = URLSession.shared
     }
@@ -146,7 +146,7 @@ public class SpinningTopClient {
             case .invalidResponse:
                 return "Invalid response from spinning top server"
             case .serverUnavailable:
-                return "Spinning top server is not reachable at localhost:7412"
+                return "Spinning top server is not reachable at localhost:7410"
             }
         }
     }
