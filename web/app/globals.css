@@ -1,0 +1,46 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --void:    #05050A;
+  --surface: #0F0F1A;
+  --raised:  #1A1A2E;
+  --border:  #2A2A40;
+  --text:    #F1F5F9;
+  --muted:   #64748B;
+  --dim:     #334155;
+
+  /* chamber glow variables — overridden per-chamber */
+  --chamber-color: #7C3AED;
+  --chamber-glow:  #7C3AED66;
+}
+
+body {
+  background: var(--void);
+  color: var(--text);
+}
+
+/* Spell circle spoke animation */
+@keyframes rotate-ccw { to { transform: rotate(-360deg); } }
+@keyframes rotate-cw  { to { transform: rotate(360deg);  } }
+
+.rotate-cw  { animation: rotate-cw  12s linear infinite; }
+.rotate-ccw { animation: rotate-ccw 18s linear infinite; }
+
+/* BEAR ring fill animation */
+.bear-fill { transition: stroke-dashoffset 0.8s cubic-bezier(0.4, 0, 0.2, 1); }
+
+/* Portal appear */
+.portal-in {
+  animation: portalIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+@keyframes portalIn {
+  from { opacity: 0; transform: scale(0.85) rotate(-8deg); }
+  to   { opacity: 1; transform: scale(1)    rotate(0deg);  }
+}
+
+/* Scrollbar — minimal, FIELD branded */
+::-webkit-scrollbar        { width: 4px; }
+::-webkit-scrollbar-track  { background: var(--surface); }
+::-webkit-scrollbar-thumb  { background: var(--border); border-radius: 2px; }
