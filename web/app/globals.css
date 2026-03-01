@@ -25,8 +25,8 @@ body {
 @keyframes rotate-ccw { to { transform: rotate(-360deg); } }
 @keyframes rotate-cw  { to { transform: rotate(360deg);  } }
 
-.rotate-cw  { animation: rotate-cw  12s linear infinite; }
-.rotate-ccw { animation: rotate-ccw 18s linear infinite; }
+.rotate-cw  { animation: rotate-cw  12s linear infinite; transform-box: fill-box; transform-origin: center; }
+.rotate-ccw { animation: rotate-ccw 18s linear infinite; transform-box: fill-box; transform-origin: center; }
 
 /* BEAR ring fill animation */
 .bear-fill { transition: stroke-dashoffset 0.8s cubic-bezier(0.4, 0, 0.2, 1); }

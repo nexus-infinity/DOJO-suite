@@ -14,6 +14,9 @@ const config: Config = {
         surface: '#0F0F1A',
         raised:  '#1A1A2E',
         border:  '#2A2A40',
+        // Text scale
+        muted:   '#64748B',
+        dim:     '#334155',
         // Chamber tech palette
         dojo:    '#7C3AED',
         obiwan:  '#E2E8F0',

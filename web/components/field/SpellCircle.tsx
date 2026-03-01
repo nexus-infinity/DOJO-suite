@@ -60,7 +60,7 @@ export function SpellCircle({ chamber, size = 80, active = true, compact = false
         stroke={color}
         strokeWidth={compact ? 0.6 : 1}
         opacity={opacity * 0.4}
-        style={{ animation: active ? 'rotate-ccw 18s linear infinite' : 'none', transformOrigin: `${cx}px ${cy}px` }}
+        className={active ? 'rotate-ccw' : ''}
       />
 
       {/* Spokes */}
