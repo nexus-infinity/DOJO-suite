@@ -16,3 +16,11 @@ Models/CoreML/*.mlmodelc
 *.app
 *.ipa
 DerivedData/
+
+# Web / Next.js
+web/node_modules/
+web/.next/
+web/package-lock.json
+web/tsconfig.tsbuildinfo
+web/next-env.d.ts
+.env.local

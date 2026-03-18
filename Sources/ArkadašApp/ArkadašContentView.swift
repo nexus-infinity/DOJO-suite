@@ -13,6 +13,32 @@
 import SwiftUI
 import DOJOShared
 
+#if canImport(AppKit)
+import AppKit
+#endif
+
+private enum PlatformColors {
+    static var windowBackground: Color {
+        #if canImport(AppKit)
+        return Color(nsColor: NSColor.windowBackgroundColor)
+        #elseif canImport(UIKit)
+        return Color(UIColor.systemBackground)
+        #else
+        return Color(.sRGB, red: 0.95, green: 0.95, blue: 0.95, opacity: 1)
+        #endif
+    }
+
+    static var controlBackground: Color {
+        #if canImport(AppKit)
+        return Color(nsColor: NSColor.controlBackgroundColor)
+        #elseif canImport(UIKit)
+        return Color(UIColor.secondarySystemBackground)
+        #else
+        return Color(.sRGB, red: 0.92, green: 0.92, blue: 0.92, opacity: 1)
+        #endif
+    }
+}
+
 // MARK: - Character Visual Palette
 
 extension GeometricCharacter {
@@ -50,7 +76,7 @@ public struct ArkadašContentView: View {
             inputBar
         }
         .frame(minWidth: 560, minHeight: 500)
-        .background(Color(NSColor.windowBackgroundColor))
+        .background(PlatformColors.windowBackground)
         .onAppear { inputFocused = true }
     }
 
@@ -106,7 +132,7 @@ public struct ArkadašContentView: View {
         }
         .padding(.horizontal, 16)
         .padding(.vertical, 7)
-        .background(Color(NSColor.controlBackgroundColor).opacity(0.6))
+        .background(PlatformColors.controlBackground.opacity(0.6))
     }
 
     // MARK: Message Thread
@@ -127,13 +153,13 @@ public struct ArkadašContentView: View {
                 .padding(.horizontal, 16)
                 .padding(.vertical, 14)
             }
-            .onChange(of: engine.messages.count) { _ in
+            .onChange(of: engine.messages.count) { _, _ in
                 guard let last = engine.messages.last else { return }
                 withAnimation(.easeOut(duration: 0.25)) {
                     proxy.scrollTo(last.id, anchor: .bottom)
                 }
             }
-            .onChange(of: engine.isProcessing) { processing in
+            .onChange(of: engine.isProcessing) { processing, _ in
                 if processing {
                     withAnimation(.easeOut(duration: 0.2)) {
                         proxy.scrollTo("__typing__", anchor: .bottom)
@@ -153,7 +179,7 @@ public struct ArkadašContentView: View {
                 .focused($inputFocused)
                 .padding(.horizontal, 12)
                 .padding(.vertical, 8)
-                .background(Color(NSColor.controlBackgroundColor))
+                .background(PlatformColors.controlBackground)
                 .cornerRadius(10)
                 .onSubmit { sendMessage() }
 

@@ -2,6 +2,17 @@ import SwiftUI
 import DOJOShared
 import DOJOUI
 
+#if canImport(AppKit)
+private let secondaryLabelColor: Color = Color(nsColor: .secondaryLabelColor)
+private let controlBackgroundColor: Color = Color(nsColor: .controlBackgroundColor)
+#elseif canImport(UIKit)
+private let secondaryLabelColor: Color = Color(UIColor.secondaryLabel)
+private let controlBackgroundColor: Color = Color(UIColor.secondarySystemBackground)
+#else
+private let secondaryLabelColor: Color = .secondary
+private let controlBackgroundColor: Color = .secondary
+#endif
+
 @main
 struct DOJOApp: App {
     init() {
@@ -25,11 +36,15 @@ struct ContentView: View {
                     .font(.system(size: 24, weight: .bold))
                 Text("Manifestation Orchestrator • 741 Hz")
                     .font(.caption)
-                    .foregroundColor(.secondary)
+                    .foregroundColor(secondaryLabelColor)
             }
             .padding(.vertical, 12)
             .frame(maxWidth: .infinity)
-            .background(Color(NSColor.controlBackgroundColor))
+            .background(
+                {
+                    controlBackgroundColor
+                }()
+            )
             
             // Chat interface
             MinimalChatView()
@@ -37,3 +52,4 @@ struct ContentView: View {
         .frame(minWidth: 600, minHeight: 500)
     }
 }
+

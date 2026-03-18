@@ -4,7 +4,9 @@ Web mirror of DOJO Suite — NIAMA conversational intelligence on the browser.
 
 ## What this is
 
-A Claude-equivalent web interface for FIELD: **Chat**, **Code/Artifacts**, and **Collaborate** modes. Connects to Mac Studio chamber endpoints via server-side API routes. MCP panel shows all Tier 2 FIELD services (Notion, GitHub, HuggingFace, SQLite) plus third-party connectors.
+A Claude-equivalent web interface for FIELD: **Chat**, **Code/Artifacts**, and **Collaborate** modes. Connects to Mac Studio chamber endpoints via server-side API routes. The web surface is a deployment interface, not a second sovereignty layer.
+
+Tier 2 services shown in the MCP panel are routed by sacred chamber ownership. They should be read as FIELD capabilities folded through the chambers, not as proof that separate client-visible Tier 2 ports are listening.
 
 ## Modes
 
@@ -58,7 +60,7 @@ Browser
   └── Next.js (Vercel)
         ├── /api/chat    → streams from DOJO :7410
         ├── /api/health  → polls all chambers
-        └── /api/mcp/*   → proxies Tier 2 MCP calls
+        └── /api/mcp/*   → FIELD capability routing surface
               └── Mac Studio (FIELD-Mac-Studio.local)
                     ├── DOJO      :7410
                     ├── OBI-WAN   :9630

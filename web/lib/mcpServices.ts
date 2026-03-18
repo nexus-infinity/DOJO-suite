@@ -6,28 +6,29 @@ export interface MCPService {
   name: string
   symbol: string
   chamber: string       // which chamber routes it
-  port: number
+  directPort?: number
   category: 'field-tier2' | 'third-party'
   description: string
   authType: 'token' | 'oauth' | 'none'
+  clientExposed?: boolean
+  routingNote?: string
   status?: 'connected' | 'disconnected' | 'error'
 }
 
 export const FIELD_MCP_SERVICES: MCPService[] = [
-  // FIELD Tier 2 — internal
-  { id: 'notion',       name: 'Notion',        symbol: 'N',  chamber: 'obiwan',  port: 9631, category: 'field-tier2', description: 'FIELD knowledge base, Notorious Home, Chronicle', authType: 'token' },
-  { id: 'github',       name: 'GitHub',        symbol: '⬡',  chamber: 'dojo',    port: 7411, category: 'field-tier2', description: 'nexus-infinity repos, issues, PRs, code search',  authType: 'token' },
-  { id: 'huggingface',  name: 'HuggingFace',   symbol: '🤗', chamber: 'atlas',   port: 5281, category: 'field-tier2', description: 'misterJB datasets, model training status',         authType: 'token' },
-  { id: 'sqlite',       name: 'Memory DB',     symbol: '◎',  chamber: 'kings',   port: 8521, category: 'field-tier2', description: 'actual_state.db, requirements.db, temporal_gaps',  authType: 'none'  },
-  { id: 'tata-records', name: 'TATA Records',  symbol: '▼',  chamber: 'tata',    port: 4321, category: 'field-tier2', description: 'Legal records, evidence, chronicle entries',        authType: 'none'  },
-  { id: 'atlas-valid',  name: 'ATLAS Validate',symbol: '▲',  chamber: 'atlas',   port: 4322, category: 'field-tier2', description: 'Geometric validation, trident signal',             authType: 'none'  },
+  // FIELD Tier 2 — surfaced through sacred chambers, not directly client-exposed.
+  { id: 'notion',             name: 'Notion',             symbol: 'N',  chamber: 'obiwan', directPort: 9631, category: 'field-tier2', description: 'FIELD knowledge base, Notorious Home, Chronicle', authType: 'token', clientExposed: false, routingNote: 'Folded through ● OBI-WAN sacred routing' },
+  { id: 'github',             name: 'GitHub',             symbol: '⬡',  chamber: 'dojo',   directPort: 7413, category: 'field-tier2', description: 'nexus-infinity repos, issues, PRs, code search', authType: 'token', clientExposed: false, routingNote: 'Folded through ◼︎ DOJO sacred routing' },
+  { id: 'huggingface',        name: 'HuggingFace',        symbol: 'H',  chamber: 'atlas',  directPort: 5281, category: 'field-tier2', description: 'misterJB datasets, model training status', authType: 'token', clientExposed: false, routingNote: 'Folded through ▲ ATLAS sacred routing' },
+  { id: 'google-apps-script', name: 'Google Apps Script', symbol: 'G',  chamber: 'tata',   directPort: 4321, category: 'field-tier2', description: 'Apps Script project management through TATA', authType: 'oauth', clientExposed: false, routingNote: 'Folded through ▼ TATA sacred routing' },
+  { id: 'hubspot',            name: 'HubSpot',            symbol: 'HS', chamber: 'tata',   directPort: 4322, category: 'field-tier2', description: 'CRM interface through TATA temporal truth', authType: 'token', clientExposed: false, routingNote: 'Folded through ▼ TATA sacred routing' },
 ]
 
 export const THIRD_PARTY_MCP_SERVICES: MCPService[] = [
-  { id: 'google-drive', name: 'Google Drive',  symbol: '▲',  chamber: 'atlas',   port: 0, category: 'third-party', description: 'Cloud document storage',      authType: 'oauth' },
-  { id: 'gmail',        name: 'Gmail',         symbol: '✉',  chamber: 'obiwan',  port: 0, category: 'third-party', description: 'Email access and search',     authType: 'oauth' },
-  { id: 'brave-search', name: 'Brave Search',  symbol: '🦁', chamber: 'atlas',   port: 0, category: 'third-party', description: 'Web search without tracking', authType: 'token' },
-  { id: 'filesystem',   name: 'Filesystem',    symbol: '◻',  chamber: 'akron',   port: 0, category: 'third-party', description: 'Local file read/write',       authType: 'none'  },
+  { id: 'google-drive', name: 'Google Drive',  symbol: '▲',  chamber: 'atlas',  category: 'third-party', description: 'Cloud document storage',      authType: 'oauth' },
+  { id: 'gmail',        name: 'Gmail',         symbol: '✉',  chamber: 'obiwan', category: 'third-party', description: 'Email access and search',     authType: 'oauth' },
+  { id: 'brave-search', name: 'Brave Search',  symbol: '🦁', chamber: 'atlas',  category: 'third-party', description: 'Web search without tracking', authType: 'token' },
+  { id: 'filesystem',   name: 'Filesystem',    symbol: '◻',  chamber: 'akron',  category: 'third-party', description: 'Local file read/write',       authType: 'none'  },
 ]
 
 export const ALL_MCP_SERVICES = [...FIELD_MCP_SERVICES, ...THIRD_PARTY_MCP_SERVICES]

@@ -1,3 +1,4 @@
+import DOJOShared
 import SwiftUI
 import HealthKit
 

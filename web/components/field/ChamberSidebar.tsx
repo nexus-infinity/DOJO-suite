@@ -1,34 +1,60 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { CHAMBERS, type ChamberKey } from '@/lib/chambers'
 import { SpellCircle, BEARRing } from './SpellCircle'
+import { type SessionRecord, formatRelativeSessionTime } from '@/lib/sessionStore'
 
-// Left sidebar — conversation history + live chamber status
-
-interface ConversationEntry {
-  id: string
-  title: string
-  mode: 'chat' | 'code' | 'collab'
-  updatedAt: string
+interface HealthPayload {
+  chambers: Record<string, {
+    normalizedStatus?: 'alive' | 'degraded' | 'offline'
+    score?: number
+  }>
+  bear?: {
+    score: number
+    label?: string
+  }
 }
 
-const MOCK_HISTORY: ConversationEntry[] = [
-  { id: '1', title: 'Niama training dataset review', mode: 'chat',  updatedAt: 'Today' },
-  { id: '2', title: 'Swift MCP client scaffold',    mode: 'code',  updatedAt: 'Today' },
-  { id: '3', title: 'Response Advantage S0-S7',     mode: 'collab',updatedAt: 'Yesterday' },
-  { id: '4', title: 'Kit Car T0-T5 HUD design',     mode: 'code',  updatedAt: 'Yesterday' },
-  { id: '5', title: 'BEAR coherence review',        mode: 'chat',  updatedAt: 'Feb 28' },
-]
+interface Props {
+  sessions: SessionRecord[]
+  activeSessionId: string
+  onSelectSession: (sessionId: string) => void
+  onNewSession: () => void
+}
 
-const CHAMBER_KEYS: ChamberKey[] = ['dojo', 'obiwan', 'atlas', 'tata', 'akron']
+const CHAMBER_KEYS: ChamberKey[] = ['dojo', 'obiwan', 'atlas', 'tata', 'akron', 'arkadas', 'kings']
 
-export function ChamberSidebar() {
+export function ChamberSidebar({ sessions, activeSessionId, onSelectSession, onNewSession }: Props) {
   const [collapsed, setCollapsed] = useState(false)
-  // Mock status — real data comes from /api/health in production
-  const [chamberAlive] = useState<Record<string, boolean>>({
-    dojo: true, obiwan: true, atlas: true, tata: false, akron: true
-  })
+  const [health, setHealth] = useState<HealthPayload | null>(null)
+
+  useEffect(() => {
+    let cancelled = false
+
+    async function loadHealth() {
+      try {
+        const res = await fetch('/api/health', { cache: 'no-store' })
+        if (!res.ok) throw new Error(`HTTP ${res.status}`)
+        const json = await res.json()
+        if (!cancelled) setHealth(json)
+      } catch {
+        if (!cancelled) setHealth(null)
+      }
+    }
+
+    loadHealth()
+    const interval = window.setInterval(loadHealth, 15_000)
+    return () => {
+      cancelled = true
+      window.clearInterval(interval)
+    }
+  }, [])
+
+  const sortedSessions = useMemo(
+    () => [...sessions].sort((a, b) => Date.parse(b.updatedAt) - Date.parse(a.updatedAt)),
+    [sessions]
+  )
 
   if (collapsed) {
     return (
@@ -37,7 +63,7 @@ export function ChamberSidebar() {
         <div className="flex-1 flex flex-col items-center gap-2 mt-4">
           {CHAMBER_KEYS.map(key => (
             <div key={key} title={`${CHAMBERS[key].symbol} ${CHAMBERS[key].name} :${CHAMBERS[key].port}`}>
-              <SpellCircle chamber={key} size={24} compact active={chamberAlive[key]} />
+              <SpellCircle chamber={key} size={24} compact active={health?.chambers?.[key]?.normalizedStatus === 'alive'} />
             </div>
           ))}
         </div>
@@ -63,13 +89,17 @@ export function ChamberSidebar() {
         <div className="space-y-1.5">
           {CHAMBER_KEYS.map(key => {
             const ch = CHAMBERS[key]
-            const alive = chamberAlive[key]
+            const state = health?.chambers?.[key]
+            const alive = state?.normalizedStatus === 'alive'
+            const degraded = state?.normalizedStatus === 'degraded'
             return (
               <div key={key} className="flex items-center gap-2">
                 <SpellCircle chamber={key} size={18} compact active={alive} />
                 <span className="text-xs font-mono text-muted flex-1">{ch.symbol} {ch.name}</span>
-                <span className={`text-xs font-mono ${alive ? 'text-green-400' : 'text-red-400/70'}`}>
-                  {alive ? '●' : '○'}
+                <span className={`text-xs font-mono ${
+                  alive ? 'text-green-400' : degraded ? 'text-amber-400' : 'text-red-400/70'
+                }`}>
+                  {alive ? '●' : degraded ? '◐' : '○'}
                 </span>
               </div>
             )
@@ -79,12 +109,20 @@ export function ChamberSidebar() {
 
       {/* BEAR score — compact */}
       <div className="flex items-center justify-center py-3 border-b border-border">
-        <BEARRing score={0.87} size={64} />
+        <div className="flex flex-col items-center gap-1">
+          <BEARRing score={health?.bear?.score ?? 0} size={64} />
+          <span className="text-[10px] font-mono uppercase tracking-wider text-dim">
+            {health?.bear?.label ?? 'offline'}
+          </span>
+        </div>
       </div>
 
       {/* New conversation */}
       <div className="px-3 py-2.5">
-        <button className="w-full flex items-center gap-2 px-3 py-2 bg-dojo/15 hover:bg-dojo/25 border border-dojo/20 rounded-lg text-sm text-dojo font-medium transition-all">
+        <button
+          onClick={onNewSession}
+          className="w-full flex items-center gap-2 px-3 py-2 bg-dojo/15 hover:bg-dojo/25 border border-dojo/20 rounded-lg text-sm text-dojo font-medium transition-all"
+        >
           <span>+</span>
           <span>New conversation</span>
         </button>
@@ -94,10 +132,13 @@ export function ChamberSidebar() {
       <div className="flex-1 overflow-y-auto px-2 pb-2">
         <p className="text-xs text-dim font-mono px-2 py-1.5">Recent</p>
         <div className="space-y-0.5">
-          {MOCK_HISTORY.map(entry => (
+          {sortedSessions.map(entry => (
             <button
               key={entry.id}
-              className="w-full text-left px-2.5 py-2 rounded-lg hover:bg-raised group transition-colors"
+              onClick={() => onSelectSession(entry.id)}
+              className={`w-full text-left px-2.5 py-2 rounded-lg group transition-colors ${
+                activeSessionId === entry.id ? 'bg-dojo/10 border border-dojo/20' : 'hover:bg-raised'
+              }`}
             >
               <div className="flex items-start gap-2">
                 <span className="text-dim text-xs mt-0.5 shrink-0">
@@ -105,11 +146,14 @@ export function ChamberSidebar() {
                 </span>
                 <div className="min-w-0">
                   <p className="text-xs text-slate-300 group-hover:text-slate-100 truncate leading-snug">{entry.title}</p>
-                  <p className="text-xs text-dim">{entry.updatedAt}</p>
+                  <p className="text-xs text-dim">{formatRelativeSessionTime(entry.updatedAt)}</p>
                 </div>
               </div>
             </button>
           ))}
+          {sortedSessions.length === 0 && (
+            <p className="px-2.5 py-2 text-xs text-dim">No saved sessions yet</p>
+          )}
         </div>
       </div>
     </aside>

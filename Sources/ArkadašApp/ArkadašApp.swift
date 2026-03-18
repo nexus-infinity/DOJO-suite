@@ -18,7 +18,9 @@ struct ArkadasApp: App {
         WindowGroup {
             ArkadašContentView()
         }
+#if os(macOS)
         .windowStyle(.titleBar)
         .windowToolbarStyle(.unified)
+#endif
     }
 }

@@ -6,8 +6,8 @@ import PackageDescription
 let package = Package(
     name: "DOJO-suite",
     platforms: [
-        .iOS(.v15),
-        .macOS(.v13)
+        .iOS(.v17),
+        .macOS(.v14)
     ],
     products: [
         // Library product for shared geometry, particle engine, and OOO framework

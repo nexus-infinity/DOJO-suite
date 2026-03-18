@@ -21,15 +21,30 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: `Unknown service: ${service}` }, { status: 400 })
   }
 
-  const base = svc.port > 0
-    ? `${chamberUrl(svc.chamber as ChamberKey).replace(/:\d+$/, '')}:${svc.port}`
+  if (!svc.clientExposed) {
+    return NextResponse.json({
+      error: 'Service folded through sacred chamber routing',
+      service,
+      tool,
+      via: chamberUrl(svc.chamber as ChamberKey),
+      directPort: svc.directPort ?? null,
+      detail: 'This Vercel/web surface treats Tier 2 as a capability routed by the chamber, not as a direct client HTTP endpoint.',
+    }, { status: 501 })
+  }
+
+  const base = svc.directPort
+    ? `${chamberUrl(svc.chamber as ChamberKey).replace(/:\d+$/, '')}:${svc.directPort}`
     : chamberUrl(svc.chamber as ChamberKey)
 
   try {
-    const res = await fetch(`${base}/mcp/tool/${tool}`, {
+    const res = await fetch(`${base}/mcp/tools/call`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(args),
+      body: JSON.stringify({
+        name: tool,
+        tool,
+        arguments: args,
+      }),
     })
     if (!res.ok) throw new Error(`HTTP ${res.status}`)
     return NextResponse.json(await res.json())

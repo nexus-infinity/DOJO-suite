@@ -9,6 +9,10 @@
 import SwiftUI
 import DOJOShared
 
+#if os(iOS)
+import UIKit
+#endif
+
 public struct MinimalChatView: View {
     @State private var messages: [ChatMessage] = []
     @State private var inputText: String = ""
@@ -20,6 +24,12 @@ public struct MinimalChatView: View {
 
     public var body: some View {
         VStack(spacing: 0) {
+            .onReceive(NotificationCenter.default.publisher(for: Notification.Name("DOJORetryLastUserMessage"))) { _ in
+                guard !isProcessing, let lastUser = messages.last(where: { $0.role == .user }) else { return }
+                inputText = lastUser.content
+                sendMessage()
+            }
+
             // Message history
             ScrollViewReader { proxy in
                 ScrollView {
@@ -28,13 +38,13 @@ public struct MinimalChatView: View {
                             MinimalMessageBubble(message: message)
                                 .id(message.id)
                         }
-                        if isProcessing {
-                            MinimalProcessingIndicator()
-                        }
+                        if isProcessing { MinimalProcessingIndicator().transition(.opacity) }
                     }
                     .padding()
+                    .frame(maxWidth: 800, alignment: .leading)
+                    .frame(maxWidth: .infinity, alignment: .leading)
                 }
-                .onChange(of: messages.count) { _ in
+                .onChange(of: messages.count) { oldValue, newValue in
                     if let lastMessage = messages.last {
                         withAnimation {
                             proxy.scrollTo(lastMessage.id, anchor: .bottom)
@@ -49,6 +59,7 @@ public struct MinimalChatView: View {
             HStack(spacing: 12) {
                 TextField("Type a message...", text: $inputText, axis: .vertical)
                     .textFieldStyle(.plain)
+                    .submitLabel(.send)
                     .lineLimit(1...6)
                     .padding(8)
                     .background(controlBackground)
@@ -83,6 +94,11 @@ public struct MinimalChatView: View {
         let userMessage = ChatMessage(role: .user, content: text)
         messages.append(userMessage)
         inputText = ""
+
+        #if os(iOS)
+        // Dismiss keyboard on iOS after sending
+        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+        #endif
 
         isProcessing = true
         Task {
@@ -128,11 +144,27 @@ struct MinimalMessageBubble: View {
             if message.role == .user { Spacer() }
 
             VStack(alignment: message.role == .user ? .trailing : .leading, spacing: 4) {
-                Text(message.content)
-                    .padding(12)
-                    .background(bubbleBackground)
-                    .foregroundColor(bubbleForeground)
-                    .cornerRadius(12)
+                Group {
+                    if message.role == .assistant {
+                        Text(.init(message.content))
+                            .textSelection(.enabled)
+                    } else {
+                        Text(message.content)
+                    }
+                }
+                .padding(12)
+                .background(bubbleBackground)
+                .foregroundColor(bubbleForeground)
+                .cornerRadius(12)
+
+                if message.role == .assistant && message.content.hasPrefix("Error:") {
+                    Button("Retry") {
+                        NotificationCenter.default.post(name: Notification.Name("DOJORetryLastUserMessage"), object: nil)
+                    }
+                    .font(.caption)
+                    .buttonStyle(.borderless)
+                    .foregroundColor(.secondary)
+                }
 
                 Text(message.timestamp, style: .time)
                     .font(.caption2)
@@ -195,3 +227,4 @@ struct MinimalChatView_Previews: PreviewProvider {
     }
 }
 #endif
+

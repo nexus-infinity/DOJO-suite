@@ -237,8 +237,8 @@ private struct SpokesShape: Shape {
             let angle = Double(i) / Double(count) * .pi * 2
             p.move(to: CGPoint(x: cx, y: cy))
             p.addLine(to: CGPoint(
-                x: cx + cos(angle) * radius,
-                y: cy + sin(angle) * radius
+                x: cx + cos(Double(angle)) * Double(radius),
+                y: cy + sin(Double(angle)) * Double(radius)
             ))
         }
         return p

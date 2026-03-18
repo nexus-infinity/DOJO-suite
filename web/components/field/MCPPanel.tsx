@@ -1,25 +1,51 @@
 'use client'
 
-import { useState } from 'react'
 import { ALL_MCP_SERVICES, FIELD_MCP_SERVICES, THIRD_PARTY_MCP_SERVICES, type MCPService } from '@/lib/mcpServices'
 import { CHAMBERS } from '@/lib/chambers'
 import { SpellCircle } from './SpellCircle'
+import { useEffect, useMemo, useState } from 'react'
 
 interface Props { onClose: () => void }
+interface ServiceStatus {
+  id: string
+  status: 'connected' | 'routed' | 'unreachable' | 'unverified'
+  chamberReachable: boolean
+  gatewayReachable: boolean | null
+  directPort: number | null
+  detail: string
+}
 
 export function MCPPanel({ onClose }: Props) {
-  const [connected, setConnected] = useState<Set<string>>(
-    new Set(['notion', 'github', 'huggingface', 'sqlite'])
-  )
   const [expandedId, setExpandedId] = useState<string | null>(null)
+  const [statuses, setStatuses] = useState<Record<string, ServiceStatus>>({})
 
-  function toggle(id: string) {
-    setConnected(prev => {
-      const next = new Set(prev)
-      next.has(id) ? next.delete(id) : next.add(id)
-      return next
-    })
-  }
+  useEffect(() => {
+    let cancelled = false
+
+    async function loadStatuses() {
+      try {
+        const res = await fetch('/api/mcp/status', { cache: 'no-store' })
+        if (!res.ok) throw new Error(`HTTP ${res.status}`)
+        const json = await res.json()
+        if (cancelled) return
+        setStatuses(Object.fromEntries((json.services as ServiceStatus[]).map(service => [service.id, service])))
+      } catch {
+        if (!cancelled) setStatuses({})
+      }
+    }
+
+    loadStatuses()
+    const interval = window.setInterval(loadStatuses, 15_000)
+    return () => {
+      cancelled = true
+      window.clearInterval(interval)
+    }
+  }, [])
+
+  const activeRoutes = useMemo(
+    () => Object.values(statuses).filter(status => status.status === 'connected' || status.status === 'routed').length,
+    [statuses]
+  )
 
   return (
     <aside className="w-80 shrink-0 border-l border-border bg-surface flex flex-col overflow-hidden">
@@ -28,7 +54,7 @@ export function MCPPanel({ onClose }: Props) {
       <div className="flex items-center justify-between px-4 py-3 border-b border-border">
         <div>
           <h2 className="text-sm font-semibold text-slate-200">MCP Connections</h2>
-          <p className="text-xs text-muted mt-0.5">{connected.size} active · {ALL_MCP_SERVICES.length} available</p>
+          <p className="text-xs text-muted mt-0.5">{activeRoutes} active routes · {ALL_MCP_SERVICES.length} listed</p>
         </div>
         <button onClick={onClose} className="text-muted hover:text-slate-300 text-lg leading-none">×</button>
       </div>
@@ -41,11 +67,13 @@ export function MCPPanel({ onClose }: Props) {
             <span className="text-xs font-semibold text-muted uppercase tracking-wider">FIELD Tier 2</span>
             <span className="text-xs text-arkadas bg-arkadas/10 px-1.5 rounded font-mono">◉ internal</span>
           </div>
+          <p className="px-1 pb-2 text-xs text-dim leading-relaxed">
+            Routed through sacred chambers. Status is read-only and derived from live routing/gateway probes, not UI toggles.
+          </p>
           <div className="space-y-1.5">
             {FIELD_MCP_SERVICES.map(svc => (
-              <ServiceRow key={svc.id} svc={svc} connected={connected.has(svc.id)}
+              <ServiceRow key={svc.id} svc={svc} status={statuses[svc.id]}
                 expanded={expandedId === svc.id}
-                onToggle={() => toggle(svc.id)}
                 onExpand={() => setExpandedId(expandedId === svc.id ? null : svc.id)}
               />
             ))}
@@ -62,9 +90,8 @@ export function MCPPanel({ onClose }: Props) {
           </div>
           <div className="space-y-1.5">
             {THIRD_PARTY_MCP_SERVICES.map(svc => (
-              <ServiceRow key={svc.id} svc={svc} connected={connected.has(svc.id)}
+              <ServiceRow key={svc.id} svc={svc} status={statuses[svc.id]}
                 expanded={expandedId === svc.id}
-                onToggle={() => toggle(svc.id)}
                 onExpand={() => setExpandedId(expandedId === svc.id ? null : svc.id)}
               />
             ))}
@@ -75,12 +102,12 @@ export function MCPPanel({ onClose }: Props) {
 
         {/* Add custom MCP */}
         <div className="p-3">
-          <button className="w-full flex items-center gap-2 px-3 py-2.5 rounded-lg border border-dashed border-border text-muted hover:text-slate-300 hover:border-dojo/30 text-xs transition-all">
+          <div className="w-full flex items-center gap-2 px-3 py-2.5 rounded-lg border border-dashed border-border text-muted text-xs">
             <span className="text-base">+</span>
-            <span>Add custom MCP server</span>
-          </button>
+            <span>Custom MCP registration not yet wired on this surface</span>
+          </div>
           <p className="text-xs text-dim mt-2 px-1 leading-relaxed">
-            Any MCP-compatible server. Routes through the nearest FIELD chamber based on domain.
+            This panel currently reports live status only. Registration flow should be added only when it can write to canonical FIELD config.
           </p>
         </div>
       </div>
@@ -101,18 +128,32 @@ export function MCPPanel({ onClose }: Props) {
   )
 }
 
-function ServiceRow({ svc, connected, expanded, onToggle, onExpand }: {
+function ServiceRow({ svc, status, expanded, onExpand }: {
   svc: MCPService
-  connected: boolean
+  status?: ServiceStatus
   expanded: boolean
-  onToggle: () => void
   onExpand: () => void
 }) {
   const chamberColor = CHAMBERS[svc.chamber as keyof typeof CHAMBERS]?.color ?? '#64748B'
+  const statusValue = status?.status ?? 'unverified'
+  const statusLabel = statusValue === 'connected'
+    ? 'Connected'
+    : statusValue === 'routed'
+    ? 'Routed'
+    : statusValue === 'unreachable'
+    ? 'Offline'
+    : 'Unverified'
+  const statusClass = statusValue === 'connected'
+    ? 'text-green-300 bg-green-500/10 border-green-500/20'
+    : statusValue === 'routed'
+    ? 'text-amber-300 bg-amber-500/10 border-amber-500/20'
+    : statusValue === 'unreachable'
+    ? 'text-red-300 bg-red-500/10 border-red-500/20'
+    : 'text-slate-300 bg-slate-500/10 border-slate-500/20'
 
   return (
     <div className={`rounded-lg border transition-all ${
-      connected ? 'border-border bg-raised' : 'border-border/50 bg-surface opacity-60'
+      statusValue === 'unreachable' ? 'border-border/50 bg-surface opacity-75' : 'border-border bg-raised'
     }`}>
       <div className="flex items-center gap-2.5 px-3 py-2">
         {/* Service icon */}
@@ -127,30 +168,25 @@ function ServiceRow({ svc, connected, expanded, onToggle, onExpand }: {
           <div className="text-xs text-muted truncate">{svc.description}</div>
         </div>
 
-        {/* Toggle */}
-        <button
-          onClick={onToggle}
-          className={`shrink-0 w-8 h-5 rounded-full transition-all relative ${
-            connected ? 'bg-dojo/70' : 'bg-border'
-          }`}
-        >
-          <span className={`absolute top-0.5 w-4 h-4 rounded-full bg-white transition-all ${
-            connected ? 'left-3.5' : 'left-0.5'
-          }`} />
-        </button>
+        <span className={`shrink-0 rounded-full border px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider ${statusClass}`}>
+          {statusLabel}
+        </span>
       </div>
 
       {/* Expanded detail */}
       {expanded && (
         <div className="px-3 pb-2.5 pt-0 border-t border-border/50 mt-1">
-          <div className="flex gap-4 text-xs font-mono text-dim mt-2">
-            {svc.port > 0 && <span>port :{svc.port}</span>}
+          <div className="flex flex-wrap gap-2 text-xs font-mono text-dim mt-2">
             <span>via {CHAMBERS[svc.chamber as keyof typeof CHAMBERS]?.symbol} {svc.chamber}</span>
+            {status?.directPort && <span>gateway :{status.directPort}</span>}
             {svc.authType !== 'none' && <span className="text-tata">auth: {svc.authType}</span>}
           </div>
-          {connected && svc.authType !== 'none' && (
-            <button className="mt-2 text-xs text-dojo hover:underline">Configure credentials →</button>
+          {svc.routingNote && (
+            <p className="mt-2 text-xs text-dim leading-relaxed">{svc.routingNote}</p>
           )}
+          <p className="mt-2 text-xs text-slate-300 leading-relaxed">
+            {status?.detail ?? 'No live status payload yet.'}
+          </p>
         </div>
       )}
     </div>
