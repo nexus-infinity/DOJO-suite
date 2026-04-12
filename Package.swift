@@ -40,7 +40,17 @@ let package = Package(
         .target(
             name: "DOJOUI",
             dependencies: ["DOJOShared"],
-            path: "Sources/DOJOUI"
+            path: "Sources/DOJOUI",
+            exclude: [
+                "DesignSystem/CRYPTOGRAPHIC_SIGNING_GUIDE.md",
+                "DesignSystem/DOCUMENT_INTAKE_CHECKLIST.md",
+                "DesignSystem/DOJO_SUITE_CANONICAL_CONTRACT.md",
+                "DesignSystem/FORMAL_REPORT_TEMPLATE.md",
+                "DesignSystem/GEOMETRIC_HARDENING_SUMMARY.md",
+                "DesignSystem/REGULATOR_FILING_TRACKER.md",
+                "DesignSystem/SERVICE_AGREEMENT_TEMPLATE.md",
+                "DesignSystem/TEMPLATE_SUITE_SUMMARY.md",
+            ]
         ),
         
         // ◼︎ DOJO.app (741 Hz) - Manifestation orchestrator
@@ -53,21 +63,21 @@ let package = Package(
         // 🎭 Arkadaš.app (852 Hz) - 27-agent Grand Gallery
         .executableTarget(
             name: "ArkadašApp",
-            dependencies: ["DOJOShared"],
+            dependencies: ["DOJOShared", "DOJOUI"],
             path: "Sources/ArkadašApp"
         ),
         
         // ● OB1Link.app (963 Hz) - Observer consciousness
         .executableTarget(
             name: "OB1LinkApp",
-            dependencies: ["DOJOShared"],
+            dependencies: ["DOJOShared", "DOJOUI"],
             path: "Sources/OB1LinkApp"
         ),
         
-        // ◆ DojoLink.app (717 Hz) - Mobile field interface
+        // ◆ DojoLink.app (741 Hz) - Mobile field interface
         .executableTarget(
             name: "DojoLinkApp",
-            dependencies: ["DOJOShared"],
+            dependencies: ["DOJOShared", "DOJOUI"],
             path: "Sources/DojoLinkApp"
         ),
         

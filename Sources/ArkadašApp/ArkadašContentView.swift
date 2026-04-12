@@ -12,32 +12,7 @@
 
 import SwiftUI
 import DOJOShared
-
-#if canImport(AppKit)
-import AppKit
-#endif
-
-private enum PlatformColors {
-    static var windowBackground: Color {
-        #if canImport(AppKit)
-        return Color(nsColor: NSColor.windowBackgroundColor)
-        #elseif canImport(UIKit)
-        return Color(UIColor.systemBackground)
-        #else
-        return Color(.sRGB, red: 0.95, green: 0.95, blue: 0.95, opacity: 1)
-        #endif
-    }
-
-    static var controlBackground: Color {
-        #if canImport(AppKit)
-        return Color(nsColor: NSColor.controlBackgroundColor)
-        #elseif canImport(UIKit)
-        return Color(UIColor.secondarySystemBackground)
-        #else
-        return Color(.sRGB, red: 0.92, green: 0.92, blue: 0.92, opacity: 1)
-        #endif
-    }
-}
+import DOJOUI
 
 // MARK: - Character Visual Palette
 
@@ -76,7 +51,8 @@ public struct ArkadašContentView: View {
             inputBar
         }
         .frame(minWidth: 560, minHeight: 500)
-        .background(PlatformColors.windowBackground)
+        .background(FieldPalette.void)
+        .preferredColorScheme(.dark)
         .onAppear { inputFocused = true }
     }
 
@@ -132,7 +108,7 @@ public struct ArkadašContentView: View {
         }
         .padding(.horizontal, 16)
         .padding(.vertical, 7)
-        .background(PlatformColors.controlBackground.opacity(0.6))
+        .background(FieldPalette.surface)
     }
 
     // MARK: Message Thread
@@ -142,11 +118,11 @@ public struct ArkadašContentView: View {
             ScrollView(.vertical, showsIndicators: true) {
                 LazyVStack(alignment: .leading, spacing: 10) {
                     ForEach(engine.messages) { message in
-                        MessageRow(message: message)
+                        ArkadašMessageRow(message: message)
                             .id(message.id)
                     }
                     if engine.isProcessing {
-                        TypingIndicator(character: engine.activeCharacter ?? .arkadas)
+                        ArkadašTypingIndicator(character: engine.activeCharacter ?? .arkadas)
                             .id("__typing__")
                     }
                 }
@@ -179,7 +155,7 @@ public struct ArkadašContentView: View {
                 .focused($inputFocused)
                 .padding(.horizontal, 12)
                 .padding(.vertical, 8)
-                .background(PlatformColors.controlBackground)
+                .background(FieldPalette.surface)
                 .cornerRadius(10)
                 .onSubmit { sendMessage() }
 
@@ -207,141 +183,3 @@ public struct ArkadašContentView: View {
     }
 }
 
-// MARK: - Presence Indicator
-
-struct PresenceIndicator: View {
-    let character: GeometricCharacter
-    let isActive: Bool
-
-    var body: some View {
-        HStack(spacing: 5) {
-            ZStack {
-                Circle()
-                    .fill(isActive ? character.activePulseColor : character.subtleBackground)
-                    .frame(width: 24, height: 24)
-                Text(character.glyph)
-                    .font(.system(size: 12))
-            }
-            VStack(alignment: .leading, spacing: 1) {
-                Text(character.displayName)
-                    .font(.system(size: 11, weight: isActive ? .semibold : .regular))
-                    .foregroundColor(isActive ? character.color : .secondary)
-                Text("\(Int(character.frequencyHz)) Hz")
-                    .font(.system(size: 9, design: .monospaced))
-                    .foregroundColor(.secondary)
-            }
-        }
-        .animation(.easeInOut(duration: 0.25), value: isActive)
-    }
-}
-
-// MARK: - Message Row
-
-struct MessageRow: View {
-    let message: ConversationMessage
-
-    var body: some View {
-        if message.isUser {
-            userBubble
-        } else if let character = message.character {
-            characterBubble(character)
-        }
-    }
-
-    private var userBubble: some View {
-        HStack {
-            Spacer(minLength: 80)
-            VStack(alignment: .trailing, spacing: 3) {
-                Text(message.text)
-                    .padding(.horizontal, 13)
-                    .padding(.vertical, 9)
-                    .background(Color.accentColor)
-                    .foregroundColor(.white)
-                    .cornerRadius(16)
-                Text(message.timestamp, style: .time)
-                    .font(.system(size: 9))
-                    .foregroundColor(.secondary)
-            }
-        }
-    }
-
-    private func characterBubble(_ character: GeometricCharacter) -> some View {
-        HStack(alignment: .top, spacing: 8) {
-            // Glyph avatar — visual identity, NOT a verbal announcement
-            Text(character.glyph)
-                .font(.system(size: 12))
-                .frame(width: 24, height: 24)
-                .background(character.subtleBackground)
-                .clipShape(Circle())
-                .padding(.top, 1)
-
-            VStack(alignment: .leading, spacing: 3) {
-                Text(message.text)
-                    .padding(.horizontal, 13)
-                    .padding(.vertical, 9)
-                    .background(character.subtleBackground)
-                    .foregroundColor(.primary)
-                    .cornerRadius(16)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 16)
-                            .strokeBorder(character.borderColor, lineWidth: 1)
-                    )
-                Text(message.timestamp, style: .time)
-                    .font(.system(size: 9))
-                    .foregroundColor(.secondary)
-            }
-
-            Spacer(minLength: 60)
-        }
-    }
-}
-
-// MARK: - Typing Indicator
-
-struct TypingIndicator: View {
-    let character: GeometricCharacter
-    @State private var animating = false
-
-    var body: some View {
-        HStack(alignment: .top, spacing: 8) {
-            Text(character.glyph)
-                .font(.system(size: 12))
-                .frame(width: 24, height: 24)
-                .background(character.subtleBackground)
-                .clipShape(Circle())
-
-            HStack(spacing: 5) {
-                ForEach(0..<3, id: \.self) { i in
-                    Circle()
-                        .fill(character.color)
-                        .frame(width: 7, height: 7)
-                        .opacity(animating ? 1.0 : 0.2)
-                        .animation(
-                            .easeInOut(duration: 0.5)
-                                .repeatForever(autoreverses: true)
-                                .delay(Double(i) * 0.18),
-                            value: animating
-                        )
-                }
-            }
-            .padding(.horizontal, 14)
-            .padding(.vertical, 10)
-            .background(character.subtleBackground)
-            .cornerRadius(16)
-
-            Spacer()
-        }
-        .onAppear { animating = true }
-    }
-}
-
-// MARK: - Preview
-
-#if DEBUG
-struct ArkadašContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ArkadašContentView()
-            .frame(width: 600, height: 600)
-    }
-}
-#endif
