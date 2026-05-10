@@ -27,40 +27,74 @@ struct DOJOMainView: View {
     @State private var isProcessing = false
     @State private var streamingContent = ""
 
+    // Cockpit host — intentionally unsealed until manual smoke test passes
+    @State private var showCockpit = false
+    @StateObject private var cockpitCoordinator = DOJOFieldCoordinator(engine: CopilotEngine())
+    @State private var cockpitController = ParticleBoardController()
+
     var body: some View {
         ZStack {
-            // Void background
             FieldPalette.void.ignoresSafeArea()
-
-            // Aurora glow behind everything
             AuroraLayer(health: health)
 
             HStack(spacing: 0) {
-                // Left sidebar — chamber signals
                 ChamberRail(health: health)
 
-                // Divider
                 Rectangle()
                     .fill(FieldPalette.border)
                     .frame(width: 1)
 
-                // Main conversation surface
                 VStack(spacing: 0) {
-                    ConversationHeader(health: health)
-                    MessageList(
-                        messages: messages,
-                        streamingContent: streamingContent,
-                        isProcessing: isProcessing
-                    )
-                    InputBar(
-                        input: $input,
-                        isProcessing: isProcessing,
-                        onSend: sendMessage
-                    )
+                    cockpitToggleStrip
+
+                    if showCockpit {
+                        ParticleBoardView(
+                            controller: cockpitController,
+                            coordinator: cockpitCoordinator
+                        )
+                    } else {
+                        VStack(spacing: 0) {
+                            ConversationHeader(health: health)
+                            MessageList(
+                                messages: messages,
+                                streamingContent: streamingContent,
+                                isProcessing: isProcessing
+                            )
+                            InputBar(
+                                input: $input,
+                                isProcessing: isProcessing,
+                                onSend: sendMessage
+                            )
+                        }
+                    }
                 }
             }
         }
         .preferredColorScheme(.dark)
+    }
+
+    // A thin strip — only entry point into the cockpit surface.
+    private var cockpitToggleStrip: some View {
+        HStack(spacing: 0) {
+            Spacer()
+            Button {
+                if !showCockpit && cockpitController.committedState == nil {
+                    cockpitController.load(DocumentPlan(title: "Cockpit v0"))
+                }
+                showCockpit.toggle()
+            } label: {
+                Text(showCockpit ? "◉  chat" : "◼︎  cockpit")
+                    .font(.system(size: 9, design: .monospaced, weight: .medium))
+                    .foregroundStyle(showCockpit ? Chamber.kings.color : FieldPalette.textDim)
+                    .padding(.horizontal, 12)
+                    .padding(.vertical, 5)
+            }
+            .buttonStyle(.plain)
+        }
+        .background(FieldPalette.surface)
+        .overlay(alignment: .bottom) {
+            Rectangle().fill(FieldPalette.border).frame(height: 1)
+        }
     }
 
     private func sendMessage() {
@@ -83,7 +117,6 @@ struct DOJOMainView: View {
                     isProcessing = false
                 }
             } catch {
-                // Fallback to direct port 7410
                 do {
                     let response = try await client.sendMessage(text)
                     await MainActor.run {
@@ -105,4 +138,3 @@ struct DOJOMainView: View {
 
 // Views/: AuroraLayer, ChamberRail, ConversationHeader, MessageList, InputBar
 // Controllers/: ChamberHealthMonitor
-

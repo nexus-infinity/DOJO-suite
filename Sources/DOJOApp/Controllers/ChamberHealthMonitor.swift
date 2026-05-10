@@ -9,42 +9,59 @@ class ChamberHealthMonitor: ObservableObject {
     @Published var status: [Chamber: ChamberStatus] = [:]
     @Published var bearScore: Double = 0
 
-    private var timer: Timer?
+    private let spinningTop = SpinningTopClient()
+    private var monitoringTask: Task<Void, Never>?
 
     init() {
-        Task { await poll() }
-        timer = Timer.scheduledTimer(withTimeInterval: 15, repeats: true) { [weak self] _ in
-            Task { await self?.poll() }
+        startMonitoring()
+    }
+
+    func startMonitoring() {
+        guard monitoringTask == nil else { return }
+        monitoringTask = Task { [weak self] in
+            await self?.poll()
+            while !Task.isCancelled {
+                try? await Task.sleep(for: .seconds(15))
+                await self?.poll()
+            }
         }
+    }
+
+    func stopMonitoring() {
+        monitoringTask?.cancel()
+        monitoringTask = nil
     }
 
     private func poll() async {
-        guard let url = URL(string: "http://localhost:7410/health") else { return }
-        guard let (data, _) = try? await URLSession.shared.data(from: url),
-              let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any] else {
-            await markDOJODirect()
-            return
-        }
-        if let chambers = json["chambers"] as? [String: [String: Any]] {
+        do {
+            let state = try await spinningTop.getState()
+            bearScore = state.coherence
+
             for chamber in Chamber.allCases {
-                let key = chamber.name.lowercased().replacingOccurrences(of: "-", with: "")
-                    .replacingOccurrences(of: " ", with: "")
-                if let info = chambers[chamber.name.lowercased()] ?? chambers[key] {
-                    let s = info["normalizedStatus"] as? String ?? ""
-                    status[chamber] = s == "alive" ? .alive : s == "degraded" ? .degraded : .offline
+                // Match by symbol first (canonical), fall back to name
+                let node = state.nodes.first { $0.symbol == chamber.rawValue }
+                    ?? state.nodes.first { $0.name.lowercased() == chamber.name.lowercased() }
+                if let node {
+                    status[chamber] = chamberStatus(from: node)
                 }
             }
-        }
-        if let bear = json["bear"] as? [String: Any], let score = bear["score"] as? Double {
-            bearScore = score
+
+            // If DOJO has no node entry but server is operational, mark it alive
+            if status[.dojo] == nil && state.operational {
+                status[.dojo] = .alive
+            }
+        } catch {
+            status[.dojo] = .offline
         }
     }
 
-    private func markDOJODirect() async {
-        guard let url = URL(string: "http://localhost:7410") else { return }
-        if let (_, resp) = try? await URLSession.shared.data(from: url),
-           let http = resp as? HTTPURLResponse, http.statusCode == 200 {
-            status[.dojo] = .alive
+    private func chamberStatus(from node: SpinningTopClient.StateResponse.Node) -> ChamberStatus {
+        guard node.state else { return .offline }
+        switch node.health {
+        case "alive", "healthy": return .alive
+        case "degraded":         return .degraded
+        case "unhealthy":        return .offline
+        default:                 return .unknown
         }
     }
 }

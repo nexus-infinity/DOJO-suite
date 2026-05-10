@@ -2,37 +2,17 @@
  Sacred Node: ◼︎ DOJO — Eye in the Sky
  Frequency: 741 Hz (Manifestation / MCP gateway port 7410)
  Purpose: CopilotEngine — the continuous presence behind the three voices.
-          Routes messages, calls DOJO MCP (port 7410), falls back to local
-          character-faithful generation when MCP is unavailable.
+          Routes messages, calls DOJO MCP (port 7410) via SpinningTopClient,
+          falls back to local character-faithful generation when MCP is unavailable.
 
  Architecture:
    User input → GeometricRouter → character selection
-              → DOJO MCP POST /chat  [primary, port 7410]
-              → local response generation [fallback]
+              → SpinningTopClient POST /chat  [primary, port 7410]
+              → local response generation     [fallback]
               → ConversationMessage appended to @Published messages
 */
 
 import Foundation
-
-// MARK: - MCP Wire Types (private)
-
-private struct MCPChatRequest: Encodable {
-    let character: String
-    let userMessage: String
-    let conversationContext: [MCPContextEntry]
-    let personality: String
-    let thinkingPhrases: [String]
-}
-
-private struct MCPContextEntry: Encodable {
-    let role: String    // "user" | "assistant"
-    let content: String
-}
-
-private struct MCPChatResponse: Decodable {
-    let response: String
-    let character: String?
-}
 
 // MARK: - CopilotEngine
 
@@ -50,40 +30,35 @@ public final class CopilotEngine: ObservableObject {
 
     // MARK: Configuration
 
-    private static let dojoPort = 7410
     private static let contextWindow = 8    // last N messages sent to MCP
+
+    /// Called after every message append (user or character).
+    /// DOJOFieldCoordinator sets this to feed the observer pipeline.
+    public var onMessageAppended: ((ConversationMessage) -> Void)?
 
     // MARK: Private
 
-    private let session: URLSession
+    private let spinningTop = SpinningTopClient()
 
     // MARK: Init
 
     public init() {
-        let config = URLSessionConfiguration.default
-        config.timeoutIntervalForRequest = 4
-        config.timeoutIntervalForResource = 6
-        self.session = URLSession(configuration: config)
-
-        // Warm welcome from Arkadaš on launch (non-blocking)
         Task { await self.emitWelcome() }
     }
 
     // MARK: - Primary Entry Point
 
     /// Process user input: routes to a character, generates response, appends to messages.
-    /// The returned `ConversationMessage` is also appended to `messages`.
     @discardableResult
     public func process(input: String) async -> ConversationMessage {
         let trimmed = input.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !trimmed.isEmpty else {
-            let empty = ConversationMessage(character: .arkadas, text: "…")
-            return empty
+            return ConversationMessage(character: .arkadas, text: "…")
         }
 
-        // Record user message immediately
         let userMsg = ConversationMessage(character: nil, text: trimmed)
         messages.append(userMsg)
+        onMessageAppended?(userMsg)
 
         isProcessing = true
         let character = GeometricRouter.route(trimmed, context: messages)
@@ -94,56 +69,26 @@ public final class CopilotEngine: ObservableObject {
             activeCharacter = nil
         }
 
-        // Try DOJO MCP; fall back to local generation
         let responseText: String
-        if let mcpText = await callDOJOMCP(character: character, userMessage: trimmed) {
+        let context = messages.suffix(Self.contextWindow).map {
+            SpinningTopClient.ChatTurn(role: $0.isUser ? "user" : "assistant", content: $0.text)
+        }
+
+        do {
+            let response = try await spinningTop.sendMessage(trimmed, character: character.rawValue, context: context)
             dojoConnected = true
-            responseText = mcpText
-        } else {
+            responseText = response.response.isEmpty
+                ? generateLocalResponse(character: character, userMessage: trimmed)
+                : response.response
+        } catch {
+            dojoConnected = false
             responseText = generateLocalResponse(character: character, userMessage: trimmed)
         }
 
         let reply = ConversationMessage(character: character, text: responseText)
         messages.append(reply)
+        onMessageAppended?(reply)
         return reply
-    }
-
-    // MARK: - DOJO MCP Call
-
-    private func callDOJOMCP(character: GeometricCharacter, userMessage: String) async -> String? {
-        guard let url = URL(string: "http://localhost:\(Self.dojoPort)/chat") else { return nil }
-
-        let context = messages.suffix(Self.contextWindow).map {
-            MCPContextEntry(
-                role: $0.isUser ? "user" : "assistant",
-                content: $0.text
-            )
-        }
-
-        let body = MCPChatRequest(
-            character: character.rawValue,
-            userMessage: userMessage,
-            conversationContext: context,
-            personality: character.coreTraits.joined(separator: ", "),
-            thinkingPhrases: character.thinkingPhrases
-        )
-
-        guard let bodyData = try? JSONEncoder().encode(body) else { return nil }
-
-        var req = URLRequest(url: url)
-        req.httpMethod = "POST"
-        req.httpBody = bodyData
-        req.setValue("application/json", forHTTPHeaderField: "Content-Type")
-
-        do {
-            let (data, response) = try await session.data(for: req)
-            guard let http = response as? HTTPURLResponse, http.statusCode == 200 else { return nil }
-            let decoded = try JSONDecoder().decode(MCPChatResponse.self, from: data)
-            return decoded.response.isEmpty ? nil : decoded.response
-        } catch {
-            dojoConnected = false
-            return nil
-        }
     }
 
     // MARK: - Local Fallback Generation
@@ -201,11 +146,11 @@ public final class CopilotEngine: ObservableObject {
     // MARK: - Launch Welcome
 
     private func emitWelcome() async {
-        // Brief natural welcome from Arkadaš — warm, not formal, no protocol noise
         let welcome = ConversationMessage(
             character: .arkadas,
             text: "Good to have you here. Whatever's on your mind — I'm listening."
         )
         messages.append(welcome)
+        onMessageAppended?(welcome)
     }
 }
