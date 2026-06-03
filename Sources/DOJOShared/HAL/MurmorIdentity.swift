@@ -23,6 +23,21 @@ public struct MurmorIdentity: Codable {
     /// Current operational state
     public var state: MurmorState
 
+    /// Activity scalar 0.0–1.0, derived from state and sync recency.
+    /// Drives relevance gravity orbit radius: active nodes orbit close, idle nodes drift out.
+    public var activityLevel: Double {
+        switch state {
+        case .active:
+            // Decay from 1.0 → 0.3 over 5 minutes since last sync
+            let age = Date().timeIntervalSince(lastSyncTimestamp)
+            return max(0.3, 1.0 - (age / 300) * 0.7)
+        case .autonomous: return 0.4
+        case .buffering:  return 0.2
+        case .sleeping:   return 0.1
+        case .offline:    return 0.0
+        }
+    }
+
     public init(
         id: UUID = UUID(),
         name: String,

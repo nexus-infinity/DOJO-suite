@@ -131,9 +131,10 @@ public struct ObserverReading: Codable {
 }
 
 public enum CoherenceLevel: String, Codable {
-    case coherent   // Green — field is aligned
-    case drifting   // Amber — field is losing alignment
-    case breached   // Red — field integrity compromised
+    case coherent   // Green — all layers covered, field is aligned
+    case degraded   // Yellow — partial coverage (can act, no dedicated sensing)
+    case drifting   // Amber — field is losing alignment or missing output path
+    case breached   // Red — no cognitive node, field cannot orient
 }
 
 public enum DOJOPhase: String, Codable {
@@ -151,6 +152,7 @@ public enum DOJOPhase: String, Codable {
 public enum ActCommand: String, Codable, CaseIterable {
     // Visual
     case indicateCoherent
+    case indicateDegraded   // Yellow — partial coverage, functional but incomplete
     case indicateDrifting
     case indicateBreached
     case indicateOff

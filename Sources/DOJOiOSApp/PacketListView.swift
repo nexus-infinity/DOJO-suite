@@ -35,8 +35,10 @@ struct PacketListView: View {
                 }
             }
             .navigationTitle("◼︎ FIELD")
+#if os(iOS)
             .navigationBarTitleDisplayMode(.inline)
             .toolbarColorScheme(.dark, for: .navigationBar)
+#endif
             .toolbar {
                 ToolbarItem(placement: .primaryAction) {
                     Button {

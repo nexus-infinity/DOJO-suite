@@ -52,15 +52,6 @@ public struct PolicyPin: Codable, Equatable, Sendable {
 // MARK: - Draft Outputs
 
 /// Deterministic Notion Markdown output — always reproducible from the same board state.
-public struct DocumentDraft: Equatable, Sendable {
-    public let sourceID: UUID       // boardID that produced this
-    public let markdown: String
-    public let metadata: DraftMetadata
-
-    public init(sourceID: UUID, markdown: String, metadata: DraftMetadata) {
-        self.sourceID = sourceID; self.markdown = markdown; self.metadata = metadata
-    }
-}
 
 public struct DraftMetadata: Equatable, Sendable {
     public let sectionCount: Int
@@ -85,18 +76,3 @@ public struct DraftMetadata: Equatable, Sendable {
 }
 
 /// Primitive scene graph for image path — v0 stub, no synthesis.
-public struct ImageDraft: Equatable, Sendable {
-    public enum Primitive: Equatable, Sendable {
-        case rect(x: Double, y: Double, width: Double, height: Double, label: String)
-        case circle(cx: Double, cy: Double, radius: Double, label: String)
-        case line(x1: Double, y1: Double, x2: Double, y2: Double)
-        case text(x: Double, y: Double, content: String)
-    }
-
-    public let sourceID: UUID
-    public let primitives: [Primitive]
-
-    public init(sourceID: UUID, primitives: [Primitive]) {
-        self.sourceID = sourceID; self.primitives = primitives
-    }
-}

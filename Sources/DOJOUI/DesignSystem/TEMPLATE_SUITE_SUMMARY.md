@@ -280,8 +280,9 @@ These templates enforce the foundational principles of the DOJO Suite:
 
 ## Support Documentation
 
-These templates reference the following supporting docs (previously created):
+These templates reference the following supporting docs:
 
+- **`DOJO_SUITE_CANONICAL_CONTRACT.md`**: ✅ **BINDING** — Operational contract (v1.0, effective 2026-03-28)
 - **`CRYPTOGRAPHIC_SIGNING_GUIDE.md`**: HMAC/Ed25519 observation signing pattern
 - **`GEOMETRIC_HARDENING_SUMMARY.md`**: OBI-WAN watch face hardening details
 - **`OBIWANState.swift`**: Phase validation, network monitoring implementation

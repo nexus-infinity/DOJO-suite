@@ -7,85 +7,42 @@ let package = Package(
     name: "DOJO-suite",
     platforms: [
         .iOS(.v17),
-        .macOS(.v14)
+        .macOS(.v14),
+        .watchOS(.v10)
     ],
     products: [
-        // Library product for shared geometry, particle engine, and OOO framework
-        .library(
-            name: "DOJOShared",
-            targets: ["DOJOShared"]
-        ),
-        // UI library product for SwiftUI views and previews
-        .library(
-            name: "DOJOUI",
-            targets: ["DOJOUI"]
-        ),
-        // Executable products for the 4 Sacred Trident apps
+        .library(name: "DOJOShared", targets: ["DOJOShared"]),
+        .library(name: "DOJOUI", targets: ["DOJOUI"]),
+        .library(name: "FieldKit", targets: ["FieldKit"]),
         .executable(name: "DOJOApp", targets: ["DOJOApp"]),
         .executable(name: "ArkadašApp", targets: ["ArkadašApp"]),
         .executable(name: "OB1LinkApp", targets: ["OB1LinkApp"]),
         .executable(name: "DojoLinkApp", targets: ["DojoLinkApp"]),
+        .executable(name: "DOJOiOSApp", targets: ["DOJOiOSApp"]),
+        .executable(name: "AKRONMac", targets: ["AKRONMac"]),
+        .executable(name: "DOJOWatchApp", targets: ["DOJOWatchApp"]),
     ],
-    dependencies: [
-        // No external dependencies - keeping it self-contained
-    ],
+    dependencies: [],
     targets: [
-        // Shared library target
-        .target(
-            name: "DOJOShared",
-            dependencies: [],
-            path: "Sources/DOJOShared"
-        ),
-        // UI library target to host SwiftUI views and previews
-        .target(
-            name: "DOJOUI",
-            dependencies: ["DOJOShared"],
-            path: "Sources/DOJOUI",
-            exclude: [
-                "DesignSystem/CRYPTOGRAPHIC_SIGNING_GUIDE.md",
-                "DesignSystem/DOCUMENT_INTAKE_CHECKLIST.md",
-                "DesignSystem/DOJO_SUITE_CANONICAL_CONTRACT.md",
-                "DesignSystem/FORMAL_REPORT_TEMPLATE.md",
-                "DesignSystem/GEOMETRIC_HARDENING_SUMMARY.md",
-                "DesignSystem/REGULATOR_FILING_TRACKER.md",
-                "DesignSystem/SERVICE_AGREEMENT_TEMPLATE.md",
-                "DesignSystem/TEMPLATE_SUITE_SUMMARY.md",
-            ]
-        ),
-        
-        // ◼︎ DOJO.app (741 Hz) - Manifestation orchestrator
-        .executableTarget(
-            name: "DOJOApp",
-            dependencies: ["DOJOShared", "DOJOUI"],
-            path: "Sources/DOJOApp"
-        ),
-        
-        // 🎭 Arkadaš.app (852 Hz) - 27-agent Grand Gallery
-        .executableTarget(
-            name: "ArkadašApp",
-            dependencies: ["DOJOShared", "DOJOUI"],
-            path: "Sources/ArkadašApp"
-        ),
-        
-        // ● OB1Link.app (963 Hz) - Observer consciousness
-        .executableTarget(
-            name: "OB1LinkApp",
-            dependencies: ["DOJOShared", "DOJOUI"],
-            path: "Sources/OB1LinkApp"
-        ),
-        
-        // ◆ DojoLink.app (741 Hz) - Mobile field interface
-        .executableTarget(
-            name: "DojoLinkApp",
-            dependencies: ["DOJOShared", "DOJOUI"],
-            path: "Sources/DojoLinkApp"
-        ),
-        
-        // Test target
-        .testTarget(
-            name: "DOJOSharedTests",
-            dependencies: ["DOJOShared"],
-            path: "Tests/DOJOSharedTests"
-        )
+        .target(name: "DOJOShared", dependencies: [], path: "Sources/DOJOShared"),
+        .target(name: "DOJOUI", dependencies: ["DOJOShared"], path: "Sources/DOJOUI", exclude: [
+            "DesignSystem/CRYPTOGRAPHIC_SIGNING_GUIDE.md",
+            "DesignSystem/DOCUMENT_INTAKE_CHECKLIST.md",
+            "DesignSystem/DOJO_SUITE_CANONICAL_CONTRACT.md",
+            "DesignSystem/FORMAL_REPORT_TEMPLATE.md",
+            "DesignSystem/GEOMETRIC_HARDENING_SUMMARY.md",
+            "DesignSystem/REGULATOR_FILING_TRACKER.md",
+            "DesignSystem/SERVICE_AGREEMENT_TEMPLATE.md",
+            "DesignSystem/TEMPLATE_SUITE_SUMMARY.md",
+        ]),
+        .executableTarget(name: "DOJOApp", dependencies: ["DOJOShared", "DOJOUI"], path: "Sources/DOJOApp"),
+        .executableTarget(name: "ArkadašApp", dependencies: ["DOJOShared", "DOJOUI"], path: "Sources/ArkadašApp"),
+        .executableTarget(name: "OB1LinkApp", dependencies: ["DOJOShared", "DOJOUI"], path: "Sources/OB1LinkApp"),
+        .executableTarget(name: "DojoLinkApp", dependencies: ["DOJOShared", "DOJOUI"], path: "Sources/DojoLinkApp"),
+        .target(name: "FieldKit", dependencies: [], path: "Sources/FieldKit"),
+        .executableTarget(name: "DOJOiOSApp", dependencies: ["FieldKit", "DOJOShared"], path: "Sources/DOJOiOSApp"),
+        .executableTarget(name: "AKRONMac", dependencies: ["FieldKit"], path: "Sources/AKRONMac"),
+        .executableTarget(name: "DOJOWatchApp", dependencies: ["DOJOShared", "DOJOUI"], path: "Sources/DOJOWatchApp"),
+        .testTarget(name: "DOJOSharedTests", dependencies: ["DOJOShared", "DOJOUI", "FieldKit"], path: "Tests/DOJOSharedTests")
     ]
 )

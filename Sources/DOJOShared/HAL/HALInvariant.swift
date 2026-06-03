@@ -116,6 +116,29 @@ public enum BreachReason {
     case noCognitiveNode        // Cannot orient — field is structurally blind
 }
 
+// MARK: - Keeper Verdict
+
+/// 3-state alignment verdict with a first-person summary sentence.
+/// Derived from CoherenceLevel + audioMode + route truth — no mythology.
+public struct KeeperVerdict: Equatable {
+    public enum State: Equatable {
+        case aligned    // all surfaces agree — proceed
+        case degraded   // partial coverage — continue with warning
+        case hold       // surfaces disagree — stop and explain
+    }
+    public let state: State
+    public let summary: String  // plain first-person sentence for the HAL bar
+
+    public init(state: State, summary: String) {
+        self.state = state
+        self.summary = summary
+    }
+
+    public static var initialising: KeeperVerdict {
+        KeeperVerdict(state: .aligned, summary: "Initialising.")
+    }
+}
+
 // MARK: - Coherence State Tracker (Hysteresis)
 
 /// Prevents ActCommand spam by requiring N consecutive evaluations at the same

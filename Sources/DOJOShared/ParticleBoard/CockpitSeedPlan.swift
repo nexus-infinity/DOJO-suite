@@ -26,18 +26,18 @@ public enum CockpitSeedPlan {
             action: "6 chambers live: AKRON 3960 · OBI-WAN 9630 · TATA 4320 · ATLAS 5280 · ARKADAS 7170 · DOJO 7410. All 5 spoke models wired to Ollama.")
         case (0, 1): return .route(
             intent: "Interpretation",
-            action: "The training pipeline is complete to its current ceiling. 3/6 DOJO gates pass stably. Structural — not a data problem.")
+            action: "DOJO validation 1/6 on HF (2026-04-23). Harmony/chat-template mismatch. gemma3 is bridge-only — naima persona not seated.")
         case (0, 2): return .route(
             intent: "Recommendation",
-            action: "Freeze training. Build one deterministic test per chamber. Wire the app to the live /chat endpoints.")
+            action: "Pin transformers>=4.52.0, fix chat-template. New HF job ~$22-25 (budget gate). Validate 6/6 before seating naima.")
 
         // Row 1 — Current task
         case (1, 0): return .route(
             intent: "Observed",
-            action: "DOJO /chat at port 7410 returns real responses via gemma3 bridge. MinimalChatView exists but is not the primary surface.")
+            action: "DOJO /chat live at port 7410 via gemma3. SpineTests 4/4 passing. Gap B closed. ParticleBoard seeded (G3 complete).")
         case (1, 1): return .route(
             intent: "Interpretation",
-            action: "The app has a working backend and a working UI surface. The gap is wiring — not capability.")
+            action: "G1–G3 sealed. G4 next: board persists across restart. G6: hardware gate (BT + TTS duck/resume on device).")
         case (1, 2): return .empty  // user sets next action
 
         // Row 2 — Left open for operator input

@@ -1,233 +1,191 @@
 import Foundation
 
-// MARK: - Aikido Optics Codec
-//
-// Bijective (within the v0 domain) encode/decode between DocumentPlan and ParticleBoardState.
-//
-// Fixed encoding map (invariants — never change without bumping the codec version):
-//
-//   (0,0) intent/draft    → primary axis: sections[0].axis ?? .witness
-//   (0,1) intent/validate → routingHome(.atlas)   — ATLAS is always validation authority
-//   (0,2) intent/publish  → routingHome(.dojo)    — DOJO is always manifestation authority
-//   (1,0) struct/draft    → sections[0].axis or .empty
-//   (1,1) struct/validate → sections[1].axis or .empty
-//   (1,2) struct/publish  → sections[2].axis or .empty
-//   (2,0) policy/draft    → policyPins[0] present? routingHome(.obiWan) : .empty
-//   (2,1) policy/validate → policyPins[1] present? routingHome(.tata)   : .empty
-//   (2,2) policy/publish  → policyPins[0] present? routingHome(.akron)  : .empty
-//
-// Shadow-casting contract: forecast() computes the diff without mutating canonical.
-// Canonical write is ONLY permitted after the caller explicitly accepts the forecast.
+public struct BoardEdit {
+    public let address: GridAddress
+    public let payload: BoardPayload
+    
+    public init(address: GridAddress, payload: BoardPayload) {
+        self.address = address
+        self.payload = payload
+    }
+}
+
+public struct PolicyPins {
+    public let hasMailPrivacy: Bool
+    public let hasCalendarPrivacy: Bool
+    public let geometricIntegrityValid: Bool
+    
+    public init(hasMailPrivacy: Bool = true, hasCalendarPrivacy: Bool = true, geometricIntegrityValid: Bool = true) {
+        self.hasMailPrivacy = hasMailPrivacy
+        self.hasCalendarPrivacy = hasCalendarPrivacy
+        self.geometricIntegrityValid = geometricIntegrityValid
+    }
+}
+
+public enum PolicyEngine {
+    public static func validate(_ state: ParticleBoardState) -> ValidationResult {
+        var reasons: [HoldReason] = []
+        
+        if state.cells.count != 9 {
+            if let addr = GridAddress(row: 0, col: 0) {
+                reasons.append(HoldReason(address: addr, code: "MALFORMED_BOARD", detail: "Grid must contain exactly 9 cells."))
+            }
+        }
+        
+        if let policyGateAddress = GridAddress(row: 2, col: 2),
+           let pCell = state.cell(at: policyGateAddress),
+           pCell.payload == .empty {
+            reasons.append(HoldReason(address: policyGateAddress, code: "POLICY_GATE_LOCKED", detail: "Cell [2,2] must be explicitly authorized to execute an Accept."))
+        }
+        
+        return reasons.isEmpty ? .ok : .hold(reasons: reasons)
+    }
+    
+    // Wire the Authority Check directly into the Policy Engine
+    @MainActor
+    public static func enforceAuthority() -> Bool {
+        let level = AuthorityManager.shared.state.currentLevel
+        if level == .level0_interfaces {
+            print("◆ HOLD: Sovereign field execution blocked. Authority Level 0.")
+            return false
+        }
+        return true
+    }
+}
 
 public enum AikidoOpticsCodec {
 
-    // MARK: - PBV-1  Encode
+    // MARK: - Composition Rules
+    //
+    // Row semantics (CellKind):
+    //   0 = intent layer    — what the operator asserts is true
+    //   1 = structure layer — how those assertions relate
+    //   2 = policy layer    — what action is authorised ([2,2] is the execution gate)
+    //
+    // Column semantics (Phase):
+    //   0 = draft     — in-progress, not yet validated
+    //   1 = validate  — awaiting review
+    //   2 = publish   — authorised for external action
+    //
+    // Claim class comes from BoardPayload.route(intent:), not position:
+    //   "Observed"       → witnessed fact, no inference applied
+    //   "Interpretation" → reasoning applied to observed facts
+    //   "Recommendation" → proposed action derived from interpretation
 
-    public static func encode(_ plan: DocumentPlan, veneerEnabled: Bool = true) -> ParticleBoardState {
-        let s = plan.sections
-        let p = plan.policyPins
-        let cells: [BoardCell] = [
-            // Row 0 — intent
-            BoardCell(row: 0, col: 0, payload: .axis(s.first?.axis ?? .witness)),
-            BoardCell(row: 0, col: 1, payload: .routingHome(.atlas)),
-            BoardCell(row: 0, col: 2, payload: .routingHome(.dojo)),
-            // Row 1 — structure
-            BoardCell(row: 1, col: 0, payload: s.count > 0 ? .axis(s[0].axis) : .empty),
-            BoardCell(row: 1, col: 1, payload: s.count > 1 ? .axis(s[1].axis) : .empty),
-            BoardCell(row: 1, col: 2, payload: s.count > 2 ? .axis(s[2].axis) : .empty),
-            // Row 2 — policy
-            BoardCell(row: 2, col: 0, payload: p.isEmpty       ? .empty : .routingHome(.obiWan)),
-            BoardCell(row: 2, col: 1, payload: p.count > 1     ? .routingHome(.tata)   : .empty),
-            BoardCell(row: 2, col: 2, payload: !p.isEmpty      ? .routingHome(.akron)  : .empty),
-        ]
-        return ParticleBoardState(cells: cells, veneerEnabled: veneerEnabled)
-    }
-
-    // MARK: - PBV-2  Decode → DocumentDraft
-
-    public static func decodeToDocument(_ state: ParticleBoardState) -> Result<DocumentDraft, DecodeError> {
-        guard state.isValid else {
-            return .failure(.invalidBoard(reason: "Board must have exactly 9 unique cells"))
-        }
-
-        // Intent row — primary axis from (0,0), routing authorities from (0,1)/(0,2)
-        let primaryAxis: CategoryAxis?
-        if case .axis(let a) = state[0, 0]?.payload { primaryAxis = a } else { primaryAxis = nil }
-
-        let validationHome: PersistenceHome
-        if case .routingHome(let h) = state[0, 1]?.payload { validationHome = h } else { validationHome = .atlas }
-
-        let publishHome: PersistenceHome
-        if case .routingHome(let h) = state[0, 2]?.payload { publishHome = h } else { publishHome = .dojo }
-
-        // Structure row — section axes from (1,0)…(1,2)
-        let sectionAxes: [CategoryAxis] = (0..<3).compactMap { col -> CategoryAxis? in
-            guard case .axis(let a) = state[1, col]?.payload else { return nil }
-            return a
-        }
-
-        // Policy row — any non-empty cell means pins present
-        let hasPolicyPins = (0..<3).contains { col in
-            if case .empty = state[2, col]?.payload ?? .empty { return false }
-            return true
-        }
-
-        let markdown = buildMarkdown(
-            primaryAxis: primaryAxis,
-            sectionAxes: sectionAxes,
-            hasPolicyPins: hasPolicyPins,
-            validationHome: validationHome,
-            publishHome: publishHome
-        )
-        let metadata = DraftMetadata(
-            sectionCount: sectionAxes.count,
-            hasPolicyPins: hasPolicyPins,
-            primaryAxis: primaryAxis,
-            validationHome: validationHome,
-            publishHome: publishHome
-        )
-        return .success(DocumentDraft(sourceID: state.boardID, markdown: markdown, metadata: metadata))
-    }
-
-    // MARK: - Image draft (v0 — scene graph, no synthesis)
-
-    public static func decodeToImage(_ state: ParticleBoardState) -> Result<ImageDraft, DecodeError> {
-        guard state.isValid else {
-            return .failure(.invalidBoard(reason: "Board must have exactly 9 unique cells"))
-        }
-        let cellW: Double = 100, cellH: Double = 80
-        var primitives: [ImageDraft.Primitive] = []
-        for cell in state.cells.sorted(by: { $0.row == $1.row ? $0.col < $1.col : $0.row < $1.row }) {
-            let x = Double(cell.col) * cellW
-            let y = Double(cell.row) * cellH
-            primitives.append(.rect(x: x, y: y, width: cellW - 4, height: cellH - 4, label: cell.cellKind.rawValue))
-            primitives.append(.text(x: x + cellW / 2, y: y + cellH / 2, content: cell.glyph))
-        }
-        return .success(ImageDraft(sourceID: state.boardID, primitives: primitives))
-    }
-
-    // MARK: - Validate
-
-    public enum ValidationResult: Equatable {
-        case pass
-        case hold(reasons: [String])
-    }
-
-    /// Policy gate: enforces ATLAS/DOJO invariants and board structure.
-    /// Returns .hold with all violation reasons (fail-open list, fail-closed action).
-    public static func validate(_ state: ParticleBoardState) -> ValidationResult {
-        var reasons: [String] = []
-
-        if !state.isValid {
-            reasons.append("Board must have exactly 9 unique (row, col) cells")
-        }
-
-        // Intent row routing invariants — these are non-negotiable in v0
-        if let cell01 = state[0, 1] {
-            if case .routingHome(let h) = cell01.payload, h != .atlas {
-                reasons.append("Cell (0,1) must route to ATLAS — validation authority invariant violated (got \(h.rawValue))")
-            }
-        }
-        if let cell02 = state[0, 2] {
-            if case .routingHome(let h) = cell02.payload, h != .dojo {
-                reasons.append("Cell (0,2) must route to DOJO — publication authority invariant violated (got \(h.rawValue))")
-            }
-        }
-
-        return reasons.isEmpty ? .pass : .hold(reasons: reasons)
-    }
-
-    // MARK: - Shadow-casting Forecast
-
-    public struct CellDiff: Sendable {
-        public let address: String          // e.g. "1x2"
-        public let before: CellPayload
-        public let after: CellPayload
-    }
-
-    public struct Forecast: Sendable {
-        public let proposed: ParticleBoardState
-        public let diffs: [CellDiff]
-        public let validation: ValidationResult
-        public let draftPreview: DocumentDraft?
-        public let risk: Risk
-
-        public enum Risk: Sendable { case none, low, high, blocked }
-    }
-
-    /// Compute a diff + preview between current and proposed board.
-    /// Does NOT mutate canonical — caller must explicitly accept before any write.
-    /// If incomplete or invalid, returns .blocked with reasons in validation.
-    public static func forecast(current: ParticleBoardState?, proposed: ParticleBoardState) -> Forecast {
-        let diffs: [CellDiff]
-        if let current {
-            diffs = (0..<3).flatMap { row in
-                (0..<3).compactMap { col -> CellDiff? in
-                    let before = current[row, col]?.payload ?? .empty
-                    let after  = proposed[row, col]?.payload ?? .empty
-                    guard before != after else { return nil }
-                    return CellDiff(address: "\(row)x\(col)", before: before, after: after)
+    public static func encode(plan: DocumentPlan) -> ParticleBoardState {
+        var cells: [BoardCell] = []
+        for r in 0...2 {
+            for c in 0...2 {
+                if let addr = GridAddress(row: r, col: c) {
+                    cells.append(BoardCell(address: addr, payload: .empty))
                 }
             }
-        } else {
-            diffs = []
         }
-
-        let validation = validate(proposed)
-        let draft = try? decodeToDocument(proposed).get()
-
-        let risk: Forecast.Risk
-        switch validation {
-        case .hold:  risk = .blocked
-        case .pass:  risk = diffs.isEmpty ? .none : (diffs.count <= 2 ? .low : .high)
-        }
-
-        return Forecast(proposed: proposed, diffs: diffs, validation: validation, draftPreview: draft, risk: risk)
+        return ParticleBoardState(cells: cells)
     }
 
-    // MARK: - Errors
-
-    public enum DecodeError: Error, Equatable {
-        case invalidBoard(reason: String)
-        case incompletePayload(cell: String)
-        case policyViolation(reason: String)
+    public static func forecast(committed: ParticleBoardState, proposedEdit: BoardEdit, policy: PolicyPins) -> Forecast {
+        var newCells = committed.cells
+        if let idx = newCells.firstIndex(where: { $0.address == proposedEdit.address }) {
+            newCells[idx] = BoardCell(address: proposedEdit.address, payload: proposedEdit.payload, channels: newCells[idx].channels)
+        } else {
+            newCells.append(BoardCell(address: proposedEdit.address, payload: proposedEdit.payload))
+        }
+        let proposedState = ParticleBoardState(cells: newCells)
+        return Forecast(
+            proposedState: proposedState,
+            documentPreview: decodeToDocument(state: proposedState),
+            imagePreview: decodeToImage(state: proposedState),
+            diff: diff(committed: committed, proposed: proposedState),
+            riskScore: 0.1
+        )
     }
 
-    // MARK: - Markdown builder (deterministic — same inputs always produce same output)
+    /// Assembles board state into a structured O/I/R forensic document.
+    /// Cells are grouped by claim class (intent field), ordered row-major within each group.
+    /// Empty cells are excluded from the body; their count appears in metadata.
+    public static func decodeToDocument(state: ParticleBoardState) -> DocumentDraft {
+        var observed: [(row: Int, col: Int, text: String)] = []
+        var interpretation: [(row: Int, col: Int, text: String)] = []
+        var recommendation: [(row: Int, col: Int, text: String)] = []
+        var metadata: [String: String] = [:]
 
-    private static func buildMarkdown(
-        primaryAxis: CategoryAxis?,
-        sectionAxes: [CategoryAxis],
-        hasPolicyPins: Bool,
-        validationHome: PersistenceHome,
-        publishHome: PersistenceHome
-    ) -> String {
-        var lines: [String] = []
-
-        lines.append(primaryAxis.map { "# [\($0.displayName)]" } ?? "# [Document]")
-        lines.append("")
-
-        if sectionAxes.isEmpty {
-            lines.append("## [Section]")
-            lines.append("{placeholder}")
-            lines.append("")
-        } else {
-            for axis in sectionAxes {
-                lines.append("## \(axis.displayName)")
-                lines.append("{placeholder}")
-                lines.append("")
+        let sorted = state.cells.sorted { ($0.row * 3 + $0.col) < ($1.row * 3 + $1.col) }
+        for cell in sorted {
+            guard case .route(let intent, let action) = cell.payload else { continue }
+            let entry = (row: cell.row, col: cell.col, text: action)
+            switch intent.lowercased() {
+            case "observed":       observed.append(entry)
+            case "interpretation": interpretation.append(entry)
+            case "recommendation": recommendation.append(entry)
+            default:               metadata["[\(cell.row),\(cell.col)]"] = "\(intent): \(action)"
             }
         }
 
-        if hasPolicyPins {
-            lines.append("---")
-            lines.append("**Policy:** {allowed-actions}")
+        var lines: [String] = []
+        if !observed.isEmpty {
+            lines.append("## ● Observed")
+            for e in observed { lines.append("- `[\(e.row),\(e.col)]` \(e.text)") }
+            lines.append("")
+        }
+        if !interpretation.isEmpty {
+            lines.append("## ◈ Interpretation")
+            for e in interpretation { lines.append("- `[\(e.row),\(e.col)]` \(e.text)") }
+            lines.append("")
+        }
+        if !recommendation.isEmpty {
+            lines.append("## ◉ Recommendation")
+            for e in recommendation { lines.append("- `[\(e.row),\(e.col)]` \(e.text)") }
             lines.append("")
         }
 
-        lines.append("---")
-        lines.append("*Validates via:* \(validationHome.rawValue)  |  *Publishes via:* \(publishHome.rawValue)")
+        let emptyCount = state.cells.filter { $0.payload == .empty }.count
+        if emptyCount > 0 { metadata["empty_cells"] = "\(emptyCount)" }
 
-        return lines.joined(separator: "\n")
+        return DocumentDraft(
+            markdown: lines.isEmpty ? "— no content committed —" : lines.joined(separator: "\n"),
+            metadata: metadata
+        )
+    }
+
+    /// Builds a scene-graph of the grid for visual layout consumers.
+    /// Keys: "cell_R_C". Metadata encodes the row/col semantic labels.
+    public static func decodeToImage(state: ParticleBoardState) -> ImageDraft {
+        var sceneGraph: [String: String] = [:]
+        for cell in state.cells {
+            let key = "cell_\(cell.row)_\(cell.col)"
+            switch cell.payload {
+            case .empty:                    sceneGraph[key] = "·"
+            case .route(let intent, let a): sceneGraph[key] = "\(intent): \(a.prefix(60))"
+            case .unknown(let raw):         sceneGraph[key] = "?: \(raw.prefix(60))"
+            }
+        }
+        return ImageDraft(
+            sceneGraph: sceneGraph,
+            metadata: [
+                "row_0": "intent",   "row_1": "structure", "row_2": "policy",
+                "col_0": "draft",    "col_1": "validate",  "col_2": "publish"
+            ]
+        )
+    }
+
+    // MARK: - Private
+
+    private static func diff(committed: ParticleBoardState, proposed: ParticleBoardState) -> String {
+        let sort: (BoardCell, BoardCell) -> Bool = { ($0.row * 3 + $0.col) < ($1.row * 3 + $1.col) }
+        let changes = zip(committed.cells.sorted(by: sort), proposed.cells.sorted(by: sort))
+            .compactMap { old, new -> String? in
+                guard old.payload != new.payload else { return nil }
+                return "[\(new.row),\(new.col)] \(payloadLabel(old.payload)) → \(payloadLabel(new.payload))"
+            }
+        return changes.isEmpty ? "no change" : changes.joined(separator: "; ")
+    }
+
+    private static func payloadLabel(_ payload: BoardPayload) -> String {
+        switch payload {
+        case .empty:             return "·"
+        case .route(let i, _):  return i
+        case .unknown(let r):   return "?\(r.prefix(8))"
+        }
     }
 }

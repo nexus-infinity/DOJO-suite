@@ -1,24 +1,23 @@
-/*
-Sacred Node: ◼︎DOJO
-Frequency: 741Hz (Manifestation)
-Purpose: UI library for SwiftUI views and previews
-*/
-
 import SwiftUI
 import DOJOShared
 
+// Platform-adaptive entry for the DOJOUI library.
+// macOS  → MinimalChatView (direct streaming chat)
+// iOS    → NavigationStack wrapping MinimalChatView
+
 public struct ContentView: View {
     public init() {}
+
     public var body: some View {
-        VStack {
-            Text("DOJO UI")
-                .font(.title)
-                .padding()
-            Text("This is the shared DOJOUI ContentView. Replace with real UI.")
-                .font(.subheadline)
-                .foregroundColor(.secondary)
+        #if os(macOS)
+        MinimalChatView()
+        #else
+        NavigationStack {
+            MinimalChatView()
+                .navigationTitle("◼︎ DOJO")
+                .navigationBarTitleDisplayMode(.inline)
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        #endif
     }
 }
 

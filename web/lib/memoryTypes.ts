@@ -1,4 +1,4 @@
-export type SessionMode = 'chat' | 'code' | 'collab'
+export type SessionMode = 'chat' | 'code' | 'collab' | 'foreman'
 export type SessionRole = 'user' | 'assistant' | 'tool'
 export type SessionStatus = 'active' | 'archived'
 export type WorkstreamStatus = 'active' | 'archived' | 'merged'

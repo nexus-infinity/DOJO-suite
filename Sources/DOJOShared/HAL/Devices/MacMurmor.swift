@@ -19,8 +19,13 @@ public final class MacMurmor: DOJOMurmor {
     public var localBuffer = EventBuffer(capacity: 10_000)
     public var lastKnownFieldState: FieldStateSnapshot = .defaultSnapshot
 
+    // Fixed UUID — ensures registry[id] = mac is always an overwrite, never an accumulation.
+    // Without this, each registerMacMurmor() call creates a fresh UUID and adds a second Mac entry.
+    static let canonicalID = UUID(uuidString: "00000000-0000-0000-0000-000000000001")!
+
     public init(name: String = "Mac") {
         self.identity = MurmorIdentity(
+            id: Self.canonicalID,
             name: name,
             deviceClass: .mac,
             profile: HALProfile(sense: .full, process: .full, store: .full, relay: .full, act: .full),

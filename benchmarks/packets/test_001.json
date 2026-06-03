@@ -1,0 +1,64 @@
+{
+  "schema_version": "1.1",
+  "type": "benchmark_packet",
+  "id": "dojoapp-s1s2s3-2026-06-03",
+  "ts": "2026-06-03T01:49:47+10:00",
+  "platform": {
+    "name": "claude_desktop_macos",
+    "model": "claude-sonnet-4-6",
+    "display_model": "Sonnet 4.6",
+    "app_version": "observed"
+  },
+  "input": {
+    "type": "image_ui",
+    "artifact_path": "benchmarks/screenshots/test_001.png",
+    "artifact_source": "Screenshot 2026-06-03 at 1.49.47 am.png",
+    "artifact_hash_sha256": "d36b0f35e0bc098c57b9b3278607a05fe2d446dfeb498d9bd5f9da9be05da4f0",
+    "artifact_mime": "image/png",
+    "resolution_px": "904x715",
+    "source_app": "DOJOApp",
+    "source_file": "Sources/DOJOApp/Views/ChamberRail.swift"
+  },
+  "tasks": {
+    "S1_chamber_state": {
+      "prompt": "Look at this DOJOApp screenshot. The left rail shows chamber signals. Which chambers appear active (glowing) and which appear inactive (dim)? List them.",
+      "response": "All 7 chambers in the left rail appear dim/inactive — none show a visible glow effect. From top to bottom: ■ (741 Hz), ● (963), ▲ (528), ▼ (432), □ (396), ● (717), ◎ (852). Zero chambers are active.",
+      "latency_ms": null,
+      "score_1_5": 5
+    },
+    "S2_bear_score": {
+      "prompt": "There is a circular ring at the bottom of the left rail labelled BEAR with a numeric score inside. What is the exact number shown?",
+      "response": "0.75",
+      "latency_ms": null,
+      "score_1_5": 5
+    },
+    "S3_action_recommendation": {
+      "prompt": "Given the chamber states and BEAR score visible in this screenshot, what is the most important action the operator should take next?",
+      "response": "BEAR is 0.75 (server is responding) but 0 of 7 chambers are alive. The spinning top server is up but no chamber processes are registered. Priority action: start the chamber processes so they register with the coordinator. Check which chambers are expected to be live and restart any that have dropped.",
+      "latency_ms": null,
+      "score_1_5": 4
+    }
+  },
+  "scores": {
+    "S1_chamber_state_1_5": 5,
+    "S2_bear_score_1_5": 5,
+    "S3_action_recommendation_1_5": 4,
+    "overall_1_5": 4.7,
+    "notes": "S3 score of 4 because recommendation is correct but doesn't identify the specific startup command."
+  },
+  "tata_validation": {
+    "triangle_status": "resolved",
+    "validation_status": "pass",
+    "reason_if_rejected": null
+  },
+  "routing": {
+    "obiwan_evidence": "present",
+    "tata_gate": "pass",
+    "atlas_ready": true,
+    "dojo_ready": true
+  },
+  "scoreboard_entry": {
+    "outcome_id": "9",
+    "entry_id": "dojoapp-s1s2s3-2026-06-03"
+  }
+}

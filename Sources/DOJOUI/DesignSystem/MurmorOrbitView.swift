@@ -173,29 +173,34 @@ private struct MurmorNode: View {
 #Preview("Orbit — mixed activity") {
     let murmors: [MurmorIdentity] = [
         {
-            var m = MurmorIdentity(name: "JB's Mac", deviceClass: .mac, profile: .init(canSpeak: true, canListen: true, canDisplay: true, hasHaptics: false, hasBiometrics: false, hasSensors: false, isAlwaysOn: true))
+            var m = MurmorIdentity(name: "JB's Mac", deviceClass: .mac,
+                                   profile: .init(sense: .full, process: .full, store: .full, relay: .full, act: .full))
             m.state = .active
             m.lastSyncTimestamp = Date()
             return m
         }(),
         {
-            var m = MurmorIdentity(name: "JB's Watch", deviceClass: .watch, profile: .init(canSpeak: false, canListen: true, canDisplay: true, hasHaptics: true, hasBiometrics: true, hasSensors: true, isAlwaysOn: true))
+            var m = MurmorIdentity(name: "JB's Watch", deviceClass: .watch,
+                                   profile: .init(sense: .full, process: .minimal, store: .minimal, relay: .moderate, act: .moderate))
             m.state = .autonomous
             m.lastSyncTimestamp = Date().addingTimeInterval(-120)
             return m
         }(),
         {
-            var m = MurmorIdentity(name: "Kitchen Sensor", deviceClass: .roomSensor, profile: .init(canSpeak: false, canListen: false, canDisplay: false, hasHaptics: false, hasBiometrics: false, hasSensors: true, isAlwaysOn: true))
+            var m = MurmorIdentity(name: "Kitchen Sensor", deviceClass: .roomSensor,
+                                   profile: .init(sense: .moderate, process: .minimal, store: .minimal, relay: .moderate, act: .minimal))
             m.state = .buffering
             return m
         }(),
         {
-            var m = MurmorIdentity(name: "iPhone 16", deviceClass: .iPhone, profile: .init(canSpeak: true, canListen: true, canDisplay: true, hasHaptics: true, hasBiometrics: true, hasSensors: true, isAlwaysOn: false))
+            var m = MurmorIdentity(name: "iPhone 16", deviceClass: .iPhone,
+                                   profile: .init(sense: .full, process: .full, store: .moderate, relay: .full, act: .full))
             m.state = .sleeping
             return m
         }(),
         {
-            var m = MurmorIdentity(name: "Front Door", deviceClass: .doorContact, profile: .init(canSpeak: false, canListen: false, canDisplay: false, hasHaptics: false, hasBiometrics: false, hasSensors: true, isAlwaysOn: true))
+            var m = MurmorIdentity(name: "Front Door", deviceClass: .doorContact,
+                                   profile: .init(sense: .minimal, process: .none, store: .none, relay: .minimal, act: .none))
             m.state = .offline
             return m
         }()

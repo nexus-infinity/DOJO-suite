@@ -13,10 +13,12 @@ public final class ParticleBoardController {
     public var onCommit: ((ParticleBoardState, DocumentDraft?) -> Void)?
 
     private var receiptStore: CockpitReceiptStore?
+    private var boardStore: CockpitBoardStore?
     private var boardTitle: String = ""
 
-    public init(plan: DocumentPlan? = nil, receiptStore: CockpitReceiptStore? = nil) {
+    public init(plan: DocumentPlan? = nil, receiptStore: CockpitReceiptStore? = nil, boardStore: CockpitBoardStore? = nil) {
         self.receiptStore = receiptStore
+        self.boardStore = boardStore
         if let plan { load(plan) }
     }
 
@@ -26,6 +28,16 @@ public final class ParticleBoardController {
         committedState = state
         committedDraft = AikidoOpticsCodec.decodeToDocument(state: state)
         committedImageDraft = AikidoOpticsCodec.decodeToImage(state: state)
+        pendingForecast = nil
+    }
+
+    /// Load with a pre-built seed state instead of running the codec.
+    /// Used when the board would otherwise open blank.
+    public func loadSeeded(_ plan: DocumentPlan, seedState: ParticleBoardState) {
+        boardTitle = plan.title
+        committedState = seedState
+        committedDraft = AikidoOpticsCodec.decodeToDocument(state: seedState)
+        committedImageDraft = AikidoOpticsCodec.decodeToImage(state: seedState)
         pendingForecast = nil
     }
 
@@ -54,6 +66,7 @@ public final class ParticleBoardController {
             committedImageDraft = AikidoOpticsCodec.decodeToImage(state: pending.proposedState)
             pendingForecast = nil
 
+            boardStore?.save(pending.proposedState, title: boardTitle)
             onCommit?(committedState!, committedDraft)
 
             receiptStore?.emit(CockpitReceipt(

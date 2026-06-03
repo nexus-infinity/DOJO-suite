@@ -62,26 +62,25 @@ public struct ParticleBoardView: View {
     // MARK: - HAL Status Bar
 
     private var halStatusBar: some View {
-        HStack(spacing: 16) {
-            Label(coordinator.activeProfile.rawValue, systemImage: "antenna.radiowaves.left.and.right")
-                .foregroundStyle(audioModeColor)
-            Label(coordinator.audioMode.rawValue, systemImage: "waveform")
-                .foregroundStyle(audioModeColor)
-            Spacer()
+        HStack(spacing: 10) {
             Circle()
-                .fill(audioModeColor)
+                .fill(verdictColor)
                 .frame(width: 6, height: 6)
-                .shadow(color: audioModeColor.opacity(0.8), radius: 4)
+                .shadow(color: verdictColor.opacity(0.8), radius: 4)
+            Text(coordinator.keeperVerdict.summary)
+                .foregroundStyle(verdictColor)
+            Spacer()
+            Text("\(coordinator.audioMode.rawValue) · \(coordinator.activeProfile.rawValue)")
+                .foregroundStyle(FieldPalette.textDim)
         }
         .font(.caption.monospaced())
     }
 
-    private var audioModeColor: Color {
-        switch coordinator.audioMode {
-        case .full:        return Chamber.atlas.color
-        case .outputOnly:  return Chamber.tata.color
-        case .passthrough: return Chamber.akron.color
-        case .silent:      return Color(hex: "#F43F5E")
+    private var verdictColor: Color {
+        switch coordinator.keeperVerdict.state {
+        case .aligned:  return Chamber.atlas.color
+        case .degraded: return Chamber.tata.color
+        case .hold:     return Color(hex: "#F43F5E")
         }
     }
 
@@ -121,7 +120,7 @@ public struct ParticleBoardView: View {
             editingCell = cell.address
             showEditSheet = true
         } label: {
-            VStack(spacing: 6) {
+            VStack(alignment: .leading, spacing: 4) {
                 HStack {
                     Text("[\(cell.row),\(cell.col)]")
                         .font(.system(size: 9, design: .monospaced))
@@ -131,12 +130,41 @@ public struct ParticleBoardView: View {
                         .font(.system(size: 8, design: .monospaced))
                         .foregroundStyle(FieldPalette.textDim)
                 }
-                Text(cell.glyph)
-                    .font(.title2)
-                    .foregroundStyle(payloadColor(cell.payload))
-                Text(Phase.from(col: cell.col).rawValue)
-                    .font(.system(size: 8, design: .monospaced))
-                    .foregroundStyle(FieldPalette.textDim)
+                switch cell.payload {
+                case .route(let intent, let action):
+                    Text(intent.uppercased())
+                        .font(.system(size: 8, weight: .semibold, design: .monospaced))
+                        .foregroundStyle(payloadColor(cell.payload))
+                    Text(action)
+                        .font(.system(size: 9, design: .monospaced))
+                        .foregroundStyle(FieldPalette.textPrimary)
+                        .lineLimit(4)
+                        .truncationMode(.tail)
+                case .empty:
+                    Spacer(minLength: 0)
+                    HStack {
+                        Spacer()
+                        Text("·")
+                            .font(.title3)
+                            .foregroundStyle(payloadColor(cell.payload))
+                        Spacer()
+                    }
+                    Spacer(minLength: 0)
+                case .unknown(let raw):
+                    Text("?")
+                        .font(.system(size: 8, weight: .semibold, design: .monospaced))
+                        .foregroundStyle(payloadColor(cell.payload))
+                    Text(raw)
+                        .font(.system(size: 9, design: .monospaced))
+                        .foregroundStyle(payloadColor(cell.payload))
+                        .lineLimit(3)
+                }
+                HStack {
+                    Text(Phase.from(col: cell.col).rawValue)
+                        .font(.system(size: 8, design: .monospaced))
+                        .foregroundStyle(FieldPalette.textDim)
+                    Spacer()
+                }
                 if let msg = holdErrors[cell.address] {
                     Text(msg)
                         .font(.system(size: 8, design: .monospaced))
@@ -299,7 +327,11 @@ struct ArtifactEditSheet: View {
                 Button("Propose Edit") {
                     guard !content.isEmpty else { return }
                     let anchor = RealityAnchor(
-                        hashSHA256: UUID().uuidString,
+                        hashSHA256: CockpitReceiptStore.sha256(
+                            from: content,
+                            claimClass.rawValue,
+                            triangleResolved ? "resolved" : "unresolved"
+                        ),
                         storageLocation: "cell[\(address.row),\(address.col)]"
                     )
                     let triangle: TriangleStatus = triangleResolved

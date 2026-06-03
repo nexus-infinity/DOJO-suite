@@ -2,15 +2,16 @@ import Foundation
 
 // MARK: - ChamberRouter
 
-/// Discovers live chamber endpoints from DOJO /state and routes
+/// Discovers live chamber endpoints and routes
 /// GeometricCharacter messages to the right SpinningTopClient.
 ///
 /// Node lifecycle:  alive → suspect (failures accumulating) → quarantined → removed
 ///                                                          ↑                    ↓
 ///                              1 success restores immediately          reprobe on quarantine
 ///
-/// Routing is data-driven — no hardcoded ports. If a character's preferred
-/// chamber isn't live, falls back to the DOJO orchestrator.
+/// Routing is symbol-first and service-boundary aware. Canonical character
+/// endpoints are probed directly; DOJO /state can add or refresh live nodes.
+/// If a character's preferred chamber isn't live, falls back to DOJO.
 @MainActor
 public final class ChamberRouter {
 
@@ -22,6 +23,26 @@ public final class ChamberRouter {
         .aiMind:  "dojo"
     ]
 
+    private static let canonicalPorts: [String: Int] = [
+        "arkadas": 7170,
+        "obiwan": 9630,
+        "dojo": 7410
+    ]
+
+    private static let symbolKeys: [String: String] = [
+        "◼︎": "dojo",
+        "◼": "dojo",
+        "●": "obiwan",
+        "▲": "atlas",
+        "▼": "tata",
+        "◻": "akron",
+        "♦︎": "akron",
+        "◉": "arkadas",
+        "🎭": "arkadas",
+        "◎": "kingschamber",
+        "⊗": "kingschamber"
+    ]
+
     private static let pruneThreshold = 3
     private static let staleAfter: TimeInterval = 300   // 5 minutes
 
@@ -31,6 +52,7 @@ public final class ChamberRouter {
     private var liveClients: [String: SpinningTopClient] = [:]  // routable
     private var quarantined: [String: SpinningTopClient] = [:]  // suspect — not routed, reprobe pending
     private var failureCounts: [String: Int] = [:]
+    private var isRefreshing = false                            // dedup guard for refreshIfStale
     public private(set) var lastTopologyRefresh: Date?
 
     // MARK: - Init
@@ -41,21 +63,34 @@ public final class ChamberRouter {
 
     // MARK: - Discovery
 
-    /// Query DOJO /state and rebuild the live endpoint table.
+    /// Probe canonical endpoints, then query DOJO /state to rebuild the live table.
     /// Nodes that reappear are restored from quarantine automatically.
     public func refreshTopology() async {
-        guard let state = try? await dojo.getState() else { return }
-
         var clients: [String: SpinningTopClient] = [:]
-        for node in state.nodes where node.state {
-            guard let port = node.mcp_port else { continue }
-            let key = normalized(node.name)
-            let client = quarantined.removeValue(forKey: key)        // restore if quarantined
-                ?? liveClients[key]                                  // keep existing session
+
+        for (key, port) in Self.canonicalPorts {
+            let client = quarantined[key]
+                ?? liveClients[key]
                 ?? SpinningTopClient(baseURL: "http://localhost:\(port)")
-            clients[key] = client
-            failureCounts[key] = 0
+            if ((try? await client.healthCheck()) ?? false) {
+                clients[key] = quarantined.removeValue(forKey: key) ?? client
+                failureCounts[key] = 0
+            }
         }
+
+        if let state = try? await dojo.getState() {
+            for node in state.nodes where node.state {
+                guard let port = node.mcp_port else { continue }
+                let key = key(for: node)
+                let client = quarantined.removeValue(forKey: key)    // restore if quarantined
+                    ?? clients[key]                                  // keep direct probe session
+                    ?? liveClients[key]                              // keep existing session
+                    ?? SpinningTopClient(baseURL: "http://localhost:\(port)")
+                clients[key] = client
+                failureCounts[key] = 0
+            }
+        }
+
         liveClients = clients
         lastTopologyRefresh = Date()
     }
@@ -112,9 +147,17 @@ public final class ChamberRouter {
 
     /// Targeted health check against the quarantined node only.
     /// Restores on pass, permanently removes on fail.
+    /// Re-validates quarantine state post-suspension: refreshTopology may have
+    /// already resolved the key while healthCheck() was awaited.
     private func reprobe(key: String) async {
         guard let client = quarantined[key] else { return }
         let alive = (try? await client.healthCheck()) ?? false
+        // Post-suspension check: if refreshTopology already moved this key out of
+        // quarantine, honour that decision and do not write over it.
+        guard quarantined[key] != nil else {
+            print("◆ ChamberRouter: '\(key)' reprobe superseded — topology already resolved")
+            return
+        }
         if alive {
             quarantined.removeValue(forKey: key)
             liveClients[key] = client
@@ -127,7 +170,18 @@ public final class ChamberRouter {
 
     private func refreshIfStale() {
         let isStale = lastTopologyRefresh.map { Date().timeIntervalSince($0) > Self.staleAfter } ?? true
-        if isStale { Task { await refreshTopology() } }
+        // isRefreshing guard prevents N concurrent topology refreshes when client(for:)
+        // is called rapidly while topology is stale.
+        guard isStale, !isRefreshing else { return }
+        isRefreshing = true
+        Task {
+            defer { isRefreshing = false }
+            await refreshTopology()
+        }
+    }
+
+    private func key(for node: SpinningTopClient.StateResponse.Node) -> String {
+        Self.symbolKeys[node.symbol] ?? normalized(node.name)
     }
 
     private func normalized(_ name: String) -> String {

@@ -1,0 +1,95 @@
+{
+  "schema_version": "1.1",
+  "type": "surface_capability_audit",
+  "id": "cds-001-2026-06-03",
+  "ts": "2026-06-03T01:22:00+10:00",
+  "platform": {
+    "name": "claude_desktop_macos",
+    "model": "claude-sonnet-4-6",
+    "display_model": "Sonnet 4.6 Low",
+    "app_version": "observed"
+  },
+  "evidence": {
+    "screenshots": [
+      "Screenshot 2026-06-03 at 1.20.49 am.png",
+      "Screenshot 2026-06-03 at 1.20.54 am.png",
+      "Screenshot 2026-06-03 at 1.20.59 am.png",
+      "Screenshot 2026-06-03 at 1.21.36 am.png",
+      "Screenshot 2026-06-03 at 1.21.49 am.png",
+      "Screenshot 2026-06-03 at 1.22.02 am.png",
+      "Screenshot 2026-06-03 at 1.22.08 am.png"
+    ]
+  },
+  "surface_audit": {
+    "interface_modes": {
+      "chat": true,
+      "cowork": true,
+      "code": true,
+      "notes": "Three distinct tabs visible. Cowork marked Beta."
+    },
+    "dojo_context": {
+      "recent_conversations": [
+        "Kings-Chamber MCP evaluation",
+        "DOJO Re:Cognition implementation strategy",
+        "DOJO chamber health and Ollama mode",
+        "Game style drift analysis",
+        "Customize Claude to your role"
+      ],
+      "custom_instructions_configured": true,
+      "memory_enabled": true,
+      "notes": "FIELD framework instructions confirmed in Settings > Profile. Memory + connector discovery enabled."
+    },
+    "tool_access": {
+      "desktop_commander": true,
+      "control_your_mac": true,
+      "pdf_stream": true,
+      "figma": true,
+      "read_write_apple_notes": true,
+      "notes": "Desktop Commander + Control your Mac give MCP-style access to local machine including DOJOApp."
+    },
+    "usage_stats": {
+      "sessions": 71,
+      "messages": 47277,
+      "total_tokens": "7.7M",
+      "active_days": 42,
+      "peak_hour": "11 AM",
+      "favorite_model": "Sonnet 4.6"
+    }
+  },
+  "scores": {
+    "can_observe_dojo_state_1_5": 3,
+    "can_send_dojo_commands_1_5": 3,
+    "has_dojo_context_1_5": 5,
+    "native_dojo_integration_1_5": 1,
+    "overall_1_5": 3.0,
+    "notes": {
+      "can_observe_dojo_state": "Via Desktop Commander screenshot + MCP tools, not native. Requires manual steps.",
+      "can_send_dojo_commands": "Desktop Commander can reach localhost:7410 but no native routing.",
+      "has_dojo_context": "FIELD instructions configured, memory enabled, DOJO history present in recents.",
+      "native_dojo_integration": "No native DOJO integration. Generic chat interface — no chamber rail, no BEAR score."
+    }
+  },
+  "gap_to_dojoapp": {
+    "what_claude_desktop_has_that_dojoapp_lacks": [
+      "Cowork mode (task-oriented sessions)",
+      "Code mode with file access",
+      "Extension ecosystem (Desktop Commander, Control your Mac)",
+      "Session history sidebar",
+      "Memory persistence across sessions",
+      "Multi-modal file input (Drive, Calendar, Gmail connectors)"
+    ],
+    "what_dojoapp_has_that_claude_desktop_lacks": [
+      "Chamber rail with live health signals",
+      "BEAR coherence score",
+      "Direct DOJO MCP routing (port 7410)",
+      "FIELD design system (aurora, palette, geometry)",
+      "Multi-chamber awareness"
+    ]
+  },
+  "verdict": "Claude desktop is a functional DOJO operator surface today via Desktop Commander. DOJOApp adds chamber-specific UI that Claude desktop cannot replicate natively. Integration path: wire Desktop Commander → DOJO MCP endpoints so both surfaces share state.",
+  "routing": {
+    "tata_gate": "pass",
+    "atlas_ready": true,
+    "dojo_ready": true
+  }
+}

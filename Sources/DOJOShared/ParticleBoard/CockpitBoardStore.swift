@@ -50,11 +50,19 @@ public struct CockpitBoardStore: Sendable {
     }
 
     public func load() -> ParticleBoardState? {
-        guard FileManager.default.fileExists(atPath: fileURL.path),
-              let data = try? Data(contentsOf: fileURL) else { return nil }
+        // Case A: file absent — fresh install. Seed is correct. No action needed.
+        guard FileManager.default.fileExists(atPath: fileURL.path) else { return nil }
+        guard let data = try? Data(contentsOf: fileURL) else { return nil }
+
+        // Case B: file present but undecodable — schema evolution or partial write.
+        // Preserve before seeding so user data is recoverable. Silent drop here is
+        // a silent overwrite on the next acceptForecast.
         guard let snapshot = try? JSONDecoder().decode(CockpitBoardSnapshot.self, from: data),
               snapshot.schemaVersion == 1 else {
-            print("◆ CockpitBoardStore: unreadable snapshot — falling back to seed.")
+            let bakURL = fileURL.deletingPathExtension().appendingPathExtension("json.bak")
+            try? data.write(to: bakURL)               // overwrite any previous bak
+            try? FileManager.default.removeItem(at: fileURL)
+            print("◆ CockpitBoardStore: unreadable snapshot preserved to \(bakURL.lastPathComponent) — falling back to seed.")
             return nil
         }
         return snapshot.committedState

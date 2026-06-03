@@ -21,12 +21,12 @@ struct ConversationHeader: View {
             Spacer()
             HStack(spacing: 5) {
                 Circle()
-                    .fill(health.status[.dojo] == .alive ? Chamber.dojo.color : Color.red.opacity(0.5))
+                    .fill(health.bearScore > 0 ? Chamber.dojo.color : Color.red.opacity(0.5))
                     .frame(width: 6, height: 6)
-                    .shadow(color: health.status[.dojo] == .alive ? Chamber.dojo.glowColor : .clear, radius: 4)
-                Text(health.status[.dojo] == .alive ? "LIVE" : "OFFLINE")
+                    .shadow(color: health.bearScore > 0 ? Chamber.dojo.glowColor : .clear, radius: 4)
+                Text(health.bearScore > 0 ? "LIVE" : "OFFLINE")
                     .font(.system(.caption2, design: .monospaced, weight: .medium))
-                    .foregroundStyle(health.status[.dojo] == .alive ? Chamber.dojo.color : FieldPalette.textDim)
+                    .foregroundStyle(health.bearScore > 0 ? Chamber.dojo.color : FieldPalette.textDim)
             }
             .padding(.horizontal, 10)
             .padding(.vertical, 5)

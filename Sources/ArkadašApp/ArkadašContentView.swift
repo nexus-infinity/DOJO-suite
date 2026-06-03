@@ -34,11 +34,17 @@ extension GeometricCharacter {
 // MARK: - ArkadašContentView
 
 public struct ArkadašContentView: View {
-    @StateObject private var engine = CopilotEngine()
+    @StateObject private var engine: CopilotEngine
+    @StateObject private var coordinator: DOJOFieldCoordinator
+    @StateObject private var mic = VADMicBridge()
     @State private var inputText: String = ""
     @FocusState private var inputFocused: Bool
 
-    public init() {}
+    public init() {
+        let e = CopilotEngine()
+        _engine = StateObject(wrappedValue: e)
+        _coordinator = StateObject(wrappedValue: DOJOFieldCoordinator(engine: e))
+    }
 
     public var body: some View {
         VStack(spacing: 0) {
@@ -53,7 +59,23 @@ public struct ArkadašContentView: View {
         .frame(minWidth: 560, minHeight: 500)
         .background(FieldPalette.void)
         .preferredColorScheme(.dark)
-        .onAppear { inputFocused = true }
+        .onAppear {
+            NSApp.activate(ignoringOtherApps: true)
+            // Delay required on macOS: window must become key before @FocusState takes effect
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                inputFocused = true
+            }
+        }
+        .task {
+            coordinator.registerMacMurmor()
+            coordinator.startInvariantMonitoring()
+            await mic.requestAuthorization()
+            mic.onUtterance = { [weak engine] text in
+                guard let engine else { return }
+                Task { await engine.process(input: text) }
+            }
+            try? mic.start()
+        }
     }
 
     // MARK: Header
@@ -157,6 +179,10 @@ public struct ArkadašContentView: View {
                 .padding(.vertical, 8)
                 .background(FieldPalette.surface)
                 .cornerRadius(10)
+                // On macOS, plain-style TextField only hit-tests the text cursor area.
+                // contentShape + onTapGesture extends the clickable region to the full background.
+                .contentShape(RoundedRectangle(cornerRadius: 10))
+                .onTapGesture { inputFocused = true }
                 .onSubmit { sendMessage() }
 
             Button(action: sendMessage) {

@@ -40,6 +40,8 @@ public final class WatchMurmor: DOJOMurmor {
         switch lastKnownFieldState.coherenceLevel {
         case .coherent:
             break  // Silent — green complication
+        case .degraded:
+            break  // Yellow complication — partial field, still functional
         case .drifting:
             break  // Gentle periodic haptic — "check in when you can"
         case .breached:

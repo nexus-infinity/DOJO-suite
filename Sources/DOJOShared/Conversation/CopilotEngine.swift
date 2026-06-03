@@ -38,12 +38,15 @@ public final class CopilotEngine: ObservableObject {
 
     // MARK: Private
 
-    private let spinningTop = SpinningTopClient()
+    private let router = ChamberRouter()
 
     // MARK: Init
 
     public init() {
-        Task { await self.emitWelcome() }
+        Task {
+            await router.refreshTopology()
+            await self.emitWelcome()
+        }
     }
 
     // MARK: - Primary Entry Point
@@ -75,13 +78,17 @@ public final class CopilotEngine: ObservableObject {
         }
 
         do {
-            let response = try await spinningTop.sendMessage(trimmed, character: character.rawValue, context: context)
+            if !dojoConnected { await router.refreshTopology() }
+            let client = router.client(for: character)
+            let response = try await client.sendMessage(trimmed, character: character.rawValue, context: context)
             dojoConnected = true
+            router.recordSuccess(for: character)
             responseText = response.response.isEmpty
                 ? generateLocalResponse(character: character, userMessage: trimmed)
                 : response.response
         } catch {
             dojoConnected = false
+            router.recordFailure(for: character)
             responseText = generateLocalResponse(character: character, userMessage: trimmed)
         }
 

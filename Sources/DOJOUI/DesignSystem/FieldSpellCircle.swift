@@ -23,6 +23,7 @@ public struct SpellCircle: View {
     public var compact: Bool = false
     @State private var rotation: Double = 0
     @State private var innerRotation: Double = 0
+    @Environment(\.scenePhase) private var scenePhase  // Battery optimization
 
     private var spokeCount: Int {
         switch chamber {
@@ -87,24 +88,38 @@ public struct SpellCircle: View {
         .frame(width: size, height: size)
         .onAppear {
             guard active else { return }
-            withAnimation(.linear(duration: 20).repeatForever(autoreverses: false)) {
-                rotation = 360
-            }
-            withAnimation(.linear(duration: 12).repeatForever(autoreverses: false)) {
-                innerRotation = -360
-            }
+            startAnimations()
         }
         .onChange(of: active) { _, isActive in
-            if isActive {
-                withAnimation(.linear(duration: 20).repeatForever(autoreverses: false)) {
-                    rotation = 360
-                }
+            if isActive && scenePhase == .active {
+                startAnimations()
             } else {
-                withAnimation(.easeOut(duration: 1.2)) {
-                    rotation = 0
-                    innerRotation = 0
-                }
+                stopAnimations()
             }
+        }
+        .onChange(of: scenePhase) { _, phase in
+            // Pause animations when app is backgrounded (homeostasis principle)
+            if phase == .active && active {
+                startAnimations()
+            } else {
+                stopAnimations()
+            }
+        }
+    }
+    
+    private func startAnimations() {
+        withAnimation(.linear(duration: 20).repeatForever(autoreverses: false)) {
+            rotation = 360
+        }
+        withAnimation(.linear(duration: 12).repeatForever(autoreverses: false)) {
+            innerRotation = -360
+        }
+    }
+    
+    private func stopAnimations() {
+        withAnimation(.easeOut(duration: 1.2)) {
+            rotation = 0
+            innerRotation = 0
         }
     }
 }
@@ -162,6 +177,7 @@ public struct BEARMandala: View {
     public var size: CGFloat = 140
     @State private var outerRotation: Double = 0
     @State private var innerRotation: Double = 0
+    @Environment(\.scenePhase) private var scenePhase  // Battery optimization
 
     private var ringColor: Color { FieldPalette.bearRing(score) }
 
@@ -214,12 +230,31 @@ public struct BEARMandala: View {
         }
         .frame(width: size, height: size)
         .onAppear {
-            withAnimation(.linear(duration: 30).repeatForever(autoreverses: false)) {
-                outerRotation = 360
+            startMandalaAnimations()
+        }
+        .onChange(of: scenePhase) { _, phase in
+            // Pause animations when backgrounded (homeostasis principle)
+            if phase == .active {
+                startMandalaAnimations()
+            } else {
+                stopMandalaAnimations()
             }
-            withAnimation(.linear(duration: 18).repeatForever(autoreverses: false)) {
-                innerRotation = -360
-            }
+        }
+    }
+    
+    private func startMandalaAnimations() {
+        withAnimation(.linear(duration: 30).repeatForever(autoreverses: false)) {
+            outerRotation = 360
+        }
+        withAnimation(.linear(duration: 18).repeatForever(autoreverses: false)) {
+            innerRotation = -360
+        }
+    }
+    
+    private func stopMandalaAnimations() {
+        withAnimation(.easeOut(duration: 1.2)) {
+            outerRotation = 0
+            innerRotation = 0
         }
     }
 }

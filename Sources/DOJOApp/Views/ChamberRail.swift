@@ -52,7 +52,7 @@ struct ChamberRail: View {
 
 struct ChamberSignal: View {
     let chamber: Chamber
-    let status: ChamberStatus
+    let status: NodeHealthStatus
     @State private var pulse = false
 
     var body: some View {

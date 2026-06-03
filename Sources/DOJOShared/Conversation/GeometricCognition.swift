@@ -45,7 +45,7 @@ public enum GeometricCharacter: String, CaseIterable, Sendable {
     public var macOSVoice: String {
         switch self {
         case .arkadas: return "Daniel"    // warm, deeper
-        case .obiWan:  return "Alex"      // clear, authoritative
+        case .obiWan:  return "Reed"      // clear, authoritative (Alex not installed)
         case .aiMind:  return "Samantha"  // clear, neutral
         }
     }

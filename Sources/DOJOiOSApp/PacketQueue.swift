@@ -23,7 +23,7 @@ final class PacketQueue: ObservableObject {
     func enqueue(textNotes: String, mediaRefs: [String] = [], voiceRef: String? = nil) async {
         let previousHash = packets.first?.integrityHash
         let hash = PacketFileStore.integrityHash(text: textNotes, mediaRefs: mediaRefs)
-        var packet = Packet(
+        let packet = Packet(
             deviceID: deviceID(),
             operatorID: "field-operator",
             integrityHash: hash,

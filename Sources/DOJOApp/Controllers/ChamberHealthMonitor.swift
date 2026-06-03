@@ -2,11 +2,11 @@ import SwiftUI
 import DOJOShared
 import DOJOUI
 
-enum ChamberStatus { case alive, degraded, offline, unknown }
+enum NodeHealthStatus { case alive, degraded, offline, unknown }
 
 @MainActor
 class ChamberHealthMonitor: ObservableObject {
-    @Published var status: [Chamber: ChamberStatus] = [:]
+    @Published var status: [Chamber: NodeHealthStatus] = [:]
     @Published var bearScore: Double = 0
 
     private let spinningTop = SpinningTopClient()
@@ -55,7 +55,7 @@ class ChamberHealthMonitor: ObservableObject {
         }
     }
 
-    private func chamberStatus(from node: SpinningTopClient.StateResponse.Node) -> ChamberStatus {
+    private func chamberStatus(from node: SpinningTopClient.StateResponse.Node) -> NodeHealthStatus {
         guard node.state else { return .offline }
         switch node.health {
         case "alive", "healthy": return .alive

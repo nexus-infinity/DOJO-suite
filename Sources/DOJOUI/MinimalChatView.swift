@@ -17,19 +17,13 @@ public struct MinimalChatView: View {
     @State private var messages: [ChatMessage] = []
     @State private var inputText: String = ""
     @State private var isProcessing: Bool = false
-
-    private let aiService = AIService()
+    @State private var streamingContent: String = ""
+    @FocusState private var inputFocused: Bool
 
     public init() {}
 
     public var body: some View {
         VStack(spacing: 0) {
-            .onReceive(NotificationCenter.default.publisher(for: Notification.Name("DOJORetryLastUserMessage"))) { _ in
-                guard !isProcessing, let lastUser = messages.last(where: { $0.role == .user }) else { return }
-                inputText = lastUser.content
-                sendMessage()
-            }
-
             // Message history
             ScrollViewReader { proxy in
                 ScrollView {
@@ -38,18 +32,24 @@ public struct MinimalChatView: View {
                             MinimalMessageBubble(message: message)
                                 .id(message.id)
                         }
-                        if isProcessing { MinimalProcessingIndicator().transition(.opacity) }
+                        if isProcessing && !streamingContent.isEmpty {
+                            MinimalMessageBubble(message: ChatMessage(role: .assistant, content: streamingContent))
+                                .id("streaming")
+                        } else if isProcessing {
+                            MinimalProcessingIndicator().transition(.opacity)
+                        }
                     }
                     .padding()
                     .frame(maxWidth: 800, alignment: .leading)
                     .frame(maxWidth: .infinity, alignment: .leading)
                 }
-                .onChange(of: messages.count) { oldValue, newValue in
+                .onChange(of: messages.count) { _, _ in
                     if let lastMessage = messages.last {
-                        withAnimation {
-                            proxy.scrollTo(lastMessage.id, anchor: .bottom)
-                        }
+                        withAnimation { proxy.scrollTo(lastMessage.id, anchor: .bottom) }
                     }
+                }
+                .onChange(of: streamingContent) { _, _ in
+                    withAnimation { proxy.scrollTo("streaming", anchor: .bottom) }
                 }
             }
 
@@ -64,8 +64,14 @@ public struct MinimalChatView: View {
                     .padding(8)
                     .background(controlBackground)
                     .cornerRadius(8)
+                    .focused($inputFocused)
                     .onSubmit {
                         sendMessage()
+                    }
+                    .onAppear {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                            inputFocused = true
+                        }
                     }
 
                 Button(action: sendMessage) {
@@ -77,11 +83,19 @@ public struct MinimalChatView: View {
             }
             .padding()
         }
+        .onReceive(NotificationCenter.default.publisher(for: Notification.Name("DOJORetryLastUserMessage"))) { _ in
+            guard !isProcessing, let lastUser = messages.last(where: { $0.role == .user }) else { return }
+            inputText = lastUser.content
+            sendMessage()
+        }
+        // TODO: Benchmark module — planned (external harness evaluating Claude AI Mac app via benchmarks/packets/)
     }
 
     private var controlBackground: Color {
         #if os(macOS)
         return Color(NSColor.controlBackgroundColor)
+        #elseif os(watchOS)
+        return Color.gray.opacity(0.2)
         #else
         return Color(UIColor.secondarySystemBackground)
         #endif
@@ -96,23 +110,28 @@ public struct MinimalChatView: View {
         inputText = ""
 
         #if os(iOS)
-        // Dismiss keyboard on iOS after sending
         UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
         #endif
 
         isProcessing = true
+        streamingContent = ""
+        let conversationId = UUID().uuidString
+
         Task {
+            let client = SpinningTopClient()
             do {
-                let result = try await aiService.runModelAsync(input: TextInput(data: text))
+                try await client.streamMessage(text, conversationId: conversationId) { token in
+                    Task { @MainActor in self.streamingContent += token }
+                }
                 await MainActor.run {
-                    let assistantMessage = ChatMessage(role: .assistant, content: result.output)
-                    messages.append(assistantMessage)
+                    messages.append(ChatMessage(role: .assistant, content: streamingContent))
+                    streamingContent = ""
                     isProcessing = false
                 }
             } catch {
                 await MainActor.run {
-                    let errorMessage = ChatMessage(role: .assistant, content: "Error: \(error.localizedDescription)")
-                    messages.append(errorMessage)
+                    messages.append(ChatMessage(role: .assistant, content: "Error: \(error.localizedDescription)"))
+                    streamingContent = ""
                     isProcessing = false
                 }
             }
@@ -186,6 +205,8 @@ struct MinimalMessageBubble: View {
     private var controlBg: Color {
         #if os(macOS)
         return Color(NSColor.controlBackgroundColor)
+        #elseif os(watchOS)
+        return Color.gray.opacity(0.2)
         #else
         return Color(UIColor.secondarySystemBackground)
         #endif

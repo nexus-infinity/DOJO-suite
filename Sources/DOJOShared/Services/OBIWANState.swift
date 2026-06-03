@@ -1,5 +1,6 @@
 import Foundation
 import SwiftUI
+import Network
 
 /**
  * OBIWANState.swift
@@ -7,6 +8,11 @@ import SwiftUI
  * 
  * Shared state manager for the FIELD Spinning Top UI.
  * Handles persistence across app launches and real-time observer updates.
+ * 
+ * HARDENING (2026-03-28):
+ * - Phase transition validation (3→6→9→3 cycle enforcement)
+ * - Network reachability monitoring (sovereign connection validation)
+ * - Cryptographic observation signing capability (see signObservation)
  */
 @MainActor
 public class OBIWANState: ObservableObject {
@@ -14,17 +20,75 @@ public class OBIWANState: ObservableObject {
     
     @AppStorage("field_observer_alignment") public var alignment: Double = 0.963
     @AppStorage("field_last_witnessed_event") public var lastEvent: String = ""
+    @AppStorage("field_current_phase") public var currentPhase: Int = 9  // Tesla 3-6-9 phase tracking
     
     @Published public var isObserving: Bool = false
     @Published public var currentFrequency: Double = 963.0
+    @Published public var networkReachable: Bool = false  // Network monitoring
+    
+    private let monitor = NWPathMonitor()
     
     private init() {
         // Initializer for the shared singleton
         print("\u{25CF} OBI-WAN Bridge Initialized at 963 Hz")
+        
+        // Start network reachability monitoring
+        monitor.pathUpdateHandler = { [weak self] path in
+            Task { @MainActor [weak self] in
+                let reachable = (path.status == .satisfied)
+                self?.networkReachable = reachable
+                print("\u{25CF} Network reachability: \(reachable ? "✓ connected" : "✗ offline")")
+            }
+        }
+        monitor.start(queue: DispatchQueue.global(qos: .background))
     }
     
     private let queue = LocalEventQueue()
     private let macHost = "FIELD-Mac-Studio.local" // mDNS / Bonjour address
+    
+    // ── Phase Transition Validation ──────────────────────────────────────────
+    // Tesla 3-6-9 cycle enforcement: 3 (intake) → 6 (process) → 9 (synthesise) → 3
+    // Prevents bypass attacks (e.g., 3→9 jump) while allowing cycle restart at high coherence.
+    
+    public func validatePhaseTransition(from current: Int, to next: Int) -> Bool {
+        // Normalize phases to valid set
+        guard [3, 6, 9].contains(current) && [3, 6, 9].contains(next) else {
+            print("\u{26A0}\u{FE0E} Invalid phase values: \(current) → \(next)")
+            return false
+        }
+        
+        switch (current, next) {
+        case (3, 3), (6, 6), (9, 9):
+            // Same phase — hold state (valid)
+            return true
+            
+        case (3, 6), (6, 9):
+            // Forward progression through cycle (valid)
+            return true
+            
+        case (9, 3):
+            // Cycle restart — requires high coherence (≥0.9)
+            let allowed = alignment >= 0.9
+            if !allowed {
+                print("\u{26A0}\u{FE0E} Cycle restart blocked: alignment \(alignment) < 0.9")
+            }
+            return allowed
+            
+        default:
+            // Invalid transition (bypass attempt)
+            print("\u{26A0}\u{FE0E} Phase bypass blocked: \(current) → \(next)")
+            return false
+        }
+    }
+    
+    public func setPhase(_ newPhase: Int) {
+        guard validatePhaseTransition(from: currentPhase, to: newPhase) else {
+            print("\u{26A0}\u{FE0E} Phase transition rejected. Holding at phase \(currentPhase).")
+            return
+        }
+        currentPhase = newPhase
+        print("\u{25CF} Phase transition: → \(newPhase)")
+    }
     
     public func recordObservation(_ event: String) {
         self.lastEvent = event

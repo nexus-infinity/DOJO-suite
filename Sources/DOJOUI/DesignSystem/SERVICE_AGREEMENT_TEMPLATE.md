@@ -1,4 +1,4 @@
-# Service Agreement — Forensic Investigation & Evidence Reconstruction
+And pieces# Service Agreement — Forensic Investigation & Evidence Reconstruction
 
 **Agreement ID**: `SA-[YYYY]-[CLIENT-ID]-[SEQ]`  
 **Effective Date**: `[DATE]`  
@@ -306,6 +306,8 @@ See `FORMAL_REPORT_TEMPLATE.md` (to be delivered with Phase 9 final report)
 ### What is the DOJO Suite?
 
 The **DOJO Suite** is a geometry-driven forensic investigation framework based on **Tesla 3-6-9 phase logic**:
+
+**Canonical Contract**: All DOJO Suite operations conform to `DOJO_SUITE_CANONICAL_CONTRACT.md` (v1.0, effective 2026-03-28).
 
 - **Phase 3 (Intake/Observe)**: Evidence gathering and initial validation
 - **Phase 6 (Process)**: Temporal reconstruction and coherence analysis

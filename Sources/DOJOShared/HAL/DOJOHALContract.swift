@@ -43,7 +43,7 @@ public struct HALProfile: Codable, Equatable, Hashable {
         return ranked.max(by: { $0.1 < $1.1 })?.0 ?? .relay
     }
 
-    /// Which King's Chamber layer this device belongs to.
+    /// Dominant chamber layer — the role this device leads with.
     /// Layer 1 (Base/Observe) = Sentinel
     /// Layer 2 (Middle/Orient) = Cognitive or Relay
     /// Layer 3 (Crown/Operate) = Anchor
@@ -53,6 +53,20 @@ public struct HALProfile: Codable, Equatable, Hashable {
         case .process, .relay, .store:  return 2
         case .act:                      return 3
         }
+    }
+
+    /// All field layers this device can satisfy — a device can belong to multiple layers.
+    /// This is the authoritative source for invariant checks.
+    ///
+    /// Layer 1: sense >= .minimal   (can observe the environment)
+    /// Layer 2: process >= .moderate (can orient and make decisions)
+    /// Layer 3: act >= .minimal     (can deliver output)
+    public var satisfiedLayers: Set<Int> {
+        var layers: Set<Int> = []
+        if sense   >= .minimal  { layers.insert(1) }
+        if process >= .moderate { layers.insert(2) }
+        if act     >= .minimal  { layers.insert(3) }
+        return layers
     }
 
     public init(

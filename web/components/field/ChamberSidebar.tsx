@@ -1,55 +1,33 @@
 'use client'
 
-import { useEffect, useMemo, useState } from 'react'
-import { CHAMBERS, type ChamberKey } from '@/lib/chambers'
-import { SpellCircle, BEARRing } from './SpellCircle'
+import { useMemo, useState } from 'react'
+import { SpellCircle } from './SpellCircle'
 import { type SessionRecord, formatRelativeSessionTime } from '@/lib/sessionStore'
-
-interface HealthPayload {
-  chambers: Record<string, {
-    normalizedStatus?: 'alive' | 'degraded' | 'offline'
-    score?: number
-  }>
-  bear?: {
-    score: number
-    label?: string
-  }
-}
 
 interface Props {
   sessions: SessionRecord[]
   activeSessionId: string
+  activeMode: SessionRecord['mode'] | 'foreman'
   onSelectSession: (sessionId: string) => void
   onNewSession: () => void
+  onSelectMode: (mode: SessionRecord['mode'] | 'foreman') => void
 }
 
-const CHAMBER_KEYS: ChamberKey[] = ['dojo', 'obiwan', 'atlas', 'tata', 'akron', 'arkadas', 'kings']
+const WORK_MODES = [
+  { id: 'chat', label: 'Chat', glyph: '◈' },
+  { id: 'collab', label: 'Memory', glyph: '◫' },
+  { id: 'foreman', label: 'Comms', glyph: '⊗' },
+] as const
 
-export function ChamberSidebar({ sessions, activeSessionId, onSelectSession, onNewSession }: Props) {
+export function ChamberSidebar({
+  sessions,
+  activeSessionId,
+  activeMode,
+  onSelectSession,
+  onNewSession,
+  onSelectMode,
+}: Props) {
   const [collapsed, setCollapsed] = useState(false)
-  const [health, setHealth] = useState<HealthPayload | null>(null)
-
-  useEffect(() => {
-    let cancelled = false
-
-    async function loadHealth() {
-      try {
-        const res = await fetch('/api/health', { cache: 'no-store' })
-        if (!res.ok) throw new Error(`HTTP ${res.status}`)
-        const json = await res.json()
-        if (!cancelled) setHealth(json)
-      } catch {
-        if (!cancelled) setHealth(null)
-      }
-    }
-
-    loadHealth()
-    const interval = window.setInterval(loadHealth, 15_000)
-    return () => {
-      cancelled = true
-      window.clearInterval(interval)
-    }
-  }, [])
 
   const sortedSessions = useMemo(
     () => [...sessions].sort((a, b) => Date.parse(b.updatedAt) - Date.parse(a.updatedAt)),
@@ -60,61 +38,30 @@ export function ChamberSidebar({ sessions, activeSessionId, onSelectSession, onN
     return (
       <aside className="w-12 border-r border-border bg-surface flex flex-col items-center py-3 gap-3">
         <button onClick={() => setCollapsed(false)} className="text-muted hover:text-slate-300 text-lg">☰</button>
-        <div className="flex-1 flex flex-col items-center gap-2 mt-4">
-          {CHAMBER_KEYS.map(key => (
-            <div key={key} title={`${CHAMBERS[key].symbol} ${CHAMBERS[key].name} :${CHAMBERS[key].port}`}>
-              <SpellCircle chamber={key} size={24} compact active={health?.chambers?.[key]?.normalizedStatus === 'alive'} />
-            </div>
-          ))}
-        </div>
+        <button
+          onClick={onNewSession}
+          title="New conversation"
+          className="flex h-8 w-8 items-center justify-center rounded-lg bg-dojo/15 text-dojo hover:bg-dojo/25"
+        >
+          +
+        </button>
       </aside>
     )
   }
 
   return (
-    <aside className="w-56 shrink-0 border-r border-border bg-surface flex flex-col">
+    <aside className="w-60 shrink-0 border-r border-border bg-surface flex flex-col">
 
       {/* Logo + collapse */}
       <div className="flex items-center justify-between px-3 py-3 border-b border-border">
         <div className="flex items-center gap-2">
-          <SpellCircle chamber="kings" size={24} compact />
-          <span className="text-sm font-semibold text-slate-200 font-mono">FIELD</span>
+          <SpellCircle chamber="dojo" size={24} compact />
+          <div>
+            <span className="block text-sm font-semibold text-slate-200 font-mono">DOJO</span>
+            <span className="block text-[10px] font-mono uppercase tracking-wide text-dim">Conversations</span>
+          </div>
         </div>
         <button onClick={() => setCollapsed(true)} className="text-muted hover:text-slate-300">‹</button>
-      </div>
-
-      {/* Chamber health strip */}
-      <div className="px-3 py-2.5 border-b border-border">
-        <p className="text-xs text-dim font-mono mb-2">Mac Studio chambers</p>
-        <div className="space-y-1.5">
-          {CHAMBER_KEYS.map(key => {
-            const ch = CHAMBERS[key]
-            const state = health?.chambers?.[key]
-            const alive = state?.normalizedStatus === 'alive'
-            const degraded = state?.normalizedStatus === 'degraded'
-            return (
-              <div key={key} className="flex items-center gap-2">
-                <SpellCircle chamber={key} size={18} compact active={alive} />
-                <span className="text-xs font-mono text-muted flex-1">{ch.symbol} {ch.name}</span>
-                <span className={`text-xs font-mono ${
-                  alive ? 'text-green-400' : degraded ? 'text-amber-400' : 'text-red-400/70'
-                }`}>
-                  {alive ? '●' : degraded ? '◐' : '○'}
-                </span>
-              </div>
-            )
-          })}
-        </div>
-      </div>
-
-      {/* BEAR score — compact */}
-      <div className="flex items-center justify-center py-3 border-b border-border">
-        <div className="flex flex-col items-center gap-1">
-          <BEARRing score={health?.bear?.score ?? 0} size={64} />
-          <span className="text-[10px] font-mono uppercase tracking-wider text-dim">
-            {health?.bear?.label ?? 'offline'}
-          </span>
-        </div>
       </div>
 
       {/* New conversation */}
@@ -126,6 +73,38 @@ export function ChamberSidebar({ sessions, activeSessionId, onSelectSession, onN
           <span>+</span>
           <span>New conversation</span>
         </button>
+      </div>
+
+      <div className="px-3 pb-2">
+        <p className="px-1 pb-2 text-xs font-mono text-dim">Modes</p>
+        <div className="grid grid-cols-2 gap-2">
+          {WORK_MODES.map(item => (
+            <button
+              key={item.id}
+              onClick={() => onSelectMode(item.id)}
+              className={`rounded-lg border px-3 py-2 text-left transition-all ${
+                activeMode === item.id
+                  ? 'border-dojo/30 bg-dojo/10 text-dojo'
+                  : 'border-border bg-raised text-slate-300 hover:border-slate-600 hover:text-slate-100'
+              }`}
+            >
+              <div className="text-xs font-mono">{item.glyph}</div>
+              <div className="mt-1 text-xs font-medium">{item.label}</div>
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <div className="px-3 pb-2">
+        <div className="rounded-lg border border-border bg-raised px-3 py-3">
+          <p className="mb-2 text-xs font-mono text-dim">Live now</p>
+          <div className="space-y-2 text-xs text-slate-300">
+            <div>• session history and saved conversations</div>
+            <div>• archive + personal memory surfaces</div>
+            <div>• comms mode with real Berjak Gmail send path</div>
+            <div>• Hugging Face job-status checks</div>
+          </div>
+        </div>
       </div>
 
       {/* History */}

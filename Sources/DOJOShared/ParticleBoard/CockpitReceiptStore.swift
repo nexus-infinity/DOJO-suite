@@ -4,6 +4,7 @@ import Foundation
 // MARK: - Receipt types
 
 public struct CockpitReceipt: Codable, Sendable {
+    public let receiptID: UUID       // stable unique ID for this receipt event
     public let timestamp: String
     public let event: String         // "commit.accepted" | "commit.blocked"
     public let actor: String
@@ -13,12 +14,42 @@ public struct CockpitReceipt: Codable, Sendable {
     public let policyResult: String  // "ok" | "hold"
     public let addressesChanged: [String]
     public let holdReasons: [HoldReasonReceipt]?
+
+    public init(
+        receiptID: UUID = UUID(),
+        timestamp: String,
+        event: String,
+        actor: String,
+        boardTitle: String,
+        stateHash: String,
+        draftPresent: Bool,
+        policyResult: String,
+        addressesChanged: [String],
+        holdReasons: [HoldReasonReceipt]?
+    ) {
+        self.receiptID = receiptID
+        self.timestamp = timestamp
+        self.event = event
+        self.actor = actor
+        self.boardTitle = boardTitle
+        self.stateHash = stateHash
+        self.draftPresent = draftPresent
+        self.policyResult = policyResult
+        self.addressesChanged = addressesChanged
+        self.holdReasons = holdReasons
+    }
 }
 
 public struct HoldReasonReceipt: Codable, Sendable {
     public let address: String
     public let code: String
     public let detail: String
+
+    public init(address: String, code: String, detail: String) {
+        self.address = address
+        self.code = code
+        self.detail = detail
+    }
 }
 
 // MARK: - Store

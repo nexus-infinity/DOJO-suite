@@ -208,41 +208,16 @@ public class AIService {
         )
     }
     
-    /// Run model asynchronously (preferred method)
+    /// Run model asynchronously — calls DOJO MCP at port 7410
     @available(iOS 15.0, macOS 12.0, *)
     public func runModelAsync(input: AIModelInput) async throws -> AIModelResult {
-        print("🔄 Running \(endpoint.modelName) on \(deviceCapabilities.platform.rawValue)")
-        print("   Input: \(input.data)")
-        print("   Quantization: \(deviceCapabilities.recommendedQuantization.rawValue)")
-        
-        // Simulate network/inference latency based on device
-        let latencyMS = simulatedLatency()
-        try await Task.sleep(nanoseconds: UInt64(latencyMS * 1_000_000))
-        
-        // TODO: Replace with actual inference call
-        // - For HuggingFace: Use HTTP inference API
-        // - For local: Load quantized model from bundle/documents
-        
-        let response = "[\(endpoint.modelName) via \(deviceCapabilities.recommendedQuantization.rawValue)]: \(input.data)"
-        
+        let client = SpinningTopClient()
+        let response = try await client.sendMessage(input.data)
         return AIModelResult(
-            output: response,
-            confidence: 0.95,
-            modelUsed: endpoint.modelName,
+            output: response.response,
+            confidence: 1.0,
+            modelUsed: response.model_used,
             deviceInfo: deviceCapabilities
         )
-    }
-    
-    private func simulatedLatency() -> Double {
-        switch deviceCapabilities.platform {
-        case .macOS:
-            return 200 // Fast on desktop
-        case .iOS, .iPadOS:
-            return 400 // Moderate on mobile
-        case .watchOS:
-            return 800 // Slower on watch
-        case .unknown:
-            return 500
-        }
     }
 }

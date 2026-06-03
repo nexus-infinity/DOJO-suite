@@ -22,6 +22,8 @@ export const FIELD_MCP_SERVICES: MCPService[] = [
   { id: 'huggingface',        name: 'HuggingFace',        symbol: 'H',  chamber: 'atlas',  directPort: 5281, category: 'field-tier2', description: 'misterJB datasets, model training status', authType: 'token', clientExposed: false, routingNote: 'Folded through ▲ ATLAS sacred routing' },
   { id: 'google-apps-script', name: 'Google Apps Script', symbol: 'G',  chamber: 'tata',   directPort: 4321, category: 'field-tier2', description: 'Apps Script project management through TATA', authType: 'oauth', clientExposed: false, routingNote: 'Folded through ▼ TATA sacred routing' },
   { id: 'hubspot',            name: 'HubSpot',            symbol: 'HS', chamber: 'tata',   directPort: 4322, category: 'field-tier2', description: 'CRM interface through TATA temporal truth', authType: 'token', clientExposed: false, routingNote: 'Folded through ▼ TATA sacred routing' },
+  { id: 'berjak-email',       name: 'Berjak Email',       symbol: '✉',  chamber: 'dojo',   directPort: 9633, category: 'field-tier2', description: 'Sovereign email lane and legal thread control', authType: 'oauth', clientExposed: false, routingNote: 'Folded through ◼︎ DOJO sovereignty routing' },
+  { id: 'comms-lane',         name: 'Comms Lane',         symbol: '∿',  chamber: 'tata',   directPort: 8521, category: 'field-tier2', description: 'Communication mediation and orchestration lane', authType: 'token', clientExposed: false, routingNote: 'Folded through ▼ TATA temporal routing' },
 ]
 
 export const THIRD_PARTY_MCP_SERVICES: MCPService[] = [

@@ -21,6 +21,40 @@ This document establishes the **canonical operational contract** for all DOJO Su
 
 ---
 
+## Scope Boundary (locked 2026-04-02)
+
+### What DOJO Suite Is
+
+**DOJO Suite** governs the **murmuration devices** — sovereign application surfaces that express the ◼︎ DOJO chamber (741 Hz) at device scale. The canonical device class name is `Field.Dojo.Murmur` (class-reference form). This applies to DOJO-iOS, DOJO-MacOS, DOJO-Watch, DOJO-tvOS, DOJO-CarKit, and any future device surface carrying DOJO's frequency.
+
+The hard invariants in this contract exist *because application programming requires them*. Swift compiles or it doesn't. A BEAR score either validates or it doesn't. This precision is the correct expression of the DOJO chamber at implementation layer — not a departure from philosophy but its rigorous form.
+
+### What DOJO Suite Is Not
+
+**DOJO Suite is not the Field-MacOS-DOJO-Spinning Top.** The Spinning Top is the whole living system — the geometry, the frequencies, the murmuration of all chambers together. DOJO Suite is one expression of one chamber within that whole.
+
+### Device Naming — DOJO Suite Scope
+
+The universal FIELD device taxonomy is defined in `docs/FIELD_SPHERE_GENUS_GRAMMAR.md`, with broader path/file naming rules in `docs/FIELD_ARCHITECTURE_AND_NAMING_CANON.md`. The full address form is:
+
+```
+Field . [Suite] . [Chamber] . [Form] . [Instance]
+```
+
+Within this contract's scope (DOJO Suite), the Suite segment is implied, so the **suite-local form** applies:
+
+- **Class reference**: `Field.Dojo.Murmur` — the Murmur device class within DOJO Suite
+- **Suite-local instance**: `Field.Dojo.Murmur.Watch1` — a specific DOJO Murmur device
+- **Full address** (cross-suite): `Field.Dojo.Arkadas.Murmur.Drone1` — when addressing from outside DOJO Suite
+
+Each `Field.Dojo.Murmur` device carries sovereign intelligence (currently: LLM+MLX hybrid — implementation will evolve, the geometric name does not track the implementation). A murmur device does not *connect to* FIELD. It *is* FIELD expressed at device scale — a limb with its own nervous system that is still fully part of the body. It carries the whole pattern at its scale.
+
+### The Complete Understanding
+
+The full knowledge of the Spinning Top — each device's sovereign boundaries AND the collective nature of being part of the whole — is held at the FIELD level, above any single suite contract. This contract governs the DOJO layer. The Spinning Top's complete understanding supersedes it.
+
+---
+
 ## Section 1: Structural Hygiene — Bridge vs Vertices
 
 ### 1.1 The 852 Hz Bridge (King's Chamber Infrastructure)

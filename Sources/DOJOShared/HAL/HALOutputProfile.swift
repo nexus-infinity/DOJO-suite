@@ -13,6 +13,22 @@ public enum HALOutputProfile: String, Codable, CaseIterable {
     // Future: splitField(primary:secondary:) — deliberate dual stream, not a launch requirement
 }
 
+// MARK: - Field Audio Mode
+
+/// Coherence-driven audio behavior — determines WHAT the field does with audio,
+/// independently of WHERE it routes (HALOutputProfile handles routing).
+///
+/// Set by DOJOFieldCoordinator on confirmed CoherenceLevel transitions.
+public enum FieldAudioMode: String, Codable {
+    case full        // All paths active — AI-driven speech enabled at full confidence
+    case outputOnly  // Output active; ambient sensing suspended (degraded field)
+                     // System speaks but with reduced environmental awareness
+    case passthrough // Dampen AI output — field doesn't trust its own state (drifting)
+                     // No assertive speech; passthrough/ambient audio only
+    case silent      // No AI-driven output — field offline (breached)
+                     // Single notification then silence
+}
+
 // MARK: - TV Connector Policy
 
 /// How HAL handles hearing aid source priority when a phone call arrives.
