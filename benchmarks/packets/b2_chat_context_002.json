@@ -1,0 +1,44 @@
+{
+  "schema_version": "1.1",
+  "type": "benchmark_packet",
+  "id": "b2-chat-context-002",
+  "surface": "B2",
+  "run": 2,
+  "ts": "2026-06-03T02:25:00+10:00",
+  "platform": {
+    "name": "claude_desktop_macos",
+    "tab": "Chat",
+    "model": "claude-sonnet-4-6",
+    "app_version": "observed"
+  },
+  "context_augmentation": {
+    "skill_active": true,
+    "skill_content": "FIELD canonical chamber spec — 7 chambers, symbols, frequencies, ports, BEAR thresholds, NodeHealthStatus mapping",
+    "delta_from_run_1": "Skill added between runs. Run 1 had no FIELD spec in context."
+  },
+  "tasks": {
+    "field_context_reasoning": {
+      "prompt": "You are operating within the FIELD system. Without searching or using tools, answer from memory:\n\n1. Name all 7 FIELD chambers with their symbols and frequencies.\n2. Which chamber is the deterministic infrastructure and translation bridge?\n3. BEAR score is 0.75 — what does this indicate about system coherence?\n4. A chamber shows state: false in /state response. What is its NodeHealthStatus?",
+      "response": "## FIELD System — Canonical Answers\n\n### 1. All 7 Chambers — Symbols & Frequencies\n\n| Symbol | Name | Hz |\n|--------|------|----|  \n| ◼︎ | DOJO | 741 Hz |\n| ● | OBI-WAN | 963 Hz |\n| ▲ | ATLAS | 528 Hz |\n| ▼ | TATA | 432 Hz |\n| ◻ | AKRON | 396 Hz |\n| ◉ | ARKADAŞ (SPIN) | 717 Hz |\n| ◎ | Kings Chamber | 852 Hz |\n\n### 2. Deterministic Infrastructure & Translation Bridge\n\n◎ Kings Chamber — 852 Hz — Port 8520\n\nNot ARKADAŞ (a common conflation point). Kings Chamber is the infrastructure translator. Note: OOOEntity.arkadas in code maps to 852 Hz = Kings Chamber, not to the SPIN entity.\n\n### 3. BEAR Score 0.75 — System Coherence\n\nStatus: Degraded\n\n- Range 0.75–0.90 = Amber / Degraded\n- Interpretation: Reduced capacity — the chamber is operational but not at nominal performance\n- Action threshold: Monitor; intervention not yet mandatory but warranted if score trends downward toward the 0.50 Concerning threshold\n\n### 4. state: false in /state Response\n\nNodeHealthStatus: .offline\n\n- This is a hard rule — no inference, no softening\n- state: false does not mean Degraded or Critical\n- It means the node is offline, period",
+      "latency_ms": null
+    }
+  },
+  "scores": {
+    "field_knowledge_1_5": 5,
+    "chamber_accuracy_1_5": 5,
+    "bear_interpretation_1_5": 5,
+    "status_mapping_1_5": 5,
+    "overall_1_5": 5.0
+  },
+  "tata_validation": {
+    "triangle_status": "resolved",
+    "validation_status": "pass",
+    "reason_if_rejected": null
+  },
+  "routing": {
+    "tata_gate": "pass",
+    "atlas_ready": true,
+    "dojo_ready": true
+  },
+  "finding": "Skill injection transforms B2 from 2.3 → 5.0. Without canonical spec in context Claude desktop cannot recall FIELD correctly. With skill active: all 7 chambers correct, translation bridge correct, BEAR thresholds exact, NodeHealthStatus exact."
+}

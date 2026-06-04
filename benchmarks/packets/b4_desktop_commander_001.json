@@ -1,0 +1,47 @@
+{
+  "schema_version": "1.1",
+  "type": "benchmark_packet",
+  "id": "b4-desktop-commander-001",
+  "surface": "B4",
+  "ts": "REPLACE_WITH_ISO_8601_UTC",
+  "platform": {
+    "name": "claude_desktop_macos",
+    "tab": "Chat",
+    "model": "REPLACE_WITH_VISIBLE_MODEL_NAME",
+    "app_version": "REPLACE_WITH_APP_VERSION"
+  },
+  "prerequisites": {
+    "server_required": true,
+    "server_url": "http://localhost:7410",
+    "server_check": "curl -s http://localhost:7410/health",
+    "tab": "Chat",
+    "tools_required": ["Desktop Commander"],
+    "verify_extension": "Settings → Extensions → Desktop Commander → Configure"
+  },
+  "tasks": {
+    "mcp_state_read": {
+      "prompt": "Use Desktop Commander to run this exact command and report the full output:\n\ncurl -s http://localhost:7410/state\n\nThen answer:\n1. What is the coherence (BEAR) value?\n2. How many nodes are reporting state: true?\n3. Which specific chambers are alive?",
+      "response": "REPLACE_WITH_VERBATIM_RESPONSE",
+      "raw_command_output": "REPLACE_WITH_CURL_OUTPUT",
+      "latency_ms": null,
+      "tool_calls_made": []
+    }
+  },
+  "scores": {
+    "tool_invocation_1_5": 0,
+    "data_accuracy_1_5": 0,
+    "chamber_identification_1_5": 0,
+    "interpretation_1_5": 0,
+    "overall_1_5": 0.0
+  },
+  "tata_validation": {
+    "triangle_status": "unresolved",
+    "validation_status": "rejected",
+    "reason_if_rejected": "Pending execution. Requires DOJO server at localhost:7410."
+  },
+  "routing": {
+    "tata_gate": "fail",
+    "atlas_ready": false,
+    "dojo_ready": false
+  }
+}

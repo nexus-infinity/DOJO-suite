@@ -1,0 +1,44 @@
+{
+  "schema_version": "1.1",
+  "type": "benchmark_packet",
+  "id": "b3-cowork-task-001",
+  "surface": "B3",
+  "ts": "REPLACE_WITH_ISO_8601_UTC",
+  "platform": {
+    "name": "claude_desktop_macos",
+    "tab": "Cowork",
+    "model": "REPLACE_WITH_VISIBLE_MODEL_NAME",
+    "app_version": "REPLACE_WITH_APP_VERSION"
+  },
+  "prerequisites": {
+    "server_required": false,
+    "tab": "Cowork — Work in a project",
+    "project_path": "/Users/field/DOJO-suite",
+    "tools_required": []
+  },
+  "tasks": {
+    "dojo_operational_plan": {
+      "prompt": "Project: DOJO-suite at /Users/field/DOJO-suite\n\nTask: All 7 FIELD chambers should be operational. Currently BEAR is 0.75 and 0/7 chambers are reporting alive in the ChamberRail. Produce a prioritised action plan (max 5 items) to get chambers online and benchmarkable. Reference specific files or ports where relevant.",
+      "response": "REPLACE_WITH_VERBATIM_RESPONSE",
+      "latency_ms": null,
+      "artifacts_produced": []
+    }
+  },
+  "scores": {
+    "task_understanding_1_5": 0,
+    "field_accuracy_1_5": 0,
+    "actionability_1_5": 0,
+    "file_specificity_1_5": 0,
+    "overall_1_5": 0.0
+  },
+  "tata_validation": {
+    "triangle_status": "unresolved",
+    "validation_status": "rejected",
+    "reason_if_rejected": "Pending execution."
+  },
+  "routing": {
+    "tata_gate": "fail",
+    "atlas_ready": false,
+    "dojo_ready": false
+  }
+}

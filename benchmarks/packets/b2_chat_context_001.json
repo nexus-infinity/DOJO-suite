@@ -1,0 +1,49 @@
+{
+  "schema_version": "1.1",
+  "type": "benchmark_packet",
+  "id": "b2-chat-context-001",
+  "surface": "B2",
+  "ts": "2026-06-03T02:10:00+10:00",
+  "platform": {
+    "name": "claude_desktop_macos",
+    "tab": "Chat",
+    "model": "claude-sonnet-4-6",
+    "app_version": "observed"
+  },
+  "prerequisites": {
+    "server_required": false,
+    "tab": "Chat",
+    "tools_required": []
+  },
+  "tasks": {
+    "field_context_reasoning": {
+      "prompt": "You are operating within the FIELD system. Without searching or using tools, answer from memory:\n\n1. Name all 7 FIELD chambers with their symbols and frequencies.\n2. Which chamber is the deterministic infrastructure and translation bridge?\n3. BEAR score is 0.75 — what does this indicate about system coherence?\n4. A chamber shows state: false in /state response. What is its NodeHealthStatus?",
+      "response": "I'll answer directly from memory — no tools, no search.\n\n## FIELD System Memory Recall\n\n### 1. The 7 FIELD Chambers — Symbols & Frequencies\n\n| Chamber | Symbol | Frequency |\n|---|---|---|\n| **DOJO** | ⚔️ / Hexagram | 741 Hz |\n| **OBI-WAN** | 👁️ / Eye | 396 Hz |\n| **TATA** | ⚖️ / Scales | 528 Hz |\n| **ATLAS** | 🌐 / Sphere/Globe | 852 Hz |\n| **AKRON** | 🔑 / Key/Gateway | 963 Hz |\n| **FIELD-DEV** | 🔧 / Gear | 432 Hz |\n| **FIELD-OOWL** | 🦉 / Owl | 639 Hz |\n\nConfidence note: The frequencies I hold most firmly are DOJO (741 Hz), TATA (528 Hz), and AKRON (963 Hz). The others are plausible from pattern but I cannot guarantee exact assignment without your canonical spec.\n\n### 2. Deterministic Infrastructure & Translation Bridge\n\nATLAS — serves as the deterministic infrastructure layer and translation bridge between the Sacred FIELD tetrahedron (above) and FIELD-LIVING (below).\n\nCaveat: You have also described the Train Station (528 Hz ↔ 432 Hz bridge) as a frequency translation mechanism — so depending on framing, the answer could be ATLAS (structural) or Train Station (operational bridge).\n\n### 3. BEAR Score = 0.75 — System Coherence Interpretation\n\nA BEAR score of 0.75 indicates: Above threshold (assuming 0.5 baseline, 1.0 = full coherence). System is functionally coherent but not at peak resonance. One or more chambers are partially synchronized — contributing signal but with degraded fidelity. Action implication: Monitor; not an emergency state, but worth investigating which chamber is pulling the score below 1.0.\n\nHonest caveat: BEAR (Baseline Environmental Alignment Ratio, or however you've canonically named it) is referenced in my memory but the exact scoring rubric thresholds aren't firmly held. I'm reasoning from the 0–1 normalized scale pattern.\n\n### 4. state: false in /state Response — NodeHealthStatus\n\nA chamber returning state: false maps to: NodeHealthStatus: OFFLINE or DEGRADED — specifically: If no heartbeat is detected → OFFLINE. If heartbeat exists but chamber is unresponsive to orchestration commands → DEGRADED. The /state endpoint returning false is the boolean gate that blocks that chamber from participating in FIELD routing.\n\n## Integrity Statement\n\nI've answered from memory as instructed. Where I have genuine uncertainty I've flagged it. I will not hallucinate precision on your canonical specs — the authoritative source is your FIELD documentation, not my inference.",
+      "latency_ms": null
+    }
+  },
+  "scoring_notes": {
+    "Q1_chamber_accuracy": "DOJO/741 correct. OBI-WAN/ATLAS/TATA/AKRON frequencies all wrong (shuffled). Invented FIELD-DEV and FIELD-OOWL. Missing ARKADAŞ (◉, 717 Hz) and Kings Chamber (◎, 852 Hz). All symbols wrong — emojis used instead of canonical Unicode glyphs (◼︎ ● ▲ ▼ ◻ ◉ ◎).",
+    "Q2_translation_bridge": "Said ATLAS. Canonical answer is Kings Chamber (◎, 852 Hz) — 'deterministic infrastructure, translation bridge' as defined in FieldDesignSystem.swift line 20.",
+    "Q3_bear_interpretation": "Correct direction: degraded but not critical, monitor. Wrong acronym expansion. Threshold reasoning slightly off (0.75 = amber/yellow ring = 0.75–0.9 range in ChamberRail). Broadly sound.",
+    "Q4_status_mapping": "state: false maps to .offline exactly per ChamberHealthMonitor.chamberStatus(). Response added DEGRADED as alternative — incorrect. DEGRADED requires state: true with health: 'degraded'. Integrity/caveat behaviour is a positive signal."
+  },
+  "scores": {
+    "field_knowledge_1_5": 2,
+    "chamber_accuracy_1_5": 1,
+    "bear_interpretation_1_5": 3,
+    "status_mapping_1_5": 3,
+    "overall_1_5": 2.3
+  },
+  "tata_validation": {
+    "triangle_status": "unresolved",
+    "validation_status": "rejected",
+    "reason_if_rejected": "overall 2.3 < 3.5 threshold. Chamber spec recall failed: frequencies shuffled, 2 invented chambers, 2 missing chambers, all symbols wrong."
+  },
+  "routing": {
+    "tata_gate": "fail",
+    "atlas_ready": false,
+    "dojo_ready": false
+  },
+  "remediation": "Feed FieldDesignSystem.swift as context or configure Claude desktop memory with canonical chamber spec. Re-run to establish improved baseline."
+}
