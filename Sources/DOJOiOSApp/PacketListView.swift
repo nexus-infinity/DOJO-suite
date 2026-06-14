@@ -43,16 +43,17 @@ struct PacketListView: View {
                             .fontWeight(.semibold)
                     }
                 }
-                if queue.packets.contains(where: { $0.state == .failed }) {
-                    ToolbarItem(placement: .primaryAction) {
-                        Button {
-                            queue.resetFailed()
-                        } label: {
-                            Image(systemName: "arrow.clockwise")
-                                .foregroundStyle(Color(hex: "#F59E0B"))
-                                .fontWeight(.semibold)
-                        }
+                ToolbarItem(placement: .primaryAction) {
+                    let hasFailed = queue.packets.contains(where: { $0.state == .failed })
+                    Button {
+                        queue.resetFailed()
+                    } label: {
+                        Image(systemName: "arrow.clockwise")
+                            .foregroundStyle(Color(hex: "#F59E0B"))
+                            .fontWeight(.semibold)
                     }
+                    .opacity(hasFailed ? 1 : 0)
+                    .disabled(!hasFailed)
                 }
                 ToolbarItem(placement: .primaryAction) {
                     Button {
