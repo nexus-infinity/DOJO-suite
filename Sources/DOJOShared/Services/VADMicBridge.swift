@@ -10,6 +10,9 @@ public final class VADMicBridge: ObservableObject {
     @Published public var isListening = false
     @Published public var liveTranscript = ""
     @Published public var authorizationStatus: SFSpeechRecognizerAuthorizationStatus = .notDetermined
+    /// Set to the completed utterance text when speech ends. Resets to "" after each firing.
+    /// SwiftUI views can observe this via `.onChange(of: micBridge.completedUtterance)`.
+    @Published public var completedUtterance: String = ""
 
     public var onUtterance: ((String) -> Void)?
 
@@ -94,7 +97,7 @@ public final class VADMicBridge: ObservableObject {
         
         switch profile {
         case .intimate:
-            options.insert(.allowBluetooth)
+            options.insert(.allowBluetoothHFP)
             options.insert(.allowBluetoothA2DP)
         case .fallback:
             options.insert(.defaultToSpeaker)
@@ -179,7 +182,9 @@ public final class VADMicBridge: ObservableObject {
             guard !Task.isCancelled else { return }
 
             if self.isSpeechActive, !self.liveTranscript.isEmpty {
-                self.onUtterance?(self.liveTranscript)
+                let final = self.liveTranscript
+                self.onUtterance?(final)
+                self.completedUtterance = final
                 self.liveTranscript = ""
                 self.restartRecognition()
             }

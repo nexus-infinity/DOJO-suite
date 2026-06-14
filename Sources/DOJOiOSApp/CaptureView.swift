@@ -1,5 +1,4 @@
 import SwiftUI
-import FieldKit
 
 struct CaptureView: View {
     @EnvironmentObject private var queue: PacketQueue

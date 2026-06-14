@@ -3,7 +3,7 @@ import Foundation
 public struct AKRONClient: Sendable {
     private let baseURL: URL
 
-    public init(host: String = "mac-studio.local", port: Int = 3960) {
+    public init(host: String = "100.79.35.36", port: Int = 3960) {
         baseURL = URL(string: "http://\(host):\(port)")!
     }
 

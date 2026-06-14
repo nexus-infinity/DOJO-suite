@@ -3,28 +3,45 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 77;
+	objectVersion = 63;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		0DDD341726277ACA4747409D /* DependencyInjector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3208A6C3C8157AD6C737E1A1 /* DependencyInjector.swift */; };
 		1028C54B2462EB8461BCC277 /* OB1LinkApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB021358F89956AFFDA69082 /* OB1LinkApp.swift */; };
 		10307B7A51F0A809212779FB /* AIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EFCE33E7A3A74EA4DD7F388 /* AIService.swift */; };
+		13472C94B75D47429ED3537E /* PacketRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F20A90EEBA248DF991EE1D2 /* PacketRepository.swift */; };
+		14DED2D1BC2B4A5195934679 /* PacketReceipt.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8F890CBD9E84A0D941A57C4 /* PacketReceipt.swift */; };
 		18221FC05E2340EFC7743D10 /* Communication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25DE45BCA6C195D8B87D4A8F /* Communication.swift */; };
+		27297FBE609F45ECAF589223 /* MurmurQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33E5E3D248F04CB8B245AC45 /* MurmurQueue.swift */; };
+		31DB2F3BAA0F4F469ADDB8E9 /* PacketQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAAE0FDC45714A46BA0AC4BC /* PacketQueue.swift */; };
+		3367C3C1C1C147A49EEEEDF5 /* AKRONClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0804EFCC8D046F08AEB1702 /* AKRONClient.swift */; };
 		49202E3944B721DDBB4F7A25 /* SacredGeometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F961D9BDC99BB36FDB05D45 /* SacredGeometry.swift */; };
+		4C44242B919A4CC19C22448B /* Packet.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEDEB7242DB744C99C23626B /* Packet.swift */; };
+		4D40008323B14B4785682C2A /* PacketStateChip.swift in Sources */ = {isa = PBXBuildFile; fileRef = D834ECC9477B409B92F5D569 /* PacketStateChip.swift */; };
+		4EED1828669A408CAD2D5D29 /* PacketFileStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 366F4E354C1146ECAE4B9706 /* PacketFileStore.swift */; };
+		594B680234F44F468318571C /* Devices/MurmurCaptureService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F45A77E6465D48E48945CDD2 /* Devices/MurmurCaptureService.swift */; };
 		5D5D147C24F81D6604FF6921 /* DOJOModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E0AA21AEF7D4FA8F5126AB8 /* DOJOModels.swift */; };
-		5E71FA5797FD24628D7BC9D3 /* ArkadašApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 215056ABE3E06A024E948B25 /* ArkadašApp.swift */; };
+		5E71FA5797FD24628D7BC9D3 /* ArkadašApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 215056ABE3E06A024E948B25 /* ArkadašApp.swift */; };
 		611A869AF3511327448E656C /* DOJOShared.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = EB68CC7B91C0F2241632A84F /* DOJOShared.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		64D1699B8DDB5F425E3863BC /* DOJOShared.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFEB4E63619521E8DCEC3E64 /* DOJOShared.swift */; };
+		74F68AD55D37458694109248 /* CaptureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 786C32EC5471400CA57BC565 /* CaptureView.swift */; };
+		76D1D379E4C14C4D94A8D7E2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F80D54EBF4A1481A8D150E1B /* Assets.xcassets */; };
 		79A9BEECF2E45F306D2A0C82 /* ModelLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E4CCE659DAB953BD66F1BEA /* ModelLoader.swift */; };
+		80D0379F2E2246EA8C9F06C5 /* DOJOiOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5426B4BD0EC847B094CDE62A /* DOJOiOSApp.swift */; };
 		86B9B0E393A74258A968D463 /* DOJOShared.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = EB68CC7B91C0F2241632A84F /* DOJOShared.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		87B07D178CABC5E8E340DE5F /* GeometryTransforms.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7C3BDB34744AA43CCA4A8F4 /* GeometryTransforms.swift */; };
 		9437AA521917AF36FEBB4715 /* PortalRegistry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 428C5537B7D18119BB3661E8 /* PortalRegistry.swift */; };
 		A48651230A674057A5339FB0 /* DOJOApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A3E090081AFC7C0FC256D3 /* DOJOApp.swift */; };
 		A7D263BB4A4AD7C50E832C63 /* DOJOShared.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB68CC7B91C0F2241632A84F /* DOJOShared.framework */; };
+		AAE06625EDCA4A7891C5FF0A /* MurmurController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16B5DE24F8BB4EEDB5AFA6D4 /* MurmurController.swift */; };
+		AF3A4A2085D9463AB0B038E1 /* MurmurPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 610D573C125A4EF0A35DFF0E /* MurmurPacket.swift */; };
 		B0FDD62F2C9019DB10C6FE80 /* SpinningTopClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021A1B390D71AD2130FCE588 /* SpinningTopClient.swift */; };
+		B4BBE2A2F95F49B98387EC3F /* PacketState.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC7A5D49B95348F8BE3269E0 /* PacketState.swift */; };
 		BB4542F6FF7FE3F74E97F8CD /* DOJOShared.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB68CC7B91C0F2241632A84F /* DOJOShared.framework */; };
+		BEADA5E1A4B24795A71C2994 /* MurmurTransport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73050C992D03472BB3247FCA /* MurmurTransport.swift */; };
 		CFD59B8D9B7D6DE73D160A08 /* ParticleEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555ECFAE396BC9AE36B19F59 /* ParticleEngine.swift */; };
+		D39F7AB46FA347ECACEE0A73 /* PacketListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9660928EC544359AD671A48 /* PacketListView.swift */; };
 		D56492B1F4BE65F6BF295B42 /* DOJOShared.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = EB68CC7B91C0F2241632A84F /* DOJOShared.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		D6C3CE05E1ED3CD28BC73A63 /* DOJOShared.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB68CC7B91C0F2241632A84F /* DOJOShared.framework */; };
 		DC51D93674716E0B087AD447 /* DOJOShared.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = EB68CC7B91C0F2241632A84F /* DOJOShared.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -115,29 +132,55 @@
 /* Begin PBXFileReference section */
 		021A1B390D71AD2130FCE588 /* SpinningTopClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinningTopClient.swift; sourceTree = "<group>"; };
 		0F961D9BDC99BB36FDB05D45 /* SacredGeometry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SacredGeometry.swift; sourceTree = "<group>"; };
+		16B5DE24F8BB4EEDB5AFA6D4 /* MurmurController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MurmurController.swift; sourceTree = "<group>"; };
 		18120823221505B789FEBEA6 /* SIMDUtilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SIMDUtilities.swift; sourceTree = "<group>"; };
 		1E0AA21AEF7D4FA8F5126AB8 /* DOJOModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DOJOModels.swift; sourceTree = "<group>"; };
-		1EE39709C30C445BCB2647F1 /* OB1LinkApp.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = OB1LinkApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		1EE39709C30C445BCB2647F1 /* OB1LinkApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OB1LinkApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		201847129651799769370F4C /* ArkadasApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ArkadasApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		215056ABE3E06A024E948B25 /* ArkadašApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ArkadašApp.swift"; sourceTree = "<group>"; };
+		215056ABE3E06A024E948B25 /* ArkadašApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ArkadašApp.swift"; sourceTree = "<group>"; };
 		25DE45BCA6C195D8B87D4A8F /* Communication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Communication.swift; sourceTree = "<group>"; };
 		3208A6C3C8157AD6C737E1A1 /* DependencyInjector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyInjector.swift; sourceTree = "<group>"; };
+		33E5E3D248F04CB8B245AC45 /* MurmurQueue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MurmurQueue.swift; sourceTree = "<group>"; };
+		3564D6572A2E4AFA9CA23765 /* DOJOiOSApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DOJOiOSApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		366F4E354C1146ECAE4B9706 /* PacketFileStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PacketFileStore.swift; sourceTree = "<group>"; };
+		3F20A90EEBA248DF991EE1D2 /* PacketRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PacketRepository.swift; sourceTree = "<group>"; };
 		428C5537B7D18119BB3661E8 /* PortalRegistry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortalRegistry.swift; sourceTree = "<group>"; };
+		49B02441183F47779DD69E4D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4F7D561AAA0D9AE7A97997F1 /* GeometricEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeometricEntity.swift; sourceTree = "<group>"; };
+		5426B4BD0EC847B094CDE62A /* DOJOiOSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DOJOiOSApp.swift; sourceTree = "<group>"; };
 		555ECFAE396BC9AE36B19F59 /* ParticleEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticleEngine.swift; sourceTree = "<group>"; };
+		610D573C125A4EF0A35DFF0E /* MurmurPacket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MurmurPacket.swift; sourceTree = "<group>"; };
+		73050C992D03472BB3247FCA /* MurmurTransport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MurmurTransport.swift; sourceTree = "<group>"; };
+		786C32EC5471400CA57BC565 /* CaptureView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptureView.swift; sourceTree = "<group>"; };
 		7E4CCE659DAB953BD66F1BEA /* ModelLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelLoader.swift; sourceTree = "<group>"; };
 		7EFCE33E7A3A74EA4DD7F388 /* AIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIService.swift; sourceTree = "<group>"; };
 		8A11802E6F074B5797D88446 /* DOJOApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DOJOApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		9D0A2561B6A8FBFBF5670BB0 /* DojoLinkApp.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = DojoLinkApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		9D0A2561B6A8FBFBF5670BB0 /* DojoLinkApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DojoLinkApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A7C3BDB34744AA43CCA4A8F4 /* GeometryTransforms.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeometryTransforms.swift; sourceTree = "<group>"; };
+		A9660928EC544359AD671A48 /* PacketListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PacketListView.swift; sourceTree = "<group>"; };
+		AC7A5D49B95348F8BE3269E0 /* PacketState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PacketState.swift; sourceTree = "<group>"; };
 		CB021358F89956AFFDA69082 /* OB1LinkApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OB1LinkApp.swift; sourceTree = "<group>"; };
 		D0A3E090081AFC7C0FC256D3 /* DOJOApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DOJOApp.swift; sourceTree = "<group>"; };
 		D2074BBDBDD85BE5C9C3A254 /* DojoLinkApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DojoLinkApp.swift; sourceTree = "<group>"; };
+		D834ECC9477B409B92F5D569 /* PacketStateChip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PacketStateChip.swift; sourceTree = "<group>"; };
+		E0804EFCC8D046F08AEB1702 /* AKRONClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AKRONClient.swift; sourceTree = "<group>"; };
+		E8F890CBD9E84A0D941A57C4 /* PacketReceipt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PacketReceipt.swift; sourceTree = "<group>"; };
 		EB68CC7B91C0F2241632A84F /* DOJOShared.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DOJOShared.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		EEDEB7242DB744C99C23626B /* Packet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Packet.swift; sourceTree = "<group>"; };
+		F45A77E6465D48E48945CDD2 /* Devices/MurmurCaptureService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Devices/MurmurCaptureService.swift; sourceTree = "<group>"; };
+		F80D54EBF4A1481A8D150E1B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		FAAE0FDC45714A46BA0AC4BC /* PacketQueue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PacketQueue.swift; sourceTree = "<group>"; };
 		FFEB4E63619521E8DCEC3E64 /* DOJOShared.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DOJOShared.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		31D27F8F6A5241159B3F4C15 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		867101C911493B4A44D76C59 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -195,11 +238,15 @@
 		3799A5DA2D80FEA3ECC04DE8 = {
 			isa = PBXGroup;
 			children = (
-				A516D10488B5D2E19EA93575 /* ArkadašApp */,
+				A19635DF2FD6B49D004AC42E /* New Group */,
+				A516D10488B5D2E19EA93575 /* ArkadašApp */,
 				61DF02893AEF9707FD7EEE6F /* DOJOApp */,
 				1FF2AF5948D456300865BF6D /* DojoLinkApp */,
 				9847278703F9081F285D0FBE /* DOJOShared */,
 				A401EC66D380D924B597DCB1 /* OB1LinkApp */,
+				64C68714534048B5A919F849 /* DOJOiOSApp */,
+				A1DC63E43B9E4E088F69F23F /* FieldKit */,
+				5A4AD7E2470C4A9195A5F537 /* DOJOShared/HAL */,
 				DA3F0C47D9901D85B78DEF7A /* Products */,
 			);
 			indentWidth = 4;
@@ -225,6 +272,18 @@
 			path = OOO;
 			sourceTree = "<group>";
 		};
+		5A4AD7E2470C4A9195A5F537 /* DOJOShared/HAL */ = {
+			isa = PBXGroup;
+			children = (
+				610D573C125A4EF0A35DFF0E /* MurmurPacket.swift */,
+				33E5E3D248F04CB8B245AC45 /* MurmurQueue.swift */,
+				73050C992D03472BB3247FCA /* MurmurTransport.swift */,
+				F45A77E6465D48E48945CDD2 /* Devices/MurmurCaptureService.swift */,
+			);
+			name = DOJOShared/HAL;
+			path = Sources/DOJOShared/HAL;
+			sourceTree = "<group>";
+		};
 		61DF02893AEF9707FD7EEE6F /* DOJOApp */ = {
 			isa = PBXGroup;
 			children = (
@@ -232,6 +291,22 @@
 			);
 			name = DOJOApp;
 			path = Sources/DOJOApp;
+			sourceTree = "<group>";
+		};
+		64C68714534048B5A919F849 /* DOJOiOSApp */ = {
+			isa = PBXGroup;
+			children = (
+				5426B4BD0EC847B094CDE62A /* DOJOiOSApp.swift */,
+				16B5DE24F8BB4EEDB5AFA6D4 /* MurmurController.swift */,
+				A9660928EC544359AD671A48 /* PacketListView.swift */,
+				FAAE0FDC45714A46BA0AC4BC /* PacketQueue.swift */,
+				D834ECC9477B409B92F5D569 /* PacketStateChip.swift */,
+				786C32EC5471400CA57BC565 /* CaptureView.swift */,
+				F80D54EBF4A1481A8D150E1B /* Assets.xcassets */,
+				49B02441183F47779DD69E4D /* Info.plist */,
+			);
+			name = DOJOiOSApp;
+			path = Sources/DOJOiOSApp;
 			sourceTree = "<group>";
 		};
 		83B137E7E02C8E8A0FDEF7DE /* Utilities */ = {
@@ -258,6 +333,34 @@
 			path = Sources/DOJOShared;
 			sourceTree = "<group>";
 		};
+		A19635DE2FD6B48B004AC42E /* New Group */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "New Group";
+			sourceTree = "<group>";
+		};
+		A19635DF2FD6B49D004AC42E /* New Group */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "New Group";
+			sourceTree = "<group>";
+		};
+		A1DC63E43B9E4E088F69F23F /* FieldKit */ = {
+			isa = PBXGroup;
+			children = (
+				E0804EFCC8D046F08AEB1702 /* AKRONClient.swift */,
+				EEDEB7242DB744C99C23626B /* Packet.swift */,
+				366F4E354C1146ECAE4B9706 /* PacketFileStore.swift */,
+				E8F890CBD9E84A0D941A57C4 /* PacketReceipt.swift */,
+				3F20A90EEBA248DF991EE1D2 /* PacketRepository.swift */,
+				AC7A5D49B95348F8BE3269E0 /* PacketState.swift */,
+			);
+			name = FieldKit;
+			path = Sources/FieldKit;
+			sourceTree = "<group>";
+		};
 		A401EC66D380D924B597DCB1 /* OB1LinkApp */ = {
 			isa = PBXGroup;
 			children = (
@@ -267,10 +370,11 @@
 			path = Sources/OB1LinkApp;
 			sourceTree = "<group>";
 		};
-		A516D10488B5D2E19EA93575 /* ArkadašApp */ = {
+		A516D10488B5D2E19EA93575 /* ArkadašApp */ = {
 			isa = PBXGroup;
 			children = (
-				215056ABE3E06A024E948B25 /* ArkadašApp.swift */,
+				A19635DE2FD6B48B004AC42E /* New Group */,
+				215056ABE3E06A024E948B25 /* ArkadašApp.swift */,
 			);
 			name = "ArkadašApp";
 			path = "Sources/ArkadašApp";
@@ -284,6 +388,7 @@
 				9D0A2561B6A8FBFBF5670BB0 /* DojoLinkApp.app */,
 				EB68CC7B91C0F2241632A84F /* DOJOShared.framework */,
 				1EE39709C30C445BCB2647F1 /* OB1LinkApp.app */,
+				3564D6572A2E4AFA9CA23765 /* DOJOiOSApp.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -396,6 +501,25 @@
 			productReference = 1EE39709C30C445BCB2647F1 /* OB1LinkApp.app */;
 			productType = "com.apple.product-type.application";
 		};
+		FB3297AE1B5B43199F54E156 /* DOJOiOSApp */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E0E178B144C74D9AADA8B835 /* Build configuration list for PBXNativeTarget "DOJOiOSApp" */;
+			buildPhases = (
+				54F3D6BA0AF7408191706CB9 /* Sources */,
+				31D27F8F6A5241159B3F4C15 /* Frameworks */,
+				52680FAFBA674C4A9351DF85 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = DOJOiOSApp;
+			packageProductDependencies = (
+			);
+			productName = DOJOiOSApp;
+			productReference = 3564D6572A2E4AFA9CA23765 /* DOJOiOSApp.app */;
+			productType = "com.apple.product-type.application";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -403,7 +527,7 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
-				LastUpgradeCheck = 1430;
+				LastUpgradeCheck = 2650;
 			};
 			buildConfigurationList = 516900806F573D4B08832C2A /* Build configuration list for PBXProject "DOJO-suite" */;
 			compatibilityVersion = "Xcode 14.0";
@@ -415,7 +539,6 @@
 			);
 			mainGroup = 3799A5DA2D80FEA3ECC04DE8;
 			minimizedProjectReferenceProxies = 1;
-			preferredProjectObjectVersion = 77;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
@@ -424,9 +547,21 @@
 				563347DB469C9F06F3EAD703 /* DOJOShared */,
 				65A51CCC8B70C69A7805AC14 /* DojoLinkApp */,
 				EAE5DC6CDF0476E9A8932543 /* OB1LinkApp */,
+				FB3297AE1B5B43199F54E156 /* DOJOiOSApp */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		52680FAFBA674C4A9351DF85 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				76D1D379E4C14C4D94A8D7E2 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		12C05A967ED30362F7894E53 /* Sources */ = {
@@ -457,6 +592,29 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		54F3D6BA0AF7408191706CB9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				80D0379F2E2246EA8C9F06C5 /* DOJOiOSApp.swift in Sources */,
+				AAE06625EDCA4A7891C5FF0A /* MurmurController.swift in Sources */,
+				D39F7AB46FA347ECACEE0A73 /* PacketListView.swift in Sources */,
+				31DB2F3BAA0F4F469ADDB8E9 /* PacketQueue.swift in Sources */,
+				4D40008323B14B4785682C2A /* PacketStateChip.swift in Sources */,
+				74F68AD55D37458694109248 /* CaptureView.swift in Sources */,
+				3367C3C1C1C147A49EEEEDF5 /* AKRONClient.swift in Sources */,
+				4C44242B919A4CC19C22448B /* Packet.swift in Sources */,
+				4EED1828669A408CAD2D5D29 /* PacketFileStore.swift in Sources */,
+				14DED2D1BC2B4A5195934679 /* PacketReceipt.swift in Sources */,
+				13472C94B75D47429ED3537E /* PacketRepository.swift in Sources */,
+				B4BBE2A2F95F49B98387EC3F /* PacketState.swift in Sources */,
+				AF3A4A2085D9463AB0B038E1 /* MurmurPacket.swift in Sources */,
+				27297FBE609F45ECAF589223 /* MurmurQueue.swift in Sources */,
+				BEADA5E1A4B24795A71C2994 /* MurmurTransport.swift in Sources */,
+				594B680234F44F468318571C /* Devices/MurmurCaptureService.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		7BC5EAB4AEEBD40BCF5346A4 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -477,7 +635,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5E71FA5797FD24628D7BC9D3 /* ArkadašApp.swift in Sources */,
+				5E71FA5797FD24628D7BC9D3 /* ArkadašApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -525,23 +683,49 @@
 			};
 			name = Debug;
 		};
+		23F30AA6C7504A2C94E524D0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Sources/DOJOiOSApp/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = au.com.berjak.DOJOiOSApp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
 		559BE09D850926A094721495 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = YES;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
 				MARKETING_VERSION = 1.0.0;
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
 				PRODUCT_BUNDLE_IDENTIFIER = org.field.DOJOShared;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -552,8 +736,18 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				AUTOMATION_APPLE_EVENTS = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
+				DEAD_CODE_STRIPPING = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_RESOURCE_ACCESS_AUDIO_INPUT = YES;
+				ENABLE_RESOURCE_ACCESS_CALENDARS = YES;
+				ENABLE_RESOURCE_ACCESS_CAMERA = YES;
+				ENABLE_RESOURCE_ACCESS_CONTACTS = YES;
+				ENABLE_RESOURCE_ACCESS_LOCATION = YES;
+				ENABLE_RESOURCE_ACCESS_PHOTO_LIBRARY = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Sources/ArkadašApp/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -562,6 +756,13 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				PRODUCT_BUNDLE_IDENTIFIER = org.field.arkadas;
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				RUNTIME_EXCEPTION_ALLOW_DYLD_ENVIRONMENT_VARIABLES = YES;
+				RUNTIME_EXCEPTION_ALLOW_JIT = YES;
+				RUNTIME_EXCEPTION_ALLOW_UNSIGNED_EXECUTABLE_MEMORY = YES;
+				RUNTIME_EXCEPTION_DEBUGGING_TOOL = YES;
+				RUNTIME_EXCEPTION_DISABLE_EXECUTABLE_PAGE_PROTECTION = YES;
+				RUNTIME_EXCEPTION_DISABLE_LIBRARY_VALIDATION = YES;
 				SDKROOT = macosx;
 			};
 			name = Release;
@@ -570,6 +771,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -600,9 +802,12 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = KQPY9CSK58;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -614,6 +819,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 5.0;
@@ -624,19 +830,24 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = YES;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
 				MARKETING_VERSION = 1.0.0;
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
 				PRODUCT_BUNDLE_IDENTIFIER = org.field.DOJOShared;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -647,8 +858,18 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				AUTOMATION_APPLE_EVENTS = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
+				DEAD_CODE_STRIPPING = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_RESOURCE_ACCESS_AUDIO_INPUT = YES;
+				ENABLE_RESOURCE_ACCESS_CALENDARS = YES;
+				ENABLE_RESOURCE_ACCESS_CAMERA = YES;
+				ENABLE_RESOURCE_ACCESS_CONTACTS = YES;
+				ENABLE_RESOURCE_ACCESS_LOCATION = YES;
+				ENABLE_RESOURCE_ACCESS_PHOTO_LIBRARY = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Sources/DOJOApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -657,6 +878,13 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				PRODUCT_BUNDLE_IDENTIFIER = org.field.dojo;
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				RUNTIME_EXCEPTION_ALLOW_DYLD_ENVIRONMENT_VARIABLES = YES;
+				RUNTIME_EXCEPTION_ALLOW_JIT = YES;
+				RUNTIME_EXCEPTION_ALLOW_UNSIGNED_EXECUTABLE_MEMORY = YES;
+				RUNTIME_EXCEPTION_DEBUGGING_TOOL = YES;
+				RUNTIME_EXCEPTION_DISABLE_EXECUTABLE_PAGE_PROTECTION = YES;
+				RUNTIME_EXCEPTION_DISABLE_LIBRARY_VALIDATION = YES;
 				SDKROOT = macosx;
 			};
 			name = Debug;
@@ -683,6 +911,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -713,9 +942,12 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = KQPY9CSK58;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -734,6 +966,7 @@
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -744,8 +977,18 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				AUTOMATION_APPLE_EVENTS = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
+				DEAD_CODE_STRIPPING = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_RESOURCE_ACCESS_AUDIO_INPUT = YES;
+				ENABLE_RESOURCE_ACCESS_CALENDARS = YES;
+				ENABLE_RESOURCE_ACCESS_CAMERA = YES;
+				ENABLE_RESOURCE_ACCESS_CONTACTS = YES;
+				ENABLE_RESOURCE_ACCESS_LOCATION = YES;
+				ENABLE_RESOURCE_ACCESS_PHOTO_LIBRARY = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Sources/DOJOApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -754,7 +997,35 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				PRODUCT_BUNDLE_IDENTIFIER = org.field.dojo;
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				RUNTIME_EXCEPTION_ALLOW_DYLD_ENVIRONMENT_VARIABLES = YES;
+				RUNTIME_EXCEPTION_ALLOW_JIT = YES;
+				RUNTIME_EXCEPTION_ALLOW_UNSIGNED_EXECUTABLE_MEMORY = YES;
+				RUNTIME_EXCEPTION_DEBUGGING_TOOL = YES;
+				RUNTIME_EXCEPTION_DISABLE_EXECUTABLE_PAGE_PROTECTION = YES;
+				RUNTIME_EXCEPTION_DISABLE_LIBRARY_VALIDATION = YES;
 				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		B36D726AF1814350B1AAC75F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Sources/DOJOiOSApp/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = au.com.berjak.DOJOiOSApp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
@@ -798,8 +1069,18 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				AUTOMATION_APPLE_EVENTS = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
+				DEAD_CODE_STRIPPING = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_RESOURCE_ACCESS_AUDIO_INPUT = YES;
+				ENABLE_RESOURCE_ACCESS_CALENDARS = YES;
+				ENABLE_RESOURCE_ACCESS_CAMERA = YES;
+				ENABLE_RESOURCE_ACCESS_CONTACTS = YES;
+				ENABLE_RESOURCE_ACCESS_LOCATION = YES;
+				ENABLE_RESOURCE_ACCESS_PHOTO_LIBRARY = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Sources/ArkadašApp/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -808,6 +1089,13 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				PRODUCT_BUNDLE_IDENTIFIER = org.field.arkadas;
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				RUNTIME_EXCEPTION_ALLOW_DYLD_ENVIRONMENT_VARIABLES = YES;
+				RUNTIME_EXCEPTION_ALLOW_JIT = YES;
+				RUNTIME_EXCEPTION_ALLOW_UNSIGNED_EXECUTABLE_MEMORY = YES;
+				RUNTIME_EXCEPTION_DEBUGGING_TOOL = YES;
+				RUNTIME_EXCEPTION_DISABLE_EXECUTABLE_PAGE_PROTECTION = YES;
+				RUNTIME_EXCEPTION_DISABLE_LIBRARY_VALIDATION = YES;
 				SDKROOT = macosx;
 			};
 			name = Debug;
@@ -847,6 +1135,15 @@
 			buildConfigurations = (
 				CFB50893183F83D92BD6E7D5 /* Debug */,
 				B63D718DF26FB66379085EEA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		E0E178B144C74D9AADA8B835 /* Build configuration list for PBXNativeTarget "DOJOiOSApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				23F30AA6C7504A2C94E524D0 /* Debug */,
+				B36D726AF1814350B1AAC75F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;

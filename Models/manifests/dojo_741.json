@@ -2,24 +2,29 @@
   "app": "DOJO",
   "frequency": 741,
   "port": 7410,
-  "symbol": "◼︎",
+  "symbol": "\u25fc\ufe0e",
   "chamber": "Apex (100% height)",
   "models": {
     "primary": {
       "name": "gpt-oss-20b-persona",
       "type": "GGUF",
-      "path": "~/Library/Application Support/DOJO/ATLAS/models/gpt-oss-20b-persona-Q8.gguf",
+      "path": "/Volumes/Akron/\u25fbAKRON/models/gpt-oss-20b-persona-Q8.gguf",
       "quantization": "Q8_0",
       "size_gb": 12.0,
       "parameters": "20B",
       "context_length": 8192,
       "temperature": 0.7,
-      "capabilities": ["consciousness_synthesis", "s4_s7_transformation", "manifestation"]
+      "capabilities": [
+        "consciousness_synthesis",
+        "s4_s7_transformation",
+        "manifestation"
+      ]
     },
     "device_tiers": {
       "mac_studio": {
         "quantization": "Q8_0",
-        "size_gb": 12.0
+        "size_gb": 12.0,
+        "path": "/Volumes/Akron/\u25fbAKRON/models/gpt-oss-20b-persona-Q8.gguf"
       },
       "ipad": {
         "quantization": "Q5_K_M",

@@ -35,12 +35,17 @@ let package = Package(
             "DesignSystem/SERVICE_AGREEMENT_TEMPLATE.md",
             "DesignSystem/TEMPLATE_SUITE_SUMMARY.md",
         ]),
-        .executableTarget(name: "DOJOApp", dependencies: ["DOJOShared", "DOJOUI"], path: "Sources/DOJOApp"),
+        .executableTarget(
+            name: "DOJOApp",
+            dependencies: ["DOJOShared", "DOJOUI"],
+            path: "Sources/DOJOApp",
+            exclude: ["Info.plist"]
+        ),
         .executableTarget(name: "ArkadašApp", dependencies: ["DOJOShared", "DOJOUI"], path: "Sources/ArkadašApp"),
         .executableTarget(name: "OB1LinkApp", dependencies: ["DOJOShared", "DOJOUI"], path: "Sources/OB1LinkApp"),
         .executableTarget(name: "DojoLinkApp", dependencies: ["DOJOShared", "DOJOUI"], path: "Sources/DojoLinkApp"),
         .target(name: "FieldKit", dependencies: [], path: "Sources/FieldKit"),
-        .executableTarget(name: "DOJOiOSApp", dependencies: ["FieldKit", "DOJOShared"], path: "Sources/DOJOiOSApp"),
+        .executableTarget(name: "DOJOiOSApp", dependencies: ["FieldKit", "DOJOShared"], path: "Sources/DOJOiOSApp", exclude: ["Info.plist"], resources: [.process("Assets.xcassets")]),
         .executableTarget(name: "AKRONMac", dependencies: ["FieldKit"], path: "Sources/AKRONMac"),
         .executableTarget(name: "DOJOWatchApp", dependencies: ["DOJOShared", "DOJOUI"], path: "Sources/DOJOWatchApp"),
         .testTarget(name: "DOJOSharedTests", dependencies: ["DOJOShared", "DOJOUI", "FieldKit"], path: "Tests/DOJOSharedTests")

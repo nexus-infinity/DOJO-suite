@@ -2,10 +2,16 @@ import SwiftUI
 import DOJOUI
 
 struct ChatMessage: Identifiable {
-    let id = UUID()
+    let id: UUID
     let role: Role
     let content: String
     enum Role { case user, assistant }
+
+    init(id: UUID = UUID(), role: Role, content: String) {
+        self.id = id
+        self.role = role
+        self.content = content
+    }
 }
 
 struct MessageList: View {
@@ -33,7 +39,7 @@ struct MessageList: View {
                         }
                     }
                 }
-                .padding(.vertical, 8)
+                .padding(.vertical, 16)
             }
             .onChange(of: messages.count) { _, _ in
                 if let last = messages.last {
@@ -52,20 +58,11 @@ struct MessageList: View {
 
 struct EmptyState: View {
     var body: some View {
-        VStack(spacing: 16) {
-            Text("◼︎")
-                .font(.system(size: 48, weight: .ultraLight))
-                .foregroundStyle(Chamber.dojo.color.opacity(0.4))
-                .shadow(color: Chamber.dojo.glowColor, radius: 20)
-            Text("DOJO is listening")
-                .font(.system(.title3, design: .rounded, weight: .light))
-                .foregroundStyle(FieldPalette.textMuted)
-            Text("741 Hz · phi4:14b")
-                .font(.system(.caption, design: .monospaced))
-                .foregroundStyle(FieldPalette.textDim)
-        }
-        .frame(maxWidth: .infinity)
-        .padding(.top, 80)
+        Text("Start a conversation")
+            .font(.system(.body, design: .rounded, weight: .light))
+            .foregroundStyle(FieldPalette.textDim)
+            .frame(maxWidth: .infinity)
+            .padding(.top, 120)
     }
 }
 
@@ -77,45 +74,28 @@ struct MessageRow: View {
         HStack(alignment: .top, spacing: 0) {
             if isUser { Spacer(minLength: 80) }
 
-            VStack(alignment: isUser ? .trailing : .leading, spacing: 4) {
-                if !isUser {
-                    HStack(spacing: 6) {
-                        Text("◼︎")
-                            .font(.system(size: 11))
-                            .foregroundStyle(Chamber.dojo.color)
-                        Text("DOJO")
-                            .font(.system(.caption2, design: .monospaced, weight: .medium))
-                            .foregroundStyle(Chamber.dojo.color.opacity(0.8))
-                    }
-                }
-
-                Text(message.content)
-                    .font(.system(.body, design: .rounded))
-                    .foregroundStyle(FieldPalette.textPrimary)
-                    .textSelection(.enabled)
-                    .padding(.horizontal, 14)
-                    .padding(.vertical, 10)
-                    .background(
-                        RoundedRectangle(cornerRadius: 14)
-                            .fill(isUser
-                                ? Chamber.dojo.color.opacity(0.18)
-                                : FieldPalette.surface
-                            )
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 14)
-                                    .stroke(
-                                        isUser ? Chamber.dojo.color.opacity(0.3) : FieldPalette.border,
-                                        lineWidth: 1
-                                    )
-                            )
-                    )
-                    .shadow(color: isUser ? Chamber.dojo.color.opacity(0.1) : .clear, radius: 8)
-            }
+            Text(message.content)
+                .font(.system(.body, design: .rounded))
+                .foregroundStyle(FieldPalette.textPrimary)
+                .textSelection(.enabled)
+                .padding(.horizontal, 14)
+                .padding(.vertical, 10)
+                .background(
+                    RoundedRectangle(cornerRadius: 12)
+                        .fill(isUser
+                            ? Color(hex: "#1E1B4B")
+                            : FieldPalette.surface
+                        )
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 12)
+                                .stroke(FieldPalette.border, lineWidth: 1)
+                        )
+                )
 
             if !isUser { Spacer(minLength: 80) }
         }
         .padding(.horizontal, 20)
-        .padding(.vertical, 6)
+        .padding(.vertical, 5)
     }
 }
 
@@ -124,29 +104,24 @@ struct ThinkingIndicator: View {
 
     var body: some View {
         HStack(alignment: .top, spacing: 0) {
-            HStack(spacing: 6) {
-                Text("◼︎")
-                    .font(.system(size: 11))
-                    .foregroundStyle(Chamber.dojo.color)
-                HStack(spacing: 4) {
-                    ForEach(0..<3, id: \.self) { i in
-                        Circle()
-                            .fill(Chamber.dojo.color.opacity(phase == i ? 1 : 0.3))
-                            .frame(width: 5, height: 5)
-                    }
+            HStack(spacing: 4) {
+                ForEach(0..<3, id: \.self) { i in
+                    Circle()
+                        .fill(FieldPalette.textMuted.opacity(phase == i ? 1 : 0.3))
+                        .frame(width: 5, height: 5)
                 }
             }
             .padding(.horizontal, 14)
-            .padding(.vertical, 10)
+            .padding(.vertical, 12)
             .background(
-                RoundedRectangle(cornerRadius: 14)
+                RoundedRectangle(cornerRadius: 12)
                     .fill(FieldPalette.surface)
-                    .overlay(RoundedRectangle(cornerRadius: 14).stroke(FieldPalette.border, lineWidth: 1))
+                    .overlay(RoundedRectangle(cornerRadius: 12).stroke(FieldPalette.border, lineWidth: 1))
             )
             Spacer()
         }
         .padding(.horizontal, 20)
-        .padding(.vertical, 6)
+        .padding(.vertical, 5)
         .onAppear {
             Timer.scheduledTimer(withTimeInterval: 0.4, repeats: true) { _ in
                 withAnimation(.easeInOut(duration: 0.2)) {

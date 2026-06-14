@@ -19,6 +19,30 @@ public final class iPhoneMurmor: DOJOMurmor {
     public var localBuffer = EventBuffer(capacity: 5_000)
     public var lastKnownFieldState: FieldStateSnapshot = .defaultSnapshot
 
+    // MARK: - Murmur capture surface
+
+#if !os(watchOS)
+    /// Injected by the app layer after building MurmurTransport + MurmurQueue.
+    public var captureService: MurmurCaptureService?
+
+    @MainActor
+    public func startCapture() throws {
+        try captureService?.start()
+    }
+
+    @MainActor
+    public func stopCapture() {
+        captureService?.stop()
+    }
+
+    @MainActor
+    public func emitQualityFrame() async {
+        await captureService?.emitQualityFrame()
+    }
+#endif
+
+    // MARK: - Init
+
     public init(name: String = "iPhone") {
         self.identity = MurmorIdentity(
             name: name,

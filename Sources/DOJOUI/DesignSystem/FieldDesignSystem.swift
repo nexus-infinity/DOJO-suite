@@ -1,14 +1,7 @@
 import SwiftUI
 import DOJOShared
 
-// ◎ Kings-Chamber — FieldDesignSystem.swift
-// Frequency: 852 Hz  |  Single source of truth for every visual surface in FIELD.
-//
-// Rule: every external interface — app icons, API health pages, CLI prompts,
-// Notion titles, Vercel deployments, error messages — carries its chamber's
-// Symbol + Frequency + Color. No exceptions.
-//
-// Formula: PORT = FREQUENCY × 10  |  COLOR = frequency domain, not arbitrary.
+// CarePORT = FREQUENCY × 10  |  COLOR = frequency domain, not arbitrary.
 //
 // CANONICAL NOTE — two-layer color system:
 //   • OOOEntity.geometric.color  = chakra palette (semantic identity, docs)

@@ -9,11 +9,15 @@ public class SpinningTopClient {
     private let baseURL: URL
     private let session: URLSession
     
-    public init(baseURL: String = "http://localhost:7410") {
+    public init(baseURL: String = "http://127.0.0.1:7410") {
         self.baseURL = URL(string: baseURL)!
         let config = URLSessionConfiguration.default
         config.timeoutIntervalForRequest = 4
         config.timeoutIntervalForResource = 6
+        // No disk cache — local DOJO server responses should not be cached,
+        // and Cache.db-wal writes will fail when disk is full.
+        config.urlCache = nil
+        config.requestCachePolicy = .reloadIgnoringLocalCacheData
         self.session = URLSession(configuration: config)
     }
     
@@ -191,41 +195,19 @@ public class SpinningTopClient {
     
     // MARK: - SSE Streaming
 
-    private struct SSEChunk: Decodable {
-        let content: String?
-        let done: Bool?
-    }
-
-    /// Stream tokens from DOJO MCP `POST /chat/stream` (SSE, port 7410).
+        /// Stream tokens from DOJO. Server exposes `POST /chat` (no SSE endpoint);
+    /// we simulate word-by-word delivery so the streaming UI animates naturally.
     public func streamMessage(
         _ message: String,
         conversationId: String,
         character: String = "padawan",
         onToken: @escaping @Sendable (String) -> Void
     ) async throws {
-        let url = baseURL.appendingPathComponent("chat").appendingPathComponent("stream")
-        var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.setValue("text/event-stream", forHTTPHeaderField: "Accept")
-        let body = ChatRequest(
-            userMessage: message,
-            character: character,
-            conversationContext: nil,
-            conversationId: conversationId
-        )
-        request.httpBody = try JSONEncoder().encode(body)
-        let (bytes, response) = try await session.bytes(for: request)
-        guard let http = response as? HTTPURLResponse, http.statusCode == 200 else {
-            throw SpinningTopError.invalidResponse
-        }
-        for try await line in bytes.lines {
-            guard line.hasPrefix("data: ") else { continue }
-            let jsonSlice = line.dropFirst(6)
-            guard let data = jsonSlice.data(using: .utf8),
-                  let chunk = try? JSONDecoder().decode(SSEChunk.self, from: data) else { continue }
-            if chunk.done == true { break }
-            if let token = chunk.content { onToken(token) }
+        let response = try await sendMessage(message, character: character)
+        let words = response.response.components(separatedBy: " ")
+        for (i, word) in words.enumerated() {
+            onToken(i == 0 ? word : " \(word)")
+            try await Task.sleep(nanoseconds: 15_000_000)
         }
     }
 

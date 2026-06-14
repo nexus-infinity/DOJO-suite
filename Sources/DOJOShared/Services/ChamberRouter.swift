@@ -57,7 +57,7 @@ public final class ChamberRouter {
 
     // MARK: - Init
 
-    public init(dojoBaseURL: String = "http://localhost:7410") {
+    public init(dojoBaseURL: String = "http://127.0.0.1:7410") {
         self.dojo = SpinningTopClient(baseURL: dojoBaseURL)
     }
 

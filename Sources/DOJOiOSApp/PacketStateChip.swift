@@ -1,5 +1,4 @@
 import SwiftUI
-import FieldKit
 
 struct PacketStateChip: View {
     let state: PacketState

@@ -1,5 +1,4 @@
 import Foundation
-import FieldKit
 
 @MainActor
 final class PacketQueue: ObservableObject {
@@ -46,6 +45,20 @@ final class PacketQueue: ObservableObject {
                 await upload(packetID: packets[i].id)
             }
         }
+    }
+
+    func resetFailed() {
+        for i in packets.indices where packets[i].state == .failed {
+            packets[i].state = .queued
+            packets[i].retryCount = 0
+        }
+        Task { [weak self] in
+            guard let self else { return }
+            for packet in packets where packet.state == .queued {
+                try? await store.save(packet)
+            }
+        }
+        drainQueue()
     }
 
     private func upload(packetID: UUID) async {
