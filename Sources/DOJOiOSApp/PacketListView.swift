@@ -1,4 +1,10 @@
 import SwiftUI
+#if canImport(FieldKit)
+import FieldKit
+#endif
+#if canImport(DOJOShared)
+import DOJOShared
+#endif
 
 struct PacketListView: View {
     @EnvironmentObject private var queue: PacketQueue
