@@ -3,47 +3,92 @@ options:
   bundleIdPrefix: org.field
   indentWidth: 4
   tabWidth: 4
+  deploymentTarget:
+    macOS: "14.0"
+    iOS: "17.0"
+
+workspace:
+  name: DOJO
 
 targets:
+  DOJOUI:
+    type: framework
+    platform: macOS
+    deploymentTarget: "14.0"
+    sources:
+      - path: Sources/DOJOUI
+        excludes:
+          - "DesignSystem/*.md"
+    dependencies:
+      - target: DOJOShared
+    settings:
+      PRODUCT_BUNDLE_IDENTIFIER: org.field.DOJOUI
+      MARKETING_VERSION: 1.0.0
+      CURRENT_PROJECT_VERSION: 1
+      MACOSX_DEPLOYMENT_TARGET: "14.0"
+      GENERATE_INFOPLIST_FILE: YES
+
   DOJOShared:
     type: framework
     platform: macOS
-    sources: [Sources/DOJOShared]
+    deploymentTarget: "14.0"
+    sources:
+      - path: Sources/DOJOShared
     settings:
       PRODUCT_BUNDLE_IDENTIFIER: org.field.DOJOShared
       MARKETING_VERSION: 1.0.0
       CURRENT_PROJECT_VERSION: 1
+      MACOSX_DEPLOYMENT_TARGET: "14.0"
+      GENERATE_INFOPLIST_FILE: YES
+      OTHER_LDFLAGS: -framework CoreAudio
+    frameworks:
+      - sdk: CoreAudio.framework
 
   DOJOApp:
     type: application
     platform: macOS
-    deploymentTarget: 13.0
-    sources: [Sources/DOJOApp]
+    deploymentTarget: "14.0"
+    sources:
+      - path: Sources/DOJOApp
+        excludes:
+          - "G6_*.md"
+          - "G6_FILES_CREATED.md"
+          - "AudioDeviceManager.swift"
+          - "MacOSMurmurController.swift"
+          - "DOJOAudioCaptureView.swift"
+          - "AudioMonitorView.swift"
+          - "GateReceiptView.swift"
+
     dependencies:
       - target: DOJOShared
+      - target: DOJOUI
     settings:
       PRODUCT_BUNDLE_IDENTIFIER: org.field.dojo
       INFOPLIST_FILE: Sources/DOJOApp/Info.plist
       GENERATE_INFOPLIST_FILE: YES
       ENABLE_HARDENED_RUNTIME: YES
+      ENABLE_RESOURCE_ACCESS_AUDIO_INPUT: YES
+      MACOSX_DEPLOYMENT_TARGET: "14.0"
 
   ArkadasApp:
     type: application
     platform: macOS
-    deploymentTarget: 13.0
+    deploymentTarget: "14.0"
     sources: [Sources/ArkadašApp]
     dependencies:
       - target: DOJOShared
+      - target: DOJOUI
     settings:
       PRODUCT_BUNDLE_IDENTIFIER: org.field.arkadas
       INFOPLIST_FILE: Sources/ArkadašApp/Info.plist
       GENERATE_INFOPLIST_FILE: YES
       ENABLE_HARDENED_RUNTIME: YES
+      MACOSX_DEPLOYMENT_TARGET: "14.0"
 
   OB1LinkApp:
     type: application
     platform: iOS
-    deploymentTarget: 15.0
+    deploymentTarget: "15.0"
     sources: [Sources/OB1LinkApp]
     dependencies:
       - target: DOJOShared
@@ -55,7 +100,7 @@ targets:
   DojoLinkApp:
     type: application
     platform: iOS
-    deploymentTarget: 15.0
+    deploymentTarget: "15.0"
     sources: [Sources/DojoLinkApp]
     dependencies:
       - target: DOJOShared
@@ -63,3 +108,20 @@ targets:
       PRODUCT_BUNDLE_IDENTIFIER: org.field.dojolink
       INFOPLIST_FILE: Sources/DojoLinkApp/Info.plist
       GENERATE_INFOPLIST_FILE: YES
+
+  DOJOiOSApp:
+    type: application
+    platform: iOS
+    deploymentTarget: "17.0"
+    sources:
+      - Sources/DOJOiOSApp
+      - Sources/FieldKit
+      - path: Sources/DOJOShared/HAL
+      - path: Sources/DOJOShared/Contracts
+    dependencies:
+      - target: DOJOShared
+    settings:
+      PRODUCT_BUNDLE_IDENTIFIER: au.com.berjak.DOJOiOSApp
+      INFOPLIST_FILE: Sources/DOJOiOSApp/Info.plist
+      GENERATE_INFOPLIST_FILE: YES
+      SWIFT_VERSION: "5.0"
