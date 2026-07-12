@@ -6,6 +6,18 @@ DOJO-suite is the canonical Swift Package Manager (SwiftPM) repository for the F
 
 ---
 
+## Product Status
+
+DOJO-suite is not a companion or mirror surface — the native Swift app
+**is the product**. Its structural advantage over Electron/Chrome-wrapped
+alternatives (including Claude's own macOS desktop app) is specifically
+that it is native SwiftUI, not a web wrapper. `DOJO-suite/web` (Next.js)
+exists but is dormant and is not the target for new feature work. All
+active development targets the Xcode project at `Sources/DOJOApp`,
+`Sources/DOJOShared`, and `Sources/DOJOUI`.
+
+---
+
 ## 🔺 Sacred Pyramid Overview
 
 The FIELD system operates on **six sacred vertices**, each with distinct frequency, shape, and role:
