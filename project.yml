@@ -69,6 +69,10 @@ targets:
       ENABLE_HARDENED_RUNTIME: YES
       ENABLE_RESOURCE_ACCESS_AUDIO_INPUT: YES
       MACOSX_DEPLOYMENT_TARGET: "14.0"
+      DEVELOPMENT_TEAM: KQPY9CSK58
+      CODE_SIGN_IDENTITY: "Apple Development"
+      CODE_SIGN_STYLE: Automatic
+      PROVISIONING_PROFILE_SPECIFIER: ""
 
   ArkadasApp:
     type: application
@@ -84,6 +88,10 @@ targets:
       GENERATE_INFOPLIST_FILE: YES
       ENABLE_HARDENED_RUNTIME: YES
       MACOSX_DEPLOYMENT_TARGET: "14.0"
+      DEVELOPMENT_TEAM: KQPY9CSK58
+      CODE_SIGN_IDENTITY: "Apple Development"
+      CODE_SIGN_STYLE: Automatic
+      PROVISIONING_PROFILE_SPECIFIER: ""
 
   OB1LinkApp:
     type: application
@@ -96,6 +104,10 @@ targets:
       PRODUCT_BUNDLE_IDENTIFIER: org.field.ob1link
       INFOPLIST_FILE: Sources/OB1LinkApp/Info.plist
       GENERATE_INFOPLIST_FILE: YES
+      DEVELOPMENT_TEAM: KQPY9CSK58
+      CODE_SIGN_IDENTITY: "Apple Development"
+      CODE_SIGN_STYLE: Automatic
+      PROVISIONING_PROFILE_SPECIFIER: ""
 
   DojoLinkApp:
     type: application
@@ -108,6 +120,10 @@ targets:
       PRODUCT_BUNDLE_IDENTIFIER: org.field.dojolink
       INFOPLIST_FILE: Sources/DojoLinkApp/Info.plist
       GENERATE_INFOPLIST_FILE: YES
+      DEVELOPMENT_TEAM: KQPY9CSK58
+      CODE_SIGN_IDENTITY: "Apple Development"
+      CODE_SIGN_STYLE: Automatic
+      PROVISIONING_PROFILE_SPECIFIER: ""
 
   DOJOiOSApp:
     type: application
@@ -125,3 +141,7 @@ targets:
       INFOPLIST_FILE: Sources/DOJOiOSApp/Info.plist
       GENERATE_INFOPLIST_FILE: YES
       SWIFT_VERSION: "5.0"
+      DEVELOPMENT_TEAM: KQPY9CSK58
+      CODE_SIGN_IDENTITY: "Apple Development"
+      CODE_SIGN_STYLE: Automatic
+      PROVISIONING_PROFILE_SPECIFIER: ""
