@@ -1,5 +1,4 @@
 import SwiftUI
-import DOJOUI
 
 // LinkMessage is the data model for DojoLink chat messages.
 struct LinkMessage: Identifiable {

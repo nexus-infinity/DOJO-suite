@@ -1,6 +1,5 @@
 import SwiftUI
-import DOJOShared
-import DOJOUI
+import Foundation
 
 // ◼︎ DojoLink · 741 Hz · Manifestation Channel
 
@@ -12,8 +11,140 @@ struct DojoLinkApp: App {
         WindowGroup {
             DojoLinkMainView()
         }
+        #if os(macOS)
         .windowStyle(.hiddenTitleBar)
         .defaultSize(width: 440, height: 720)
+        #endif
+    }
+}
+
+// ── Local support ─────────────────────────────────────────────────────────────
+
+private struct SpinningTopClient {
+    private let baseURL = URL(string: "http://127.0.0.1:7410")!
+    private let session: URLSession
+
+    init() {
+        let configuration = URLSessionConfiguration.default
+        configuration.timeoutIntervalForRequest = 4
+        configuration.timeoutIntervalForResource = 6
+        configuration.urlCache = nil
+        configuration.requestCachePolicy = .reloadIgnoringLocalCacheData
+        session = URLSession(configuration: configuration)
+    }
+
+    func healthCheck() async throws -> Bool {
+        let url = baseURL.appendingPathComponent("health")
+        let (data, response) = try await session.data(from: url)
+
+        guard let httpResponse = response as? HTTPURLResponse,
+              (200...299).contains(httpResponse.statusCode) else {
+            return false
+        }
+
+        if let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
+           let status = json["status"] as? String {
+            return ["operational", "healthy", "stable", "degraded"].contains(status)
+        }
+
+        return true
+    }
+
+    func streamMessage(
+        _ message: String,
+        conversationId: String,
+        onToken: @escaping @Sendable (String) -> Void
+    ) async throws {
+        let response = try await sendMessage(message, conversationId: conversationId)
+        let words = response.components(separatedBy: " ")
+
+        for (index, word) in words.enumerated() {
+            onToken(index == 0 ? word : " \(word)")
+            try await Task.sleep(nanoseconds: 15_000_000)
+        }
+    }
+
+    private func sendMessage(_ message: String, conversationId: String) async throws -> String {
+        let url = baseURL.appendingPathComponent("chat")
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpBody = try JSONEncoder().encode(ChatRequest(userMessage: message, conversationId: conversationId))
+
+        let (data, response) = try await session.data(for: request)
+
+        guard let httpResponse = response as? HTTPURLResponse,
+              (200...299).contains(httpResponse.statusCode) else {
+            throw URLError(.badServerResponse)
+        }
+
+        return try JSONDecoder().decode(ChatResponse.self, from: data).response
+    }
+
+    private struct ChatRequest: Encodable {
+        let userMessage: String
+        let character = "padawan"
+        let conversationContext: [String]? = nil
+        let conversationId: String
+    }
+
+    private struct ChatResponse: Decodable {
+        let response: String
+    }
+}
+
+enum Chamber {
+    case dojo
+
+    var color: Color {
+        Color(hex: "#7C3AED")
+    }
+
+    var glowColor: Color {
+        color.opacity(0.75)
+    }
+}
+
+enum FieldPalette {
+    static let void = Color(hex: "#05050A")
+    static let surface = Color(hex: "#111118")
+    static let border = Color(hex: "#2A2A35")
+    static let textPrimary = Color(hex: "#F8FAFC")
+    static let textMuted = Color(hex: "#94A3B8")
+    static let textDim = Color(hex: "#64748B")
+}
+
+enum FieldType {
+    static let title = Font.system(size: 15, weight: .semibold, design: .rounded)
+    static let frequency = Font.system(size: 11, weight: .medium, design: .monospaced)
+    static let badge = Font.system(size: 10, weight: .bold, design: .monospaced)
+    static let chronicle = Font.system(size: 13, weight: .regular, design: .rounded)
+    static let chatInput = Font.system(size: 14, weight: .regular, design: .rounded)
+    static let body = Font.system(size: 14, weight: .regular, design: .rounded)
+}
+
+extension Color {
+    init(hex: String) {
+        let value = hex.trimmingCharacters(in: CharacterSet.alphanumerics.inverted)
+        var rgb: UInt64 = 0
+        Scanner(string: value).scanHexInt64(&rgb)
+
+        let red: Double
+        let green: Double
+        let blue: Double
+
+        switch value.count {
+        case 6:
+            red = Double((rgb >> 16) & 0xFF) / 255
+            green = Double((rgb >> 8) & 0xFF) / 255
+            blue = Double(rgb & 0xFF) / 255
+        default:
+            red = 1
+            green = 1
+            blue = 1
+        }
+
+        self.init(red: red, green: green, blue: blue)
     }
 }
 
@@ -101,12 +232,12 @@ struct DojoLinkMainView: View {
                 }
                 .padding(.vertical, 12)
             }
-            .onChange(of: messages.count) { _, _ in
+            .onChange(of: messages.count) { _ in
                 if let last = messages.last {
                     withAnimation(.easeOut(duration: 0.25)) { proxy.scrollTo(last.id, anchor: .bottom) }
                 }
             }
-            .onChange(of: messages.last?.content) { _, _ in
+            .onChange(of: messages.last?.content) { _ in
                 if let last = messages.last { proxy.scrollTo(last.id, anchor: .bottom) }
             }
         }
@@ -139,11 +270,10 @@ struct DojoLinkMainView: View {
 
     private var inputBar: some View {
         HStack(spacing: 10) {
-            TextField("Message DOJO…", text: $inputText, axis: .vertical)
+            TextField("Message DOJO…", text: $inputText)
                 .font(FieldType.chatInput)
                 .foregroundStyle(FieldPalette.textPrimary)
                 .textFieldStyle(.plain)
-                .lineLimit(1...5)
                 .onSubmit { send() }
 
             Button(action: send) {
