@@ -125,6 +125,22 @@ targets:
       CODE_SIGN_STYLE: Automatic
       PROVISIONING_PROFILE_SPECIFIER: ""
 
+  DOJOSharedTests:
+    type: bundle.unit-test
+    platform: macOS
+    deploymentTarget: "14.0"
+    sources:
+      - path: Tests/DOJOSharedTests
+        excludes:
+          - "*.bak"
+    dependencies:
+      - target: DOJOShared
+      - target: DOJOUI
+    settings:
+      PRODUCT_BUNDLE_IDENTIFIER: org.field.DOJOSharedTests
+      MACOSX_DEPLOYMENT_TARGET: "14.0"
+      GENERATE_INFOPLIST_FILE: YES
+
   DOJOiOSApp:
     type: application
     platform: iOS

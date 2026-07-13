@@ -15,20 +15,25 @@
 		052DE8D02502810EE52EFE8A /* ArkadašMessageRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9DB8E9549821F17A4A856D /* ArkadašMessageRow.swift */; };
 		08EFB6FB4F24CF4EDF5EF7EA /* ConversationStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE868281EDBF0763662A7B08 /* ConversationStore.swift */; };
 		0970215E8C26FC6983ABC1AD /* OBIWANState.swift in Sources */ = {isa = PBXBuildFile; fileRef = D33ED3CB18D53E120FFC881B /* OBIWANState.swift */; };
+		0C4F8C86CE056BC0E09AE674 /* SealedVoiceObjectTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820096EF98B6A98B43DCB691 /* SealedVoiceObjectTests.swift */; };
 		0DDD341726277ACA4747409D /* DependencyInjector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3208A6C3C8157AD6C737E1A1 /* DependencyInjector.swift */; };
+		0E1F6105D68E4A30661E8EE4 /* GNE1ContractTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97E005CC2F7880D9644BA751 /* GNE1ContractTests.swift */; };
 		1028C54B2462EB8461BCC277 /* OB1LinkApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB021358F89956AFFDA69082 /* OB1LinkApp.swift */; };
 		10307B7A51F0A809212779FB /* AIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EFCE33E7A3A74EA4DD7F388 /* AIService.swift */; };
 		17B9342DFDD075B362C3E5FF /* G6Core.swift in Sources */ = {isa = PBXBuildFile; fileRef = 719E478513212F6257E91D14 /* G6Core.swift */; };
 		18221FC05E2340EFC7743D10 /* Communication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25DE45BCA6C195D8B87D4A8F /* Communication.swift */; };
+		1BAF89786C8607835614CF4C /* DOJOShared.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB68CC7B91C0F2241632A84F /* DOJOShared.framework */; };
 		1C1F8C9B14E2E9D8C06B1F1E /* DOJOUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 99E3E3BFD7D1344F3A5748D7 /* DOJOUI.framework */; };
 		1C9A049DE74A77E0F99EAD79 /* ParticleBoardTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EB6AB2C97D956EB044CA51B /* ParticleBoardTypes.swift */; };
 		248294C92DA0C1DDB036FFFF /* MurmurPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE99BA9054E885B8D4D2A2C /* MurmurPacket.swift */; };
 		252F92EFE327D7E7A34C1BC6 /* VADMicBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8A8E8000FEFC105D950ED6 /* VADMicBridge.swift */; };
 		27CD3028B428E09F51B4971C /* MurmorIdentity.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C7704311620887E87970FD /* MurmorIdentity.swift */; };
 		29B4EB64AB999E59037921EF /* ObservationFeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3202625FD91B1A9B041C5E85 /* ObservationFeedView.swift */; };
+		2A0419DFBAA0606EC261E6B4 /* AttractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64E1391532D40192095FB095 /* AttractorTests.swift */; };
 		2E26CE63327391C8EEE76D03 /* RoomSensorMurmor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5C7E04D5416B056669AA82 /* RoomSensorMurmor.swift */; };
 		2F6160BEE754EB5F713B3F0F /* CategorySchema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D0C8A6D0D958063EF52B390 /* CategorySchema.swift */; };
 		2FAF7EBE4E93B27A454A2280 /* ParticleBoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6797D8DE8C4CD4A283757F7 /* ParticleBoardView.swift */; };
+		30237814443A29AF046597A6 /* OOOTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC6BBC36E24653D7F9E88B80 /* OOOTests.swift */; };
 		317B8E2D539414EC626D9D17 /* AuroraLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D38C2FE26B0DB9BA1106F2E /* AuroraLayer.swift */; };
 		348EB0E1B854CF93081F0F14 /* CockpitReceiptStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79013CB5827E1DB174F1FDE /* CockpitReceiptStore.swift */; };
 		373A6A70E3FAC96C14A973C9 /* DOJOShared.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB68CC7B91C0F2241632A84F /* DOJOShared.framework */; };
@@ -59,6 +64,7 @@
 		611A869AF3511327448E656C /* DOJOShared.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = EB68CC7B91C0F2241632A84F /* DOJOShared.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		621F21C5998D46AB3D55B9A7 /* DOJOFieldCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 205CB441DC8E78F5F91ACA2E /* DOJOFieldCoordinator.swift */; };
 		62C89E7D8025D871BCEED308 /* PacketReceipt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 928238A2A6282D5E225B727A /* PacketReceipt.swift */; };
+		643CBF2E6FDBD71669B77F0A /* HALAudioPipelineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BF9222152A051FAF0B770BA /* HALAudioPipelineTests.swift */; };
 		64D1699B8DDB5F425E3863BC /* DOJOShared.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFEB4E63619521E8DCEC3E64 /* DOJOShared.swift */; };
 		695911D0561DA54E5BE17DAB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 30D0F18F11629F5648F16664 /* Assets.xcassets */; };
 		69B6DBCFB5899BB4ADC14A44 /* ChamberHealthMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9828FB49A63E67984A09A8 /* ChamberHealthMonitor.swift */; };
@@ -83,17 +89,22 @@
 		9953D6DC6CF7F7CFB81ADC91 /* DOJOiOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E07793E2B4769E12792BC28 /* DOJOiOSApp.swift */; };
 		9CAD24633A9C15A76AC1153F /* CaptureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FBDF8F83838F0FBC00D29EF /* CaptureView.swift */; };
 		9D5FB9D9DF464E6DB52E71DA /* MurmurQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DDE107A6E79B10EC3C33029 /* MurmurQueue.swift */; };
+		A316340957CD239C5AC19BF1 /* DOJOUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 99E3E3BFD7D1344F3A5748D7 /* DOJOUI.framework */; };
 		A3ED6C742D51F5736315E3D4 /* MurmurPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE99BA9054E885B8D4D2A2C /* MurmurPacket.swift */; };
+		A41730FA6973153E0FB6DFB1 /* ParticleEngineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C17D3C23B9429D5DE28362D1 /* ParticleEngineTests.swift */; };
 		A48651230A674057A5339FB0 /* DOJOApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A3E090081AFC7C0FC256D3 /* DOJOApp.swift */; };
 		A5A595A1252009CB8E3E217E /* DOJOMarkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64CECDEF29A3E4EEF8DB969E /* DOJOMarkView.swift */; };
 		A60EA8D3A0DD7297586A7F75 /* LinkMessageRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = F49F7DCB0A8CF090BE939BC2 /* LinkMessageRow.swift */; };
 		A6BA9D261C6DF9C77DAF5E0C /* GeometricCognition.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5FF7F2FC9E9B2332F69CA55 /* GeometricCognition.swift */; };
 		A7D263BB4A4AD7C50E832C63 /* DOJOShared.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB68CC7B91C0F2241632A84F /* DOJOShared.framework */; };
 		AA90882EBCEDB4E881A82AF9 /* DOJOFieldEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66DEE7D9F5DDBCD0F8CE03F4 /* DOJOFieldEvents.swift */; };
+		AD7047998A1A736C28D7E36C /* DOJOShared.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = EB68CC7B91C0F2241632A84F /* DOJOShared.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		AECE29717DDA0CFE2C34AA2E /* DOJOSharedTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FA8D8D7686ED7055C79FDEF /* DOJOSharedTests.swift */; };
 		B066221058A2B4F1428CF6B8 /* PacketFileStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE163CB21E5404EE67E55858 /* PacketFileStore.swift */; };
 		B087FCAFFAC623ED2127AF19 /* FieldDesignSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 191346AF0DDCAC4EC99E05B2 /* FieldDesignSystem.swift */; };
 		B0FDD62F2C9019DB10C6FE80 /* SpinningTopClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021A1B390D71AD2130FCE588 /* SpinningTopClient.swift */; };
 		B1D7703373436410FCF96C66 /* MurmorIdentity.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C7704311620887E87970FD /* MurmorIdentity.swift */; };
+		B322E4485241244E9C5B64C8 /* DOJOUI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 99E3E3BFD7D1344F3A5748D7 /* DOJOUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B75A8375E60CE0162DF074BF /* PacketState.swift in Sources */ = {isa = PBXBuildFile; fileRef = C751E51D6E79D219924A1147 /* PacketState.swift */; };
 		B94DEE095B9ED3090E32C017 /* ArkadašContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46DCA5597DC64E544C305ED2 /* ArkadašContentView.swift */; };
 		BA3636DE55394BD2626F440E /* WatchMurmor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44CA6F55DBD7727DE05B5BC9 /* WatchMurmor.swift */; };
@@ -112,6 +123,7 @@
 		D8331A13E4EAB5F7BC0DBC8B /* MacMurmor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0A6039921F4DB58B89D774D /* MacMurmor.swift */; };
 		DB2D10AB7534294A45611633 /* CockpitBoardStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20A18A0FA38D5224E37519AD /* CockpitBoardStore.swift */; };
 		DC51D93674716E0B087AD447 /* DOJOShared.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = EB68CC7B91C0F2241632A84F /* DOJOShared.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		DE86784B36B889056E889ECA /* CategorySchemaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9202BAD6F90D173ED589E62D /* CategorySchemaTests.swift */; };
 		DEBC57EFDE38EE2436480C14 /* DojoLinkApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2074BBDBDD85BE5C9C3A254 /* DojoLinkApp.swift */; };
 		DF8A7366781D2B3FBDFF8610 /* DOJOUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 99E3E3BFD7D1344F3A5748D7 /* DOJOUI.framework */; };
 		DFAF9D7DFE8892F6B4D96F12 /* DOJOShared.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB68CC7B91C0F2241632A84F /* DOJOShared.framework */; };
@@ -124,6 +136,7 @@
 		EF016EEBF3D99B5163FAD381 /* Packet.swift in Sources */ = {isa = PBXBuildFile; fileRef = D65F35B5D86DE41899DC4AC1 /* Packet.swift */; };
 		F1707D8D51502BC8731793C0 /* DOJORelay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7986FD4355C00651B59C79E7 /* DOJORelay.swift */; };
 		F2DCB82E941820A0358D5E4B /* DOJOShared.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB68CC7B91C0F2241632A84F /* DOJOShared.framework */; };
+		F2DE79364B523500CD281A15 /* SpineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7EFDEC707B78B2C5209F63E /* SpineTests.swift */; };
 		F47AACCBC8E2A628BEF43E96 /* GeometricEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F7D561AAA0D9AE7A97997F1 /* GeometricEntity.swift */; };
 		F5DD64CC2721B900E4227750 /* LocalPersistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A472B907DD7EEF25C3F126 /* LocalPersistence.swift */; };
 		F665CEDEC0FA48299F2B6750 /* MurmorOrbitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C410526CA3EBC30929D73392 /* MurmorOrbitView.swift */; };
@@ -165,6 +178,13 @@
 			remoteGlobalIDString = 563347DB469C9F06F3EAD703;
 			remoteInfo = DOJOShared;
 		};
+		97184190575B2029738C25EE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EEB863757FC5D706FF3B991E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 563347DB469C9F06F3EAD703;
+			remoteInfo = DOJOShared;
+		};
 		A7D5412D8B95B81AE364D80B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = EEB863757FC5D706FF3B991E /* Project object */;
@@ -185,6 +205,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 563347DB469C9F06F3EAD703;
 			remoteInfo = DOJOShared;
+		};
+		DEB0449ACD1DAF3DCA163208 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EEB863757FC5D706FF3B991E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C658A9F1275A7AFE87E96AE9;
+			remoteInfo = DOJOUI;
 		};
 		F996EDB235ACE79DB7343C65 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -253,6 +280,18 @@
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		96AE4B36C728FDB79568D45A /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				AD7047998A1A736C28D7E36C /* DOJOShared.framework in Embed Frameworks */,
+				B322E4485241244E9C5B64C8 /* DOJOUI.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
@@ -295,6 +334,7 @@
 		5E5C7E04D5416B056669AA82 /* RoomSensorMurmor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomSensorMurmor.swift; sourceTree = "<group>"; };
 		63E92BB0BA05B971DA95C3F5 /* HALOutputProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HALOutputProfile.swift; sourceTree = "<group>"; };
 		64CECDEF29A3E4EEF8DB969E /* DOJOMarkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DOJOMarkView.swift; sourceTree = "<group>"; };
+		64E1391532D40192095FB095 /* AttractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttractorTests.swift; sourceTree = "<group>"; };
 		653733CEC5114A2683129F9C /* RelevanceGravity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelevanceGravity.swift; sourceTree = "<group>"; };
 		66DEE7D9F5DDBCD0F8CE03F4 /* DOJOFieldEvents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DOJOFieldEvents.swift; sourceTree = "<group>"; };
 		70F2644637AAC82994C444B2 /* PresenceIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresenceIndicator.swift; sourceTree = "<group>"; };
@@ -307,6 +347,7 @@
 		7E9CD07B5B229AE6E088A4E9 /* MessageList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageList.swift; sourceTree = "<group>"; };
 		7EFCE33E7A3A74EA4DD7F388 /* AIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIService.swift; sourceTree = "<group>"; };
 		7F8E0E8D8A2B54510A75BD7E /* CockpitSeedPlan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CockpitSeedPlan.swift; sourceTree = "<group>"; };
+		820096EF98B6A98B43DCB691 /* SealedVoiceObjectTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SealedVoiceObjectTests.swift; sourceTree = "<group>"; };
 		8A11802E6F074B5797D88446 /* DOJOApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DOJOApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8BE01FD93DE2953D28BAB203 /* OBIWANWatchFace.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OBIWANWatchFace.swift; sourceTree = "<group>"; };
 		8D36AB538D0C4E88074DFF1E /* InputBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputBar.swift; sourceTree = "<group>"; };
@@ -315,19 +356,25 @@
 		8DD524AC334B2B0A281C32C5 /* DocumentPlan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentPlan.swift; sourceTree = "<group>"; };
 		8DDE107A6E79B10EC3C33029 /* MurmurQueue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MurmurQueue.swift; sourceTree = "<group>"; };
 		8EB6AB2C97D956EB044CA51B /* ParticleBoardTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticleBoardTypes.swift; sourceTree = "<group>"; };
+		8FA8D8D7686ED7055C79FDEF /* DOJOSharedTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DOJOSharedTests.swift; sourceTree = "<group>"; };
+		9202BAD6F90D173ED589E62D /* CategorySchemaTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategorySchemaTests.swift; sourceTree = "<group>"; };
 		928238A2A6282D5E225B727A /* PacketReceipt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PacketReceipt.swift; sourceTree = "<group>"; };
+		97E005CC2F7880D9644BA751 /* GNE1ContractTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GNE1ContractTests.swift; sourceTree = "<group>"; };
 		99E3E3BFD7D1344F3A5748D7 /* DOJOUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DOJOUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9BF9222152A051FAF0B770BA /* HALAudioPipelineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HALAudioPipelineTests.swift; sourceTree = "<group>"; };
 		9D0A2561B6A8FBFBF5670BB0 /* DojoLinkApp.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = DojoLinkApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9F8A8E8000FEFC105D950ED6 /* VADMicBridge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VADMicBridge.swift; sourceTree = "<group>"; };
 		A7C3BDB34744AA43CCA4A8F4 /* GeometryTransforms.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeometryTransforms.swift; sourceTree = "<group>"; };
 		A9E7098B132E7AF82FAEFBD3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		AAA0F09D21DD9E8CEF05BEB9 /* DOJOMurmorProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DOJOMurmorProtocol.swift; sourceTree = "<group>"; };
 		AB81393DEE9E63E1E02CBE1B /* PromotionGate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromotionGate.swift; sourceTree = "<group>"; };
+		AC6BBC36E24653D7F9E88B80 /* OOOTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OOOTests.swift; sourceTree = "<group>"; };
 		B0A6039921F4DB58B89D774D /* MacMurmor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacMurmor.swift; sourceTree = "<group>"; };
 		B88DB69DD1ECEC24FF36D67D /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		BA7B1B93F689F5267235FE60 /* HALInvariant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HALInvariant.swift; sourceTree = "<group>"; };
 		BA9DB8E9549821F17A4A856D /* ArkadašMessageRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ArkadašMessageRow.swift"; sourceTree = "<group>"; };
 		BD4254D4D9C4AF4CACA79908 /* MinimalChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MinimalChatView.swift; sourceTree = "<group>"; };
+		C17D3C23B9429D5DE28362D1 /* ParticleEngineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticleEngineTests.swift; sourceTree = "<group>"; };
 		C2510B8E94BD8CE3F8D9F196 /* ConversationHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationHeader.swift; sourceTree = "<group>"; };
 		C410526CA3EBC30929D73392 /* MurmorOrbitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MurmorOrbitView.swift; sourceTree = "<group>"; };
 		C751E51D6E79D219924A1147 /* PacketState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PacketState.swift; sourceTree = "<group>"; };
@@ -343,6 +390,8 @@
 		D5A472B907DD7EEF25C3F126 /* LocalPersistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalPersistence.swift; sourceTree = "<group>"; };
 		D5C7704311620887E87970FD /* MurmorIdentity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MurmorIdentity.swift; sourceTree = "<group>"; };
 		D65F35B5D86DE41899DC4AC1 /* Packet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Packet.swift; sourceTree = "<group>"; };
+		D6C0F7E2FFB8D23437CB6F14 /* DOJOSharedTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DOJOSharedTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		D7EFDEC707B78B2C5209F63E /* SpineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpineTests.swift; sourceTree = "<group>"; };
 		DAE99BA9054E885B8D4D2A2C /* MurmurPacket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MurmurPacket.swift; sourceTree = "<group>"; };
 		DE9828FB49A63E67984A09A8 /* ChamberHealthMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChamberHealthMonitor.swift; sourceTree = "<group>"; };
 		DEA1A42698BDE5066C90C686 /* FieldSystemDashboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FieldSystemDashboard.swift; sourceTree = "<group>"; };
@@ -375,6 +424,15 @@
 			files = (
 				F2DCB82E941820A0358D5E4B /* DOJOShared.framework in Frameworks */,
 				1C1F8C9B14E2E9D8C06B1F1E /* DOJOUI.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ADDF8CDFCB68CDA90A3B3EBF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1BAF89786C8607835614CF4C /* DOJOShared.framework in Frameworks */,
+				A316340957CD239C5AC19BF1 /* DOJOUI.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -469,6 +527,7 @@
 				37B8F52C5F8C9EFAFB3BA8FB /* DOJOiOSApp */,
 				1FF2AF5948D456300865BF6D /* DojoLinkApp */,
 				9847278703F9081F285D0FBE /* DOJOShared */,
+				7FF6CDEA807A897067197FBB /* DOJOSharedTests */,
 				7E5EBA4F4CF2A93B401876FA /* DOJOUI */,
 				25A56291007F7EC60CB53851 /* FieldKit */,
 				A401EC66D380D924B597DCB1 /* OB1LinkApp */,
@@ -492,6 +551,15 @@
 			);
 			name = DOJOiOSApp;
 			path = Sources/DOJOiOSApp;
+			sourceTree = "<group>";
+		};
+		533555347FD90BB224EAE951 /* HAL */ = {
+			isa = PBXGroup;
+			children = (
+				9BF9222152A051FAF0B770BA /* HALAudioPipelineTests.swift */,
+				820096EF98B6A98B43DCB691 /* SealedVoiceObjectTests.swift */,
+			);
+			path = HAL;
 			sourceTree = "<group>";
 		};
 		544513744E5949BBAABA9EB8 /* Contracts */ = {
@@ -599,6 +667,22 @@
 			path = Sources/DOJOUI;
 			sourceTree = "<group>";
 		};
+		7FF6CDEA807A897067197FBB /* DOJOSharedTests */ = {
+			isa = PBXGroup;
+			children = (
+				64E1391532D40192095FB095 /* AttractorTests.swift */,
+				9202BAD6F90D173ED589E62D /* CategorySchemaTests.swift */,
+				8FA8D8D7686ED7055C79FDEF /* DOJOSharedTests.swift */,
+				AC6BBC36E24653D7F9E88B80 /* OOOTests.swift */,
+				C17D3C23B9429D5DE28362D1 /* ParticleEngineTests.swift */,
+				D7EFDEC707B78B2C5209F63E /* SpineTests.swift */,
+				533555347FD90BB224EAE951 /* HAL */,
+				B8C4697C2E2BB9F23F7FCDBA /* ParticleBoard */,
+			);
+			name = DOJOSharedTests;
+			path = Tests/DOJOSharedTests;
+			sourceTree = "<group>";
+		};
 		82EF5D1C7003BFAB55EAC767 /* DesignSystem */ = {
 			isa = PBXGroup;
 			children = (
@@ -693,6 +777,14 @@
 			path = G6;
 			sourceTree = "<group>";
 		};
+		B8C4697C2E2BB9F23F7FCDBA /* ParticleBoard */ = {
+			isa = PBXGroup;
+			children = (
+				97E005CC2F7880D9644BA751 /* GNE1ContractTests.swift */,
+			);
+			path = ParticleBoard;
+			sourceTree = "<group>";
+		};
 		C8240A9A0E8FC4E19E208CFF /* ParticleBoard */ = {
 			isa = PBXGroup;
 			children = (
@@ -725,6 +817,7 @@
 				320508E05F124124ED4A4D25 /* DOJOiOSApp.app */,
 				9D0A2561B6A8FBFBF5670BB0 /* DojoLinkApp.app */,
 				EB68CC7B91C0F2241632A84F /* DOJOShared.framework */,
+				D6C0F7E2FFB8D23437CB6F14 /* DOJOSharedTests.xctest */,
 				99E3E3BFD7D1344F3A5748D7 /* DOJOUI.framework */,
 				1EE39709C30C445BCB2647F1 /* OB1LinkApp.app */,
 			);
@@ -743,6 +836,27 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		1F5F69BB37A2BF8B53433646 /* DOJOSharedTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0F821D48EE84E5F6B7288AF5 /* Build configuration list for PBXNativeTarget "DOJOSharedTests" */;
+			buildPhases = (
+				5434DA0CA960329EFA4D6BFD /* Sources */,
+				ADDF8CDFCB68CDA90A3B3EBF /* Frameworks */,
+				96AE4B36C728FDB79568D45A /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				2236C68F4CD6BA17F183ED86 /* PBXTargetDependency */,
+				B98016DCB3E8E0471C00EA81 /* PBXTargetDependency */,
+			);
+			name = DOJOSharedTests;
+			packageProductDependencies = (
+			);
+			productName = DOJOSharedTests;
+			productReference = D6C0F7E2FFB8D23437CB6F14 /* DOJOSharedTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		36441F0929B73C1734C1E48B /* DOJOiOSApp */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = E08B338EB5944AAA040B4B59 /* Build configuration list for PBXNativeTarget "DOJOiOSApp" */;
@@ -931,6 +1045,7 @@
 				BF6B72E8103317D4FE72EF13 /* ArkadasApp */,
 				5B465B52E4977C497CDE92D8 /* DOJOApp */,
 				563347DB469C9F06F3EAD703 /* DOJOShared */,
+				1F5F69BB37A2BF8B53433646 /* DOJOSharedTests */,
 				C658A9F1275A7AFE87E96AE9 /* DOJOUI */,
 				36441F0929B73C1734C1E48B /* DOJOiOSApp */,
 				65A51CCC8B70C69A7805AC14 /* DojoLinkApp */,
@@ -1032,6 +1147,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		5434DA0CA960329EFA4D6BFD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2A0419DFBAA0606EC261E6B4 /* AttractorTests.swift in Sources */,
+				DE86784B36B889056E889ECA /* CategorySchemaTests.swift in Sources */,
+				AECE29717DDA0CFE2C34AA2E /* DOJOSharedTests.swift in Sources */,
+				0E1F6105D68E4A30661E8EE4 /* GNE1ContractTests.swift in Sources */,
+				643CBF2E6FDBD71669B77F0A /* HALAudioPipelineTests.swift in Sources */,
+				30237814443A29AF046597A6 /* OOOTests.swift in Sources */,
+				A41730FA6973153E0FB6DFB1 /* ParticleEngineTests.swift in Sources */,
+				0C4F8C86CE056BC0E09AE674 /* SealedVoiceObjectTests.swift in Sources */,
+				F2DE79364B523500CD281A15 /* SpineTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		588A0882D7F12DE8E1FCDB08 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1121,6 +1252,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		2236C68F4CD6BA17F183ED86 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 563347DB469C9F06F3EAD703 /* DOJOShared */;
+			targetProxy = 97184190575B2029738C25EE /* PBXContainerItemProxy */;
+		};
 		22AF71E64D8F3EBF34D8A09A /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 563347DB469C9F06F3EAD703 /* DOJOShared */;
@@ -1150,6 +1286,11 @@
 			isa = PBXTargetDependency;
 			target = 563347DB469C9F06F3EAD703 /* DOJOShared */;
 			targetProxy = A7D5412D8B95B81AE364D80B /* PBXContainerItemProxy */;
+		};
+		B98016DCB3E8E0471C00EA81 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C658A9F1275A7AFE87E96AE9 /* DOJOUI */;
+			targetProxy = DEB0449ACD1DAF3DCA163208 /* PBXContainerItemProxy */;
 		};
 		C17261C76B948A18B7342FE7 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -1206,6 +1347,23 @@
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
+		};
+		34C62553EFC824CBCD88D908 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				PRODUCT_BUNDLE_IDENTIFIER = org.field.DOJOSharedTests;
+				SDKROOT = macosx;
+			};
+			name = Release;
 		};
 		559BE09D850926A094721495 /* Release */ = {
 			isa = XCBuildConfiguration;
@@ -1538,6 +1696,23 @@
 			};
 			name = Release;
 		};
+		C776FABDABB6C019E62C75DE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				PRODUCT_BUNDLE_IDENTIFIER = org.field.DOJOSharedTests;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
 		CA7F92B6444922AB1E91961B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1606,6 +1781,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		0F821D48EE84E5F6B7288AF5 /* Build configuration list for PBXNativeTarget "DOJOSharedTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C776FABDABB6C019E62C75DE /* Debug */,
+				34C62553EFC824CBCD88D908 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
 		516900806F573D4B08832C2A /* Build configuration list for PBXProject "DOJO-suite" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
