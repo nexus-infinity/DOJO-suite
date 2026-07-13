@@ -3,6 +3,11 @@
 *.xcuserstate
 xcuserdata/
 *.xcscmblueprint
+*.xcodeproj/project.xcworkspace/xcshareddata/
+
+# Generated / scratch
+*.bak
+Sources/DOJOApp/Info-Shared.plist
 
 # Swift Package Manager
 .build/
