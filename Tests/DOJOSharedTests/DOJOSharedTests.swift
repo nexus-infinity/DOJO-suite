@@ -1,85 +1,41 @@
 import XCTest
 @testable import DOJOShared
 
+// Stale tests — legacy DOJOShared class, AIService, TextInput, TextMessage, Communication, and
+// DependencyInjector types were removed. DOJOShared is now a module name only (see commit 64929ed).
+// Bodies replaced with XCTSkip; test names retained for history.
 final class DOJOSharedTests: XCTestCase {
-    
-    func testDOJOSharedInitialization() {
-        let shared = DOJOShared()
-        shared.initialize()
-        XCTAssertEqual(DOJOShared.version, "1.0.0")
+
+    func testDOJOSharedInitialization() throws {
+        throw XCTSkip("Legacy DOJOShared class removed — module/class name collision resolved in 64929ed")
     }
-    
-    func testAIService() {
-        let aiService = AIService()
-        let input = TextInput(data: "test input")
-        let result = aiService.runModel(input: input)
-        
-        // Verify result is returned
-        XCTAssertFalse(result.output.isEmpty)
-        XCTAssertTrue(result.output.contains("test input"))
-        XCTAssertGreaterThan(result.confidence, 0.0)
+
+    func testAIService() throws {
+        throw XCTSkip("AIService, TextInput stub types removed")
     }
-    
+
     @available(iOS 15.0, macOS 12.0, *)
     func testAIServiceAsync() async throws {
-    return
+        throw XCTSkip("AIService async stub types removed")
+    }
 
-        let aiService = AIService()
-        let input = TextInput(data: "async test")
-        let result = try await aiService.runModelAsync(input: input)
-        
-        // Verify async result is returned
-        XCTAssertFalse(result.output.isEmpty)
-        XCTAssertTrue(result.output.contains("async test"))
-        XCTAssertGreaterThan(result.confidence, 0.0)
+    func testCommunication() throws {
+        throw XCTSkip("Communication, TextMessage stub types removed")
     }
-    
-    func testCommunication() {
-        // Test message sending and receiving
-        let message = TextMessage(payload: "test message")
-        Communication.sendMessage(to: "TestModule", message: message)
-        
-        let received = Communication.receiveMessage(from: "TestModule")
-        XCTAssertEqual(received.count, 1)
-        XCTAssertEqual(received.first?.payload, "test message")
+
+    func testCommunicationEmptyQueue() throws {
+        throw XCTSkip("Communication stub type removed")
     }
-    
-    func testCommunicationEmptyQueue() {
-        // Test receiving when no messages are available
-        let received = Communication.receiveMessage(from: "EmptyModule")
-        XCTAssertEqual(received.count, 0)
+
+    func testDependencyInjector() throws {
+        throw XCTSkip("DependencyInjector stub type removed")
     }
-    
-    func testDependencyInjector() {
-        let testService = "TestService"
-        DependencyInjector.registerService(name: "test", service: testService)
-        
-        let retrieved = DependencyInjector.getService(name: "test") as? String
-        XCTAssertEqual(retrieved, testService)
+
+    func testDependencyInjectorTypeSafe() throws {
+        throw XCTSkip("DependencyInjector stub type removed")
     }
-    
-    func testDependencyInjectorTypeSafe() {
-        // Test type-safe API
-        let testService = AIService()
-        DependencyInjector.register(AIService.self, service: testService)
-        
-        let retrieved = DependencyInjector.get(AIService.self)
-        XCTAssertNotNil(retrieved)
-    }
-    
-    func testDependencyInjectorThreadSafety() {
-        // Test concurrent access
-        let expectation = XCTestExpectation(description: "Concurrent access")
-        expectation.expectedFulfillmentCount = 10
-        
-        for i in 0..<10 {
-            DispatchQueue.global().async {
-                DependencyInjector.registerService(name: "service\(i)", service: "value\(i)")
-                let _ = DependencyInjector.getService(name: "service\(i)")
-                expectation.fulfill()
-            }
-        }
-        
-        wait(for: [expectation], timeout: 5.0)
+
+    func testDependencyInjectorThreadSafety() throws {
+        throw XCTSkip("DependencyInjector stub type removed")
     }
 }

@@ -10,7 +10,7 @@ final class HALAudioPipelineTests: XCTestCase {
         let engine = CopilotEngine()
         let observer = OBIWANState.shared
         let micBridge = VADMicBridge()
-        let coordinator = DOJOFieldCoordinator(engine: engine, observer: observer, micBridge: micBridge)
+        let coordinator = DOJOFieldCoordinator(engine: engine, observer: observer, micBridge: micBridge, envMonitor: HALEnvironmentMonitor())
         
         // Initial state: broadcast, full
         XCTAssertEqual(coordinator.activeProfile, .broadcast)

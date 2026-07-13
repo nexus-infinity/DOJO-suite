@@ -9,11 +9,6 @@ import DOJOShared
 
 @main
 struct ArkadasApp: App {
-    init() {
-        let shared = DOJOShared()
-        shared.initialize()
-    }
-
     var body: some Scene {
         WindowGroup {
             ArkadašContentView()
