@@ -1,14 +1,17 @@
 import SwiftUI
 import AppKit
-import DOJOShared
 
+#if os(macOS)
+
+// MARK: - App Delegate
+
+@available(macOS 14.0, *)
 class DOJOAppDelegate: NSObject, NSApplicationDelegate {
     func applicationDidFinishLaunching(_ notification: Notification) {
         NSApp.activate()
+        
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
             guard let window = NSApp.windows.first(where: { $0.isVisible }) else { return }
-            // orderFrontRegardless bypasses app-active check — puts DOJOApp window
-            // above Xcode without needing to steal focus, so hover tracking is reachable.
             window.orderFrontRegardless()
             window.makeKeyAndOrderFront(nil)
         }
@@ -19,15 +22,38 @@ class DOJOAppDelegate: NSObject, NSApplicationDelegate {
     }
 }
 
+// MARK: - Main App
+
+@available(macOS 14.0, *)
 @main
 struct DOJOApp: App {
     @NSApplicationDelegateAdaptor(DOJOAppDelegate.self) var appDelegate
-    @StateObject private var health = ChamberHealthMonitor()
 
     var body: some Scene {
-        WindowGroup {
-            DOJOChatView(health: health)
+        // G6 Hardware Gate — Audio Capture Window (Primary)
+        WindowGroup("G6 Audio Capture") {
+            DOJOAudioCaptureView()
         }
-        .defaultSize(width: 720, height: 600)
+        .defaultSize(width: 520, height: 650)
+        .commands {
+            CommandGroup(after: .newItem) {
+                Button("New Audio Capture") {
+                    openAudioCaptureWindow()
+                }
+                .keyboardShortcut("n", modifiers: [.command, .shift])
+            }
+        }
+    }
+    
+    private func openAudioCaptureWindow() {
+        // Create a new window by activating the New command
+        NSApp
+            .sendAction(
+                #selector(NSDocumentController.newDocument(_:)),
+                to: nil,
+                from: nil
+            )
     }
 }
+
+#endif
