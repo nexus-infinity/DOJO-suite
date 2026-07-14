@@ -146,6 +146,34 @@ public struct SealedVoiceObject: Codable, Sendable, Equatable, Identifiable {
     public var visibleSummary: String {
         "MFC-01 sealed · \(lifecycle_state.rawValue) · hash=\(audio_hash.prefix(12))… · \(String(format: "%.1fs", duration))"
     }
+
+    /// Returns a new SealedVoiceObject promoted to AKRON_CONFIRMED.
+    /// Only call when AKRON has actually returned a non-empty receipt ID.
+    /// Audio hash, file path, and all evidence fields are preserved unchanged.
+    public func withAKRONReceipt(_ receiptID: String) -> SealedVoiceObject {
+        SealedVoiceObject(
+            voice_object_id: voice_object_id,
+            sealed_object_ref: sealed_object_ref,
+            local_file_path: local_file_path,
+            audio_hash: audio_hash,
+            hash_algorithm: hash_algorithm,
+            capture_timestamp: capture_timestamp,
+            device_session_id: device_session_id,
+            duration: duration,
+            lifecycle_state: .akronConfirmed,
+            authority_state: authority_state,
+            copy_policy: copy_policy,
+            export_policy: export_policy,
+            akron_receipt_id: receiptID,
+            sample_rate_hz: sample_rate_hz,
+            channels: channels,
+            codec: codec,
+            byte_count: byte_count,
+            resonance: resonance,
+            workLayerStatus: workLayerStatus,
+            semanticHoldReasons: semanticHoldReasons
+        )
+    }
 }
 
 // MARK: - Durable store
@@ -257,6 +285,33 @@ public final class SealedVoiceObjectStore: @unchecked Sendable {
         return Self.sha256Hex(data) == object.audio_hash
     }
 
+    /// Assigns an AKRON receipt ID to a queued sealed voice object and persists to disk.
+    ///
+    /// Zero-loss rules enforced here:
+    ///   - Empty receiptID is rejected: audio must not be "confirmed" by an empty string.
+    ///   - Object not found is rejected: cannot invent a receipt for a missing seal.
+    ///   - Already-confirmed is idempotent: returns existing object unchanged (no regression).
+    ///   - Audio hash is never altered: evidence spine is preserved.
+    ///   - If AKRON is unavailable and this is never called, lifecycle stays QUEUED indefinitely.
+    public func assignAKRONReceipt(voiceObjectID: String, receiptID: String) throws -> SealedVoiceObject {
+        guard !receiptID.isEmpty else {
+            throw SealedVoiceError.invalidReceiptID
+        }
+        guard let existing = try load(voiceObjectID: voiceObjectID) else {
+            throw SealedVoiceError.objectNotFound
+        }
+        // Idempotent: receipt already assigned — return without overwriting.
+        guard existing.akron_receipt_id == nil else {
+            return existing
+        }
+        let confirmed = existing.withAKRONReceipt(receiptID)
+        let packetURL = root
+            .appendingPathComponent(voiceObjectID, isDirectory: true)
+            .appendingPathComponent("packet.json")
+        try encoder.encode(confirmed).write(to: packetURL, options: .atomic)
+        return confirmed
+    }
+
     public static func sha256Hex(_ data: Data) -> String {
         SHA256.hash(data: data).map { String(format: "%02x", $0) }.joined()
     }
@@ -264,4 +319,6 @@ public final class SealedVoiceObjectStore: @unchecked Sendable {
 
 public enum SealedVoiceError: Error, Equatable {
     case emptyAudio
+    case invalidReceiptID
+    case objectNotFound
 }

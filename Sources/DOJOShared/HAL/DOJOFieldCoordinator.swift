@@ -24,6 +24,7 @@ public final class DOJOFieldCoordinator: NSObject, ObservableObject, AVSpeechSyn
     private var cancellables = Set<AnyCancellable>()
 
     private let synthesizer = AVSpeechSynthesizer()
+    private var activeSpeechUtterance: AVSpeechUtterance?
 
     public init(engine: CopilotEngine, observer: OBIWANState, micBridge: VADMicBridge, envMonitor: HALEnvironmentMonitor) {
         self.engine = engine
@@ -91,9 +92,15 @@ public final class DOJOFieldCoordinator: NSObject, ObservableObject, AVSpeechSyn
     public func registerMacMurmor(name: String = "Mac") {
         let mac = MacMurmor(name: name)
         let identity = mac.identity
-        let activeIdentity = MurmorIdentity(
-            id: identity.id, name: identity.name, deviceClass: identity.deviceClass, profile: identity.profile, state: .active
+        var activeIdentity = MurmorIdentity(
+            id: identity.id,
+            name: identity.name,
+            deviceClass: identity.deviceClass,
+            profile: identity.profile,
+            state: .active
         )
+        activeIdentity.lastSyncTimestamp = Date()
+        mac.identity = activeIdentity
         registry[activeIdentity.id] = mac
         registeredMurmors = registry.values.map(\.identity)
         evaluateInvariant()
@@ -248,11 +255,14 @@ public final class DOJOFieldCoordinator: NSObject, ObservableObject, AVSpeechSyn
             let utterance = AVSpeechUtterance(string: text)
             utterance.voice = voice(for: character)
             utterance.rate = 0.46
+            activeSpeechUtterance = utterance
             // AVSpeechSynthesizer.speak() calls DispatchQueue.main.sync internally.
             // Scheduling via main.async breaks out of the Swift Task context and
             // prevents the "unsafeForcedSync" runtime warning.
-            let synth = synthesizer
-            DispatchQueue.main.async { synth.speak(utterance) }
+            DispatchQueue.main.async { [weak self] in
+                guard let self, let utterance = self.activeSpeechUtterance else { return }
+                self.synthesizer.speak(utterance)
+            }
         case .passthrough, .silent:
             break
         }
@@ -264,22 +274,27 @@ public final class DOJOFieldCoordinator: NSObject, ObservableObject, AVSpeechSyn
     }
     
     nonisolated public func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didStart utterance: AVSpeechUtterance) {
-        Task { @MainActor in
+        Task { @MainActor [weak self] in
+            guard let self else { return }
             print("◆ HAL: Ducking mic for AI speech output")
             micBridge.pauseForOutput()
         }
     }
     
     nonisolated public func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didFinish utterance: AVSpeechUtterance) {
-        Task { @MainActor in
+        Task { @MainActor [weak self] in
+            guard let self else { return }
             print("◆ HAL: Resuming mic after AI speech output")
             micBridge.resumeAfterOutput()
+            activeSpeechUtterance = nil
         }
     }
     
     nonisolated public func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didCancel utterance: AVSpeechUtterance) {
-        Task { @MainActor in
+        Task { @MainActor [weak self] in
+            guard let self else { return }
             micBridge.resumeAfterOutput()
+            activeSpeechUtterance = nil
         }
     }
 

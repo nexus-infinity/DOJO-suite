@@ -1,17 +1,22 @@
 import AVFoundation
 import Foundation
+#if canImport(DOJOShared)
+import DOJOShared
+#endif
 
 /// Owns the murmur capture pipeline for the iOS app.
 /// Creates Transport → Queue → CaptureService and manages the capture lifecycle.
-/// On session end: fires completedSessionRef so DOJOiOSApp can bridge → PacketQueue.
+/// On session end: seals MFC-01 voice object (durable audio + hash) and bridges → PacketQueue.
 @MainActor
 final class MurmurController: ObservableObject {
 
     let captureService: MurmurCaptureService
 
-    /// Fires with a voice-session ref ("<deviceID>:<unix_ts>") each time recording stops.
-    /// Observed by DOJOiOSApp to bridge completed murmur sessions → PacketQueue.
+    /// Legacy session ref (UI/session id only — NOT evidence). Prefer `lastSealedVoiceObject`.
     @Published private(set) var completedSessionRef: String? = nil
+
+    /// MFC-01 sealed offline voice object from the last completed capture (evidence spine).
+    @Published private(set) var lastSealedVoiceObject: SealedVoiceObject? = nil
 
     private let deviceID: String
 
@@ -24,9 +29,7 @@ final class MurmurController: ObservableObject {
 
     func toggle() {
         if captureService.isCapturing {
-            let ref = endSession()
-            captureService.stop()
-            completedSessionRef = ref
+            finishCapture()
         } else {
             Task {
                 let granted = await AVAudioApplication.requestRecordPermission()
@@ -39,17 +42,29 @@ final class MurmurController: ObservableObject {
     /// Stops capture gracefully when the app backgrounds.
     func stopForBackground() {
         guard captureService.isCapturing else { return }
-        let ref = endSession()
-        captureService.stop()
-        completedSessionRef = ref
+        finishCapture()
     }
 
     // MARK: - Private
 
-    private func endSession() -> String {
-        let ref = "\(deviceID):\(Int(Date().timeIntervalSince1970))"
-        GeometryGateReceipt(sessionRef: ref, capability: "ios.mic.capture").log()
-        return ref
+    private func finishCapture() {
+        captureService.stop()
+        // Prefer sealed object from capture service (original bytes + SHA-256).
+        if let sealed = captureService.lastSealedVoiceObject {
+            lastSealedVoiceObject = sealed
+            completedSessionRef = sealed.sealed_object_ref
+            GeometryGateReceipt(
+                sessionRef: sealed.sealed_object_ref,
+                capability: "ios.mic.capture.mfc01_sealed",
+                audioHashPrefix: String(sealed.audio_hash.prefix(16))
+            ).log()
+        } else {
+            // No audio bytes captured — do not invent evidence; session ref is UI-only.
+            let ref = "\(deviceID):\(Int(Date().timeIntervalSince1970))"
+            completedSessionRef = ref
+            lastSealedVoiceObject = nil
+            GeometryGateReceipt(sessionRef: ref, capability: "ios.mic.capture.empty", audioHashPrefix: "none").log()
+        }
     }
 
     private static func resolveDeviceID() -> String {
@@ -61,18 +76,18 @@ final class MurmurController: ObservableObject {
     }
 }
 
-// v0 stub — records capability proof locally; upgrade to AKRON signed receipt in v1.
+// Local capability log — not an AKRON receipt.
 private struct GeometryGateReceipt: Codable {
     let sessionRef: String
     let timestamp: Date
     let capability: String
-    let sha256Hint: String  // first 8 chars of sessionRef as v0 placeholder
+    let audioHashPrefix: String
 
-    init(sessionRef: String, capability: String) {
+    init(sessionRef: String, capability: String, audioHashPrefix: String) {
         self.sessionRef = sessionRef
         self.timestamp = Date()
         self.capability = capability
-        self.sha256Hint = String(sessionRef.prefix(8))
+        self.audioHashPrefix = audioHashPrefix
     }
 
     func log() {

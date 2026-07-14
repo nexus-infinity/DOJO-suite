@@ -137,6 +137,10 @@ struct PacketRowView: View {
                         .font(.system(size: 11, design: .monospaced))
                         .foregroundStyle(Color(hex: "#4B5563"))
 
+                    Text("seal \(packet.integrityHash.prefix(8))")
+                        .font(.system(size: 11, design: .monospaced))
+                        .foregroundStyle(Color(hex: "#4B5563"))
+
                     if let receipt = packet.receipt {
                         Text("◼︎ \(receipt.receiptID.prefix(8))")
                             .font(.system(size: 11, design: .monospaced))

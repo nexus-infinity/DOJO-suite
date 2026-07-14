@@ -4,7 +4,7 @@ import Foundation
 /// Layer 2 cognitive node — almost never autonomous, it IS the hub.
 public final class MacMurmor: DOJOMurmor {
 
-    public let identity: MurmorIdentity
+    public internal(set) var identity: MurmorIdentity
 
     public var profile: HALProfile {
         HALProfile(

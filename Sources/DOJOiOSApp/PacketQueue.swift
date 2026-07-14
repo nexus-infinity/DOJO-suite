@@ -1,8 +1,18 @@
 import Foundation
+#if canImport(FieldKit)
+import FieldKit
+#endif
+#if canImport(DOJOShared)
+import DOJOShared
+#endif
 
 @MainActor
 final class PacketQueue: ObservableObject {
     @Published private(set) var packets: [Packet] = []
+
+    private static let proofPacketID = UUID(uuidString: "11111111-2222-3333-4444-555555555555")!
+    private static let proofText = "Portal Integrity Loop proof packet"
+    private static let proofMediaRefs = ["local-seal:portal-integrity-loop-proof"]
 
     private let store: any PacketRepository
     private let client: AKRONClient
@@ -16,6 +26,7 @@ final class PacketQueue: ObservableObject {
 
     func load() async {
         packets = (try? await store.loadAll()) ?? []
+        await ensureProofPacket()
         drainQueue()
     }
 
@@ -35,6 +46,29 @@ final class PacketQueue: ObservableObject {
         try? await store.save(packet)
         packets.insert(packet, at: 0)
         drainQueue()
+    }
+
+    /// MFC-01: enqueue from sealed voice object. Evidence = media path + audio hash; voiceRef is UI pointer only.
+    /// Does not set AKRON_CONFIRMED; akron_receipt_id on sealed object must remain null until real receipt.
+    func enqueueSealedVoice(_ sealed: SealedVoiceObject) async {
+        let summary = """
+        MFC-01 sealed voice object
+        voice_object_id=\(sealed.voice_object_id)
+        sealed_object_ref=\(sealed.sealed_object_ref)
+        audio_hash=\(sealed.audio_hash)
+        hash_algorithm=\(sealed.hash_algorithm)
+        lifecycle_state=\(sealed.lifecycle_state.rawValue)
+        authority_state=\(sealed.authority_state.rawValue)
+        copy_policy=\(sealed.copy_policy.rawValue)
+        export_policy=\(sealed.export_policy.rawValue)
+        akron_receipt_id=\(sealed.akron_receipt_id ?? "null")
+        duration=\(sealed.duration)
+        """
+        await enqueue(
+            textNotes: summary,
+            mediaRefs: [sealed.local_file_path, "sha256:\(sealed.audio_hash)"],
+            voiceRef: sealed.sealed_object_ref
+        )
     }
 
     func drainQueue() {
@@ -90,6 +124,32 @@ final class PacketQueue: ObservableObject {
             }
         }
         try? await store.save(packets[idx])
+    }
+
+    private func ensureProofPacket() async {
+        guard !packets.contains(where: { $0.id == Self.proofPacketID }) else { return }
+
+        let hash = PacketFileStore.integrityHash(
+            text: Self.proofText,
+            mediaRefs: Self.proofMediaRefs
+        )
+        let packet = Packet(
+            id: Self.proofPacketID,
+            deviceID: deviceID(),
+            operatorID: "portal-integrity-loop",
+            integrityHash: hash,
+            previousPacketHash: packets.first?.integrityHash,
+            textNotes: Self.proofText,
+            mediaRefs: Self.proofMediaRefs,
+            state: .queued
+        )
+
+        do {
+            try await store.save(packet)
+            packets.insert(packet, at: 0)
+        } catch {
+            packets.insert(packet, at: 0)
+        }
     }
 
     // Stable per-device ID stored in UserDefaults — no UIKit dependency.

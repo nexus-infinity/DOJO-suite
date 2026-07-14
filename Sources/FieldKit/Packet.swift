@@ -13,7 +13,6 @@ public struct Packet: Codable, Sendable, Equatable, Identifiable {
     public let textNotes: String
     public let mediaRefs: [String]
     public let voiceRef: String?
-    public let geoHash: String?
     public var state: PacketState
     public var retryCount: Int
     public var receipt: PacketReceipt?
@@ -28,10 +27,9 @@ public struct Packet: Codable, Sendable, Equatable, Identifiable {
         operatorID: String,
         integrityHash: String,
         previousPacketHash: String? = nil,
-        textNotes: String = "",
+        textNotes: String,
         mediaRefs: [String] = [],
         voiceRef: String? = nil,
-        geoHash: String? = nil,
         state: PacketState = .draft,
         retryCount: Int = 0,
         receipt: PacketReceipt? = nil,
@@ -48,7 +46,6 @@ public struct Packet: Codable, Sendable, Equatable, Identifiable {
         self.textNotes = textNotes
         self.mediaRefs = mediaRefs
         self.voiceRef = voiceRef
-        self.geoHash = geoHash
         self.state = state
         self.retryCount = retryCount
         self.receipt = receipt
@@ -67,7 +64,6 @@ public struct Packet: Codable, Sendable, Equatable, Identifiable {
         case textNotes
         case mediaRefs
         case voiceRef
-        case geoHash
         case state
         case retryCount
         case receipt
@@ -87,7 +83,6 @@ public struct Packet: Codable, Sendable, Equatable, Identifiable {
         textNotes = try container.decode(String.self, forKey: .textNotes)
         mediaRefs = try container.decode([String].self, forKey: .mediaRefs)
         voiceRef = try container.decodeIfPresent(String.self, forKey: .voiceRef)
-        geoHash = try container.decodeIfPresent(String.self, forKey: .geoHash)
         state = try container.decode(PacketState.self, forKey: .state)
         retryCount = try container.decode(Int.self, forKey: .retryCount)
         receipt = try container.decodeIfPresent(PacketReceipt.self, forKey: .receipt)

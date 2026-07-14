@@ -44,7 +44,7 @@ let package = Package(
         .executableTarget(name: "ArkadašApp", dependencies: ["DOJOShared", "DOJOUI"], path: "Sources/ArkadašApp"),
         .executableTarget(name: "OB1LinkApp", dependencies: ["DOJOShared", "DOJOUI"], path: "Sources/OB1LinkApp"),
         .executableTarget(name: "DojoLinkApp", dependencies: ["DOJOShared", "DOJOUI"], path: "Sources/DojoLinkApp"),
-        .target(name: "FieldKit", dependencies: [], path: "Sources/FieldKit"),
+        .target(name: "FieldKit", dependencies: ["DOJOShared"], path: "Sources/FieldKit"),
         .executableTarget(name: "DOJOiOSApp", dependencies: ["FieldKit", "DOJOShared"], path: "Sources/DOJOiOSApp", exclude: ["Info.plist"], resources: [.process("Assets.xcassets")]),
         .executableTarget(name: "AKRONMac", dependencies: ["FieldKit"], path: "Sources/AKRONMac"),
         .executableTarget(name: "DOJOWatchApp", dependencies: ["DOJOShared", "DOJOUI"], path: "Sources/DOJOWatchApp"),

@@ -29,10 +29,26 @@ public final class MurmurCaptureService: ObservableObject {
     private var totalFrames = 0
     private var qualityTimer: Task<Void, Never>?
 
-    public init(deviceID: String, streamID: String = "mic.main", queue: MurmurQueue) {
+    /// Full-session PCM16LE accumulator for MFC-01 sealed voice object (durable seal on stop).
+    private var sessionPCM = Data()
+    private let sealedStore: SealedVoiceObjectStore
+
+    /// Last sealed offline voice object from this service (nil until a session seals).
+    @Published public private(set) var lastSealedVoiceObject: SealedVoiceObject?
+
+    /// Real-time RMS level in dBFS, updated every audio buffer (~10x/sec). -96 = silence.
+    @Published public private(set) var currentDbLevel: Float = -96.0
+
+    public init(
+        deviceID: String,
+        streamID: String = "mic.main",
+        queue: MurmurQueue,
+        sealedStore: SealedVoiceObjectStore = .shared
+    ) {
         self.deviceID = deviceID
         self.streamID = streamID
         self.queue = queue
+        self.sealedStore = sealedStore
     }
 
     // MARK: - Control
@@ -61,13 +77,17 @@ public final class MurmurCaptureService: ObservableObject {
         converter = conv
 
         inputNode.installTap(onBus: 0, bufferSize: 4_096, format: nativeFormat) { [weak self] buffer, _ in
-            Task { @MainActor [weak self] in
-                self?.onBuffer(buffer, converter: conv, targetFormat: targetFormat)
+            // Copy buffer for off-main processing — AVAudioEngine tap runs on a real-time thread.
+            guard let self else { return }
+            let copied = buffer.copy() as! AVAudioPCMBuffer
+            Task.detached(priority: .userInitiated) { [weak self] in
+                await self?.onBuffer(copied, converter: conv, targetFormat: targetFormat)
             }
         }
 
         engine.prepare()
         try engine.start()
+        sessionPCM = Data()
         isCapturing = true
         startQualityTimer()
     }
@@ -78,20 +98,40 @@ public final class MurmurCaptureService: ObservableObject {
         qualityTimer?.cancel()
         qualityTimer = nil
         converter = nil
-        chunkBuffer = []
+
+        // Flush remainder into session seal (short captures < 100ms chunk).
+        if !chunkBuffer.isEmpty {
+            sessionPCM.append(toPCM16(chunkBuffer))
+            chunkBuffer = []
+        }
         windowBuffer = []
         speechFrames = 0
         totalFrames = 0
         isCapturing = false
+
+        // MFC-01: seal original session bytes to durable local storage + hash (no AKRON claim).
+        if !sessionPCM.isEmpty {
+            if let sealed = try? sealedStore.seal(pcm16le: sessionPCM, deviceSessionID: deviceID) {
+                lastSealedVoiceObject = sealed
+            }
+        }
+        sessionPCM = Data()
 
         #if os(iOS)
         try? AVAudioSession.sharedInstance().setActive(false, options: .notifyOthersOnDeactivation)
         #endif
     }
 
+    /// Test / offline path: seal arbitrary PCM without the mic (same store as live capture).
+    public func sealOfflinePCMForTest(_ pcm16le: Data) throws -> SealedVoiceObject {
+        let sealed = try sealedStore.seal(pcm16le: pcm16le, deviceSessionID: deviceID)
+        lastSealedVoiceObject = sealed
+        return sealed
+    }
+
     // MARK: - Buffer processing
 
-    private func onBuffer(_ buffer: AVAudioPCMBuffer, converter: AVAudioConverter, targetFormat: AVAudioFormat) {
+    private func onBuffer(_ buffer: AVAudioPCMBuffer, converter: AVAudioConverter, targetFormat: AVAudioFormat) async {
         guard let converted = convert(buffer, using: converter, to: targetFormat),
               let data = converted.floatChannelData?[0] else { return }
 
@@ -99,16 +139,23 @@ public final class MurmurCaptureService: ObservableObject {
         guard count > 0 else { return }
         let samples = Array(UnsafeBufferPointer(start: data, count: count))
 
-        // Quality window accumulation
-        windowBuffer.append(contentsOf: samples)
-        totalFrames += 1
-
+        // Compute RMS dB for the monitor.
         var rms: Float = 0
         vDSP_rmsqv(data, 1, &rms, vDSP_Length(count))
-        if rms > 0.015 { speechFrames += 1 }  // ~-36 dBFS speech threshold
+        let db = rms > 1e-9 ? 20 * log10f(rms) : -96.0
+        let isSpeech = rms > 0.015  // ~-36 dBFS speech threshold
 
-        // Chunk accumulation — ship when 100ms worth collected
+        currentDbLevel = db
+        windowBuffer.append(contentsOf: samples)
+        totalFrames += 1
+        if isSpeech { speechFrames += 1 }
         chunkBuffer.append(contentsOf: samples)
+
+        shipPendingChunks()
+    }
+
+    @MainActor
+    private func shipPendingChunks() {
         while chunkBuffer.count >= MurmurConstants.chunkSampleCount {
             let chunk = Array(chunkBuffer.prefix(MurmurConstants.chunkSampleCount))
             chunkBuffer.removeFirst(MurmurConstants.chunkSampleCount)
@@ -143,6 +190,8 @@ public final class MurmurCaptureService: ObservableObject {
     private func shipChunk(_ samples: [Float]) {
         let speechRatio = totalFrames > 0 ? Float(speechFrames) / Float(totalFrames) : 0
         let pcmData = toPCM16(samples)
+        // Accumulate full-session original bytes for MFC-01 seal (evidence spine).
+        sessionPCM.append(pcmData)
         let payload = AudioChunkPayload(
             pcmData: pcmData,
             speech: speechRatio > 0.1,

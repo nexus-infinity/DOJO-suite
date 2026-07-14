@@ -29,8 +29,8 @@ struct PacketStateChip: View {
         case .acknowledged: return Color(hex: "#14B8A6")
         case .validated:    return Color(hex: "#22C55E")
         case .hold:         return Color(hex: "#F43F5E")
-        case .failed:       return Color(hex: "#EF4444")
         case .retrying:     return Color(hex: "#F59E0B")
+        case .failed:       return Color(hex: "#EF4444")
         case .expired:      return Color(hex: "#4B5563")
         }
     }
