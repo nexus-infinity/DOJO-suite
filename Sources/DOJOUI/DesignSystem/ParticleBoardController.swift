@@ -66,10 +66,15 @@ public final class ParticleBoardController {
             committedImageDraft = AikidoOpticsCodec.decodeToImage(state: pending.proposedState)
             pendingForecast = nil
 
-            boardStore?.save(pending.proposedState, title: boardTitle)
+            boardStore?.saveCommittedImmediately(pending.proposedState, title: boardTitle)
+            if changed.contains("[2,2]"),
+               let targetCell = pending.proposedState.cell(at: GridAddress(row: 2, col: 2)!),
+               case .route(_, let action) = targetCell.payload {
+                boardStore?.saveWP07WitnessImmediately(expectedValue: action, preRestartHash: hash)
+            }
             onCommit?(committedState!, committedDraft)
 
-            receiptStore?.emit(CockpitReceipt(
+            receiptStore?.emitImmediately(CockpitReceipt(
                 timestamp: iso8601Now(),
                 event: "commit.accepted",
                 actor: "cockpit-ui",
@@ -82,7 +87,7 @@ public final class ParticleBoardController {
             ))
 
         case .hold(let reasons):
-            receiptStore?.emit(CockpitReceipt(
+            receiptStore?.emitImmediately(CockpitReceipt(
                 timestamp: iso8601Now(),
                 event: "commit.blocked",
                 actor: "cockpit-ui",

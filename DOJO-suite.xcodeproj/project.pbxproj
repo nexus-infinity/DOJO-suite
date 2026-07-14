@@ -32,6 +32,7 @@
 		2A0419DFBAA0606EC261E6B4 /* AttractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64E1391532D40192095FB095 /* AttractorTests.swift */; };
 		2E26CE63327391C8EEE76D03 /* RoomSensorMurmor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5C7E04D5416B056669AA82 /* RoomSensorMurmor.swift */; };
 		2F6160BEE754EB5F713B3F0F /* CategorySchema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D0C8A6D0D958063EF52B390 /* CategorySchema.swift */; };
+		2F8B8113BA67C0750C738873 /* CockpitAlphaView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22D52906AD4833AF999912A /* CockpitAlphaView.swift */; };
 		2FAF7EBE4E93B27A454A2280 /* ParticleBoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6797D8DE8C4CD4A283757F7 /* ParticleBoardView.swift */; };
 		30237814443A29AF046597A6 /* OOOTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC6BBC36E24653D7F9E88B80 /* OOOTests.swift */; };
 		317B8E2D539414EC626D9D17 /* AuroraLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D38C2FE26B0DB9BA1106F2E /* AuroraLayer.swift */; };
@@ -370,6 +371,7 @@
 		AB81393DEE9E63E1E02CBE1B /* PromotionGate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromotionGate.swift; sourceTree = "<group>"; };
 		AC6BBC36E24653D7F9E88B80 /* OOOTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OOOTests.swift; sourceTree = "<group>"; };
 		B0A6039921F4DB58B89D774D /* MacMurmor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacMurmor.swift; sourceTree = "<group>"; };
+		B22D52906AD4833AF999912A /* CockpitAlphaView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CockpitAlphaView.swift; sourceTree = "<group>"; };
 		B88DB69DD1ECEC24FF36D67D /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		BA7B1B93F689F5267235FE60 /* HALInvariant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HALInvariant.swift; sourceTree = "<group>"; };
 		BA9DB8E9549821F17A4A856D /* ArkadašMessageRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ArkadašMessageRow.swift"; sourceTree = "<group>"; };
@@ -575,6 +577,7 @@
 			children = (
 				8D38C2FE26B0DB9BA1106F2E /* AuroraLayer.swift */,
 				8DD290A9DB4B7C8BA593DD61 /* ChamberRail.swift */,
+				B22D52906AD4833AF999912A /* CockpitAlphaView.swift */,
 				C2510B8E94BD8CE3F8D9F196 /* ConversationHeader.swift */,
 				40082228E040A706E192FE46 /* DOJOChatView.swift */,
 				8D36AB538D0C4E88074DFF1E /* InputBar.swift */,
@@ -1137,6 +1140,7 @@
 				317B8E2D539414EC626D9D17 /* AuroraLayer.swift in Sources */,
 				69B6DBCFB5899BB4ADC14A44 /* ChamberHealthMonitor.swift in Sources */,
 				BD858A4B62AE2C17FD2D0D98 /* ChamberRail.swift in Sources */,
+				2F8B8113BA67C0750C738873 /* CockpitAlphaView.swift in Sources */,
 				045E78E976D316FD66B18393 /* ConversationHeader.swift in Sources */,
 				08EFB6FB4F24CF4EDF5EF7EA /* ConversationStore.swift in Sources */,
 				A48651230A674057A5339FB0 /* DOJOApp.swift in Sources */,

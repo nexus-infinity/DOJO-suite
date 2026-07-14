@@ -21,6 +21,25 @@ public struct CockpitBoardSnapshot: Codable, Sendable {
     }
 }
 
+public struct WP07WitnessState: Codable, Sendable {
+    public let targetCellCoordinate: String
+    public let expectedValue: String
+    public let preRestartHash: String
+    public let recordedAt: String
+
+    public init(
+        targetCellCoordinate: String = "[2,2]",
+        expectedValue: String,
+        preRestartHash: String,
+        recordedAt: String
+    ) {
+        self.targetCellCoordinate = targetCellCoordinate
+        self.expectedValue = expectedValue
+        self.preRestartHash = preRestartHash
+        self.recordedAt = recordedAt
+    }
+}
+
 // MARK: - Store
 
 /// Atomic JSON persistence for the committed ParticleBoard state.
@@ -28,12 +47,14 @@ public struct CockpitBoardSnapshot: Codable, Sendable {
 /// Returns nil on missing file, decoding failure, or schema mismatch — never throws.
 public struct CockpitBoardStore: Sendable {
     public let fileURL: URL
+    public let wp07WitnessFileURL: URL
 
     public init() {
         let support = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
         let dir = support.appendingPathComponent("DOJO", isDirectory: true)
         try? FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
         fileURL = dir.appendingPathComponent("cockpit_board.json")
+        wp07WitnessFileURL = dir.appendingPathComponent("wp07_witness.json")
     }
 
     public func save(_ state: ParticleBoardState, title: String) {
@@ -42,10 +63,8 @@ public struct CockpitBoardStore: Sendable {
             boardTitle: title,
             committedState: state
         )
-        let url = fileURL
         DispatchQueue.global(qos: .utility).async {
-            guard let data = try? JSONEncoder().encode(snapshot) else { return }
-            try? data.write(to: url, options: .atomic)
+            saveImmediately(snapshot)
         }
     }
 
@@ -66,5 +85,49 @@ public struct CockpitBoardStore: Sendable {
             return nil
         }
         return snapshot.committedState
+    }
+
+    public func saveWP07Witness(expectedValue: String, preRestartHash: String) {
+        let witness = WP07WitnessState(
+            expectedValue: expectedValue,
+            preRestartHash: preRestartHash,
+            recordedAt: ISO8601DateFormatter().string(from: Date())
+        )
+        DispatchQueue.global(qos: .utility).async {
+            saveWP07WitnessImmediately(witness)
+        }
+    }
+
+    public func loadWP07Witness() -> WP07WitnessState? {
+        guard let data = try? Data(contentsOf: wp07WitnessFileURL) else { return nil }
+        return try? JSONDecoder().decode(WP07WitnessState.self, from: data)
+    }
+
+    public func saveCommittedImmediately(_ state: ParticleBoardState, title: String) {
+        let snapshot = CockpitBoardSnapshot(
+            savedAt: ISO8601DateFormatter().string(from: Date()),
+            boardTitle: title,
+            committedState: state
+        )
+        saveImmediately(snapshot)
+    }
+
+    public func saveWP07WitnessImmediately(expectedValue: String, preRestartHash: String) {
+        let witness = WP07WitnessState(
+            expectedValue: expectedValue,
+            preRestartHash: preRestartHash,
+            recordedAt: ISO8601DateFormatter().string(from: Date())
+        )
+        saveWP07WitnessImmediately(witness)
+    }
+
+    private func saveImmediately(_ snapshot: CockpitBoardSnapshot) {
+        guard let data = try? JSONEncoder().encode(snapshot) else { return }
+        try? data.write(to: fileURL, options: .atomic)
+    }
+
+    private func saveWP07WitnessImmediately(_ witness: WP07WitnessState) {
+        guard let data = try? JSONEncoder().encode(witness) else { return }
+        try? data.write(to: wp07WitnessFileURL, options: .atomic)
     }
 }

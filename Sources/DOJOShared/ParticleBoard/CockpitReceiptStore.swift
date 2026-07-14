@@ -67,21 +67,24 @@ public struct CockpitReceiptStore: Sendable {
     }
 
     public func emit(_ receipt: CockpitReceipt) {
-        let url = fileURL
         DispatchQueue.global(qos: .utility).async {
-            let encoder = JSONEncoder()
-            guard let lineData = try? encoder.encode(receipt),
-                  var line = String(data: lineData, encoding: .utf8) else { return }
-            line += "\n"
-            guard let data = line.data(using: .utf8) else { return }
-            if FileManager.default.fileExists(atPath: url.path) {
-                guard let handle = try? FileHandle(forWritingTo: url) else { return }
-                defer { try? handle.close() }
-                handle.seekToEndOfFile()
-                handle.write(data)
-            } else {
-                try? data.write(to: url, options: .atomic)
-            }
+            emitImmediately(receipt)
+        }
+    }
+
+    public func emitImmediately(_ receipt: CockpitReceipt) {
+        let encoder = JSONEncoder()
+        guard let lineData = try? encoder.encode(receipt),
+              var line = String(data: lineData, encoding: .utf8) else { return }
+        line += "\n"
+        guard let data = line.data(using: .utf8) else { return }
+        if FileManager.default.fileExists(atPath: fileURL.path) {
+            guard let handle = try? FileHandle(forWritingTo: fileURL) else { return }
+            defer { try? handle.close() }
+            handle.seekToEndOfFile()
+            handle.write(data)
+        } else {
+            try? data.write(to: fileURL, options: .atomic)
         }
     }
 

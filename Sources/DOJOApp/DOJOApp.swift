@@ -43,6 +43,12 @@ struct DOJOApp: App {
                 .keyboardShortcut("n", modifiers: [.command, .shift])
             }
         }
+
+        // Governor-reviewable cockpit surface — lifecycle truth state
+        WindowGroup("Cockpit Alpha", id: "cockpit-alpha") {
+            CockpitAlphaView()
+        }
+        .defaultSize(width: 600, height: 520)
     }
     
     private func openAudioCaptureWindow() {

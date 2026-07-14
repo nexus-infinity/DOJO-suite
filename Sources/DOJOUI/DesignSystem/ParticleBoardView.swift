@@ -11,8 +11,12 @@ public struct ParticleBoardView: View {
     @ObservedObject private var coordinator: DOJOFieldCoordinator
 
     @State private var editingCell: GridAddress? = nil
-    @State private var showEditSheet = false
+    @State private var editContent: String = ""
+    @State private var editClaimClass: ClaimClass = .observed
+    @State private var editTriangleResolved = true
     @State private var holdErrors: [GridAddress: String] = [:]
+    @FocusState private var editorFocused: Bool
+    private let wp07Target = GridAddress(row: 2, col: 2)!
 
     private let columns = Array(repeating: GridItem(.flexible(), spacing: 8), count: 3)
 
@@ -34,6 +38,9 @@ public struct ParticleBoardView: View {
             ScrollView {
                 VStack(spacing: 20) {
                     gridSection
+                    if let address = editingCell {
+                        editorPanel(for: address)
+                    }
                     if let forecast = controller.pendingForecast {
                         forecastPanel(forecast)
                     }
@@ -43,20 +50,6 @@ public struct ParticleBoardView: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(FieldPalette.void.ignoresSafeArea())
-        .sheet(isPresented: $showEditSheet) {
-            if let address = editingCell {
-                ArtifactEditSheet(address: address) { artifact in
-                    let payload = BoardPayload.route(
-                        intent: artifact.claimClass.rawValue,
-                        action: artifact.content
-                    )
-                    controller.proposeEdit(row: address.row, col: address.col, payload: payload)
-                    showEditSheet = false
-                } onCancel: {
-                    showEditSheet = false
-                }
-            }
-        }
     }
 
     // MARK: - HAL Status Bar
@@ -116,15 +109,21 @@ public struct ParticleBoardView: View {
 
     private func cellView(_ cell: BoardCell) -> some View {
         let hasHold = holdErrors[cell.address] != nil
+        let isWP07Target = cell.address == wp07Target
+        let isEditing = editingCell == cell.address
         return Button {
-            editingCell = cell.address
-            showEditSheet = true
+            beginEditing(cell)
         } label: {
             VStack(alignment: .leading, spacing: 4) {
                 HStack {
                     Text("[\(cell.row),\(cell.col)]")
                         .font(.system(size: 9, design: .monospaced))
                         .foregroundStyle(FieldPalette.textDim)
+                    if isWP07Target {
+                        Text("WP07 TARGET")
+                            .font(.system(size: 8, weight: .bold, design: .monospaced))
+                            .foregroundStyle(Chamber.tata.color)
+                    }
                     Spacer()
                     Text(CellKind.from(row: cell.row).rawValue)
                         .font(.system(size: 8, design: .monospaced))
@@ -180,8 +179,8 @@ public struct ParticleBoardView: View {
             .overlay(
                 RoundedRectangle(cornerRadius: 8)
                     .stroke(
-                        hasHold ? Color(hex: "#F43F5E") : cellBorderColor(cell.payload),
-                        lineWidth: hasHold ? 2 : 1
+                        hasHold ? Color(hex: "#F43F5E") : (isEditing ? Chamber.dojo.color : (isWP07Target ? Chamber.tata.color : cellBorderColor(cell.payload))),
+                        lineWidth: hasHold ? 2 : (isEditing || isWP07Target ? 2 : 1)
                     )
             )
         }
@@ -215,6 +214,68 @@ public struct ParticleBoardView: View {
 
     // MARK: - Forecast Panel
 
+    private func editorPanel(for address: GridAddress) -> some View {
+        VStack(alignment: .leading, spacing: 12) {
+            HStack {
+                Text("EDIT CELL [\(address.row),\(address.col)]")
+                    .font(.caption.monospaced().bold())
+                    .foregroundStyle(Chamber.tata.color)
+                Spacer()
+                if address == wp07Target {
+                    Text("Governor-visible witness editor")
+                        .font(.caption2.monospaced())
+                        .foregroundStyle(FieldPalette.textDim)
+                }
+            }
+
+            VStack(alignment: .leading, spacing: 6) {
+                Text("O / I / R CLASS")
+                    .font(.caption.monospaced())
+                    .foregroundStyle(FieldPalette.textMuted)
+                Picker("Claim Class", selection: $editClaimClass) {
+                    ForEach(ClaimClass.allCases) { claimClass in
+                        Text(claimClass.rawValue).tag(claimClass)
+                    }
+                }
+                .pickerStyle(.segmented)
+            }
+
+            VStack(alignment: .leading, spacing: 6) {
+                Text("CONTENT")
+                    .font(.caption.monospaced())
+                    .foregroundStyle(FieldPalette.textMuted)
+                TextField("Enter cell content", text: $editContent)
+                    .textFieldStyle(.roundedBorder)
+                    .font(.body.monospaced())
+                    .focused($editorFocused)
+            }
+
+            Toggle("Triangle Resolved", isOn: $editTriangleResolved)
+                .font(.body.monospaced())
+                .foregroundStyle(FieldPalette.textPrimary)
+                .tint(Chamber.atlas.color)
+
+            HStack(spacing: 12) {
+                Button("Cancel") {
+                    cancelEditing()
+                }
+                .buttonStyle(FieldButtonStyle(tint: FieldPalette.border))
+
+                Button("Propose Edit") {
+                    commitInlineEdit(for: address)
+                }
+                .buttonStyle(FieldButtonStyle())
+                .disabled(editContent.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
+            }
+        }
+        .padding(14)
+        .background(FieldPalette.surfaceRaised)
+        .clipShape(RoundedRectangle(cornerRadius: 8))
+        .overlay(
+            RoundedRectangle(cornerRadius: 8).stroke(FieldPalette.border, lineWidth: 1)
+        )
+    }
+
     private func forecastPanel(_ forecast: Forecast) -> some View {
         VStack(alignment: .leading, spacing: 12) {
             HStack {
@@ -236,6 +297,7 @@ public struct ParticleBoardView: View {
                     do {
                         try controller.acceptForecast()
                         holdErrors = [:]
+                        editingCell = nil
                     } catch ParticleBoardError.acceptBlockedByPolicy(let reasons) {
                         holdErrors = [:]
                         for reason in reasons {
@@ -261,102 +323,66 @@ public struct ParticleBoardView: View {
             RoundedRectangle(cornerRadius: 8).stroke(FieldPalette.border, lineWidth: 1)
         )
     }
-}
 
-// MARK: - ArtifactEditSheet
-// Enforces the Triangle: a cell edit requires Anchor + O/I/R + TriangleStatus.
-
-struct ArtifactEditSheet: View {
-    let address: GridAddress
-    let onCommit: (FieldArtifact) -> Void
-    let onCancel: () -> Void
-
-    @State private var content: String = ""
-    @State private var claimClass: ClaimClass = .observed
-    @State private var triangleResolved = true
-
-    var body: some View {
-        VStack(alignment: .leading, spacing: 20) {
-            Text("Edit Cell [\(address.row),\(address.col)]")
-                .font(.title3.monospaced().bold())
-                .foregroundStyle(FieldPalette.textPrimary)
-
-            VStack(alignment: .leading, spacing: 6) {
-                Text("O / I / R CLASS")
-                    .font(.caption.monospaced())
-                    .foregroundStyle(FieldPalette.textMuted)
-                Picker("Claim Class", selection: $claimClass) {
-                    ForEach(ClaimClass.allCases) { c in
-                        Text(c.rawValue).tag(c)
-                    }
-                }
-                .pickerStyle(.segmented)
-            }
-
-            VStack(alignment: .leading, spacing: 6) {
-                Text("CONTENT")
-                    .font(.caption.monospaced())
-                    .foregroundStyle(FieldPalette.textMuted)
-                TextEditor(text: $content)
-                    .font(.body.monospaced())
-                    .frame(minHeight: 80)
-                    .padding(8)
-                    .background(FieldPalette.surface)
-                    .clipShape(RoundedRectangle(cornerRadius: 6))
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 6)
-                            .stroke(FieldPalette.border, lineWidth: 1)
-                    )
-            }
-
-            VStack(alignment: .leading, spacing: 6) {
-                Text("TRIANGLE STATUS")
-                    .font(.caption.monospaced())
-                    .foregroundStyle(FieldPalette.textMuted)
-                Toggle("Triangle Resolved", isOn: $triangleResolved)
-                    .font(.body.monospaced())
-                    .foregroundStyle(FieldPalette.textPrimary)
-                    .tint(Chamber.atlas.color)
-            }
-
-            Spacer()
-
-            HStack(spacing: 12) {
-                Button("Cancel", action: onCancel)
-                    .buttonStyle(FieldButtonStyle(tint: FieldPalette.border))
-                Button("Propose Edit") {
-                    guard !content.isEmpty else { return }
-                    let anchor = RealityAnchor(
-                        hashSHA256: CockpitReceiptStore.sha256(
-                            from: content,
-                            claimClass.rawValue,
-                            triangleResolved ? "resolved" : "unresolved"
-                        ),
-                        storageLocation: "cell[\(address.row),\(address.col)]"
-                    )
-                    let triangle: TriangleStatus = triangleResolved
-                        ? .resolved
-                        : .unresolved(missingSides: [.document], acknowledgedGap: true)
-                    onCommit(FieldArtifact(
-                        anchor: anchor,
-                        claimClass: claimClass,
-                        triangle: triangle,
-                        content: content
-                    ))
-                }
-                .buttonStyle(FieldButtonStyle())
-                .disabled(content.isEmpty)
-            }
+    private func beginEditing(_ cell: BoardCell) {
+        editingCell = cell.address
+        holdErrors[cell.address] = nil
+        switch cell.payload {
+        case .route(let intent, let action):
+            editContent = action
+            editClaimClass = ClaimClass(rawValue: intent) ?? .observed
+        case .empty:
+            editContent = ""
+            editClaimClass = .observed
+        case .unknown(let raw):
+            editContent = raw
+            editClaimClass = .observed
         }
-        .padding(24)
-        .frame(minWidth: 400, minHeight: 420)
-        .background(FieldPalette.void)
-        .foregroundStyle(FieldPalette.textPrimary)
+        editTriangleResolved = true
+        DispatchQueue.main.async {
+            editorFocused = true
+        }
+    }
+
+    private func cancelEditing() {
+        editingCell = nil
+        editContent = ""
+        editClaimClass = .observed
+        editTriangleResolved = true
+        editorFocused = false
+    }
+
+    private func commitInlineEdit(for address: GridAddress) {
+        let trimmed = editContent.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !trimmed.isEmpty else { return }
+        let anchor = RealityAnchor(
+            hashSHA256: CockpitReceiptStore.sha256(
+                from: trimmed,
+                editClaimClass.rawValue,
+                editTriangleResolved ? "resolved" : "unresolved"
+            ),
+            storageLocation: "cell[\(address.row),\(address.col)]"
+        )
+        let triangle: TriangleStatus = editTriangleResolved
+            ? .resolved
+            : .unresolved(missingSides: [.document], acknowledgedGap: true)
+        let artifact = FieldArtifact(
+            anchor: anchor,
+            claimClass: editClaimClass,
+            triangle: triangle,
+            content: trimmed
+        )
+        let payload = BoardPayload.route(
+            intent: artifact.claimClass.rawValue,
+            action: artifact.content
+        )
+        controller.proposeEdit(row: address.row, col: address.col, payload: payload)
+        editorFocused = false
     }
 }
 
 // MARK: - ClaimClass Identifiable bridge (local — avoids retroactive conformance)
-extension ClaimClass: Identifiable {
+extension ClaimClass: @retroactive Identifiable {
     public var id: String { rawValue }
 }
 
