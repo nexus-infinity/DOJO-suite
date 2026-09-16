@@ -25,6 +25,8 @@ This record closes the accumulated local development surface into one reviewable
 - Observer-aligned ontology validation: `PASS · 32 records`.
 - SwiftPM CLI in the managed assistant environment: `HOLD.ToolingSandbox`; SwiftPM could not initialize its nested sandbox. Xcode compiled the same source graph and ran the active test plan successfully.
 
+Non-blocking web maintenance remains explicit: `HOLD.WebNFTExternalFileTraceWarning` for the sovereign route's intentional external ledger reads, and `HOLD.BrowserslistDataRefresh` for the stale local `caniuse-lite` dataset. Neither warning failed compilation, type-checking, page generation, or the production build.
+
 ## Intentional test HOLDs
 
 The skipped set is explicit rather than silently green:
