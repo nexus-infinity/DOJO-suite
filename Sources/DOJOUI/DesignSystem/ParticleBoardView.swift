@@ -248,7 +248,7 @@ public struct ParticleBoardView: View {
                     .font(.caption.monospaced())
                     .foregroundStyle(FieldPalette.textMuted)
                 Picker("Claim Class", selection: $editClaimClass) {
-                    ForEach(ClaimClass.allCases, id: \.rawValue) { claimClass in
+                    ForEach(ClaimClass.allCases, id: \.self) { claimClass in
                         Text(claimClass.rawValue).tag(claimClass)
                     }
                 }

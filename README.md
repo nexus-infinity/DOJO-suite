@@ -16,6 +16,11 @@ exists but is dormant and is not the target for new feature work. All
 active development targets the Xcode project at `Sources/DOJOApp`,
 `Sources/DOJOShared`, and `Sources/DOJOUI`.
 
+Cloud/Linux agents cannot build or ship this app. Status for murmurations
+and Apple production is governed in Field-MacOS-DOJO:
+`docs/CLOUD_DEV_ATTRACTOR_MURMURATION_AND_APPLE_PRODUCTION.md`
+(local pointer: `docs/CLOUD_DEV_ATTRACTOR_POINTER.md`).
+
 ---
 
 ## 🔺 Sacred Pyramid Overview

@@ -1,6 +1,8 @@
 # Apple Applications Evaluation Report
 ## DOJO-suite Repository Overview
 
+**UNTRUSTED for production-ready claims as of 2026-09-16.** This 2026-01-24 scaffolding eval must not override the locked Apple plan or Linear P0s. Governed attractor: `nexus-infinity/field-macos-dojo` `docs/CLOUD_DEV_ATTRACTOR_MURMURATION_AND_APPLE_PRODUCTION.md` (pointer: `docs/CLOUD_DEV_ATTRACTOR_POINTER.md`).
+
 **Report Date**: 2026-01-24  
 **Repository**: nexus-infinity/DOJO-suite  
 **Evaluator**: GitHub Copilot Coding Agent

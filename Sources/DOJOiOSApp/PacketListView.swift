@@ -174,7 +174,7 @@ struct PacketRowView: View {
                 .padding(.top, 2)
             VStack(alignment: .leading, spacing: 6) {
                 if let voiceRef = packet.voiceRef, packet.textNotes.isEmpty {
-                    Label("murmur · \(voiceRef.suffix(10))", systemImage: "mic")
+                    Label("murmur · \(String(voiceRef.suffix(10)))", systemImage: "mic")
                         .font(.system(.body, design: .monospaced))
                         .foregroundStyle(Color(hex: "#7C3AED"))
                         .lineLimit(1)
@@ -190,12 +190,12 @@ struct PacketRowView: View {
                         .font(.system(size: 11, design: .monospaced))
                         .foregroundStyle(Color(hex: "#4B5563"))
 
-                    Text("seal \(packet.integrityHash.prefix(8))")
+                    Text("seal \(String(packet.integrityHash.prefix(8)))")
                         .font(.system(size: 11, design: .monospaced))
                         .foregroundStyle(Color(hex: "#4B5563"))
 
                     if let receipt = packet.receipt {
-                        Text("◼︎ \(receipt.receiptID.prefix(8))")
+                        Text("◼︎ \(String(receipt.receiptID.prefix(8)))")
                             .font(.system(size: 11, design: .monospaced))
                             .foregroundStyle(Color(hex: "#4B5563"))
                     }
