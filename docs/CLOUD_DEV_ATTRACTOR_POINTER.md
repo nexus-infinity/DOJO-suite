@@ -18,5 +18,6 @@ This pointer is on draft PR #8 (`cursor/murmuration-apple-attractor-a502`). It i
 - `Sources/DOJOiOSApp/PacketListView.swift` — SwiftUI `LocalizedStringKey` cannot interpolate `prefix`/`suffix` Substring sequences
 - `Sources/DOJOiOSApp/PacketQueue.swift` — `@MainActor` `packets[i]` passed `inout` into `async` `save`/`upload`
 - `Sources/DOJOUI/DesignSystem/MurmorOrbitView.swift` — `#Preview` body did not return a `View` (AppKit vs SwiftUI `Preview` ambiguity)
+- `Sources/DOJOUI/DesignSystem/ParticleBoardView.swift` — `@retroactive` is Swift 5.10+; Xcode 15.2 CI is Swift 5.9. `ForEach(..., id: \.self)` instead of a cross-module Identifiable conformance
 
 Do **not** merge this draft while that job is red. Linux cloud cannot run `swift build`. This is not Xcode/device/G6 proof.

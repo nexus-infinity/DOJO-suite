@@ -233,7 +233,7 @@ public struct ParticleBoardView: View {
                     .font(.caption.monospaced())
                     .foregroundStyle(FieldPalette.textMuted)
                 Picker("Claim Class", selection: $editClaimClass) {
-                    ForEach(ClaimClass.allCases) { claimClass in
+                    ForEach(ClaimClass.allCases, id: \.self) { claimClass in
                         Text(claimClass.rawValue).tag(claimClass)
                     }
                 }
@@ -379,11 +379,6 @@ public struct ParticleBoardView: View {
         controller.proposeEdit(row: address.row, col: address.col, payload: payload)
         editorFocused = false
     }
-}
-
-// MARK: - ClaimClass Identifiable bridge (local — avoids retroactive conformance)
-extension ClaimClass: @retroactive Identifiable {
-    public var id: String { rawValue }
 }
 
 // MARK: - FieldButtonStyle
