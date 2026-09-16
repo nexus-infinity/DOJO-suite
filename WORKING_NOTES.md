@@ -1,6 +1,6 @@
 # DOJO-suite Working Notes
-> **Purpose**: Persistent session context — read before any new session on this suite.  
-> **Principle**: Read-then-build, not rebuild-from-scratch.  
+> **Purpose**: Persistent session context — read before any new session on this suite.
+> **Principle**: Read-then-build, not rebuild-from-scratch.
 > **Last updated**: 2026-04-15 by copilot
 
 ---
@@ -11,7 +11,7 @@
 | Component | Status | File |
 |---|---|---|
 | `VADMicBridge.swift` | ✅ BUILT (needs wiring) | `Sources/DOJOShared/Services/VADMicBridge.swift` |
-| `ArkadašContentView` | ✅ EXISTS — StateObject added | `Sources/ArkadašApp/ArkadašContentView.swift` |
+| `ArkadasContentView` | ✅ EXISTS — StateObject added | `Sources/ArkadasApp/ArkadasContentView.swift` |
 | `Package.swift` | ✅ UPDATED | watchOS(.v10) added |
 | `SUITE_MANIFEST.md` | ✅ CANONICAL | Portal OOO registry |
 | `project.yml` | ✅ EXISTS | XcodeGen declaration |
@@ -37,7 +37,7 @@ Mac Studio   →  FIELD sovereign processing (all 7 chamber ports)
 
 ### What Watch NEVER does
 - No direct DOJO calls
-- No speech recognition  
+- No speech recognition
 - No local LLM
 - Watch routes EVERYTHING to iPhone via `WCSession`
 
@@ -58,8 +58,8 @@ Mac Studio   →  FIELD sovereign processing (all 7 chamber ports)
 ## 🚀 Deployment Declaration Philosophy
 
 ### The NixOS principle applied here
-`Field-NixOS-SOMA/flake.nix` = declarative Mac Studio server state (already exists).  
-`Package.swift` = declarative Swift package state (already there).  
+`Field-NixOS-SOMA/flake.nix` = declarative Mac Studio server state (already exists).
+`Package.swift` = declarative Swift package state (already there).
 **Missing**: a declarative **session state** — what does "cohabitation mode: active" look like as a reproducible declaration?
 
 ### The anchor point
@@ -83,7 +83,7 @@ Mac Studio   →  FIELD sovereign processing (all 7 chamber ports)
   }
 }
 ```
-This is the "pull from scratch" anchor — declare desired state, system bootstraps to it.  
+This is the "pull from scratch" anchor — declare desired state, system bootstraps to it.
 Home: `Sources/DOJOShared/Models/CohabitationSession.swift` + a `.json` schema.
 
 ---
@@ -91,11 +91,11 @@ Home: `Sources/DOJOShared/Models/CohabitationSession.swift` + a `.json` schema.
 ## Sub-project: Voice Input (VADMicBridge)
 > See: `Sources/DOJOShared/Services/VADMicBridge.swift`
 
-**The problem solved**: Apple Dictation = button lag. Control My Mac = choppy after extended use. Neither is always-on.  
+**The problem solved**: Apple Dictation = button lag. Control My Mac = choppy after extended use. Neither is always-on.
 **The solution**: VAD (Voice Activity Detection) — system listens continuously, silence = send. No button.
 
 **Still needs**:
-- `.onAppear` wiring in `ArkadašContentView`:
+- `.onAppear` wiring in `ArkadasContentView`:
   ```swift
   .onAppear {
       Task {
@@ -124,7 +124,7 @@ HealthKit HKObserverQuery (HR + HRV)
     → spike detection (>20bpm rise OR HRV drop >20ms)
     → WCSession.sendMessage() to iPhone
     → iPhone interprets as heightened attention signal
-    → Arkadaš S5 homeostasis adjusts routing
+    → Arkadaş S5 homeostasis adjusts routing
     → Haptic on Watch when DOJO responds (WKInterfaceDevice.play(.notification))
 ```
 
@@ -137,13 +137,13 @@ HealthKit HKObserverQuery (HR + HRV)
 ---
 
 ## Sub-project: Cohabitation DOJO Game Space
-> Parent: GNE-1 (Geometric Navigation Engine) → Week 7-8: Dance-Music Interface  
-> Stage: S5 Arkadaš Homeostasis  
-> Chambers: ◉ Arkadaš (coordination) + ◼︎ DOJO (Geometer-Conductor)
+> Parent: GNE-1 (Geometric Navigation Engine) → Week 7-8: Dance-Music Interface
+> Stage: S5 Arkadaş Homeostasis
+> Chambers: ◉ Arkadaş (coordination) + ◼︎ DOJO (Geometer-Conductor)
 
-**Concept**: Multiple Watch-wearing participants in shared physical space.  
-Collective biometrics + motion → music generation + visual environment.  
-DOJO arbitrates whose movement "leads" at any moment.  
+**Concept**: Multiple Watch-wearing participants in shared physical space.
+Collective biometrics + motion → music generation + visual environment.
+DOJO arbitrates whose movement "leads" at any moment.
 DJb (Conductor Panel) = one person as DJ. Cohabitation = ensemble — everyone is DJ.
 
 **Sensor chain**:
@@ -152,7 +152,7 @@ Each participant: Watch Ultra (HR/HRV) + iPhone (accelerometer/gyro)
     ↓
 HAL (IDEA-007): Madgwick filter → ALIGNED / PRECESSING / WOBBLING
     ↓
-Arkadaš S5: who's leading rhythm, who's syncing, who's diverging
+Arkadaş S5: who's leading rhythm, who's syncing, who's diverging
     ↓
 Groove Requiem: collective rhythm → music at 528Hz / 0.57s coalescence
     ↓
@@ -161,8 +161,8 @@ Aikido Optics: visual environment embodies the field state
 DOJO Geometer-Conductor: arbitrates, amplifies moments
 ```
 
-**Aikido principle for this space**:  
-Augmentation = redirecting what already exists in the body/space.  
+**Aikido principle for this space**:
+Augmentation = redirecting what already exists in the body/space.
 The room responds to what people are doing. No button. No UI. Just presence.
 
 **Notion anchors**:
@@ -174,11 +174,11 @@ The room responds to what people are doing. No button. No UI. Just presence.
 ---
 
 ## Sub-project: Aikido Optics (IDEA-006)
-> Spec: `/Users/field/docs/idea_crystallization/DOJO_FRONTEND_ATTRIBUTES.md` §6  
-> Notion: `2f0a49ca`  
+> Spec: `/Users/field/docs/idea_crystallization/DOJO_FRONTEND_ATTRIBUTES.md` §6
+> Notion: `2f0a49ca`
 > Status: **Named and specced. Not yet wired.**
 
-**Definition**: Display subsystem — every visual particle embodies its principle.  
+**Definition**: Display subsystem — every visual particle embodies its principle.
 Paired with: **Groove Requiem** (sound subsystem, 528Hz = 0.57s coalescence).
 
 **Interaction principles**:
@@ -192,7 +192,7 @@ Paired with: **Groove Requiem** (sound subsystem, 528Hz = 0.57s coalescence).
 2. Emotional Resonance → Layout Geometry → Typography as Frequency
 3. Spinning Top Motion (last — most complex)
 
-**Swift layer**: `ParticleEngine` + `GeometryTransforms` stubs exist in `DOJOShared`.  
+**Swift layer**: `ParticleEngine` + `GeometryTransforms` stubs exist in `DOJOShared`.
 Next: wire them into actual rendering instead of no-ops.
 
 ---
@@ -206,7 +206,7 @@ Next: wire them into actual rendering instead of no-ops.
 3. **AirPods Pro** — personalized spatial audio layer (Groove Requiem personal mix)
 4. **Apple Vision Pro** — solo deep-work mode (NOT cohabitation)
 
-**Why NOT Meta Ray-Ban / XREAL as primary**: Not sovereign, no FIELD MCP hook.  
+**Why NOT Meta Ray-Ban / XREAL as primary**: Not sovereign, no FIELD MCP hook.
 **Why NOT Vision Pro for cohabitation**: Anti-social headset, heavy, wrong form factor for dance.
 
 ---

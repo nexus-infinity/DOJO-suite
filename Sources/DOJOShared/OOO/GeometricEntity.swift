@@ -9,7 +9,8 @@ public enum GeometricShape: String, Codable, Sendable {
     case invertedTriangle = "▼"         // TATA (432 Hz) — Truth/Temporal
     case triangle = "▲"                 // ATLAS (528 Hz) — Knowledge/Navigation
     case square = "◼︎"                   // DOJO (741 Hz) — Manifestation Apex
-    case crosshairsCircle = "⊗"         // Arkadaš (852 Hz) — King's Chamber / THE BRAIN
+    case crosshairsCircle = "⊗"         // King's Chamber (852 Hz) — deterministic infrastructure
+    case filledTarget = "◉"             // Arkadaş (717 Hz) — embodiment bridge / SPIN
     case diamond = "◆"                  // Akron Gateway (396 Hz) — Archive
     case hexagon = "⬡"                  // Metatron Cube
 }
@@ -20,22 +21,37 @@ public enum GeometricColor: String, Codable, Sendable {
     case orange = "#FF8000"             // 432 Hz - TATA
     case green = "#00FF00"              // 528 Hz - ATLAS
     case blue = "#0000FF"               // 741 Hz - DOJO
-    case indigo = "#4B0082"             // 852 Hz - Arkadaš (King's Chamber)
+    case indigo = "#4B0082"             // 852 Hz - King's Chamber
+    case gold = "#EAB308"               // 717 Hz - Arkadaş
     case violet = "#8B00FF"             // 963 Hz - OBI-WAN
 }
 
 /// Geometric properties defining shape, frequency, and position in the Sacred Pyramid
 public struct GeometricProperties: Codable, Sendable {
     public let shape: GeometricShape
+    /// Optional canonical routing identity when the visual shape is not the route glyph.
+    public let routeSymbolOverride: String?
     public let color: GeometricColor
     public let frequency: Float         // Hz - Solfeggio frequency
     public let position: Float          // 0.0 (foundation) → 1.0 (apex)
-    
-    public init(shape: GeometricShape, color: GeometricColor, frequency: Float, position: Float) {
+
+    public init(
+        shape: GeometricShape,
+        color: GeometricColor,
+        frequency: Float,
+        position: Float,
+        routeSymbolOverride: String? = nil
+    ) {
         self.shape = shape
+        self.routeSymbolOverride = routeSymbolOverride
         self.color = color
         self.frequency = frequency
         self.position = position
+    }
+
+    /// Canonical route identity. Visual geometry may remain distinct.
+    public var canonicalRouteSymbol: String {
+        routeSymbolOverride ?? shape.rawValue
     }
 }
 
@@ -45,7 +61,7 @@ public struct GeometricProperties: Codable, Sendable {
 public enum SemanticDomain: String, Codable, Sendable {
     case legal          // Legal/contractual domain (TATA)
     case temporal       // Time/cadence domain (OBI-WAN)
-    case identity       // Identity/consciousness (Arkadas)
+    case identity       // Identity/consciousness (Arkadaş)
     case geometric      // Geometric/mathematical (ATLAS)
     case commercial     // Commercial/transactional
     case translation    // Translation/bridging (King's Chamber)
@@ -57,7 +73,7 @@ public struct SemanticProperties: Codable, Sendable {
     public let domain: SemanticDomain
     public let culturalTradition: String
     public let intent: String
-    
+
     public init(domain: SemanticDomain, culturalTradition: String, intent: String) {
         self.domain = domain
         self.culturalTradition = culturalTradition
@@ -82,7 +98,7 @@ public struct TemporalProperties: Codable, Sendable {
     public let cadence: Float?          // Hz (nil for continuous/eternal)
     public let lifecyclePhase: LifecyclePhase
     public let observerCalibrated: Bool // Aligned with JB (nexus-infinity)
-    
+
     public init(cadence: Float?, lifecyclePhase: LifecyclePhase, observerCalibrated: Bool) {
         self.cadence = cadence
         self.lifecyclePhase = lifecyclePhase
@@ -100,7 +116,7 @@ public struct OOOEntity: Codable, Identifiable, Sendable {
     public let geometric: GeometricProperties
     public let semantic: SemanticProperties
     public let temporal: TemporalProperties
-    
+
     public init(
         id: UUID = UUID(),
         name: String,
@@ -139,7 +155,7 @@ public extension OOOEntity {
             observerCalibrated: true
         )
     )
-    
+
     /// ▼ TATA: Truth Anchor, Legal Record (432 Hz - Base)
     static let tata = OOOEntity(
         name: "TATA",
@@ -160,7 +176,7 @@ public extension OOOEntity {
             observerCalibrated: true
         )
     )
-    
+
     /// ▲ ATLAS: Knowledge/Navigation, AI Access (528 Hz - Base)
     static let atlas = OOOEntity(
         name: "ATLAS",
@@ -181,7 +197,7 @@ public extension OOOEntity {
             observerCalibrated: true
         )
     )
-    
+
     /// ◼︎ DOJO: Consciousness Synthesis, Manifestation (741 Hz - Apex)
     static let dojo = OOOEntity(
         name: "DOJO",
@@ -202,15 +218,17 @@ public extension OOOEntity {
             observerCalibrated: true
         )
     )
-    
-    /// ◆ Akron Gateway: Sovereign Archive, Proof Storage (396 Hz - Foundation)
+
+    /// Visual ◆ Akron Gateway: Sovereign Archive, Proof Storage (396 Hz - Foundation).
+    /// Routing remains canonical ◻; ♦︎ is the filesystem alias.
     static let akronGateway = OOOEntity(
         name: "Akron Gateway",
         geometric: GeometricProperties(
             shape: .diamond,
             color: .red,
             frequency: 396.0,
-            position: 0.0  // Foundation
+            position: 0.0,  // Foundation
+            routeSymbolOverride: "◻"
         ),
         semantic: SemanticProperties(
             domain: .archive,
@@ -223,20 +241,44 @@ public extension OOOEntity {
             observerCalibrated: true
         )
     )
-    
-    /// ⊗ Arkadaš / King's Chamber: THE BRAIN — Homeostasis Engine (852 Hz - 38.2% from base)
+
+    /// ◉ Arkadaş: embodiment bridge / SPIN (717 Hz).
+    /// Occupies translation height; does not own 852 or King's Chamber.
+    /// Display spelling: Turkish arkadaş — ş = U+015F (cedilla below s), not š caron.
     static let arkadas = OOOEntity(
-        name: "Arkadaš",
+        name: "Arkadaş",
+        geometric: GeometricProperties(
+            shape: .filledTarget,
+            color: .gold,
+            frequency: 717.0,
+            position: 0.382  // occupancy at translation height — not the 852 listen identity
+        ),
+        semantic: SemanticProperties(
+            domain: .identity,
+            culturalTradition: "Turkish arkadaş — friend/companion (ş U+015F)",
+            intent: "Hardware↔software↔observer bridge, homeostasis, declared-vs-actual"
+        ),
+        temporal: TemporalProperties(
+            cadence: 717.0,
+            lifecyclePhase: .eternal,
+            observerCalibrated: true
+        )
+    )
+
+    /// ⊗ King's Chamber: deterministic infrastructure (852 Hz — 38.2% from base).
+    /// Not Arkadaş. Not a model-bearing vertex.
+    static let kingsChamber = OOOEntity(
+        name: "King's Chamber",
         geometric: GeometricProperties(
             shape: .crosshairsCircle,
             color: .indigo,
             frequency: 852.0,
-            position: 0.382  // 38.2% from base (golden ratio / King's Chamber)
+            position: 0.382
         ),
         semantic: SemanticProperties(
-            domain: .identity,
-            culturalTradition: "Third Eye Chakra / Intuition (852 Hz)",
-            intent: "Hardware↔software bridge, homeostasis engine, frequency conversion, zero-failsafe"
+            domain: .translation,
+            culturalTradition: "Third Eye / translation membrane (852 Hz)",
+            intent: "Admit, route, arbitrate — deterministic infrastructure"
         ),
         temporal: TemporalProperties(
             cadence: 852.0,
@@ -244,8 +286,8 @@ public extension OOOEntity {
             observerCalibrated: true
         )
     )
-    
-    /// All sacred pyramid vertices
+
+    /// Six model-bearing vertices. King's Chamber is infrastructure, not in this list.
     static let sacredVertices: [OOOEntity] = [
         obiWan,
         tata,
@@ -254,7 +296,4 @@ public extension OOOEntity {
         akronGateway,
         arkadas
     ]
-
-    /// Legacy alias
-    static let kingsChamber = arkadas
 }

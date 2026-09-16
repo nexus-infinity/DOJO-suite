@@ -1,0 +1,59 @@
+{
+  "schema": "DOJO.ExternalSealFocusLease.RefinementReceipt.V0",
+  "recorded_at": "2026-08-07T06:52:10Z",
+  "object": "DOJO.ExternalSealFocusLeaseAndReturn",
+  "action_obligation": "PRESERVE_AND_HANDOFF",
+  "decision": "HOLD",
+  "status": "DESIGN_REFINEMENT.HOLD.NOT_IMPLEMENTED_OR_VERIFIED",
+  "predecessors_preserved": [
+    "docs/OBSERVER_ALIGNED_ASSISTANCE_ONTOLOGY_V0.jsonl",
+    "docs/EXTERNAL_SEAL_EXPERIENCE_REFINEMENT_HANDOFF_V0.md",
+    "docs/EXTERNAL_SEAL_EXPERIENCE_CONTRACT_V0.md",
+    "Sources/DOJOShared/Contracts/ExternalSealExperienceContracts.swift",
+    "Tests/DOJOSharedTests/ExternalSealExperienceTests.swift",
+    "logs/state_patches/external_seal_experience_weave_receipt_20260807T063700Z.json"
+  ],
+  "files_added": [
+    "docs/EXTERNAL_SEAL_FOCUS_LEASE_AND_RETURN_HANDOFF_V0.md",
+    "logs/state_patches/external_seal_focus_lease_refinement_20260807T065210Z.json"
+  ],
+  "refinements_seated": [
+    "External Seal requests but does not own or award a Focus Lease",
+    "Attention Arbiter resolves each concurrent activity to one disposition",
+    "high priority label alone does not prove present non-interruptibility",
+    "Continuity Manager checkpoints and restores suspended objects",
+    "full-screen commissioning is a bounded Level 3 attention claim",
+    "configuration and independent seal phases share an envelope but not mutation authority",
+    "zero loss preserves identity, state, provenance, authority, and return path",
+    "responsive surface geometry is pinned as the next separate design object"
+  ],
+  "declared_vs_actual": {
+    "successor_handoff": "PRESENT",
+    "predecessor_modified": false,
+    "typed_focus_lease_contracts": "ABSENT",
+    "runtime_attention_arbiter_integration": "ABSENT",
+    "live_process_pause_or_notification_suppression": "ABSENT",
+    "restoration_runtime": "ABSENT",
+    "full_screen_specimen": "ABSENT",
+    "independent_human_external_seal": "ABSENT"
+  },
+  "external_seal": {
+    "status": "intentionally_unsealed",
+    "reason": "This pass seats a successor design handoff and filesystem receipt only; no runtime Focus Lease or independent human verification was performed.",
+    "return_point": "Implement the typed focus-lease, interruption, checkpoint, restoration, and receipt contracts from the successor handoff.",
+    "resume_condition": "Deterministic tests and a bounded full-screen specimen exist, followed by an External Orbiting Observer Seal outside the originating Weave."
+  },
+  "next_object": {
+    "id": "DOJO.ObserverAlignedResponsiveSurfaceGeometry",
+    "status": "READY_FOR_DESIGN_REFINEMENT",
+    "constraint": "Responsive visual phenotype may vary by surface; semantic, epistemic, authority, and observer-alignment pins must not collapse."
+  },
+  "non_authorisations": [
+    "No live process suspension",
+    "No application closure",
+    "No notification suppression",
+    "No device or permission mutation",
+    "No safety-critical runtime claim",
+    "No self-seal"
+  ]
+}

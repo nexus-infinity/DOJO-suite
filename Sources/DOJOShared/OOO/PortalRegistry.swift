@@ -10,7 +10,7 @@ public struct Portal: Codable, Identifiable, Sendable {
     public let vertexAnchor: [String]       // Names of OOO vertices this portal anchors to
     public let platform: String
     public let oooProperties: OOOEntity
-    
+
     public init(
         id: UUID = UUID(),
         repositoryName: String,
@@ -30,10 +30,13 @@ public struct Portal: Codable, Identifiable, Sendable {
 
 public extension Portal {
     /// DOJO-suite: Swift Package (iOS/macOS)
-    /// Primary orchestration portal for particle visualization and OOO framework
+    /// Working mirror portal into the ◼︎ DOJO spinning top. The suite presents
+    /// selected state and proposals; it is not the source of truth or chamber
+    /// authority. DOJO and SOMA may share pulse genotype, but remain distinct
+    /// phenotypes and sovereign homes; this portal does not collapse them.
     static let dojoSuite = Portal(
         repositoryName: "nexus-infinity/DOJO-suite",
-        vertexAnchor: ["DOJO", "Arkadaš"],
+        vertexAnchor: ["DOJO", "Arkadaş"],
         platform: "iOS/macOS (SwiftPM)",
         oooProperties: OOOEntity(
             name: "DOJO-suite Portal",
@@ -46,7 +49,7 @@ public extension Portal {
             semantic: SemanticProperties(
                 domain: .translation,
                 culturalTradition: "Swift/SwiftUI, Apple Ecosystem",
-                intent: "Primary orchestration portal, particle visualization, OOO framework implementation"
+                intent: "Working mirror portal into the ◼︎ DOJO spinning top; sacred-geometry genotype expressed as a DOJO phenotype; selected-state presentation and bounded proposals, not source-of-truth authority; DOJO phenotype distinct from sovereign SOMA; SOMA is co-present but remains a separate phenotype and lawful home; shared pulse genotype does not merge identity, authority, route, or home"
             ),
             temporal: TemporalProperties(
                 cadence: 741.0,
@@ -55,7 +58,7 @@ public extension Portal {
             )
         )
     )
-    
+
     /// berjak-fre-dojo: Web Portal (React)
     /// ATLAS + TATA anchored portal for web-based access
     static let berjakFRE = Portal(
@@ -82,7 +85,7 @@ public extension Portal {
             )
         )
     )
-    
+
     /// somalink: Under Review
     /// Pending OOO classification
     static let somalink = Portal(
@@ -109,14 +112,14 @@ public extension Portal {
             )
         )
     )
-    
+
     /// All registered portals
     static let registeredPortals: [Portal] = [
         dojoSuite,
         berjakFRE,
         somalink
     ]
-    
+
     /// Active portals (excluding those under review)
     static var activePortals: [Portal] {
         registeredPortals.filter { $0.oooProperties.temporal.lifecyclePhase == .active }
@@ -131,7 +134,7 @@ public struct NonPortal: Codable, Identifiable, Sendable {
     public let repositoryName: String
     public let classification: String
     public let reason: String
-    
+
     public init(
         id: UUID = UUID(),
         repositoryName: String,
@@ -152,35 +155,35 @@ public extension NonPortal {
         classification: "Archive Candidate",
         reason: "Legacy macOS implementation, superseded by DOJO-suite"
     )
-    
+
     /// DOJO Python: Tool/Component
     static let dojoPython = NonPortal(
         repositoryName: "DOJO-Python",
         classification: "Tool/Component",
         reason: "Python utilities, not a full portal - no geometric embodiment"
     )
-    
+
     /// King's Chamber: Internal Component
     static let kingsChamberRepo = NonPortal(
         repositoryName: "King's Chamber",
         classification: "Internal Component",
         reason: "Translation engine component, internal to DOJO - not standalone portal"
     )
-    
+
     /// TATA: Separate Service (Under Review)
     static let tataService = NonPortal(
         repositoryName: "TATA",
         classification: "Service (Under Review)",
         reason: "Legal record service, may become separate repo/service"
     )
-    
+
     /// ATLAS: Separate Service (Under Review)
     static let atlasService = NonPortal(
         repositoryName: "ATLAS",
         classification: "Service (Under Review)",
         reason: "AI access service, may become separate repo/service"
     )
-    
+
     /// All non-portals
     static let nonPortals: [NonPortal] = [
         fieldMacOSDojo,
@@ -198,31 +201,31 @@ public struct PortalValidator {
     /// Checks if a portal meets the three-layer OOO requirements
     public static func validate(_ portal: Portal) -> PortalValidationResult {
         var issues: [String] = []
-        
+
         // Geometric validation
         if portal.oooProperties.geometric.frequency <= 0 {
             issues.append("Invalid frequency: must be > 0")
         }
-        
+
         if portal.oooProperties.geometric.position < 0 || portal.oooProperties.geometric.position > 1 {
             issues.append("Invalid position: must be between 0.0 and 1.0")
         }
-        
+
         // Semantic validation
         if portal.oooProperties.semantic.intent.isEmpty {
             issues.append("Missing intent in semantic layer")
         }
-        
+
         // Temporal validation
         if portal.oooProperties.temporal.lifecyclePhase == .proposal && portal.oooProperties.temporal.observerCalibrated {
             issues.append("Proposal phase entities should not be observer-calibrated")
         }
-        
+
         // Vertex anchor validation
         if portal.vertexAnchor.isEmpty || portal.vertexAnchor.contains("Under Review") {
             issues.append("Portal must have valid vertex anchors")
         }
-        
+
         return PortalValidationResult(
             isValid: issues.isEmpty,
             portal: portal,
@@ -236,7 +239,7 @@ public struct PortalValidationResult: Sendable {
     public let isValid: Bool
     public let portal: Portal
     public let issues: [String]
-    
+
     public init(isValid: Bool, portal: Portal, issues: [String]) {
         self.isValid = isValid
         self.portal = portal

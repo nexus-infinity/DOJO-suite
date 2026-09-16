@@ -1,8 +1,12 @@
 import XCTest
 @testable import DOJOShared
-import FieldKit
+import DOJOPersistence
 
-/// Spine gate tests: capture → queue → AKRON → DOJO → receipt → render
+/// Spine gate tests: capture → local queue → explicit boundary request → receipt → render
+///
+/// DOJOShared local circulation is enqueue/load/reset.
+/// Request Receipt is an explicit AKRON boundary action after Arkadas/SPIN policy authorization.
+/// AKRON receipt exists only after a real AKRON response.
 ///
 /// Three tests, one per critical gap from the v0.1 inventory.
 /// A PASSING test proves the happy path holds.
@@ -37,7 +41,7 @@ final class SpineTests: XCTestCase {
         XCTAssertEqual(restored.textNotes, "field murmur test",
             "Text content must be intact")
         XCTAssertEqual(restored.state, .queued,
-            "State must be preserved — loss reverts to draft and skips upload")
+            "State must be preserved — loss reverts to draft and drops the local circulation state")
         XCTAssertEqual(restored.retryCount, 3,
             "Retry count must survive — loss resets the exponential backoff clock to zero")
         XCTAssertEqual(restored.integrityHash, hash,
@@ -50,9 +54,9 @@ final class SpineTests: XCTestCase {
     // Proves: FieldInvariant.evaluate() correctly returns .breached when no
     // cognitive murmor is registered (no node → field cannot orient).
     //
-    // GAP (spine inventory gap C): this breach is NOT wired to PacketQueue.
+    // GAP (spine inventory gap C): this breach is NOT wired to an Arkadas/SPIN policy gate.
     // In-flight packets do NOT move to .hold when the invariant fires .breached.
-    // Fix: FieldInvariant result → .breached must call PacketQueue.holdAll(reason:).
+    // Fix: FieldInvariant result → .breached must route through policy before any HOLD state changes.
     // When that fix lands, add:
     //   XCTAssertTrue(queue.packets.allSatisfy { $0.state == .hold })
 
@@ -75,8 +79,8 @@ final class SpineTests: XCTestCase {
     // ── Test 3: Receipt ID end-to-end ─────────────────────────────────────────
     // Gate invariant: does not lose murmur.
     //
-    // Proves: PacketReceipt.receiptID (FieldKit layer) survives JSON encoding.
-    // This is the only end-to-end correlation key from queue → AKRON.
+    // Proves: PacketReceipt.receiptID (DOJOShared contract layer) survives JSON encoding.
+    // This is the correlation key returned by an explicit AKRON boundary response.
     //
     // GAP (spine inventory gap B): CockpitReceipt (DOJOShared) has no field
     // linking it back to the originating Packet.id. The stateHash is a content
@@ -97,7 +101,7 @@ final class SpineTests: XCTestCase {
         let restored = try JSONDecoder().decode(PacketReceipt.self, from: data)
 
         XCTAssertEqual(restored.receiptID, "akron-2026-spine-001",
-            "receiptID must survive — only end-to-end correlation key from queue to AKRON")
+            "receiptID must survive — correlation key from explicit AKRON boundary response")
         XCTAssertEqual(restored.chamberTrace, ["AKRON", "DOJO", "ATLAS"],
             "Chamber trace must survive — required for audit trail")
         XCTAssertEqual(restored.validationResult, "VALIDATED")

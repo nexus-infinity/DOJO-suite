@@ -6,6 +6,7 @@
 
 import { useCallback, useEffect, useState } from 'react'
 import Link from 'next/link'
+import { BRAND_KIT } from '@/lib/brandKit'
 
 interface ChamberHealth {
   chamber: string
@@ -37,15 +38,15 @@ interface ChamberDef {
   role: string
 }
 
-// Static chamber definitions — mirrors lib/chambers.ts
+// Static chamber definitions — Brand Kit Accent Base via lib/brandKit.ts
 const CHAMBERS: ChamberDef[] = [
-  { key: 'dojo',    symbol: '◼', name: 'DOJO',         port: 7410, freq: 741,  color: '#7C3AED', role: 'Manifestation apex' },
-  { key: 'obiwan',  symbol: '●', name: 'OBI-WAN',       port: 9630, freq: 963,  color: '#9370DB', role: 'Observer consciousness' },
-  { key: 'atlas',   symbol: '▲', name: 'ATLAS',         port: 5280, freq: 528,  color: '#FFD700', role: 'Crystalline validation' },
-  { key: 'tata',    symbol: '▼', name: 'TATA',          port: 4320, freq: 432,  color: '#FF8C00', role: 'Temporal truth' },
-  { key: 'akron',   symbol: '◻', name: 'AKRON',         port: 3960, freq: 396,  color: '#78716C', role: 'Archive sovereignty' },
-  { key: 'arkadas', symbol: '◉', name: 'ARKADAŞ',       port: 7170, freq: 717,  color: '#EAB308', role: 'Embodiment bridge (SPIN)' },
-  { key: 'kings',   symbol: '◎', name: 'Kings Chamber', port: 8520, freq: 852,  color: '#F43F5E', role: 'Infrastructure routing' },
+  { key: 'dojo',    symbol: '◼', name: 'DOJO',         port: 7410, freq: 741,  color: BRAND_KIT.chambers.dojo,    role: 'Manifestation apex' },
+  { key: 'obiwan',  symbol: '●', name: 'OBI-WAN',       port: 9630, freq: 963,  color: BRAND_KIT.chambers.obiwan,  role: 'Observer consciousness' },
+  { key: 'atlas',   symbol: '▲', name: 'ATLAS',         port: 5280, freq: 528,  color: BRAND_KIT.chambers.atlas,   role: 'Crystalline validation' },
+  { key: 'tata',    symbol: '▼', name: 'TATA',          port: 4320, freq: 432,  color: BRAND_KIT.chambers.tata,    role: 'Temporal truth' },
+  { key: 'akron',   symbol: '◻', name: 'AKRON',         port: 3960, freq: 396,  color: BRAND_KIT.chambers.akron,   role: 'Archive sovereignty' },
+  { key: 'arkadas', symbol: '◉', name: 'ARKADAŞ',       port: 7170, freq: 717,  color: BRAND_KIT.chambers.arkadas, role: 'Embodiment bridge (SPIN)' },
+  { key: 'kings',   symbol: '◎', name: 'Kings Chamber', port: 8520, freq: 852,  color: BRAND_KIT.chambers.kings,   role: 'Infrastructure routing' },
 ]
 
 // Spoke lock status — static (training complete)
@@ -95,9 +96,15 @@ export default function StatusPage() {
   }, [lastFetched])
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a] text-[#f5f5f0]">
+    <div
+      className="min-h-screen"
+      style={{ background: BRAND_KIT.canvas, color: BRAND_KIT.textPrimary }}
+    >
       {/* Header */}
-      <header className="border-b border-[#1a1a1a] px-6 py-4 flex items-center justify-between">
+      <header
+        className="px-6 py-4 flex items-center justify-between"
+        style={{ borderBottom: `1px solid color-mix(in srgb, ${BRAND_KIT.structure} 40%, transparent)` }}
+      >
         <div className="flex items-center gap-4">
           <Link
             href="/"

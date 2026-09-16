@@ -1,0 +1,43 @@
+{
+  "receipt_version": "V0",
+  "receipt_type": "DESIGN_REGISTRATION_RECEIPT",
+  "mission_identity": "AIKIDO_OPTICS_PROJECT_IDENTITY_REGISTRATION_V0_2",
+  "recorded_at": "2026-08-26T03:05:15+10:00",
+  "source_surface": "Codex",
+  "lawful_execution_home": "/Users/field/DOJO-suite",
+  "preflight_receipt": "/Users/field/◎Kings-Chamber/chronicle/KC_REENTRY_20260825T170202Z_AIKIDO_OPTICS_PROJECT_IDENTITY_REGISTRATION_V0_2.receipt.json",
+  "decision": "IMPLEMENTED_LOCALLY_AS_DESIGN_REGISTRATION",
+  "canon_status": "LOCAL_DESIGN_ARTIFACT_NOT_RUNTIME_CANON",
+  "observer_seal": "INTENTIONALLY_UNSEALED",
+  "result_class": "PASS.PROJECT_IDENTITY_REGISTERED_HOLD_RUNTIME",
+  "artifact": "/Users/field/DOJO-suite/docs/AIKIDO_OPTICS_PROJECT_ONTOLOGY_V0_2.json",
+  "registered_object": {
+    "object_id": "project.aikido-optics",
+    "object_class": "AutonomousSubProject",
+    "parent_project": "project.dojo-suite"
+  },
+  "lineage": {
+    "notion_direct_anchor": "2f0a49ca-8e6b-46a9-824e-8e6514a06687",
+    "notion_product_hub": "9bce3ac8-604a-4287-bfe1-3f59f49c61c7",
+    "notion_embodied_lineage": "f14c500f-e398-499d-9c93-f6268bbd43f3",
+    "linear_parent_project": "project:19bbafbe-d03f-40a2-8c63-b53a37b6dbfc",
+    "linear_related_issue": "issue:BER-42",
+    "google_drive": "Unknown.DirectAikidoArtifact"
+  },
+  "boundary": {
+    "notion_written": false,
+    "google_drive_written": false,
+    "linear_written": false,
+    "runtime_changed": false,
+    "source_ontology_owned": false,
+    "dojo_manifestation_authority_owned": false,
+    "external_observer_seal": false
+  },
+  "remaining_holds": [
+    "HOLD.RuntimeOpticalPhenotypeUnproven",
+    "HOLD.PhysicalExperimentReceiptMissing",
+    "HOLD.ExternalObserverSealMissing",
+    "Unknown.DirectGoogleDriveLineage"
+  ],
+  "next_lawful_move": "Create the first bounded project charter and experiment receipt in /Users/field/DOJO-suite, then re-witness the optical observer loop before any promotion."
+}

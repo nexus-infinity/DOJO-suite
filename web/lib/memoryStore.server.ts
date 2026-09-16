@@ -205,7 +205,11 @@ export function patchSession(input: {
     next.id
   )
 
-  evaluateSessionMemory(next.id)
+  // Message persistence is presentation/history only. In particular, an
+  // assistant response must not trigger linking, promotion, ranking, routing,
+  // or summary mutation. Workstream changes stay on explicit human routes or
+  // a separately verified deterministic-authority route.
+  inferDraftMemory()
   return getSession(input.id)
 }
 
@@ -535,43 +539,6 @@ export function buildRetrievalContext(sessionId: string, includeArchive: boolean
   }
 }
 
-function evaluateSessionMemory(sessionId: string) {
-  const session = getSession(sessionId)
-  if (!session) return
-
-  const suggestions = buildSuggestions(sessionId)
-  const daysTouched = uniqueDayCount(session.messages)
-  const qualifiesForPromotion = session.messages.length >= 6 || daysTouched >= 2
-
-  if (suggestions.length > 0) {
-    const top = suggestions[0]
-    const second = suggestions[1]
-    const strong = top.score >= 0.24
-    const ambiguous = second ? Math.abs(top.score - second.score) < 0.08 : false
-
-    if (strong && !ambiguous) {
-      upsertLink(top.workstreamId, sessionId, top.score, top.reason, false)
-      recomputePrimaryWorkstream(sessionId)
-    }
-  }
-
-  if (qualifiesForPromotion && !hasPositiveLink(sessionId)) {
-    const workstreamId = `ws-${session.id}`
-    createWorkstream({
-      id: workstreamId,
-      name: deriveWorkstreamName(session),
-      summary: summarizeSession(session),
-      sessionId,
-      linkReason: 'promoted-from-session',
-      linkScore: 0.6,
-    })
-  } else if (qualifiesForPromotion) {
-    syncLinkedWorkstreamSummaries(sessionId)
-  }
-
-  inferDraftMemory()
-}
-
 function inferDraftMemory() {
   const sessions = listSessions().sessions.filter(session => session.messages.length > 0)
   const candidateCounts = new Map<string, { count: number; sourceSessions: Set<string> }>()
@@ -774,7 +741,7 @@ function deriveWorkstreamName(session: PersistentSession) {
 
 function summarizeSession(session: PersistentSession) {
   const preview = session.messages
-    .filter(message => message.role !== 'tool')
+    .filter(message => message.role === 'user')
     .slice(-3)
     .map(message => normalizeWhitespace(message.content))
     .join(' ')
@@ -797,11 +764,7 @@ function summarizeLinkedWorkstream(workstreamId: string, name: string) {
 }
 
 function tokensForSession(session: PersistentSession) {
-  return tokenize([
-    session.title,
-    session.summary,
-    ...session.messages.slice(-10).map(message => message.content),
-  ].join(' '))
+  return tokenize(userAuthoredText(session.messages.slice(-10)))
 }
 
 function tokensForWorkstream(workstreamId: string, workstream: Workstream) {
@@ -817,10 +780,26 @@ function tokensForWorkstream(workstreamId: string, workstream: Workstream) {
   const text = [
     workstream.name,
     workstream.summary,
-    ...rows.map(row => `${row.title} ${row.summary} ${row.messages_json}`),
+    ...rows.map(row => userAuthoredText(parseSessionMessages(row.messages_json))),
   ].join(' ')
 
   return tokenize(text)
+}
+
+function parseSessionMessages(value: string): SessionMessage[] {
+  try {
+    const parsed = JSON.parse(value)
+    return Array.isArray(parsed) ? parsed : []
+  } catch {
+    return []
+  }
+}
+
+function userAuthoredText(messages: SessionMessage[]) {
+  return messages
+    .filter(message => message.role === 'user')
+    .map(message => message.content)
+    .join(' ')
 }
 
 function tokenize(text: string) {

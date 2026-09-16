@@ -68,6 +68,7 @@ public enum WorkLayerStatus: String, Codable, Sendable, Equatable, CaseIterable 
 }
 
 public enum SemanticHoldReason: String, Codable, Sendable, Equatable, CaseIterable {
+    // Resonance / packet boundary
     case missingSphereProfile
     case missingGeometryProfile
     case missingResonanceSignature
@@ -75,7 +76,21 @@ public enum SemanticHoldReason: String, Codable, Sendable, Equatable, CaseIterab
     case unqualifiedRoute
     case akronReceiptMissing
     case packetBoundaryUnresolved
-    case fieldKitAuthorityUnresolved
+    case packetAuthorityUnresolved
     case implementationLeakedIntoContract
+
+    // External service boundary (ExternalServiceContract)
+    case serviceConfigMissing           // No valid configuration for this service
+    case servicePermissionUnknown       // Auth scope or permission cannot be determined
+    case serviceScopeUnknown            // Resource scope is missing or ambiguous
+    case externalServiceMisconfigured   // Configuration present but invalid
+    case contextForbidsService          // Current context disallows this service
+
+    // Artifact boundary (FieldArtifactContract)
+    case canonicalHomeUnknown           // Artifact has no declared canonical home
+    case sovereignTouchUnknown          // SovereignTouchStatus cannot be read
+    case artifactHashMissing            // No content hash — cannot verify identity
+    case duplicateOfUnknownSource       // Appears to be a duplicate; original not identified
+
     case unknown
 }

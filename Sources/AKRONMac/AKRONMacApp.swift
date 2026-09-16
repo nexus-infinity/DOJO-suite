@@ -1,5 +1,4 @@
 import SwiftUI
-import FieldKit
 
 @main struct AKRONMacApp: App {
     @StateObject private var store = PacketStore()

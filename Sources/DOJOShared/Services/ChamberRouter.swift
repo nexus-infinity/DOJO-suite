@@ -2,18 +2,18 @@ import Foundation
 
 // MARK: - ChamberRouter
 
-/// Discovers live chamber endpoints and routes
-/// GeometricCharacter messages to the right SpinningTopClient.
+/// Routes GeometricCharacter messages through authority-bearing endpoints.
 ///
-/// Node lifecycle:  alive → suspect (failures accumulating) → quarantined → removed
-///                                                          ↑                    ↓
-///                              1 success restores immediately          reprobe on quarantine
-///
-/// Routing is symbol-first and service-boundary aware. Canonical character
-/// endpoints are probed directly; DOJO /state can add or refresh live nodes.
-/// If a character's preferred chamber isn't live, falls back to DOJO.
+/// Availability observations such as health checks and DOJO `/state` are not
+/// routing authority. Until a preferred chamber supplies a correlated,
+/// deterministic routing receipt, the canonical DOJO client remains the
+/// fail-closed fallback.
 @MainActor
 public final class ChamberRouter {
+    private struct AdmittedRoute {
+        let client: SpinningTopClient
+        let expiresAt: Date
+    }
 
     // MARK: - Character → Chamber preference
 
@@ -23,75 +23,42 @@ public final class ChamberRouter {
         .aiMind:  "dojo"
     ]
 
-    private static let canonicalPorts: [String: Int] = [
-        "arkadas": 7170,
-        "obiwan": 9630,
-        "dojo": 7410
-    ]
-
-    private static let symbolKeys: [String: String] = [
-        "◼︎": "dojo",
-        "◼": "dojo",
-        "●": "obiwan",
-        "▲": "atlas",
-        "▼": "tata",
-        "◻": "akron",
-        "♦︎": "akron",
-        "◉": "arkadas",
-        "🎭": "arkadas",
-        "◎": "kingschamber",
-        "⊗": "kingschamber"
-    ]
-
-    private static let pruneThreshold = 3
     private static let staleAfter: TimeInterval = 300   // 5 minutes
 
     // MARK: - State
 
-    private let dojo: SpinningTopClient                          // unconditional fallback
-    private var liveClients: [String: SpinningTopClient] = [:]  // routable
-    private var quarantined: [String: SpinningTopClient] = [:]  // suspect — not routed, reprobe pending
-    private var failureCounts: [String: Int] = [:]
-    private var isRefreshing = false                            // dedup guard for refreshIfStale
+    private let dojo: SpinningTopClient
+    private let admissionVerifier: any ChamberRouteAdmissionVerifying
+    private let replayLedger: any RouteAdmissionReplayLedger
+    private let now: () -> Date
+    /// Only clients admitted by a correlated deterministic routing receipt may
+    /// enter this table. No observational topology source populates it.
+    private var liveClients: [String: AdmittedRoute] = [:]
+    private var isRefreshing = false
     public private(set) var lastTopologyRefresh: Date?
 
     // MARK: - Init
 
-    public init(dojoBaseURL: String = "http://127.0.0.1:7410") {
+    public init(
+        dojoBaseURL: String = "http://127.0.0.1:7410",
+        admissionVerifier: any ChamberRouteAdmissionVerifying = KingsChamberRouteAdmissionVerifier(),
+        replayLedger: any RouteAdmissionReplayLedger = FileRouteAdmissionReplayLedger(),
+        now: @escaping () -> Date = { Date() }
+    ) {
         self.dojo = SpinningTopClient(baseURL: dojoBaseURL)
+        self.admissionVerifier = admissionVerifier
+        self.replayLedger = replayLedger
+        self.now = now
     }
 
     // MARK: - Discovery
 
-    /// Probe canonical endpoints, then query DOJO /state to rebuild the live table.
-    /// Nodes that reappear are restored from quarantine automatically.
+    /// Invalidates any previously projected topology.
+    ///
+    /// Health and `/state` observations may inform presentation elsewhere, but
+    /// cannot populate an authority-bearing routing table.
     public func refreshTopology() async {
-        var clients: [String: SpinningTopClient] = [:]
-
-        for (key, port) in Self.canonicalPorts {
-            let client = quarantined[key]
-                ?? liveClients[key]
-                ?? SpinningTopClient(baseURL: "http://localhost:\(port)")
-            if ((try? await client.healthCheck()) ?? false) {
-                clients[key] = quarantined.removeValue(forKey: key) ?? client
-                failureCounts[key] = 0
-            }
-        }
-
-        if let state = try? await dojo.getState() {
-            for node in state.nodes where node.state {
-                guard let port = node.mcp_port else { continue }
-                let key = key(for: node)
-                let client = quarantined.removeValue(forKey: key)    // restore if quarantined
-                    ?? clients[key]                                  // keep direct probe session
-                    ?? liveClients[key]                              // keep existing session
-                    ?? SpinningTopClient(baseURL: "http://localhost:\(port)")
-                clients[key] = client
-                failureCounts[key] = 0
-            }
-        }
-
-        liveClients = clients
+        liveClients.removeAll()
         lastTopologyRefresh = Date()
     }
 
@@ -102,70 +69,85 @@ public final class ChamberRouter {
     public func client(for character: GeometricCharacter) -> SpinningTopClient {
         refreshIfStale()
         let key = Self.preferredChamber[character] ?? "dojo"
-        return liveClients[key] ?? dojo
+        return admittedClient(for: key) ?? dojo
     }
 
-    // MARK: - Health Feedback
+    /// Admit exactly one specialised route after both local deterministic
+    /// checks and lawful receipt verification pass.
+    @discardableResult
+    public func admitSpecializedRoute(
+        for character: GeometricCharacter,
+        receipt: ChamberRouteAdmissionReceipt,
+        correlationID: UUID
+    ) async -> Bool {
+        let key = Self.preferredChamber[character] ?? "dojo"
+        let currentTime = now()
+        guard key != "dojo",
+              receipt.chamberKey == key,
+              receipt.correlationID == correlationID,
+              receipt.issuedAt <= currentTime,
+              currentTime < receipt.expiresAt,
+              let endpoint = URL(string: receipt.endpoint),
+              let scheme = endpoint.scheme?.lowercased(),
+              ["http", "https"].contains(scheme),
+              endpoint.host != nil,
+              await admissionVerifier.permits(
+                  receipt,
+                  chamberKey: key,
+                  correlationID: correlationID
+              ),
+              await replayLedger.claim(
+                  receiptID: receipt.receiptID,
+                  consumedAt: currentTime
+              ) else {
+            liveClients.removeValue(forKey: key)
+            return false
+        }
 
-    /// Record a request failure. After `pruneThreshold` consecutive failures
-    /// the chamber is quarantined and a targeted reprobe is launched.
+        liveClients[key] = AdmittedRoute(
+            client: SpinningTopClient(baseURL: receipt.endpoint),
+            expiresAt: receipt.expiresAt
+        )
+        lastTopologyRefresh = currentTime
+        return true
+    }
+
+    public func routingDisposition(for character: GeometricCharacter) -> ChamberRoutingDisposition {
+        let key = Self.preferredChamber[character] ?? "dojo"
+        return admittedClient(for: key) == nil
+            ? .canonicalDOJOFallback
+            : .receiptAdmittedSpecializedRoute
+    }
+
+    // MARK: - Request Feedback
+
+    /// Failure may demote an admitted route, but can never create one.
     public func recordFailure(for character: GeometricCharacter) {
         let key = Self.preferredChamber[character] ?? "dojo"
-        guard liveClients[key] != nil else { return }
-
-        let count = (failureCounts[key] ?? 0) + 1
-        failureCounts[key] = count
-
-        guard count >= Self.pruneThreshold else { return }
-
-        if let client = liveClients.removeValue(forKey: key) {
-            quarantined[key] = client
-            failureCounts.removeValue(forKey: key)
-            print("◆ ChamberRouter: '\(key)' quarantined after \(count) failures — reprobing")
-            Task { await reprobe(key: key) }
-        }
+        liveClients.removeValue(forKey: key)
     }
 
-    /// Record a successful request. Resets the failure counter and immediately
-    /// restores the chamber if it was quarantined (trust re-accrual on first success).
+    /// Success is an operational observation, not routing authority.
     public func recordSuccess(for character: GeometricCharacter) {
-        let key = Self.preferredChamber[character] ?? "dojo"
-        failureCounts[key] = 0
-        if let client = quarantined.removeValue(forKey: key) {
-            liveClients[key] = client
-            print("◆ ChamberRouter: '\(key)' restored from quarantine on success")
-        }
+        // Deliberately no promotion. Only admitSpecializedRoute can populate
+        // an authority-bearing route.
     }
 
-    /// True if the character's preferred chamber has a live (non-quarantined) endpoint.
+    /// True only when the preferred chamber has an authority-admitted endpoint.
     public func isPreferredChamberLive(for character: GeometricCharacter) -> Bool {
         let key = Self.preferredChamber[character] ?? "dojo"
-        return liveClients[key] != nil
+        return admittedClient(for: key) != nil
     }
 
     // MARK: - Private
 
-    /// Targeted health check against the quarantined node only.
-    /// Restores on pass, permanently removes on fail.
-    /// Re-validates quarantine state post-suspension: refreshTopology may have
-    /// already resolved the key while healthCheck() was awaited.
-    private func reprobe(key: String) async {
-        guard let client = quarantined[key] else { return }
-        let alive = (try? await client.healthCheck()) ?? false
-        // Post-suspension check: if refreshTopology already moved this key out of
-        // quarantine, honour that decision and do not write over it.
-        guard quarantined[key] != nil else {
-            print("◆ ChamberRouter: '\(key)' reprobe superseded — topology already resolved")
-            return
+    private func admittedClient(for key: String) -> SpinningTopClient? {
+        guard let route = liveClients[key] else { return nil }
+        guard now() < route.expiresAt else {
+            liveClients.removeValue(forKey: key)
+            return nil
         }
-        if alive {
-            quarantined.removeValue(forKey: key)
-            liveClients[key] = client
-            print("◆ ChamberRouter: '\(key)' restored after successful reprobe")
-        } else {
-            quarantined.removeValue(forKey: key)
-            print("◆ ChamberRouter: '\(key)' permanently removed after failed reprobe")
-        }
+        return route.client
     }
 
     private func refreshIfStale() {
@@ -180,13 +162,4 @@ public final class ChamberRouter {
         }
     }
 
-    private func key(for node: SpinningTopClient.StateResponse.Node) -> String {
-        Self.symbolKeys[node.symbol] ?? normalized(node.name)
-    }
-
-    private func normalized(_ name: String) -> String {
-        name.lowercased()
-            .replacingOccurrences(of: "-", with: "")
-            .replacingOccurrences(of: " ", with: "")
-    }
 }

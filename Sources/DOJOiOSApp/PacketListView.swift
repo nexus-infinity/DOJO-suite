@@ -1,9 +1,9 @@
 import SwiftUI
-#if canImport(FieldKit)
-import FieldKit
-#endif
 #if canImport(DOJOShared)
 import DOJOShared
+#endif
+#if canImport(DOJOUI)
+import DOJOUI
 #endif
 
 struct PacketListView: View {
@@ -15,19 +15,72 @@ struct PacketListView: View {
 
     var body: some View {
         NavigationStack {
+            let surfaceSelection = SurfaceSelectionSnapshot.localIOSDefault
+            let homeReachability = HomeReachabilitySnapshot.contractStub
+            let handoffWitness = HandoffWitnessSnapshot.contractStub
+            let authorityCeiling = AuthorityCeilingSnapshot.reportingStub
+            let snapshot = BoundaryCapacitySnapshot.observed(
+                packets: queue.packets,
+                murmurPendingCount: murmur.murmurPendingCount,
+                homeReachable: homeReachability.homeReachable,
+                selectedInputSurface: surfaceSelection.selectedInputSurface,
+                selectedOutputSurface: surfaceSelection.selectedOutputSurface,
+                handoffAvailable: handoffWitness.handoffAvailable,
+                handoffReliability: handoffWitness.handoffReliability,
+                authorityCeiling: authorityCeiling.authorityCeiling,
+                holdReasons: [
+                    "HOLD.HomeProbeUnknown",
+                    "HOLD.HandoffWitnessUnknown",
+                    "HOLD.AuthorityCeilingUnknown",
+                    "HOLD.CanDriveNowUnknown"
+                ]
+            )
+            // Shared read-only glance (DOJOUI) — same card as macOS Cockpit Alpha; no authority change.
+            let capacityGlance = BoundaryCapacityGlanceView(
+                snapshot: snapshot,
+                modeLabel: queue.packets.isEmpty
+                    ? "iOS · surface + home + handoff stubs"
+                    : "iOS · local queue + reporting stubs",
+                nextLawfulMove: "HOLD: recheck when Home / Handoff / Ceiling are witnessed — no live probe this surface"
+            )
+
             ZStack {
                 Color(hex: "#0A0A0C").ignoresSafeArea()
 
                 if queue.packets.isEmpty {
-                    FieldOrb()
-                        .containerRelativeFrame([.horizontal]) { size, _ in size * 0.72 }
-                        .aspectRatio(1, contentMode: .fit)
+                    ScrollView {
+                        VStack(spacing: 18) {
+                            capacityGlance
+                                .padding(.horizontal, 16)
+                                .padding(.top, 16)
+
+                            FieldOrb()
+                                .containerRelativeFrame([.horizontal]) { size, _ in size * 0.72 }
+                                .aspectRatio(1, contentMode: .fit)
+                        }
+                    }
                 } else {
                     List {
+                        capacityGlance
+                            .listRowBackground(Color(hex: "#111113"))
+                            .listRowSeparatorTint(Color(hex: "#1F1F23"))
+
                         ForEach(queue.packets) { packet in
                             PacketRowView(packet: packet)
                                 .listRowBackground(Color(hex: "#111113"))
                                 .listRowSeparatorTint(Color(hex: "#1F1F23"))
+                                .swipeActions(edge: .trailing) {
+                                    if packet.state == .queued || packet.state == .retrying {
+                                        Button {
+                                            // Explicit AKRON boundary request for receipt/seal/HOLD.
+                                            // Local DOJOShared circulation remains separate.
+                                            queue.promoteToAKRON(packetID: packet.id)
+                                        } label: {
+                                            Label("Request Receipt", systemImage: "seal")
+                                        }
+                                        .tint(Color(hex: "#7C3AED"))
+                                    }
+                                }
                         }
                     }
                     .listStyle(.plain)

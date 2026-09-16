@@ -2,7 +2,7 @@ import SwiftUI
 
 // MARK: - DOJO Mark
 //
-// Spinning-top mark: ◼︎ DOJO (741 Hz) outer triangle containing ⬢ Arkadaş (852 Hz)
+// Spinning-top mark: ◼︎ DOJO (741 Hz) outer triangle containing ⬢ Arkadaş (717 Hz)
 // hexagon, wrapped in ◻ Akron Gateway (396 Hz) ring.
 //
 // Color palette: Notion canonical "Sacred Color Palette" (visual production assets).

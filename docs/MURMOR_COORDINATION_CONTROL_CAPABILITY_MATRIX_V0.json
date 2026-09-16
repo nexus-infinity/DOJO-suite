@@ -1,0 +1,224 @@
+{
+  "object": "Murmor / coordination / control capability matrix V0",
+  "object_id": "MURMOR-COORDINATION-CONTROL-CAPABILITY-MATRIX-V0",
+  "status": "DELAYED.CLASSIFICATION",
+  "promoted": false,
+  "authority_ceiling": "classification only; not a flight controller; not a drone-count claim",
+  "source_surface": "Cursor",
+  "lawful_home": "/Users/field/DOJO-suite/docs/MURMOR_COORDINATION_CONTROL_CAPABILITY_MATRIX_V0.json",
+  "seated_at": "2026-08-29T15:44:49Z",
+  "starting_rule": "Begin with what each Murmor can actually do; then ask what coordination may safely coordinate. Do not begin with desired artwork.",
+  "non_collapse": [
+    "artwork mission package",
+    "individual device / Murmor identity",
+    "telemetry packet",
+    "trajectory / flight command",
+    "Unity visualisation",
+    "authority receipt"
+  ],
+  "verdict": {
+    "murmor_contracts": "PARTIAL",
+    "arkadas_coordination": "PARTIAL",
+    "grand_gallery_27": "shell only",
+    "drone_formation_control": "UNKNOWN / HOLD",
+    "public_multi_drone_artwork": "future stress test, not current capability"
+  },
+  "channels": {
+    "murmor": {
+      "function": "stable device identity, local sensing, local processing, storage, relay, bounded actuation",
+      "is_not": ["flight controller", "artwork renderer", "authority"]
+    },
+    "dojo_field_coordinator": {
+      "function": "register Murmors; distribute FieldStateSnapshot; dispatch enumerated ActCommand; audio profile switch",
+      "is_not": ["Arkadaş", "King's Chamber", "Unity"]
+    },
+    "arkadas": {
+      "function": "transport quality, leader selection, continuity",
+      "is_not": ["flight controller", "27 controllable drones"]
+    },
+    "kings_chamber": {
+      "function": "authority and arbitration",
+      "is_not": ["payload store", "visual surface", "drone operator"]
+    },
+    "unity": {
+      "function": "visual / VR / AR surface for showing the world",
+      "is_not": ["physical-control plane"],
+      "proof_in_dojo_suite": "UNKNOWN — no Unity/ARKit/geospatial control types witnessed in this pass"
+    }
+  },
+  "device_capability": {
+    "hal_questions": ["sense", "process", "store", "relay", "act"],
+    "source": "/Users/field/DOJO-suite/Sources/DOJOShared/HAL/DOJOHALContract.swift",
+    "tiers": ["none", "minimal", "moderate", "full"],
+    "device_class": {
+      "source": "/Users/field/DOJO-suite/Sources/DOJOShared/HAL/MurmorIdentity.swift",
+      "witnessed_cases": [
+        "mac", "iPhone", "watch", "homePod", "appleTV",
+        "roomSensor", "doorContact", "smartSpeaker", "lightStrip",
+        "irBlaster", "edgeCompute", "smartGlasses", "biometricBand",
+        "custom"
+      ],
+      "drone_type": "absent — a drone would currently fall under custom",
+      "implemented_phenotypes": {
+        "mac": "/Users/field/DOJO-suite/Sources/DOJOShared/HAL/Devices/MacMurmor.swift",
+        "iPhone": "/Users/field/DOJO-suite/Sources/DOJOShared/HAL/Devices/iPhoneMurmor.swift",
+        "watch": "/Users/field/DOJO-suite/Sources/DOJOShared/HAL/Devices/WatchMurmor.swift",
+        "roomSensor": "/Users/field/DOJO-suite/Sources/DOJOShared/HAL/Devices/RoomSensorMurmor.swift"
+      },
+      "observeLocal_runtime": "Mac/iPhone/Watch/RoomSensor observeLocal() currently return nil (declared sensors, not proven live loops in this pass)"
+    },
+    "identity": {
+      "type": "MurmorIdentity",
+      "stable_id": "UUID",
+      "equality": "UUID only; profile and state may change",
+      "states": ["active", "autonomous", "buffering", "sleeping", "offline"]
+    },
+    "proof_status": "PARTIAL"
+  },
+  "coordination_capability": {
+    "field_coordinator": {
+      "source": "/Users/field/DOJO-suite/Sources/DOJOShared/HAL/DOJOFieldCoordinator.swift",
+      "witnessed": [
+        "register / deregister Murmor",
+        "registeredMurmors list",
+        "distribute FieldStateSnapshot to registry",
+        "FieldInvariant coverage/coherence check",
+        "dispatchActCommand for coherence indicators only",
+        "HALOutputProfile audio path switching"
+      ],
+      "not_witnessed": [
+        "formation assignment",
+        "geospatial assignment",
+        "per-drone independent telemetry ingest beyond audio/quality/heartbeat"
+      ]
+    },
+    "arkadas_transport": {
+      "source": "/Users/field/DOJO-suite/Sources/DOJOShared/HAL/MurmurTransport.swift",
+      "routes": {
+        "POST /v0/obiwan/ingest": ["audio chunk", "heartbeat"],
+        "POST /v0/arkadas/quality": ["quality frame → leader source_id/stream_id"]
+      },
+      "drone_control_route": "absent",
+      "signature": "X-Signature empty in v0"
+    },
+    "relay_protocol": {
+      "source": "/Users/field/DOJO-suite/Sources/DOJOShared/HAL/DOJORelay.swift",
+      "declared": ["discoverPeers", "publish SenseEvent", "subscribe FieldStateSnapshot", "subscribe ActCommand", "syncBuffer"],
+      "concrete_implementation_in_this_pass": "UNKNOWN — protocol only, no conforming class found"
+    },
+    "grand_gallery_27": {
+      "meaning": "niche/orchestration shell limit",
+      "not": "27 controllable drones",
+      "proof_status": "shell only"
+    },
+    "proof_status": "PARTIAL"
+  },
+  "control_ceiling": {
+    "act_command_source": "/Users/field/DOJO-suite/Sources/DOJOShared/HAL/DOJOFieldEvents.swift",
+    "enumerated_now": {
+      "visual": ["indicateCoherent", "indicateDegraded", "indicateDrifting", "indicateBreached", "indicateOff"],
+      "audio": ["speakResponse", "playTone", "silenceOutput"],
+      "haptic": ["pulseGround", "pulseAlert", "pulseConfirm"],
+      "environmental": ["dimLights", "brightenLights", "adjustTemperature"],
+      "system": ["syncNow", "enterSleep", "wake"]
+    },
+    "coordinator_actually_dispatches": [
+      "indicateCoherent",
+      "indicateDegraded",
+      "indicateDrifting",
+      "indicateBreached"
+    ],
+    "absent": [
+      "flight",
+      "trajectory",
+      "formation",
+      "geofence",
+      "collision_avoidance",
+      "emergency_return",
+      "operator_override"
+    ],
+    "comment": "ActCommand is fully enumerated with no dynamic payloads. Flight cannot be smuggled in without a new enum case and a new authority receipt.",
+    "proof_status": "HOLD.DroneFormationControl"
+  },
+  "data_package": {
+    "mission_dna": {
+      "type": "CapabilityShapedPackage",
+      "source": "/Users/field/DOJO-suite/Sources/DOJOShared/HAL/CapabilityShapedPackage.swift",
+      "immutable_fields": [
+        "packageID",
+        "payloadSHA256",
+        "semanticIntent",
+        "authorityScope",
+        "provenance",
+        "returnRoute"
+      ],
+      "rule": "capability negotiation may change expression, never identity, meaning, authority, provenance, or return route",
+      "prior_specimen": "/Users/field/DOJO-suite/receipts/SAME_PACKAGE_TWO_DEVICE_CAPABILITY_COHERENCE_SPECIMEN_V0.implementation.receipt.json",
+      "prior_specimen_decision": "PROMOTE COHERENT_DIFFERENT_PHENOTYPES for two HAL phenotypes of the same package — not drone proof"
+    },
+    "telemetry_kinds_witnessed": {
+      "source": "/Users/field/DOJO-suite/Sources/DOJOShared/HAL/MurmurPacket.swift",
+      "kinds": ["audioChunk", "qualityFrame", "heartbeat"]
+    },
+    "heartbeat_capabilities_declared": ["audioCapture", "maxSampleRateHz", "onDeviceVad"],
+    "sense_event": {
+      "identity_pin": "sourceID UUID",
+      "types": [
+        "motion", "temperature", "humidity", "light", "pressure", "contact",
+        "heartRate", "skinConductance", "bloodOxygen",
+        "voiceActivity", "screenContent", "audioStream",
+        "presenceChange", "environmentShift"
+      ],
+      "absent": ["gps", "altitude", "heading", "battery_for_flight", "adsb", "lidar_scan_as_nav"]
+    },
+    "field_snapshot": {
+      "type": "FieldStateSnapshot",
+      "carries": ["timestamp", "coherenceLevel", "activePhase", "activeMurmors UUID list", "lastObserverReading"],
+      "does_not_carry": ["trajectories", "lat/lon", "formation slots"]
+    },
+    "proof_status": "PARTIAL — shared DNA exists; per-drone independent telemetry stream not proven"
+  },
+  "geometry": {
+    "relevance_gravity": {
+      "source": "/Users/field/DOJO-suite/Sources/DOJOShared/Geometry/RelevanceGravity.swift",
+      "kind": "2D interface layout around Observer",
+      "units": "logical orbit radius 150–450 mapped to screen / 0–1 normalised view space",
+      "is_not": "real-world flight geometry"
+    },
+    "formation_geospatial": "UNKNOWN / HOLD",
+    "unity_visual_correspondence": "UNKNOWN / HOLD"
+  },
+  "failure_behaviour": {
+    "witnessed": {
+      "rule_1": "sense locally, publish on change; EventBuffer bounded eviction",
+      "rule_2": "operateAutonomously from lastKnownFieldState; never go dark (declared)",
+      "rule_3": "rejoinField via DOJORelay.syncBuffer without ceremony (protocol; concrete relay UNKNOWN)",
+      "invariant_breach": "no active Layer-2 cognitive node → field cannot orient",
+      "audio_on_breach": "FieldAudioMode.silent"
+    },
+    "not_witnessed": [
+      "packet-loss recovery for flight links",
+      "formation rejoin after dropout",
+      "collision avoidance",
+      "geofencing",
+      "operator override",
+      "emergency return",
+      "post-flight provenance chain for physical motion"
+    ],
+    "proof_status": "PARTIAL for local buffer/autonomy declarations; HOLD for physical-safety failure modes"
+  },
+  "artwork_stress_test_requirements": [
+    {"id": 1, "need": "individual Murmor identity and registration", "current": "PARTIAL — UUID identity + coordinator register; drone class absent"},
+    {"id": 2, "need": "shared mission package without identity collapse", "current": "PARTIAL — CapabilityShapedPackage specimen exists for HAL phenotypes"},
+    {"id": 3, "need": "formation and geospatial coordinate accuracy", "current": "HOLD"},
+    {"id": 4, "need": "time synchronisation and latency", "current": "PARTIAL — quality frame has latencyMs/jitterMs for audio, not flight sync"},
+    {"id": 5, "need": "telemetry, packet loss, and rejoin behaviour", "current": "PARTIAL — murmur queue/rejoin protocol; not drone-control telemetry"},
+    {"id": 6, "need": "collision avoidance and geofencing", "current": "HOLD"},
+    {"id": 7, "need": "operator override and emergency return", "current": "HOLD"},
+    {"id": 8, "need": "authority receipts and post-flight provenance", "current": "PARTIAL — KC/receipts exist for software specimens; no post-flight physical provenance"},
+    {"id": 9, "need": "Unity visual correspondence with the real formation", "current": "HOLD / UNKNOWN"}
+  ],
+  "safe_configuration_rule": "Configure only inside witnessed ceilings. A custom DeviceClass plus CapabilityShapedPackage may carry mission DNA. It does not authorise ActCommand expansion, Arkadaş flight control, or treating 27 niches as 27 airframes.",
+  "next_lawful_move": "If a drone Murmor is later designed, add a dedicated DeviceClass and a separately authorised control-ceiling packet. Do not reuse ActCommand or RelevanceGravity for flight.",
+  "observer_seal": "intentionally_unsealed"
+}

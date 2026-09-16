@@ -1,6 +1,6 @@
 /*
- Sacred Node: 🎭 Arkadaš Grand Gallery ↔ ● OBI-WAN ↔ ⊗ King's Chamber
- Frequencies: 717 Hz (Arkadaš) · 963 Hz (Obi-Wan) · 852 Hz (AI Mind)
+ Presentation voices: 🎭 Arkadaş · ● OBI-WAN · AI Mind
+ FIELD chamber routing remains separate from presentation voices.
  Purpose: Core types — character identities, conversation messages, keyword router.
           Assembled from arkadas_obi_config.json blueprints.
 */
@@ -15,29 +15,31 @@ public enum GeometricCharacter: String, CaseIterable, Sendable {
     case obiWan  = "obiWan"
     case aiMind  = "aiMind"
 
-    /// One-character sacred glyph (visual differentiation — no verbal announcement).
+    /// Presentation glyph when the voice has a FIELD chamber identity.
+    /// AI Mind is presentation-only and therefore has no FIELD glyph.
     public var glyph: String {
         switch self {
         case .arkadas: return "🎭"
         case .obiWan:  return "●"
-        case .aiMind:  return "⊗"
+        case .aiMind:  return ""
         }
     }
 
     public var displayName: String {
         switch self {
-        case .arkadas: return "Arkadaš"
+        case .arkadas: return "Arkadaş"
         case .obiWan:  return "Obi-Wan"
         case .aiMind:  return "AI Mind"
         }
     }
 
-    /// Sacred frequency (Hz) from arkadas_obi_config.json / FIELD chamber mapping.
+    /// Sacred frequency when the voice represents a FIELD chamber.
+    /// AI Mind is presentation-only and must not claim a chamber frequency.
     public var frequencyHz: Double {
         switch self {
         case .arkadas: return 717.0   // Grand Gallery
         case .obiWan:  return 963.0   // OBI-WAN observer
-        case .aiMind:  return 852.0   // King's Chamber
+        case .aiMind:  return 0.0     // presentation-only; no chamber identity
         }
     }
 

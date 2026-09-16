@@ -13,14 +13,16 @@ let package = Package(
     products: [
         .library(name: "DOJOShared", targets: ["DOJOShared"]),
         .library(name: "DOJOUI", targets: ["DOJOUI"]),
-        .library(name: "FieldKit", targets: ["FieldKit"]),
+        .library(name: "DOJOPersistence", targets: ["DOJOPersistence"]),
+        .library(name: "DOJOTransport", targets: ["DOJOTransport"]),
         .executable(name: "DOJOApp", targets: ["DOJOApp"]),
-        .executable(name: "ArkadašApp", targets: ["ArkadašApp"]),
+        .executable(name: "ArkadasApp", targets: ["ArkadasApp"]),
         .executable(name: "OB1LinkApp", targets: ["OB1LinkApp"]),
         .executable(name: "DojoLinkApp", targets: ["DojoLinkApp"]),
         .executable(name: "DOJOiOSApp", targets: ["DOJOiOSApp"]),
         .executable(name: "AKRONMac", targets: ["AKRONMac"]),
         .executable(name: "DOJOWatchApp", targets: ["DOJOWatchApp"]),
+        .executable(name: "TodayKeep", targets: ["TodayKeep"]),
     ],
     dependencies: [],
     targets: [
@@ -41,13 +43,15 @@ let package = Package(
             path: "Sources/DOJOApp",
             exclude: ["Info.plist"]
         ),
-        .executableTarget(name: "ArkadašApp", dependencies: ["DOJOShared", "DOJOUI"], path: "Sources/ArkadašApp"),
+        .executableTarget(name: "ArkadasApp", dependencies: ["DOJOShared", "DOJOUI"], path: "Sources/ArkadasApp"),
         .executableTarget(name: "OB1LinkApp", dependencies: ["DOJOShared", "DOJOUI"], path: "Sources/OB1LinkApp"),
         .executableTarget(name: "DojoLinkApp", dependencies: ["DOJOShared", "DOJOUI"], path: "Sources/DojoLinkApp"),
-        .target(name: "FieldKit", dependencies: ["DOJOShared"], path: "Sources/FieldKit"),
-        .executableTarget(name: "DOJOiOSApp", dependencies: ["FieldKit", "DOJOShared"], path: "Sources/DOJOiOSApp", exclude: ["Info.plist"], resources: [.process("Assets.xcassets")]),
-        .executableTarget(name: "AKRONMac", dependencies: ["FieldKit"], path: "Sources/AKRONMac"),
+        .target(name: "DOJOPersistence", dependencies: ["DOJOShared"], path: "Sources/DOJOPersistence"),
+        .target(name: "DOJOTransport", dependencies: ["DOJOShared"], path: "Sources/DOJOTransport"),
+        .executableTarget(name: "DOJOiOSApp", dependencies: ["DOJOPersistence", "DOJOTransport", "DOJOShared", "DOJOUI"], path: "Sources/DOJOiOSApp", exclude: ["Info.plist"], resources: [.process("Assets.xcassets")]),
+        .executableTarget(name: "AKRONMac", dependencies: ["DOJOPersistence", "DOJOShared"], path: "Sources/AKRONMac"),
         .executableTarget(name: "DOJOWatchApp", dependencies: ["DOJOShared", "DOJOUI"], path: "Sources/DOJOWatchApp"),
-        .testTarget(name: "DOJOSharedTests", dependencies: ["DOJOShared", "DOJOUI", "FieldKit"], path: "Tests/DOJOSharedTests")
+        .executableTarget(name: "TodayKeep", dependencies: ["DOJOShared"], path: "Sources/TodayKeep"),
+        .testTarget(name: "DOJOSharedTests", dependencies: ["DOJOShared", "DOJOUI", "DOJOPersistence"], path: "Tests/DOJOSharedTests")
     ]
 )

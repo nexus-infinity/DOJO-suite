@@ -1,0 +1,53 @@
+{
+  "receipt_version": "V0",
+  "receipt_type": "IMPLEMENTATION_RECEIPT",
+  "mission_identity": "SAME_PACKAGE_TWO_DEVICE_CAPABILITY_COHERENCE_SPECIMEN_V0",
+  "recorded_at": "2026-08-14T02:07:48Z",
+  "source_surface": "Codex",
+  "lawful_execution_home": "/Users/field/DOJO-suite",
+  "king_chamber_reentry_receipt": "/Users/field/◎Kings-Chamber/chronicle/KC_REENTRY_20260814T020547Z_SAME_PACKAGE_TWO_DEVICE_CAPABILITY_COHERENCE_SPECIMEN_V0.receipt.json",
+  "decision": "PROMOTE",
+  "result_class": "COHERENT_DIFFERENT_PHENOTYPES",
+  "implemented": {
+    "contract": {
+      "path": "/Users/field/DOJO-suite/Sources/DOJOShared/HAL/CapabilityShapedPackage.swift",
+      "sha256": "21e4d275a58b7642690993a9aed01befbbed9d02c2e0a1283ce3e7bd42dc4146"
+    },
+    "hal_sendable_alignment": {
+      "path": "/Users/field/DOJO-suite/Sources/DOJOShared/HAL/DOJOHALContract.swift",
+      "sha256": "847ec0fea896eb8b4d0fb41a1c79f3d6c81a396ed786e7342a343ef4923aa3de"
+    },
+    "tests": {
+      "path": "/Users/field/DOJO-suite/Tests/DOJOSharedTests/HAL/CapabilityShapedPackageTests.swift",
+      "sha256": "8e5fdc288cf8d32fc4f3a73299765c63dade31247ca0fe9c71519b3c3ec2c22e"
+    }
+  },
+  "invariants": [
+    "package identity conserved",
+    "payload digest conserved",
+    "semantic intent conserved",
+    "authority scope conserved",
+    "provenance conserved",
+    "return route conserved",
+    "all three capability layers remain explicitly represented"
+  ],
+  "phenotype_rule": "HAL capability changes layer availability only; unavailable layers remain present and explicit.",
+  "verification": {
+    "command": "swift test --package-path /Users/field/DOJO-suite --skip-build --filter CapabilityShapedPackageTests",
+    "tests_executed": 4,
+    "failures": 0,
+    "test_bundle_sha256": "76d6d8bbce19a02ecb28286b56f6a93cbe9f66a1e7f54e3821ed0f4b0667c436"
+  },
+  "boundary": {
+    "models_invoked": false,
+    "pulse_integrated": false,
+    "soma_integrated": false,
+    "live_hardware_invoked": false,
+    "arkadas_boundary_crossed": false,
+    "external_transport_invoked": false,
+    "notion_written": false,
+    "linear_written": false,
+    "git_staged_or_committed": false
+  },
+  "qualification": "A clean focused run passed. A later rebuild encountered a pre-existing DojoLinkApp code-signing subsystem error after the test bundle linked; the focused test bundle was then run directly with --skip-build and passed 4/4. This receipt does not seal whole-suite app signing or runtime device transport."
+}

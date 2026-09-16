@@ -1,5 +1,5 @@
 import SwiftUI
-import FieldKit
+import DOJOShared
 
 struct CommandCenterView: View {
     @EnvironmentObject private var store: PacketStore

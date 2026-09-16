@@ -1,7 +1,4 @@
 import SwiftUI
-#if canImport(FieldKit)
-import FieldKit
-#endif
 #if canImport(DOJOShared)
 import DOJOShared
 #endif

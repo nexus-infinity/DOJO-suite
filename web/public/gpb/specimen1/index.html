@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Geometrical Particle Board — Specimen 1</title>
+  <style>
+    :root {
+      --void: #05050A;
+      --dojo: #7C3AED;
+      --atlas: #06B6D4;
+      --arkadas: #EAB308;
+      --text: #F1F5F9;
+      --muted: #64748B;
+      --dim: #334155;
+      --surface: #0F0F1A;
+      --pass: #22C55E;
+    }
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0; height: 100%;
+      background: var(--void); color: var(--text);
+      font-family: "JetBrains Mono", ui-monospace, monospace;
+    }
+    #wrap { position: relative; width: 100%; height: 100%; }
+    canvas { display: block; width: 100%; height: 100%; }
+    .panel {
+      position: absolute; top: 16px; left: 16px;
+      background: color-mix(in srgb, var(--surface) 92%, transparent);
+      border: 1px solid #2A2A40; border-radius: 8px;
+      padding: 12px; max-width: 380px; line-height: 1.45;
+    }
+    .panel h1 { margin: 0 0 6px; font-size: 11px; color: var(--dojo); letter-spacing: 0.04em; }
+    .panel .sub { font-size: 10px; color: var(--muted); margin-bottom: 8px; }
+    .panel .row { font-size: 12px; margin: 4px 0; }
+    .panel .score { font-size: 10px; color: var(--dim); }
+    .panel .ok { color: var(--pass); font-weight: 700; font-size: 10px; }
+    .panel .diffuse { color: var(--muted); font-weight: 700; font-size: 10px; }
+    .lane {
+      position: absolute; bottom: 16px; left: 16px;
+      font-size: 9px; color: var(--dim);
+      background: #1A1A2E; padding: 8px; border-radius: 6px;
+    }
+  </style>
+</head>
+<body>
+  <div id="wrap">
+    <canvas id="c"></canvas>
+    <div class="panel">
+      <h1>GEOMETRICAL PARTICLE BOARD</h1>
+      <div class="sub">Participatory Embodied Performance · Specimen 1</div>
+      <div class="row" id="phase">Phase: —</div>
+      <div class="score" id="score">Recognition: —</div>
+      <div id="flag" class="diffuse">FIELD DIFFUSE</div>
+    </div>
+    <div class="lane">Lane lock: not Misrouted UI Build · not CockpitOIRTextGrid · not ParticleBoardView</div>
+  </div>
+  <script>
+    const canvas = document.getElementById('c');
+    const ctx = canvas.getContext('2d');
+    const CYCLE = 12;
+    const N = 120;
+    const FIELD = 20;
+    const particles = [];
+    const glyph = (() => {
+      const r = FIELD * 0.22;
+      return [
+        { x: 0, y: r },
+        { x: -r * 0.866, y: -r * 0.5 },
+        { x: r * 0.866, y: -r * 0.5 }
+      ];
+    })();
+
+    function phaseFrom(c) {
+      if (c < 0.18) return 'smoke';
+      if (c < 0.38) return 'pressure';
+      if (c < 0.58) return 'coalesce';
+      if (c < 0.78) return 'stillness';
+      return 'dissolve';
+    }
+
+    function reseat() {
+      particles.length = 0;
+      for (let i = 0; i < N; i++) {
+        const t = i / (N - 1);
+        const angle = t * Math.PI * 2 * 3;
+        const radius = (FIELD / 2) * (0.35 + 0.55 * ((i % 7) / 7));
+        particles.push({
+          x: Math.cos(angle) * radius,
+          y: Math.sin(angle) * radius * 0.85,
+          vx: 0, vy: 0
+        });
+      }
+    }
+
+    function attract(p, tx, ty, strength) {
+      const dx = tx - p.x, dy = ty - p.y;
+      const d2 = dx * dx + dy * dy + 0.25;
+      const d = Math.sqrt(d2);
+      const f = strength / Math.pow(d, 1.6);
+      p.vx += (dx / d) * f * 0.016;
+      p.vy += (dy / d) * f * 0.016;
+    }
+
+    function step(phase) {
+      let strength = 0.4, turb = 2.2;
+      if (phase === 'pressure') { strength = 6; turb = 0.8; }
+      if (phase === 'coalesce') { strength = 14; turb = 0.15; }
+      if (phase === 'stillness') { strength = 18; turb = 0.02; }
+      if (phase === 'dissolve') { strength = 0.2; turb = 3.5; }
+
+      const cx = (glyph[0].x + glyph[1].x + glyph[2].x) / 3;
+      const cy = (glyph[0].y + glyph[1].y + glyph[2].y) / 3;
+
+      for (const p of particles) {
+        for (const v of glyph) attract(p, v.x, v.y, strength);
+        attract(p, cx, cy, strength * 0.35);
+        p.vx += (Math.random() * 2 - 1) * turb * 0.02;
+        p.vy += (Math.random() * 2 - 1) * turb * 0.02;
+        p.vx *= 0.96; p.vy *= 0.96;
+        const sp = Math.hypot(p.vx, p.vy);
+        if (sp > 0.35) { p.vx = p.vx / sp * 0.35; p.vy = p.vy / sp * 0.35; }
+        p.x += p.vx; p.y += p.vy;
+      }
+    }
+
+    function recognition(phase) {
+      let total = 0;
+      for (const p of particles) {
+        let best = Infinity;
+        for (const v of glyph) best = Math.min(best, Math.hypot(p.x - v.x, p.y - v.y));
+        for (let i = 0; i < 3; i++) {
+          const a = glyph[i], b = glyph[(i + 1) % 3];
+          const mx = (a.x + b.x) / 2, my = (a.y + b.y) / 2;
+          best = Math.min(best, Math.hypot(p.x - mx, p.y - my));
+        }
+        total += best;
+      }
+      const mean = total / N;
+      const crystallised = 1.8, diffuse = FIELD * 0.35;
+      let score = 1 - ((mean - crystallised) / (diffuse - crystallised));
+      score = Math.max(0, Math.min(1, score));
+      if (phase === 'smoke' || phase === 'dissolve') score *= 0.35;
+      else if (phase === 'pressure') score *= 0.7;
+      return { score, mean, ok: score >= 0.55 && (phase === 'coalesce' || phase === 'stillness') };
+    }
+
+    function resize() {
+      canvas.width = canvas.clientWidth * devicePixelRatio;
+      canvas.height = canvas.clientHeight * devicePixelRatio;
+    }
+
+    function draw(phase, rec) {
+      const w = canvas.width, h = canvas.height;
+      ctx.setTransform(1, 0, 0, 1, 0, 0);
+      ctx.fillStyle = '#05050A';
+      ctx.fillRect(0, 0, w, h);
+      const scale = Math.min(w, h) / FIELD;
+      const ox = w / 2, oy = h / 2;
+      const proj = (x, y) => [ox + x * scale, oy - y * scale];
+
+      const cx = (glyph[0].x + glyph[1].x + glyph[2].x) / 3;
+      const cy = (glyph[0].y + glyph[1].y + glyph[2].y) / 3;
+      const [gx, gy] = proj(cx, cy);
+      const glow = Math.min(w, h) * 0.28;
+      const g = ctx.createRadialGradient(gx, gy, 0, gx, gy, glow);
+      const boost = (phase === 'stillness' || phase === 'coalesce') ? 0.18 : 0.08;
+      g.addColorStop(0, `rgba(124,58,237,${boost})`);
+      g.addColorStop(0.5, 'rgba(6,182,212,0.06)');
+      g.addColorStop(1, 'rgba(5,5,10,0)');
+      ctx.fillStyle = g;
+      ctx.beginPath(); ctx.arc(gx, gy, glow, 0, Math.PI * 2); ctx.fill();
+
+      for (const p of particles) {
+        const [px, py] = proj(p.x, p.y);
+        const r = (2.2 + rec.score * 1.8) * devicePixelRatio;
+        ctx.beginPath();
+        ctx.fillStyle = rec.score > 0.5
+          ? `rgba(124,58,237,${0.25 + rec.score * 0.55})`
+          : `rgba(234,179,8,${0.25 + rec.score * 0.45})`;
+        ctx.arc(px, py, r, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      if (rec.score > 0.35) {
+        ctx.beginPath();
+        const pts = glyph.map(v => proj(v.x, v.y));
+        ctx.moveTo(pts[0][0], pts[0][1]);
+        ctx.lineTo(pts[1][0], pts[1][1]);
+        ctx.lineTo(pts[2][0], pts[2][1]);
+        ctx.closePath();
+        ctx.strokeStyle = `rgba(124,58,237,${0.15 + rec.score * 0.75})`;
+        ctx.lineWidth = (1.5 + rec.score * 1.5) * devicePixelRatio;
+        ctx.stroke();
+      }
+    }
+
+    reseat();
+    resize();
+    window.addEventListener('resize', resize);
+
+    function frame(now) {
+      const cycle = ((now / 1000) / CYCLE) % 1;
+      const phase = phaseFrom(cycle);
+      step(phase);
+      const rec = recognition(phase);
+      draw(phase, rec);
+      document.getElementById('phase').textContent = 'Phase: ' + phase.toUpperCase();
+      document.getElementById('score').textContent =
+        `Recognition: ${rec.score.toFixed(2)}  ·  meanΔ: ${rec.mean.toFixed(2)}`;
+      const flag = document.getElementById('flag');
+      if (rec.ok) {
+        flag.textContent = 'STRUCTURE RECOGNISABLE';
+        flag.className = 'ok';
+      } else {
+        flag.textContent = 'FIELD DIFFUSE';
+        flag.className = 'diffuse';
+      }
+      requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
+  </script>
+</body>
+</html>

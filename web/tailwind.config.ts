@@ -1,4 +1,5 @@
 import type { Config } from 'tailwindcss'
+import { BRAND_KIT } from './lib/brandKit'
 
 const config: Config = {
   content: [
@@ -9,22 +10,27 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // FIELD void palette — "Days of Future Past"
-        void:    '#05050A',
-        surface: '#0F0F1A',
-        raised:  '#1A1A2E',
-        border:  '#2A2A40',
+        // Brand Kit — Default Surface Profile (Future Path)
+        void:    BRAND_KIT.canvas,
+        canvas:  BRAND_KIT.canvas,
+        surface: BRAND_KIT.deepTeal,
+        raised:  '#123838',
+        border:  BRAND_KIT.structure,
+        structure: BRAND_KIT.structure,
+        wireframe: BRAND_KIT.wireframe,
+        energy:  BRAND_KIT.activeEnergy,
+        wisdom:  BRAND_KIT.wisdomDot,
         // Text scale
-        muted:   '#64748B',
-        dim:     '#334155',
-        // Chamber tech palette
-        dojo:    '#7C3AED',
-        obiwan:  '#E2E8F0',
-        atlas:   '#06B6D4',
-        tata:    '#F59E0B',
-        akron:   '#78716C',
-        arkadas: '#EAB308',
-        kings:   '#F43F5E',
+        muted:   BRAND_KIT.textSecondary,
+        dim:     BRAND_KIT.structure,
+        // Chamber Accent Base — Brand Kit GOLDEN
+        dojo:    BRAND_KIT.chambers.dojo,
+        obiwan:  BRAND_KIT.chambers.obiwan,
+        atlas:   BRAND_KIT.chambers.atlas,
+        tata:    BRAND_KIT.chambers.tata,
+        akron:   BRAND_KIT.chambers.akron,
+        arkadas: BRAND_KIT.chambers.arkadas,
+        kings:   BRAND_KIT.chambers.kings,
       },
       fontFamily: {
         mono: ['JetBrains Mono', 'Fira Code', 'ui-monospace', 'monospace'],

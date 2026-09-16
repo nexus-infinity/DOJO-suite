@@ -14,32 +14,32 @@ struct DOJOTheme {
     static let obsidian = Color(hex: "#111113")       // Deep obsidian
     static let slate = Color(hex: "#1E1E20")          // Slate surface
     static let stone = Color(hex: "#2D2D30")          // Stone border
-    
+
     // Frequency Colors (741 Hz + 963 Hz)
     static let manifestation = Color(hex: "#7C3AED")  // 741 Hz - Purple (primary)
     static let observer = Color(hex: "#A78BFA")       // 963 Hz - Light purple
     static let consciousness = Color(hex: "#C4B5FD")  // Consciousness glow
-    
+
     // Semantic Colors
     static let danger = Color(hex: "#EF4444")         // Red (clipping/error)
     static let caution = Color(hex: "#F59E0B")        // Amber (warning)
     static let optimal = Color(hex: "#10B981")        // Green (good signal)
     static let quiet = Color(hex: "#3B82F6")          // Blue (low signal)
-    
+
     // Text Colors
     static let textPrimary = Color.white
     static let textSecondary = Color(hex: "#D1D5DB")
     static let textTertiary = Color(hex: "#9CA3AF")
     static let textMuted = Color(hex: "#6B7280")
     static let textDim = Color(hex: "#4B5563")
-    
+
     // Geometric Gradients
     static let pyramidGradient = LinearGradient(
         colors: [manifestation, observer],
         startPoint: .topLeading,
         endPoint: .bottomTrailing
     )
-    
+
     static let frequencyGradient = LinearGradient(
         colors: [manifestation, consciousness],
         startPoint: .top,
@@ -52,35 +52,39 @@ struct DOJOTheme {
 struct DOJOAudioCaptureView: View {
     @StateObject private var controller = MacOSMurmurController()
     @State private var selectedTab: Tab = .cockpitShell
-    
+
     enum Tab {
         case cockpitShell
         case integrity
-        case particleboard
+        case geometricalParticleBoard
+        case particleboard // DeadEnd.MisroutedUIBuild evidence surface — not GPB
         case capture
         case monitor
         case cockpit
         case receipts
     }
-    
+
     var body: some View {
         ZStack {
             // Geometric background layer
             DOJOTheme.void
-            
+
             VStack(spacing: 0) {
                 deviceSelector
                 Divider().background(DOJOTheme.stone)
                 tabSelector
                 Divider().background(DOJOTheme.stone)
-                
+
                 Group {
                     switch selectedTab {
                     case .cockpitShell:
                         CockpitShellAlphaView()
                     case .integrity:
                         PortalIntegrityLoopReviewView()
+                    case .geometricalParticleBoard:
+                        DOJOUI.GeometricalParticleFieldView()
                     case .particleboard:
+                        // Evidence-only Misrouted UI Build (CockpitOIRTextGrid) — not GPB
                         ParticleBoardFirstSliceView()
                     case .capture:
                         captureTab
@@ -96,7 +100,7 @@ struct DOJOAudioCaptureView: View {
         }
         .frame(minWidth: 860, minHeight: 720)
     }
-    
+
     private var deviceSelector: some View {
         HStack(spacing: 12) {
             // Frequency icon (741 Hz manifestation)
@@ -104,12 +108,12 @@ struct DOJOAudioCaptureView: View {
                 .font(.system(size: 16, weight: .medium))
                 .foregroundStyle(DOJOTheme.pyramidGradient)
                 .shadow(color: DOJOTheme.manifestation.opacity(0.3), radius: 4)
-            
+
             Text("INPUT DEVICE")
                 .font(.system(size: 10, weight: .bold, design: .monospaced))
                 .foregroundStyle(DOJOTheme.textMuted)
                 .tracking(1.2)
-            
+
             Menu {
                 ForEach(controller.deviceManager.availableDevices) { device in
                     Button {
@@ -124,9 +128,9 @@ struct DOJOAudioCaptureView: View {
                         }
                     }
                 }
-                
+
                 Divider()
-                
+
                 Button {
                     Task {
                         await controller.deviceManager.refreshDevices()
@@ -162,9 +166,9 @@ struct DOJOAudioCaptureView: View {
             }
             .buttonStyle(.plain)
             .disabled(controller.isCapturing)
-            
+
             Spacer()
-            
+
             if controller.isCapturing {
                 HStack(spacing: 8) {
                     // Pulsing sacred geometry indicator
@@ -197,12 +201,12 @@ struct DOJOAudioCaptureView: View {
             }
         )
     }
-    
+
     private var tabSelector: some View {
         HStack(spacing: 4) {
             DOJOTabButton(
                 title: "Shell",
-                icon: "point.3.connected_trianglepath.dotted",
+                icon: "point.3.connected.trianglepath.dotted",
                 frequency: "α",
                 isSelected: selectedTab == .cockpitShell
             ) {
@@ -219,9 +223,18 @@ struct DOJOAudioCaptureView: View {
             }
 
             DOJOTabButton(
-                title: "Particle",
+                title: "GPB",
+                icon: "triangle",
+                frequency: "PEP-1",
+                isSelected: selectedTab == .geometricalParticleBoard
+            ) {
+                selectedTab = .geometricalParticleBoard
+            }
+
+            DOJOTabButton(
+                title: "OIR Grid",
                 icon: "sparkles",
-                frequency: "slice-1",
+                frequency: "evidence",
                 isSelected: selectedTab == .particleboard
             ) {
                 selectedTab = .particleboard
@@ -235,7 +248,7 @@ struct DOJOAudioCaptureView: View {
             ) {
                 selectedTab = .capture
             }
-            
+
             DOJOTabButton(
                 title: "Monitor",
                 icon: "chart.xyaxis.line",
@@ -253,7 +266,7 @@ struct DOJOAudioCaptureView: View {
             ) {
                 selectedTab = .cockpit
             }
-            
+
             DOJOTabButton(
                 title: "G6 Gate",
                 icon: "checkmark.seal.fill",
@@ -292,7 +305,7 @@ final class PortalIntegrityLoopProofModel: ObservableObject {
     ]
 
     @Published var currentState = "Queued"
-    @Published var syncMessage = "Preserved locally. Queued for AKRON. Not yet sovereignly receipted."
+    @Published var syncMessage = "Preserved locally. Ready for explicit receipt request."
     @Published var receiptID: String?
     @Published var isSyncing = false
     @Published var holdActive = false
@@ -322,7 +335,7 @@ final class PortalIntegrityLoopProofModel: ObservableObject {
     func attemptAkronSync() async {
         isSyncing = true
         currentState = "Syncing"
-        syncMessage = "Attempting to submit the proof packet to AKRON."
+        syncMessage = "Requesting an external AKRON receipt for the proof packet."
         receiptID = nil
 
         do {
@@ -332,7 +345,7 @@ final class PortalIntegrityLoopProofModel: ObservableObject {
             syncMessage = "AKRON receipt received. This prototype still does not claim FIELD validation."
         } catch {
             currentState = "Queued"
-            syncMessage = "AKRON not reached — packet remains queued."
+            syncMessage = "AKRON not reached — packet remains local."
         }
 
         isSyncing = false
@@ -411,7 +424,7 @@ struct CockpitShellAlphaView: View {
                 .font(.system(size: 10, weight: .semibold, design: .monospaced))
                 .foregroundStyle(DOJOTheme.manifestation)
                 .tracking(1.1)
-            Text("I have preserved this locally. AKRON receipt is pending.")
+            Text("I have preserved this locally. External receipt requires explicit action.")
                 .font(.system(size: 15, weight: .medium, design: .rounded))
                 .foregroundStyle(DOJOTheme.textPrimary)
             Text("Not yet sovereignly receipted.")
@@ -429,7 +442,7 @@ struct CockpitShellAlphaView: View {
             HStack(spacing: 8) {
                 surfaceChip("Interface", "Cockpit visible", DOJOTheme.quiet)
                 surfaceChip("State", "Packet queued", DOJOTheme.caution)
-                surfaceChip("Route", "AKRON pending", DOJOTheme.caution)
+                surfaceChip("Route", "Local queue", DOJOTheme.caution)
                 surfaceChip("Body", "Not instrumented", DOJOTheme.textMuted)
             }
             .frame(minHeight: 54)
@@ -555,7 +568,7 @@ struct CockpitShellAlphaView: View {
                     if proof.isSyncing {
                         ProgressView().controlSize(.small)
                     } else {
-                        Text("Attempt AKRON Sync")
+                        Text("Request Receipt")
                     }
                 }
                 .buttonStyle(.borderedProminent)
@@ -1251,24 +1264,23 @@ extension DOJOAudioCaptureView {
             encoder.outputFormatting = .sortedKeys
             let data = (try? encoder.encode(state)) ?? Data()
             return CockpitReceiptStore.sha256(
-                from: String(data: data, encoding: .utf8) ?? "",
-                boardSource.rawValue
+                from: String(data: data, encoding: .utf8) ?? ""
             )
         }
     }
-    
+
     private var captureTab: some View {
         ZStack {
             // Background void
             DOJOTheme.void
-            
+
             // Subtle geometric pattern overlay
             GeometricPattern()
                 .opacity(0.03)
-            
+
             VStack(spacing: 32) {
                 Spacer()
-                
+
                 // Sacred geometry record button
                 Button {
                     controller.toggle()
@@ -1277,29 +1289,29 @@ extension DOJOAudioCaptureView {
                         // Outer glow ring
                         Circle()
                             .stroke(
-                                controller.isCapturing ? 
+                                controller.isCapturing ?
                                     DOJOTheme.danger.opacity(0.3) :
                                     DOJOTheme.manifestation.opacity(0.3),
                                 lineWidth: 2
                             )
                             .frame(width: 140, height: 140)
                             .blur(radius: 8)
-                        
+
                         // Main circle
                         Circle()
                             .fill(
-                                controller.isCapturing ? 
+                                controller.isCapturing ?
                                     AnyShapeStyle(DOJOTheme.danger) :
                                     AnyShapeStyle(DOJOTheme.pyramidGradient)
                             )
                             .frame(width: 120, height: 120)
                             .shadow(
-                                color: controller.isCapturing ? 
+                                color: controller.isCapturing ?
                                     DOJOTheme.danger.opacity(0.6) :
                                     DOJOTheme.manifestation.opacity(0.6),
                                 radius: 20
                             )
-                        
+
                         // Inner symbol
                         if controller.isCapturing {
                             // Geometric stop (square within circle - sacred proportion)
@@ -1312,7 +1324,7 @@ extension DOJOAudioCaptureView {
                                 Circle()
                                     .fill(DOJOTheme.textPrimary)
                                     .frame(width: 50, height: 50)
-                                
+
                                 // Frequency indicator
                                 Text("◼︎")
                                     .font(.system(size: 20, weight: .ultraLight))
@@ -1323,14 +1335,14 @@ extension DOJOAudioCaptureView {
                 }
                 .buttonStyle(.plain)
                 .disabled(controller.deviceManager.selectedDevice == nil)
-                
+
                 // Status text with frequency
                 VStack(spacing: 12) {
                     Text(controller.isCapturing ? "◼︎ RECORDING" : "◼︎ READY")
                         .font(.system(size: 20, weight: .bold, design: .monospaced))
                         .foregroundStyle(DOJOTheme.textPrimary)
                         .tracking(2)
-                    
+
                     if let device = controller.deviceManager.selectedDevice {
                         HStack(spacing: 6) {
                             Text(device.type.icon)
@@ -1352,7 +1364,7 @@ extension DOJOAudioCaptureView {
                             .foregroundStyle(DOJOTheme.textMuted)
                             .tracking(1)
                     }
-                    
+
                     // Frequency indicator
                     if controller.isCapturing {
                         Text("741 Hz ◆ 963 Hz")
@@ -1361,7 +1373,7 @@ extension DOJOAudioCaptureView {
                             .tracking(1.5)
                     }
                 }
-                
+
                 // Real-time stats (pyramid layout)
                 if controller.isCapturing {
                     HStack(spacing: 20) {
@@ -1371,7 +1383,7 @@ extension DOJOAudioCaptureView {
                             value: "\(Int(controller.currentRMSdB)) dB",
                             color: levelStatColor
                         )
-                        
+
                         if let quality = controller.lastQuality {
                             DOJOQuickStat(
                                 icon: "antenna.radiowaves.left.and.right",
@@ -1379,7 +1391,7 @@ extension DOJOAudioCaptureView {
                                 value: quality.snrQuality.uppercased(),
                                 color: DOJOTheme.manifestation
                             )
-                            
+
                             DOJOQuickStat(
                                 icon: "waveform.path.ecg",
                                 label: "SPEECH",
@@ -1390,9 +1402,9 @@ extension DOJOAudioCaptureView {
                     }
                     .padding(.top, 24)
                 }
-                
+
                 Spacer()
-                
+
                 // Instructions panel (geometric)
                 if !controller.isCapturing {
                     geometricInstructions
@@ -1402,7 +1414,7 @@ extension DOJOAudioCaptureView {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
-    
+
     private var levelStatColor: Color {
         let db = controller.currentRMSdB
         if db > -6 { return DOJOTheme.danger }
@@ -1410,7 +1422,7 @@ extension DOJOAudioCaptureView {
         if db > -24 { return DOJOTheme.optimal }
         return DOJOTheme.quiet
     }
-    
+
     private var geometricInstructions: some View {
         VStack(alignment: .leading, spacing: 14) {
             DOJOInstructionRow(
@@ -1459,7 +1471,7 @@ extension DOJOAudioCaptureView {
 struct AudioMonitorView: View {
     @ObservedObject var controller: MacOSMurmurController
     @State private var blink = true
-    
+
     var body: some View {
         VStack(spacing: 16) {
             HStack {
@@ -1469,7 +1481,7 @@ struct AudioMonitorView: View {
                 Text("Audio Monitor")
                     .font(.system(size: 15, weight: .semibold, design: .rounded))
                 Spacer()
-                
+
                 if controller.isCapturing {
                     HStack(spacing: 6) {
                         Circle()
@@ -1489,28 +1501,28 @@ struct AudioMonitorView: View {
             }
             .padding(.horizontal, 16)
             .padding(.top, 12)
-            
+
             Divider().background(Color(hex: "#2D2D30"))
-            
+
             levelMeter
-            
+
             if let quality = controller.lastQuality {
                 Divider().background(Color(hex: "#2D2D30"))
                 qualityMetrics(quality)
             }
-            
+
             Spacer()
         }
         .frame(maxWidth: .infinity)
         .background(Color(hex: "#0A0A0C"))
     }
-    
+
     private var levelMeter: some View {
         VStack(alignment: .leading, spacing: 8) {
             Text("INPUT LEVEL")
                 .font(.system(size: 10, weight: .medium, design: .monospaced))
                 .foregroundStyle(Color(hex: "#6B7280"))
-            
+
             HStack(spacing: 12) {
                 VStack(alignment: .trailing, spacing: 2) {
                     Text("0").font(.system(size: 9, design: .monospaced))
@@ -1525,7 +1537,7 @@ struct AudioMonitorView: View {
                 }
                 .foregroundStyle(Color(hex: "#6B7280"))
                 .frame(height: 100)
-                
+
                 GeometryReader { geo in
                     ZStack(alignment: .bottom) {
                         LinearGradient(
@@ -1539,7 +1551,7 @@ struct AudioMonitorView: View {
                             endPoint: .bottom
                         )
                         .opacity(0.2)
-                        
+
                         LinearGradient(
                             colors: levelColors,
                             startPoint: .top,
@@ -1555,7 +1567,7 @@ struct AudioMonitorView: View {
                     )
                 }
                 .frame(width: 40, height: 100)
-                
+
                 VStack {
                     Text("\(Int(controller.currentRMSdB))")
                         .font(.system(size: 24, weight: .bold, design: .monospaced))
@@ -1568,7 +1580,7 @@ struct AudioMonitorView: View {
         }
         .padding(.horizontal, 16)
     }
-    
+
     private func qualityMetrics(_ quality: QualityMetrics) -> some View {
         VStack(spacing: 12) {
             HStack {
@@ -1580,28 +1592,28 @@ struct AudioMonitorView: View {
                     .font(.system(size: 9, design: .monospaced))
                     .foregroundStyle(Color(hex: "#4B5563"))
             }
-            
+
             MetricRow(
                 label: "SNR",
                 value: "\(Int(quality.snrEst)) dB",
                 badge: quality.snrQuality,
                 badgeColor: quality.snrColor
             )
-            
+
             MetricRow(
                 label: "Speech",
                 value: "\(Int(quality.vadSpeechRatio * 100))%",
                 badge: quality.vadSpeechRatio > 0.3 ? "Active" : "Silent",
                 badgeColor: quality.vadSpeechRatio > 0.3 ? "#10B981" : "#6B7280"
             )
-            
+
             MetricRow(
                 label: "Noise Floor",
                 value: "\(Int(quality.noiseFloorDb)) dB",
                 badge: nil,
                 badgeColor: nil
             )
-            
+
             if quality.clipRate > 0.01 {
                 MetricRow(
                     label: "Clipping",
@@ -1613,13 +1625,13 @@ struct AudioMonitorView: View {
         }
         .padding(.horizontal, 16)
     }
-    
+
     private func levelHeight(in maxHeight: CGFloat) -> CGFloat {
         let db = controller.currentRMSdB
         let normalized = (db + 96) / 96
         return max(2, maxHeight * CGFloat(normalized))
     }
-    
+
     private var levelColors: [Color] {
         let db = controller.currentRMSdB
         if db >= -6 {
@@ -1630,12 +1642,12 @@ struct AudioMonitorView: View {
         }
         return [Color(hex: "#10B981"), Color(hex: "#3B82F6")]
     }
-    
+
     private var levelTextColor: Color {
         let db = controller.currentRMSdB
         return db > -6 ? Color(hex: "#EF4444") : .white
     }
-    
+
     private func timeAgo(_ date: Date) -> String {
         let seconds = Int(Date().timeIntervalSince(date))
         if seconds < 60 { return "\(seconds)s ago" }
@@ -1649,7 +1661,7 @@ struct AudioMonitorView: View {
 struct GateReceiptView: View {
     @State private var receipts: [GeometryGateReceipt] = []
     @State private var selectedReceipt: GeometryGateReceipt?
-    
+
     var body: some View {
         VStack(spacing: 0) {
             HStack {
@@ -1659,7 +1671,7 @@ struct GateReceiptView: View {
                 Text("G6 Hardware Gate")
                     .font(.system(size: 15, weight: .semibold, design: .rounded))
                 Spacer()
-                
+
                 HStack(spacing: 4) {
                     Circle()
                         .fill(receipts.isEmpty ? Color(hex: "#6B7280") : Color(hex: "#10B981"))
@@ -1672,7 +1684,7 @@ struct GateReceiptView: View {
                 .padding(.vertical, 4)
                 .background(Color(hex: "#111113"))
                 .clipShape(RoundedRectangle(cornerRadius: 6))
-                
+
                 Button {
                     refreshReceipts()
                 } label: {
@@ -1683,9 +1695,9 @@ struct GateReceiptView: View {
             }
             .padding(.horizontal, 16)
             .padding(.vertical, 12)
-            
+
             Divider().background(Color(hex: "#2D2D30"))
-            
+
             if receipts.isEmpty {
                 emptyState
             } else {
@@ -1695,7 +1707,7 @@ struct GateReceiptView: View {
         .background(Color(hex: "#0A0A0C"))
         .onAppear { refreshReceipts() }
     }
-    
+
     private var emptyState: some View {
         VStack(spacing: 16) {
             Spacer()
@@ -1714,7 +1726,7 @@ struct GateReceiptView: View {
         }
         .frame(maxWidth: .infinity)
     }
-    
+
     private var receiptList: some View {
         ScrollView {
             LazyVStack(spacing: 8) {
@@ -1731,7 +1743,7 @@ struct GateReceiptView: View {
             .padding(12)
         }
     }
-    
+
     private func refreshReceipts() {
         receipts = GeometryGateReceipt.fetchAll().reversed()
     }
@@ -1836,7 +1848,7 @@ struct PortalIntegrityLoopReviewView: View {
                     } else {
                         Image(systemName: "arrow.triangle.2.circlepath")
                     }
-                    Text(proof.isSyncing ? "Attempting AKRON Sync" : "Attempt AKRON Sync")
+                    Text(proof.isSyncing ? "Requesting Receipt" : "Request Receipt")
                 }
                 .font(.system(size: 13, weight: .semibold, design: .monospaced))
             }
@@ -1890,12 +1902,12 @@ struct GeometricPattern: View {
             let rows = 20
             let cellWidth = size.width / CGFloat(columns)
             let cellHeight = size.height / CGFloat(rows)
-            
+
             for row in 0..<rows {
                 for col in 0..<columns {
                     let x = CGFloat(col) * cellWidth
                     let y = CGFloat(row) * cellHeight
-                    
+
                     if (row + col) % 2 == 0 {
                         let rect = CGRect(x: x, y: y, width: cellWidth, height: cellHeight)
                         context.fill(Path(rect), with: .color(.white))
@@ -1912,19 +1924,19 @@ struct DOJOTabButton: View {
     let frequency: String
     let isSelected: Bool
     let action: () -> Void
-    
+
     var body: some View {
         Button(action: action) {
             VStack(spacing: 6) {
                 Image(systemName: icon)
                     .font(.system(size: 16, weight: .medium))
                     .foregroundStyle(isSelected ? AnyShapeStyle(DOJOTheme.pyramidGradient) : AnyShapeStyle(DOJOTheme.textMuted))
-                
+
                 Text(title)
                     .font(.system(size: 11, weight: .semibold, design: .monospaced))
                     .foregroundStyle(isSelected ? DOJOTheme.textPrimary : DOJOTheme.textMuted)
                     .tracking(0.5)
-                
+
                 Text(frequency)
                     .font(.system(size: 8, weight: .medium, design: .monospaced))
                     .foregroundStyle(isSelected ? DOJOTheme.observer : DOJOTheme.textDim)
@@ -1961,19 +1973,19 @@ struct DOJOQuickStat: View {
     let label: String
     let value: String
     let color: Color
-    
+
     var body: some View {
         VStack(spacing: 8) {
             Image(systemName: icon)
                 .font(.system(size: 18, weight: .medium))
                 .foregroundStyle(color)
                 .shadow(color: color.opacity(0.3), radius: 4)
-            
+
             Text(label)
                 .font(.system(size: 9, weight: .bold, design: .monospaced))
                 .foregroundStyle(DOJOTheme.textMuted)
                 .tracking(1)
-            
+
             Text(value)
                 .font(.system(size: 13, weight: .bold, design: .monospaced))
                 .foregroundStyle(DOJOTheme.textPrimary)
@@ -1997,7 +2009,7 @@ struct DOJOQuickStat: View {
 struct DOJOInstructionRow: View {
     let number: String
     let text: String
-    
+
     var body: some View {
         HStack(alignment: .top, spacing: 14) {
             ZStack {
@@ -2005,12 +2017,12 @@ struct DOJOInstructionRow: View {
                     .fill(DOJOTheme.pyramidGradient)
                     .frame(width: 28, height: 28)
                     .shadow(color: DOJOTheme.manifestation.opacity(0.3), radius: 4)
-                
+
                 Text(number)
                     .font(.system(size: 13, weight: .black, design: .monospaced))
                     .foregroundStyle(DOJOTheme.textPrimary)
             }
-            
+
             Text(text)
                 .font(.system(size: 12, weight: .medium, design: .rounded))
                 .foregroundStyle(DOJOTheme.textSecondary)
@@ -2024,7 +2036,7 @@ struct MetricRow: View {
     let value: String
     let badge: String?
     let badgeColor: String?
-    
+
     var body: some View {
         HStack {
             Text(label)
@@ -2034,7 +2046,7 @@ struct MetricRow: View {
             Text(value)
                 .font(.system(size: 12, weight: .semibold, design: .monospaced))
                 .foregroundStyle(.white)
-            
+
             if let badge = badge, let color = badgeColor {
                 Text(badge)
                     .font(.system(size: 9, weight: .bold, design: .monospaced))
@@ -2055,24 +2067,24 @@ struct MetricRow: View {
 struct ReceiptCard: View {
     let receipt: GeometryGateReceipt
     let isSelected: Bool
-    
+
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
             HStack {
                 Image(systemName: "checkmark.circle.fill")
                     .foregroundStyle(Color(hex: "#10B981"))
-                
+
                 Text(receipt.capability.uppercased())
                     .font(.system(size: 10, weight: .bold, design: .monospaced))
                     .foregroundStyle(Color(hex: "#10B981"))
-                
+
                 Spacer()
-                
+
                 Text(formatTimestamp(receipt.timestamp))
                     .font(.system(size: 9, design: .monospaced))
                     .foregroundStyle(Color(hex: "#6B7280"))
             }
-            
+
             HStack(spacing: 6) {
                 Image(systemName: "waveform")
                     .font(.system(size: 10))
@@ -2081,23 +2093,23 @@ struct ReceiptCard: View {
                     .font(.system(size: 11, design: .rounded))
                     .foregroundStyle(Color(hex: "#D1D5DB"))
             }
-            
+
             VStack(alignment: .leading, spacing: 4) {
                 Text("SESSION REF")
                     .font(.system(size: 8, weight: .medium, design: .monospaced))
                     .foregroundStyle(Color(hex: "#6B7280"))
-                
+
                 HStack {
                     Text(receipt.sha256Hint)
                         .font(.system(size: 11, weight: .semibold, design: .monospaced))
                         .foregroundStyle(Color(hex: "#A78BFA"))
-                    
+
                     Text("•••")
                         .font(.system(size: 10))
                         .foregroundStyle(Color(hex: "#4B5563"))
-                    
+
                     Spacer()
-                    
+
                     Button {
                         copyToClipboard(receipt.sessionRef)
                     } label: {
@@ -2111,11 +2123,11 @@ struct ReceiptCard: View {
             .padding(8)
             .background(Color(hex: "#111113"))
             .clipShape(RoundedRectangle(cornerRadius: 6))
-            
+
             HStack {
                 Image(systemName: "lock.shield")
                     .font(.system(size: 9))
-                Text("Ready for AKRON v1 signature")
+                Text("External receipt requires explicit request")
                     .font(.system(size: 9, design: .monospaced))
                 Spacer()
             }
@@ -2129,13 +2141,13 @@ struct ReceiptCard: View {
         )
         .clipShape(RoundedRectangle(cornerRadius: 8))
     }
-    
+
     private func formatTimestamp(_ date: Date) -> String {
         let formatter = RelativeDateTimeFormatter()
         formatter.unitsStyle = .abbreviated
         return formatter.localizedString(for: date, relativeTo: Date())
     }
-    
+
     private func copyToClipboard(_ text: String) {
         let pasteboard = NSPasteboard.general
         pasteboard.clearContents()

@@ -1,0 +1,80 @@
+{
+  "schema": "DOJO.RenderProjection.V1",
+  "status": "SEATED.LIVE.DB.LOCAL_SNAPSHOT_WIRED",
+  "database_url": "https://app.notion.com/p/c96d49fc3b9f4ce78a26c0cb498490ba",
+  "parent_page_id": "2fe04c15-e4f1-81ce-8be8-f688f76f212c",
+  "title": "DOJO Render Projection v1",
+  "data_source_id": "61eb4b55-e283-454b-a628-5656c228dfc6",
+  "consume_tuple": [
+    "geometry",
+    "chamber",
+    "role",
+    "evidence",
+    "authority",
+    "next",
+    "prime_state"
+  ],
+  "not_consumed": [
+    "Name",
+    "workplace",
+    "source_page",
+    "Created",
+    "Last edited",
+    "page_body",
+    "notion_option_color",
+    "markdown",
+    "emoji"
+  ],
+  "enums": {
+    "geometry": ["pyramid", "octagon", "spiral", "neural", "walk-on"],
+    "chamber": ["dojo", "obiwan", "tata", "atlas", "akron", "arkadas", "kings"],
+    "role": ["structure", "flow", "interface", "observer", "validation"],
+    "evidence": ["SEALED", "HOLD", "PROMOTE"],
+    "authority": ["observe", "compose", "record", "none"],
+    "prime_state": ["HOLD · not embodied", "Unknown"]
+  },
+  "role_colour_derived_in_dojo": {
+    "structure": "blue",
+    "flow": "teal",
+    "interface": "cyan",
+    "observer": "purple-indigo",
+    "validation": "gold",
+    "green": "reserved"
+  },
+  "workplace_filter_only": {
+    "field-dojo-hub": "pyramid",
+    "stories-matter": "octagon",
+    "days-of-future-past": "spiral",
+    "nexus-infinity": "neural",
+    "trek-walk-on": "walk-on"
+  },
+  "one_chamber_dojo_query_witnessed": [
+    {
+      "url": "https://app.notion.com/3c704c15e4f1812290c1ee4b48a92a86",
+      "geometry": "pyramid",
+      "chamber": "dojo",
+      "role": "structure",
+      "evidence": "HOLD",
+      "authority": "observe",
+      "next": "Feed one chamber row and watch the quiet projection.",
+      "prime_state": "HOLD · not embodied"
+    },
+    {
+      "url": "https://app.notion.com/3c704c15e4f18133835ee0aed4895065",
+      "geometry": "octagon",
+      "chamber": "dojo",
+      "role": "flow",
+      "evidence": "HOLD",
+      "authority": "compose",
+      "next": "Choose one rail and write one next-evidence sentence.",
+      "prime_state": "HOLD · not embodied"
+    }
+  ],
+  "holds": [
+    "HOLD.SwiftRoleColourStillChamberMapped",
+    "HOLD.SomaPrimeNotEmbodied",
+    "HOLD.TrekInTrash",
+    "HOLD.LocalDojoNotConsumingFeed"
+  ],
+  "mcp_query": "SELECT url, \"geometry\", \"chamber\", \"role\", \"evidence\", \"authority\", \"next\", \"prime_state\" FROM \"collection://61eb4b55-e283-454b-a628-5656c228dfc6\" WHERE \"geometry\" IS NOT NULL AND \"chamber\" IS NOT NULL AND \"role\" IS NOT NULL AND \"evidence\" IS NOT NULL AND \"authority\" IS NOT NULL AND TRIM(\"next\") != '' AND \"prime_state\" IS NOT NULL"
+}

@@ -8,12 +8,11 @@ import DOJOShared
 //   • Chamber.color              = tech palette "Days of Future Past" (app UI)
 //   Both are correct for their context. Do not collapse them.
 //
-// CANONICAL NOTE — ARKADAŞ vs Kings Chamber:
-//   • ◉ ARKADAŞ (SPIN) = 717 Hz — model-bearing vertex, embodiment bridge
-//   • ⊗ Kings Chamber  = 852 Hz — deterministic infrastructure, translation bridge
-//   These are two distinct entities. OOOEntity.arkadas (852 Hz) is the infrastructure
-//   entity. ARKADAŞ at 717 Hz is a separate model-bearing vertex tracked here.
-//   TODO: add OOOEntity.arkadasSpin (717 Hz) in GeometricEntity.swift.
+// CANONICAL NOTE — Arkadaş vs King's Chamber:
+//   • ◉ Arkadaş (SPIN) = 717 Hz — model-bearing vertex, embodiment bridge
+//     Display: Turkish arkadaş, ş = U+015F (cedilla below s). ASCII slug: arkadas.
+//   • ⊗ King's Chamber  = 852 Hz — deterministic infrastructure, translation bridge
+//   OOOEntity.arkadas is 717. OOOEntity.kingsChamber is 852. Do not collapse.
 
 // ── Chamber identity ──────────────────────────────────────────────────────────
 
@@ -86,7 +85,7 @@ public enum Chamber: String, CaseIterable, Identifiable {
 
     // ── Bridge to OOOEntity (canonical data model) ────────────────────────────
     // Returns the nearest OOOEntity for this chamber.
-    // Note: .arkadas (717 Hz SPIN) maps to nil until OOOEntity.arkadasSpin is added.
+    // Arkadaş and King’s Chamber remain separate OOO entities.
     public var oooEntity: OOOEntity? {
         switch self {
         case .dojo:    return .dojo
@@ -94,8 +93,8 @@ public enum Chamber: String, CaseIterable, Identifiable {
         case .atlas:   return .atlas
         case .tata:    return .tata
         case .akron:   return .akronGateway
-        case .arkadas: return nil   // 717 Hz SPIN not yet in OOOEntity — TODO
-        case .kings:   return .arkadas  // OOOEntity.arkadas = 852 Hz infrastructure
+        case .arkadas: return .arkadas
+        case .kings:   return .kingsChamber
         }
     }
 }

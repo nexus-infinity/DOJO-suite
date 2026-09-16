@@ -1,0 +1,172 @@
+{
+  "$schema": "FIELD.ObjectOrientedOntology/v0.2",
+  "ontology_id": "aikido-optics.observer-mirror-portal.v0.2",
+  "title": "Aikido Optics — Autonomous Sub-Project Identity and Mirror Portal Ontology",
+  "version": "0.2.0",
+  "created_at": "2026-08-26T03:05:15+10:00",
+  "artifact_class": "design_registration",
+  "status": "PASS.DESIGN_REGISTERED_RUNTIME_UNPROVEN",
+  "source_lineage": {
+    "user_supplied_ontology": "/Users/field/.codex/attachments/999fee18-3299-4801-bfb9-52a1c87ff546/pasted-text.txt",
+    "notion": [
+      {
+        "id": "2f0a49ca-8e6b-46a9-824e-8e6514a06687",
+        "title": "Aikido Optics — Holographic Compression for Post-v1.0 Research",
+        "role": "direct research and origin anchor",
+        "observed_at": "2026-08-03T16:58:45.327Z"
+      },
+      {
+        "id": "9bce3ac8-604a-4287-bfe1-3f59f49c61c7",
+        "title": "Product Development Hub — FIELD + DOJO Suite (GA-aligned)",
+        "role": "placement and development-protocol anchor",
+        "observed_at": "2026-07-23T07:56:40.437Z"
+      },
+      {
+        "id": "f14c500f-e398-499d-9c93-f6268bbd43f3",
+        "title": "DOJO Performance Integration: Human-AI Real-Time Collaboration in Physical Space",
+        "role": "embodied optics and particle-field lineage anchor",
+        "observed_at": "2026-06-21T14:06:49.089Z"
+      }
+    ],
+    "linear": [
+      {
+        "id": "project:19bbafbe-d03f-40a2-8c63-b53a37b6dbfc",
+        "title": "Field-MacOS-DOJO",
+        "role": "parent DOJO project and suite placement anchor",
+        "observed_at": "2026-08-25T08:25:12.412Z"
+      },
+      {
+        "id": "issue:BER-42",
+        "title": "FIELD: Activate Participatory Embodied Performance — Frequency-Colored Agent/Editor Text + Distinct Layers",
+        "role": "related embodied manifestation lineage",
+        "observed_at": "2026-07-11T06:22:12.317Z"
+      }
+    ],
+    "google_drive": {
+      "status": "Unknown.DirectAikidoArtifact",
+      "note": "Searches for Aikido Optics and particle-board lineage did not produce a reliable direct project artifact; unrelated geometry and historical documents were excluded."
+    },
+    "local": [
+      "/Users/field/DOJO-suite/WORKING_NOTES.md",
+      "/Users/field/DOJO-suite/Sources/DOJOShared/ParticleBoard/AikidoOpticsCodec.swift",
+      "/Users/field/DOJO-suite/docs/OBSERVER_ALIGNED_ASSISTANCE_ATTRIBUTE_MAPPING_V0.md"
+    ]
+  },
+  "project_identity": {
+    "object_id": "project.aikido-optics",
+    "object_class": "AutonomousSubProject",
+    "display_name": "Aikido Optics",
+    "parent_project": "project.dojo-suite",
+    "project_status": "exploratory-development",
+    "source_object": "Aikido Optics development body",
+    "representation": "optical and mirror surfaces produced by the project",
+    "lawful_home": "/Users/field/DOJO-suite",
+    "owns": [
+      "aikido_optics_ontology",
+      "optical_research",
+      "prototype_generations",
+      "manufacturing_relationships",
+      "experimental_receipts",
+      "project_specific_ip",
+      "project_roadmap",
+      "project_risks",
+      "project_completion_criteria"
+    ],
+    "inherits": [
+      "dojo_suite_mirror_portal_contract",
+      "field_observer_model",
+      "dojo_ontology_interface",
+      "field_provenance_and_receipt_discipline"
+    ],
+    "does_not_own": [
+      "dojo_source_ontology",
+      "dojo_manifestation_authority",
+      "kings_chamber_arbiter_authority",
+      "physical_geometry_truth",
+      "observer_intention"
+    ]
+  },
+  "relationships": [
+    {
+      "subject": "project.aikido-optics",
+      "predicate": "IS_A",
+      "object": "AutonomousSubProject"
+    },
+    {
+      "subject": "project.aikido-optics",
+      "predicate": "IS_SUBPROJECT_OF",
+      "object": "project.dojo-suite",
+      "collapse": false
+    },
+    {
+      "subject": "project.aikido-optics",
+      "predicate": "IMPLEMENTS",
+      "object": "MirrorPortal"
+    },
+    {
+      "subject": "project.aikido-optics",
+      "predicate": "REFERENCES",
+      "object": "dojo.source-ontology"
+    },
+    {
+      "subject": "project.aikido-optics",
+      "predicate": "DOES_NOT_OWN",
+      "object": "dojo.source-ontology"
+    },
+    {
+      "subject": "project.aikido-optics",
+      "predicate": "DOES_NOT_OWN",
+      "object": "dojo.manifestation-authority"
+    },
+    {
+      "subject": "portal.dojo-suite.aikido-optics",
+      "predicate": "REPRESENTS",
+      "object": "project.aikido-optics"
+    },
+    {
+      "subject": "portal.dojo-suite.aikido-optics",
+      "predicate": "IS_NOT",
+      "object": "dojo.manifestation-authority"
+    }
+  ],
+  "non_collapse_boundaries": [
+    "Aikido Optics != DOJO Suite",
+    "Aikido Optics != DOJO ontology",
+    "Aikido Optics != optical representation",
+    "AutonomousSubProject != independent sovereign FIELD",
+    "SourceObject != Representation",
+    "Observation != Interpretation",
+    "RecognisedGeometry != PhysicalGeometry",
+    "Geometry != Authority",
+    "PerceptualSignal != PhysicalSourceObject"
+  ],
+  "claim_state": {
+    "observed": [
+      "Aikido Optics has independent technical, manufacturing, experimental and IP concerns.",
+      "Aikido Optics already has a documented lineage in particle-board and embodied-optics research.",
+      "Aikido Optics remains situated within the DOJO Suite ecosystem.",
+      "The local project contains an AikidoOpticsCodec and related particle-board implementation surfaces."
+    ],
+    "inferred": [
+      "Aikido Optics warrants first-class project identity rather than feature-only or DevelopmentDomain classification.",
+      "Its mirror surfaces can represent selected ontology relationships without owning the source ontology."
+    ],
+    "unproven": [
+      "Useful optical modulation at the required spatial and perceptual resolution.",
+      "Accurate registration to physical geometry across lighting and motion conditions.",
+      "Manufacturable hardware architecture, supplier readiness or patentability.",
+      "A completed observer experiment closing the full optical loop."
+    ]
+  },
+  "promotion_gate": {
+    "decision": "HOLD",
+    "reason": "Design identity is registered; runtime and physical optical claims remain unproven.",
+    "required_next_evidence": [
+      "project charter and scope boundary receipt",
+      "first roadmap and prototype-generation record",
+      "project-specific experiment receipt",
+      "PhysicalGeometricObject -> RecognisedGeometry -> GeometricParticle -> OpticalPolicy -> ObserverResponse trace",
+      "external observer seal before any runtime or production promotion"
+    ]
+  }
+}

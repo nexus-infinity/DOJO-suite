@@ -14,7 +14,7 @@ struct DOJOiOSApp: App {
                 .environmentObject(murmur.captureService)
                 .task { await queue.load() }
                 .preferredColorScheme(.dark)
-                // Bridge: MFC-01 sealed voice object → FieldKit PacketQueue (audio path + hash).
+                // Bridge: MFC-01 sealed voice object → local PacketQueue (audio path + hash).
                 // voiceRef alone is not evidence; sealed object carries original + SHA-256.
                 .onChange(of: murmur.lastSealedVoiceObject) { _, sealed in
                     guard let sealed else { return }

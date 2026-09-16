@@ -25,7 +25,12 @@ export function inferSessionTitle(messages: SessionMessage[]): string {
 }
 
 export function sessionPreview(messages: SessionMessage[]): string {
-  const lastMeaningful = [...messages].reverse().find(message => message.content.trim())
+  // Persisted summaries can influence later workstream decisions. Keep that
+  // projection user-authored; assistant content remains available in messages
+  // for presentation, but is not promoted into a state-bearing summary.
+  const lastMeaningful = [...messages]
+    .reverse()
+    .find(message => message.role === 'user' && message.content.trim())
   if (!lastMeaningful) return 'No messages yet'
   return truncate(lastMeaningful.content.replace(/\s+/g, ' ').trim(), 96)
 }

@@ -1,5 +1,5 @@
 import SwiftUI
-import FieldKit
+import DOJOShared
 
 struct PacketStateChip: View {
     let state: PacketState

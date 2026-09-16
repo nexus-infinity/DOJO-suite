@@ -11,6 +11,19 @@ workspace:
   name: DOJO
 
 targets:
+  DOJOPersistence:
+    type: framework
+    platform: macOS
+    deploymentTarget: "14.0"
+    sources:
+      - path: Sources/DOJOPersistence
+    dependencies:
+      - target: DOJOShared
+    settings:
+      PRODUCT_BUNDLE_IDENTIFIER: org.field.DOJOPersistence
+      MACOSX_DEPLOYMENT_TARGET: "14.0"
+      GENERATE_INFOPLIST_FILE: YES
+
   DOJOUI:
     type: framework
     platform: macOS
@@ -65,7 +78,8 @@ targets:
     settings:
       PRODUCT_BUNDLE_IDENTIFIER: org.field.dojo
       INFOPLIST_FILE: Sources/DOJOApp/Info.plist
-      GENERATE_INFOPLIST_FILE: YES
+      GENERATE_INFOPLIST_FILE: NO
+      ENABLE_DEBUG_DYLIB: YES
       ENABLE_HARDENED_RUNTIME: YES
       ENABLE_RESOURCE_ACCESS_AUDIO_INPUT: YES
       MACOSX_DEPLOYMENT_TARGET: "14.0"
@@ -78,13 +92,12 @@ targets:
     type: application
     platform: macOS
     deploymentTarget: "14.0"
-    sources: [Sources/ArkadašApp]
+    sources: [Sources/ArkadasApp]
     dependencies:
       - target: DOJOShared
       - target: DOJOUI
     settings:
       PRODUCT_BUNDLE_IDENTIFIER: org.field.arkadas
-      INFOPLIST_FILE: Sources/ArkadašApp/Info.plist
       GENERATE_INFOPLIST_FILE: YES
       ENABLE_HARDENED_RUNTIME: YES
       MACOSX_DEPLOYMENT_TARGET: "14.0"
@@ -95,15 +108,16 @@ targets:
 
   OB1LinkApp:
     type: application
-    platform: iOS
-    deploymentTarget: "15.0"
+    platform: macOS
+    deploymentTarget: "14.0"
     sources: [Sources/OB1LinkApp]
     dependencies:
       - target: DOJOShared
+      - target: DOJOUI
     settings:
       PRODUCT_BUNDLE_IDENTIFIER: org.field.ob1link
-      INFOPLIST_FILE: Sources/OB1LinkApp/Info.plist
       GENERATE_INFOPLIST_FILE: YES
+      MACOSX_DEPLOYMENT_TARGET: "14.0"
       DEVELOPMENT_TEAM: KQPY9CSK58
       CODE_SIGN_IDENTITY: "Apple Development"
       CODE_SIGN_STYLE: Automatic
@@ -114,11 +128,8 @@ targets:
     platform: iOS
     deploymentTarget: "15.0"
     sources: [Sources/DojoLinkApp]
-    dependencies:
-      - target: DOJOShared
     settings:
       PRODUCT_BUNDLE_IDENTIFIER: org.field.dojolink
-      INFOPLIST_FILE: Sources/DojoLinkApp/Info.plist
       GENERATE_INFOPLIST_FILE: YES
       DEVELOPMENT_TEAM: KQPY9CSK58
       CODE_SIGN_IDENTITY: "Apple Development"
@@ -134,12 +145,18 @@ targets:
         excludes:
           - "*.bak"
     dependencies:
+      - target: DOJOApp
       - target: DOJOShared
       - target: DOJOUI
+      - target: DOJOPersistence
     settings:
       PRODUCT_BUNDLE_IDENTIFIER: org.field.DOJOSharedTests
       MACOSX_DEPLOYMENT_TARGET: "14.0"
       GENERATE_INFOPLIST_FILE: YES
+      DEVELOPMENT_TEAM: KQPY9CSK58
+      CODE_SIGN_IDENTITY: "Apple Development"
+      CODE_SIGN_STYLE: Automatic
+      PROVISIONING_PROFILE_SPECIFIER: ""
 
   DOJOiOSApp:
     type: application
@@ -147,11 +164,10 @@ targets:
     deploymentTarget: "17.0"
     sources:
       - Sources/DOJOiOSApp
-      - Sources/FieldKit
-      - path: Sources/DOJOShared/HAL
-      - path: Sources/DOJOShared/Contracts
-    dependencies:
-      - target: DOJOShared
+      - Sources/DOJOPersistence
+      - Sources/DOJOTransport
+      - Sources/DOJOShared
+      - Sources/DOJOUI/BoundaryCapacityGlanceView.swift
     settings:
       PRODUCT_BUNDLE_IDENTIFIER: au.com.berjak.DOJOiOSApp
       INFOPLIST_FILE: Sources/DOJOiOSApp/Info.plist

@@ -14,7 +14,7 @@ The FIELD system operates on five geometric vertices plus one internal chamber, 
 |--------|-----------|-------|-------|----------|--------|------|
 | **OBI-WAN** | 963 Hz | ● | Violet | 100% (apex) | Temporal | Observer, Living Memory, Unity Consciousness |
 | **DOJO** | 741 Hz | ◆ | Blue | 66.7% (manifestation) | Translation | Orchestrator, S0-S6 Router, Manifestation Apex |
-| **King's Chamber** | 852 Hz | ⊕ | Indigo | 33.3% (balance) | Translation | DOJO↔SOMA Bridge, Frequency Conversion, Intuition |
+| **King's Chamber** | 852 Hz | ⊕ | Indigo | 33.3% (balance) | Translation | Hosts Train Station gateway (DOJO↔SOMA frequency conversion); Intuition — package name remains Train Station |
 | **TATA** | 432 Hz | ▲ | Orange | 0% (base) | Legal | Truth Anchor, Legal Record, Natural Tuning |
 | **ATLAS** | 528 Hz | ◼︎ | Green | 0% (base) | Geometric | Geometric Wisdom, AI Access, DNA Repair |
 | **Akron Gateway** | 396 Hz | ▼ | Red | 0% (foundation) | Archive | Sovereign Archive, Proof Storage, Liberation |
@@ -59,8 +59,8 @@ Non-portals include:
 
 ### 1. DOJO-suite *(Active)*
 
-**Repository**: `nexus-infinity/DOJO-suite`  
-**Vertex Anchor**: DOJO (741 Hz) + King's Chamber (852 Hz)  
+**Repository**: `nexus-infinity/DOJO-suite`
+**Vertex Anchor**: DOJO (741 Hz) + King's Chamber (852 Hz)
 **Platform**: iOS 15+ / macOS 12+ (SwiftPM)
 
 **OOO Properties**:
@@ -96,8 +96,8 @@ Temporal: {
 
 ### 2. berjak-fre-dojo *(Active)*
 
-**Repository**: `nexus-infinity/berjak-fre-dojo`  
-**Vertex Anchor**: ATLAS (528 Hz) + TATA (432 Hz)  
+**Repository**: `nexus-infinity/berjak-fre-dojo`
+**Vertex Anchor**: ATLAS (528 Hz) + TATA (432 Hz)
 **Platform**: Web (React)
 
 **OOO Properties**:
@@ -135,8 +135,8 @@ Temporal: {
 
 ### somalink *(Proposal)*
 
-**Repository**: `nexus-infinity/somalink`  
-**Vertex Anchor**: *Under Review*  
+**Repository**: `nexus-infinity/somalink`
+**Vertex Anchor**: *Under Review*
 **Platform**: TBD
 
 **Status**: OOO properties pending classification. Lifecycle phase is `proposal`, not yet observer-calibrated.
@@ -239,15 +239,15 @@ To register a new portal, submit a PR with:
 
 ## Observer Alignment
 
-**Calibrated to**: nexus-infinity (JB)  
-**Date**: 2025-12-20  
-**Frequency**: 963 Hz (OBI-WAN - Crown/Unity)  
+**Calibrated to**: nexus-infinity (JB)
+**Date**: 2025-12-20
+**Frequency**: 963 Hz (OBI-WAN - Crown/Unity)
 **Geometric Principle**: "As above, so below" — The portal registry reflects the Sacred Pyramid geometry
 
 ---
 
-**Manifest Version**: 1.0.0  
-**Last Updated**: 2025-12-20  
+**Manifest Version**: 1.0.0
+**Last Updated**: 2025-12-20
 **Maintained By**: nexus-infinity
 
 🔺●◼︎

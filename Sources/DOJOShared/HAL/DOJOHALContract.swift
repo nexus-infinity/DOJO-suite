@@ -4,7 +4,7 @@ import Foundation
 
 /// The five questions every device must answer.
 /// A device does NOT need all five — but it must declare honestly.
-public enum HALCapability: String, Codable, CaseIterable {
+public enum HALCapability: String, Codable, CaseIterable, Sendable {
     case sense    // Can you observe?
     case process  // Can you think?
     case store    // Can you remember?
@@ -14,7 +14,7 @@ public enum HALCapability: String, Codable, CaseIterable {
 
 /// Strength of a given capability — not binary, but bounded.
 /// This is NOT a percentage. It's a tier.
-public enum CapabilityTier: Int, Codable, Comparable, Hashable {
+public enum CapabilityTier: Int, Codable, Comparable, Hashable, Sendable {
     case none     = 0  // Cannot do this at all
     case minimal  = 1  // Threshold logic only (ESP32-class)
     case moderate = 2  // Can run lightweight models, buffer hours of data
@@ -27,7 +27,7 @@ public enum CapabilityTier: Int, Codable, Comparable, Hashable {
 
 /// The complete capability profile of a device.
 /// This is the answer to the five HAL questions.
-public struct HALProfile: Codable, Equatable, Hashable {
+public struct HALProfile: Codable, Equatable, Hashable, Sendable {
     public let sense: CapabilityTier
     public let process: CapabilityTier
     public let store: CapabilityTier

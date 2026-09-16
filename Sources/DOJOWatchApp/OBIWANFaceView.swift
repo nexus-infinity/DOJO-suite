@@ -13,9 +13,17 @@ struct OBIWANFaceView: View {
 
     private let healthStore = HKHealthStore()
 
+    private var currentInteractionContext: InteractionContext {
+        WatchInteractionContextAdapter.make(
+            heartRateBPM: heartRate,
+            heartRateVariabilityMS: hrv
+        )
+    }
+
     var body: some View {
         OBIWANWatchFace(state: state, heartRate: heartRate, hrv: hrv)
             .ignoresSafeArea()
+            .accessibilityValue(currentInteractionContext.biometricState.rawValue)
             .task { await requestHealthAccess() }
     }
 

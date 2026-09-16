@@ -1,0 +1,45 @@
+{
+  "receipt_version": "V0",
+  "receipt_type": "IMPLEMENTATION_RECEIPT",
+  "mission_identity": "DOJO_RENDER_PROJECTION_V1_READONLY_DOJO_SNAPSHOT",
+  "recorded_at": "2026-08-25T15:16:00Z",
+  "source_surface": "Cursor",
+  "lawful_execution_home": "/Users/field/DOJO-suite",
+  "preflight_receipt": "/Users/field/logs/state_patches/EDITOR_PREFLIGHT_20260825T151505Z.receipt.json",
+  "decision": "IMPLEMENTED_LOCALLY",
+  "canon_status": "NOT_CANON",
+  "observer_seal": "INTENTIONALLY_UNSEALED",
+  "result_class": "PASS.READONLY_DOJO_PROJECTION_SNAPSHOT",
+  "implemented": {
+    "contract": "Sources/DOJOShared/Contracts/DojoRenderProjectionV1.swift",
+    "tests": "Tests/DOJOSharedTests/DojoRenderProjectionV1Tests.swift",
+    "surface": "Sources/DOJOApp/Views/DOJOTodaySurfaceView.swift",
+    "data_source_id": "61eb4b55-e283-454b-a628-5656c228dfc6",
+    "chamber_scope": "dojo",
+    "write_policy": "read_only",
+    "rendered_tuples": [
+      "pyramid · dojo · structure · HOLD · observe",
+      "octagon · dojo · flow · HOLD · compose"
+    ]
+  },
+  "boundary": {
+    "notion_written": false,
+    "live_notion_mcp_invoked_from_app": false,
+    "investigation_cards_retinted": false,
+    "soma_embodied": false,
+    "trek_restored": false,
+    "composer_mcp_exposed": false
+  },
+  "remaining_holds": [
+    "HOLD.SwiftRoleColourStillChamberMapped",
+    "HOLD.SomaPrimeNotEmbodied",
+    "HOLD.TrekInTrash",
+    "HOLD.LocalDojoNotConsumingFeed"
+  ],
+  "verification": {
+    "focused_command": "swift test --package-path /Users/field/DOJO-suite --filter DojoRenderProjectionV1Tests",
+    "focused_tests_executed": 7,
+    "focused_failures": 0
+  },
+  "qualification": "Local Today renders the witnessed two-tuple snapshot on Investigations. It does not query live Notion, execute writes, retint existing cards by role, restore Trek, or embody SOMA."
+}

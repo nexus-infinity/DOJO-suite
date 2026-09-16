@@ -1,0 +1,74 @@
+{
+  "receipt_version": "V0",
+  "receipt_type": "IMPLEMENTATION_RECEIPT",
+  "mission_identity": "DETERMINISTIC_CONTINUITY_ZERO_LOSS_FIXTURE_V0_R1",
+  "recorded_at": "2026-08-14T12:19:38Z",
+  "source_surface": "Codex Terminal",
+  "lawful_execution_home": "/Users/field/DOJO-suite",
+  "king_chamber_reentry_receipt": "/Users/field/◎Kings-Chamber/chronicle/KC_REENTRY_20260814T121654Z_DETERMINISTIC_CONTINUITY_ZERO_LOSS_FIXTURE_V0_R1.receipt.json",
+  "prior_held_reentry_receipt": "/Users/field/◎Kings-Chamber/chronicle/KC_REENTRY_20260814T121631Z_DETERMINISTIC_CONTINUITY_ZERO_LOSS_FIXTURE_V0.receipt.json",
+  "decision": "IMPLEMENTED_LOCALLY",
+  "canon_status": "NOT_CANON",
+  "observer_seal": "INTENTIONALLY_UNSEALED",
+  "result_class": "PASS.DETERMINISTIC_ZERO_LOSS_CONTINUITY_FIXTURE",
+  "implemented": {
+    "contract": {
+      "path": "/Users/field/DOJO-suite/Sources/DOJOShared/HAL/DeterministicContinuityFixture.swift",
+      "sha256": "9ac3bf326b10ec7b43ed0feb2e81ca7b4d9971118ee2f79e07f89fa3883e38df"
+    },
+    "tests": {
+      "path": "/Users/field/DOJO-suite/Tests/DOJOSharedTests/HAL/DeterministicContinuityFixtureTests.swift",
+      "sha256": "fba37e287e7a26aeeeddbecc39c87db3a420150e83ad87c1773403c30aca1f8e"
+    }
+  },
+  "deterministic_sequence": [
+    "source capability loss exposed",
+    "Arkadas selects one already-qualified receiving surface",
+    "receiving surface confirms",
+    "exact package-bound receipt returns",
+    "DOJO reacquires the same focused object",
+    "prior surface releases last"
+  ],
+  "invariants": [
+    "package identity conserved",
+    "payload digest conserved",
+    "semantic intent conserved",
+    "authority scope conserved",
+    "provenance conserved",
+    "return route conserved",
+    "focused object identity conserved",
+    "unqualified surfaces cannot be selected",
+    "no qualified replacement leaves the prior surface unreleased",
+    "unconfirmed or drifted receipt leaves the prior surface unreleased",
+    "prior surface release occurs only after DOJO focus reacquisition"
+  ],
+  "verification": {
+    "focused_command": "swift test --package-path /Users/field/DOJO-suite --filter DeterministicContinuityFixtureTests",
+    "focused_tests_executed": 6,
+    "focused_failures": 0,
+    "combined_command": "swift test --package-path /Users/field/DOJO-suite --skip-build --filter 'CapabilityShapedPackageTests|TodayAttentionCartographyTests|DeterministicContinuityFixtureTests'",
+    "combined_tests_executed": 13,
+    "combined_failures": 0
+  },
+  "boundary": {
+    "live_hardware_invoked": false,
+    "external_transport_invoked": false,
+    "models_invoked": false,
+    "dynamic_spin_invoked": false,
+    "pulse_integrated": false,
+    "database_mutated": false,
+    "notion_written": false,
+    "linear_written": false,
+    "git_staged_or_committed": false,
+    "authorityMutation": "none"
+  },
+  "remaining_holds": [
+    "HOLD.RepositoryLineageUncommitted",
+    "HOLD.LiveDeviceTransportNotTested",
+    "HOLD.ArkadasRuntimeBindingNotTested",
+    "HOLD.LiveMatrixContinuitySelectionNotTested",
+    "HOLD.PULSECarrierIntegrationNotInScope",
+    "HOLD.ExternalObserverSealRequiredForRuntimeClaim"
+  ],
+  "qualification": "This receipt proves a pure local deterministic fixture and focused tests. It does not prove live hardware, transport, Arkadas service binding, continuous Matrix ingestion, PULSE carriage, deployment, canon promotion, or runtime zero-loss continuity. The surrounding DOJO-suite worktree was already materially dirty and remains uncommitted."
+}

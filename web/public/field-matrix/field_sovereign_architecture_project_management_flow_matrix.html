@@ -1,0 +1,1213 @@
+<!DOCTYPE html>
+<!--
+  SPECIMEN: FIELD_MATRIX_GEMINI_PRESENTATION_SPECIMEN_V0
+  CLASS: DESIGN / SIMULATION
+  AUTHORITY: NONE
+  RUNTIME_EFFECT: NONE
+  PERSISTENCE: NONE
+  PRODUCTION_ENFORCEMENT: NO
+  SOURCE_PRESERVED: /Users/field/Downloads/field_sovereign_architecture_project_management_flow_matrix.html
+  SOURCE_SHA256: 1a3d2fa390d3b2c6868f7973e60fe491f1991ddf1261677e2f951ddb06b1b758
+  WEB_TOPOLOGY_MIRROR: DOJO-suite/web/lib/chambers.ts (display only; not runtime authority)
+-->
+
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FIELD Architecture Matrix — DESIGN / SIMULATION specimen</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f0fdf4',
+                            500: '#22c55e',
+                            600: '#16a34a',
+                            900: '#14532d',
+                        },
+                        cyber: {
+                            bg: '#0b0f19',
+                            card: '#111827',
+                            border: '#1f2937',
+                            accent: '#38bdf8',
+                            purple: '#a855f7',
+                            gold: '#f59e0b',
+                            rose: '#f43f5e'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'Menlo', 'monospace']
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Chart.js for Interactive Simulators -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            background-color: #0b0f19;
+            color: #e5e7eb;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+        .grid-bg {
+            background-size: 30px 30px;
+            background-image:
+                linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+        }
+        .flow-node {
+            transition: all 0.25s ease;
+            cursor: pointer;
+        }
+        .flow-node:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 25px -5px rgba(56, 189, 248, 0.25);
+        }
+        .glass-panel {
+            background: rgba(17, 24, 39, 0.75);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        /* Custom scrollbars */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0b0f19;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1f2937;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #374151;
+        }
+    </style>
+</head>
+<body class="grid-bg min-h-screen flex flex-col text-gray-200">
+    <div id="specimen-authority-banner" class="bg-amber-950 text-amber-100 border-b border-amber-700 px-4 py-2.5 text-[11px] font-mono z-[60]">
+        <div class="max-w-7xl mx-auto flex flex-wrap gap-x-5 gap-y-1">
+            <span class="font-bold tracking-wide">STATUS: DESIGN / SIMULATION</span>
+            <span>AUTHORITY: NONE</span>
+            <span>RUNTIME EFFECT: NONE</span>
+            <span>PERSISTENCE: NONE</span>
+            <span>PRODUCTION ENFORCEMENT: NO</span>
+        </div>
+        <div class="max-w-7xl mx-auto mt-1 text-amber-200/80">This file is an isolated static specimen. It does not write, seal, promote, or contact chambers. Existing /sovereign is a different surface and is unchanged.</div>
+    </div>
+
+
+    <!-- HEADER NAVBAR -->
+    <header class="border-b border-gray-800 bg-gray-900/90 backdrop-blur sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex flex-col md:flex-row items-center justify-between gap-2 py-2 md:py-0">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-cyan-500 via-purple-600 to-blue-600 flex items-center justify-center text-white font-bold text-xl shadow-lg shadow-cyan-500/20">
+                    <i class="fa-solid fa-cubes"></i>
+                </div>
+                <div>
+                    <h1 class="text-base md:text-lg font-bold tracking-tight text-white flex items-center gap-2">
+                        FIELD <span class="text-xs px-2 py-0.5 rounded bg-amber-950 text-amber-300 border border-amber-800">DESIGN / SIMULATION — NOT SOVEREIGN V2.8</span>
+                    </h1>
+                    <p class="text-[11px] text-gray-400">Presentation specimen only. No runtime, no authority, no persistence.</p>
+                </div>
+            </div>
+
+            <!-- NAVIGATION TABS -->
+            <nav class="flex space-x-1 bg-gray-950 p-1 rounded-xl border border-gray-800 text-xs overflow-x-auto max-w-full">
+                <button onclick="switchTab('tab-pm')" id="btn-tab-pm" class="tab-btn active px-3 py-1.5 font-medium rounded-lg transition-all text-white bg-gray-800 shadow flex items-center gap-1.5 whitespace-nowrap">
+                    <i class="fa-solid fa-sitemap text-cyan-400"></i> PM & Comm Matrix
+                </button>
+                <button onclick="switchTab('tab-sovereign')" id="btn-tab-sovereign" class="tab-btn px-3 py-1.5 font-medium rounded-lg transition-all text-gray-400 hover:text-white flex items-center gap-1.5 whitespace-nowrap">
+                    <i class="fa-solid fa-shield-halved text-purple-400"></i> Sovereign Topology
+                </button>
+                <button onclick="switchTab('tab-l1l4')" id="btn-tab-l1l4" class="tab-btn px-3 py-1.5 font-medium rounded-lg transition-all text-gray-400 hover:text-white flex items-center gap-1.5 whitespace-nowrap">
+                    <i class="fa-solid fa-apple text-amber-400"></i> L1–L4 & macOS Stack
+                </button>
+                <button onclick="switchTab('tab-mlops')" id="btn-tab-mlops" class="tab-btn px-3 py-1.5 font-medium rounded-lg transition-all text-gray-400 hover:text-white flex items-center gap-1.5 whitespace-nowrap">
+                    <i class="fa-solid fa-brain text-rose-400"></i> MLOps & Archaeology
+                </button>
+                <button onclick="switchTab('tab-labs')" id="btn-tab-labs" class="tab-btn px-3 py-1.5 font-medium rounded-lg transition-all text-gray-400 hover:text-white flex items-center gap-1.5 whitespace-nowrap">
+                    <i class="fa-solid fa-flask text-emerald-400"></i> Interactive Labs
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
+
+        <!-- ========================================================================= -->
+        <!-- TAB 1: PROJECT MANAGEMENT & COMMUNICATION MATRIX -->
+        <!-- ========================================================================= -->
+        <section id="tab-pm" class="tab-content space-y-6">
+            <div class="inline-flex items-center gap-2 text-[10px] font-mono tracking-wide px-2 py-1 rounded border mb-3 bg-amber-950/70 text-amber-300 border-amber-800">PANEL: DESIGN</div>
+            <!-- Executive Thesis Banner -->
+            <div class="glass-panel rounded-2xl p-6 border-l-4 border-l-cyan-500 shadow-xl">
+                <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4">
+                    <div>
+                        <div class="inline-flex items-center gap-2 text-xs font-mono text-cyan-400 bg-cyan-950/60 px-2.5 py-1 rounded-full border border-cyan-800 mb-2">
+                            <i class="fa-solid fa-compass"></i> Core Intellectual Thesis
+                        </div>
+                        <h2 class="text-xl font-bold text-white">Contextual Integration & Flexible Governance</h2>
+                        <p class="text-sm text-gray-300 mt-1 max-w-4xl leading-relaxed">
+                            Modern project management is not about rigidly choosing a single methodology. It is about selecting and integrating appropriate delivery methods, communication practices, and digital tools according to the project’s specific context, uncertainty, stakeholders, and operational constraints.
+                        </p>
+                    </div>
+                    <div class="bg-gray-900 px-4 py-3 rounded-xl border border-gray-800 text-xs space-y-1 w-full lg:w-auto">
+                        <div class="text-gray-400"><span class="text-cyan-400 font-semibold">Case Study:</span> Customised Electric Vehicle (EV)</div>
+                        <div class="text-gray-400"><span class="text-emerald-400 font-semibold">Frameworks:</span> PMI PMBOK 7 & PRINCE2 7</div>
+                        <div class="text-gray-400"><span class="text-amber-400 font-semibold">Focus:</span> Landing Ramp & Margin Gradient</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Interactive Flowchart Diagram -->
+            <div class="glass-panel rounded-2xl p-6 relative overflow-hidden">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="text-sm font-semibold text-gray-200 uppercase tracking-wider flex items-center gap-2">
+                        <i class="fa-solid fa-diagram-project text-cyan-400"></i> Interactive 7-Stage Project Delivery Matrix
+                    </h3>
+                    <span class="text-xs text-gray-500 hidden sm:inline">Click any node to inspect detailed governance specifications</span>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-7 gap-3 relative z-10">
+
+                    <!-- Stage 1 -->
+                    <div onclick="inspectPmNode(1)" class="flow-node glass-panel p-4 rounded-xl border-l-4 border-cyan-500 hover:border-cyan-400">
+                        <div class="text-xs font-mono text-cyan-400 mb-1">STAGE 01</div>
+                        <h4 class="text-sm font-bold text-white mb-2">2026 Operating Context</h4>
+                        <p class="text-xs text-gray-400">VUCA realities, AI integration, cybersecurity, supply volatility.</p>
+                        <div class="mt-3 flex items-center text-[10px] text-gray-500 gap-1">
+                            <i class="fa-solid fa-circle-dot text-cyan-500"></i> Foundation
+                        </div>
+                    </div>
+
+                    <!-- Stage 2 -->
+                    <div onclick="inspectPmNode(2)" class="flow-node glass-panel p-4 rounded-xl border-l-4 border-blue-500 hover:border-blue-400">
+                        <div class="text-xs font-mono text-blue-400 mb-1">STAGE 02</div>
+                        <h4 class="text-sm font-bold text-white mb-2">Project Definition & Value</h4>
+                        <p class="text-xs text-gray-400">Temporary endeavor creating unique modular EV platform outcomes.</p>
+                        <div class="mt-3 flex items-center text-[10px] text-gray-500 gap-1">
+                            <i class="fa-solid fa-chart-line text-blue-500"></i> Business Case
+                        </div>
+                    </div>
+
+                    <!-- Stage 3 -->
+                    <div onclick="inspectPmNode(3)" class="flow-node glass-panel p-4 rounded-xl border-l-4 border-emerald-500 hover:border-emerald-400">
+                        <div class="text-xs font-mono text-emerald-400 mb-1">STAGE 03</div>
+                        <h4 class="text-sm font-bold text-white mb-2">The Landing Ramp</h4>
+                        <p class="text-xs text-gray-400">Transitioning from fluid exploration to locked deterministic production.</p>
+                        <div class="mt-3 flex items-center text-[10px] text-emerald-400 font-semibold gap-1">
+                            <i class="fa-solid fa-lock text-emerald-500"></i> Spec Lock-In
+                        </div>
+                    </div>
+
+                    <!-- Stage 4 -->
+                    <div onclick="inspectPmNode(4)" class="flow-node glass-panel p-4 rounded-xl border-l-4 border-purple-500 hover:border-purple-400">
+                        <div class="text-xs font-mono text-purple-400 mb-1">STAGE 04</div>
+                        <h4 class="text-sm font-bold text-white mb-2">Hybrid Methodology</h4>
+                        <p class="text-xs text-gray-400">PRINCE2 7 Predictive chassis core + Agile software & BMS sprints.</p>
+                        <div class="mt-3 flex items-center text-[10px] text-gray-500 gap-1">
+                            <i class="fa-solid fa-layer-group text-purple-500"></i> Tailored Spectrum
+                        </div>
+                    </div>
+
+                    <!-- Stage 5 -->
+                    <div onclick="inspectPmNode(5)" class="flow-node glass-panel p-4 rounded-xl border-l-4 border-amber-500 hover:border-amber-400">
+                        <div class="text-xs font-mono text-amber-400 mb-1">STAGE 05</div>
+                        <h4 class="text-sm font-bold text-white mb-2">Communication Matrix</h4>
+                        <p class="text-xs text-gray-400">Sync, async, digital platforms & AI governance boundaries.</p>
+                        <div class="mt-3 flex items-center text-[10px] text-gray-500 gap-1">
+                            <i class="fa-solid fa-comments text-amber-500"></i> Human Accountable
+                        </div>
+                    </div>
+
+                    <!-- Stage 6 -->
+                    <div onclick="inspectPmNode(6)" class="flow-node glass-panel p-4 rounded-xl border-l-4 border-rose-500 hover:border-rose-400">
+                        <div class="text-xs font-mono text-rose-400 mb-1">STAGE 06</div>
+                        <h4 class="text-sm font-bold text-white mb-2">Gradient of Attraction</h4>
+                        <p class="text-xs text-gray-400">Margin preservation across OEM, Tier 1-3 partners & NIST cyber security.</p>
+                        <div class="mt-3 flex items-center text-[10px] text-gray-500 gap-1">
+                            <i class="fa-solid fa-truck-ramp-box text-rose-500"></i> Margin Attraction
+                        </div>
+                    </div>
+
+                    <!-- Stage 7 -->
+                    <div onclick="inspectPmNode(7)" class="flow-node glass-panel p-4 rounded-xl border-l-4 border-indigo-500 hover:border-indigo-400">
+                        <div class="text-xs font-mono text-indigo-400 mb-1">STAGE 07</div>
+                        <h4 class="text-sm font-bold text-white mb-2">OOOGST & Synthesis</h4>
+                        <p class="text-xs text-gray-400">Object-oriented conceptual lens & empirical post-project learnings.</p>
+                        <div class="mt-3 flex items-center text-[10px] text-gray-500 gap-1">
+                            <i class="fa-solid fa-flag-checkered text-indigo-500"></i> Synthesis
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Inspection Detail Panel -->
+            <div id="pm-detail-panel" class="glass-panel rounded-2xl p-6 border border-gray-800 transition-all">
+                <div class="flex items-center justify-between border-b border-gray-800 pb-4 mb-4">
+                    <div class="flex items-center gap-3">
+                        <span id="pm-node-badge" class="px-2.5 py-1 rounded text-xs font-mono font-bold bg-cyan-950 text-cyan-400 border border-cyan-800">STAGE 01</span>
+                        <h3 id="pm-node-title" class="text-lg font-bold text-white">2026 Operating Context</h3>
+                    </div>
+                    <span class="text-xs text-gray-400 font-mono"><i class="fa-solid fa-eye text-cyan-400"></i> Active Node Specification</span>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <div class="lg:col-span-2 space-y-4">
+                        <h4 class="text-xs font-semibold text-gray-400 uppercase tracking-wider">Detailed Specification & Theoretical Basis</h4>
+                        <p id="pm-node-desc" class="text-sm text-gray-300 leading-relaxed">
+                            Rather than presenting modern project management as a standalone new methodology, the contemporary landscape reflects the adaptation of established frameworks (PMI PMBOK 7, PRINCE2 7) to AI-assisted analysis, distributed teams, cybersecurity regulations, and extreme supply chain volatility.
+                        </p>
+                        <div id="pm-node-extra" class="bg-gray-950/80 p-4 rounded-xl border border-gray-800 text-xs font-mono text-gray-300 space-y-2">
+                            <!-- Dynamic Content Inserted via JS -->
+                        </div>
+                    </div>
+
+                    <div class="space-y-4">
+                        <h4 class="text-xs font-semibold text-gray-400 uppercase tracking-wider">Customised EV Case Study Application</h4>
+                        <div id="pm-node-ev" class="bg-gray-900/90 p-4 rounded-xl border border-cyan-900/50 text-xs text-gray-300 space-y-2">
+                            <!-- EV Case Study Application -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================================================= -->
+        <!-- TAB 2: FIELD SOVEREIGN TOPOLOGY -->
+        <!-- ========================================================================= -->
+        <section id="tab-sovereign" class="tab-content hidden space-y-6">
+            <div class="inline-flex items-center gap-2 text-[10px] font-mono tracking-wide px-2 py-1 rounded border mb-3 bg-amber-950/70 text-amber-300 border-amber-800">PANEL: DESIGN</div> <div class="inline-flex items-center gap-2 text-[10px] font-mono tracking-wide px-2 py-1 rounded border mb-3 bg-rose-950/70 text-rose-300 border-rose-800">PANEL: HOLD on remaining runtime/authority claims</div>
+
+            <!-- Architecture Overview Banner -->
+            <div class="glass-panel rounded-2xl p-6 border-l-4 border-l-purple-500">
+                <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4">
+                    <div>
+                        <div class="inline-flex items-center gap-2 text-xs font-mono text-purple-400 bg-purple-950/60 px-2.5 py-1 rounded-full border border-purple-800 mb-2">
+                            <i class="fa-solid fa-shield-cat"></i> DESIGN topology — seven entries + Soma illustrative
+                        </div>
+                        <h2 class="text-xl font-bold text-white">FIELD Sovereign Data & Execution Topology</h2>
+                        <p class="text-sm text-gray-300 mt-1 max-w-4xl leading-relaxed">
+                            DESIGN display of current seven-entry FIELD topology (web mirror of chambers.ts). Six model-bearing vertices plus King’s Chamber as deterministic infrastructure. Soma is an illustrative concept, not a canonical chamber. This panel does not execute the cycle.
+                        </p>
+                    </div>
+                    <div class="bg-gray-900 px-4 py-3 rounded-xl border border-gray-800 text-xs space-y-1 w-full lg:w-auto">
+                        <div class="text-gray-400"><span class="text-purple-400 font-semibold">Quorum:</span> 2-of-3 Trident Consensus</div>
+                        <div class="text-gray-400"><span class="text-emerald-400 font-semibold">Audit:</span> Nexus Chain SHA-256 Merkle Anchoring</div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Current seven-entry FIELD topology (display only). Soma is not a chamber. -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+
+                <div onclick="inspectSovereignNode('obiwan')" class="flow-node glass-panel p-5 rounded-2xl border-t-4 border-t-cyan-500 text-center space-y-3">
+                    <div class="w-12 h-12 mx-auto rounded-full bg-cyan-950 flex items-center justify-center text-cyan-400 text-xl font-bold border border-cyan-800">●</div>
+                    <div>
+                        <h3 class="text-base font-bold text-white">OBI-WAN</h3>
+                        <p class="text-xs text-cyan-400 font-mono">963 Hz · port 9630 · Observer</p>
+                    </div>
+                    <p class="text-xs text-gray-400">Model-bearing vertex. Colour here is specimen phenotype, not Brand Kit authority.</p>
+                </div>
+
+                <div onclick="inspectSovereignNode('tata')" class="flow-node glass-panel p-5 rounded-2xl border-t-4 border-t-amber-500 text-center space-y-3">
+                    <div class="w-12 h-12 mx-auto rounded-full bg-amber-950 flex items-center justify-center text-amber-400 text-xl font-bold border border-amber-800">▼</div>
+                    <div>
+                        <h3 class="text-base font-bold text-white">TATA</h3>
+                        <p class="text-xs text-amber-400 font-mono">432 Hz · port 4320 · Temporal truth</p>
+                    </div>
+                    <p class="text-xs text-gray-400">Model-bearing vertex. Display only.</p>
+                </div>
+
+                <div onclick="inspectSovereignNode('atlas')" class="flow-node glass-panel p-5 rounded-2xl border-t-4 border-t-purple-500 text-center space-y-3">
+                    <div class="w-12 h-12 mx-auto rounded-full bg-purple-950 flex items-center justify-center text-purple-400 text-xl font-bold border border-purple-800">▲</div>
+                    <div>
+                        <h3 class="text-base font-bold text-white">ATLAS</h3>
+                        <p class="text-xs text-purple-400 font-mono">528 Hz · port 5280 · Pattern / validation</p>
+                    </div>
+                    <p class="text-xs text-gray-400">Model-bearing vertex. Display only.</p>
+                </div>
+
+                <div onclick="inspectSovereignNode('dojo')" class="flow-node glass-panel p-5 rounded-2xl border-t-4 border-t-rose-500 text-center space-y-3">
+                    <div class="w-12 h-12 mx-auto rounded-full bg-rose-950 flex items-center justify-center text-rose-400 text-xl font-bold border border-rose-800">◼︎</div>
+                    <div>
+                        <h3 class="text-base font-bold text-white">DOJO</h3>
+                        <p class="text-xs text-rose-400 font-mono">741 Hz · port 7410 · Manifestation</p>
+                    </div>
+                    <p class="text-xs text-gray-400">Model-bearing vertex. This page is not the DOJO runtime.</p>
+                </div>
+
+                <div onclick="inspectSovereignNode('akron')" class="flow-node glass-panel p-5 rounded-2xl border-t-4 border-t-stone-500 text-center space-y-3">
+                    <div class="w-12 h-12 mx-auto rounded-full bg-stone-900 flex items-center justify-center text-stone-300 text-xl font-bold border border-stone-700">◻</div>
+                    <div>
+                        <h3 class="text-base font-bold text-white">AKRON</h3>
+                        <p class="text-xs text-stone-300 font-mono">396 Hz · port 3960 · Archive / gateway</p>
+                    </div>
+                    <p class="text-xs text-gray-400">Model-bearing vertex. Was absent from the Downloads original.</p>
+                </div>
+
+                <div onclick="inspectSovereignNode('arkadas')" class="flow-node glass-panel p-5 rounded-2xl border-t-4 border-t-yellow-500 text-center space-y-3">
+                    <div class="w-12 h-12 mx-auto rounded-full bg-yellow-950 flex items-center justify-center text-yellow-300 text-xl font-bold border border-yellow-800">◉</div>
+                    <div>
+                        <h3 class="text-base font-bold text-white">ARKADAŞ</h3>
+                        <p class="text-xs text-yellow-300 font-mono">717 Hz · port 7170 · Embodiment bridge</p>
+                    </div>
+                    <p class="text-xs text-gray-400">Model-bearing vertex. ◉ is ARKADAŞ, not Soma.</p>
+                </div>
+
+                <div onclick="inspectSovereignNode('kings')" class="flow-node glass-panel p-5 rounded-2xl border-t-4 border-t-fuchsia-500 text-center space-y-3">
+                    <div class="w-12 h-12 mx-auto rounded-full bg-fuchsia-950 flex items-center justify-center text-fuchsia-300 text-xl font-bold border border-fuchsia-800">◎</div>
+                    <div>
+                        <h3 class="text-base font-bold text-white">King’s Chamber</h3>
+                        <p class="text-xs text-fuchsia-300 font-mono">852 Hz · port 8520 · Infrastructure</p>
+                    </div>
+                    <p class="text-xs text-gray-400">Deterministic translation / arbiter. Not a model-bearing vertex. Symbol ◎ as in chambers.ts (⊗ also appears in FIELD home canon; not collapsed here).</p>
+                </div>
+
+                <div onclick="inspectSovereignNode('soma')" class="flow-node glass-panel p-5 rounded-2xl border-t-4 border-t-emerald-500 text-center space-y-3 border border-dashed border-emerald-800">
+                    <div class="text-[10px] font-mono text-emerald-400">ILLUSTRATIVE — NOT A CHAMBER</div>
+                    <div class="w-12 h-12 mx-auto rounded-full bg-emerald-950 flex items-center justify-center text-emerald-400 text-xl font-bold border border-emerald-800">◇</div>
+                    <div>
+                        <h3 class="text-base font-bold text-white">Soma</h3>
+                        <p class="text-xs text-emerald-400 font-mono">concept only · no FIELD port</p>
+                    </div>
+                    <p class="text-xs text-gray-400">Keep as an illustrative living-canvas idea. Must not occupy ◉ or 741 Hz.</p>
+                </div>
+
+            </div>
+
+            <!-- Sovereign Detail Drawer -->
+            <div id="sovereign-detail-panel" class="glass-panel rounded-2xl p-6 border border-gray-800">
+                <div class="flex items-center justify-between border-b border-gray-800 pb-4 mb-4">
+                    <h3 id="sov-node-title" class="text-lg font-bold text-white">● OBI-WAN (Observer / Witness Protocol)</h3>
+                    <span id="sov-node-tag" class="text-xs font-mono text-cyan-400 bg-cyan-950 px-2 py-1 rounded border border-cyan-800">frequency: 963 Hz | role: observer | DESIGN display</span>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="space-y-3">
+                        <h4 class="text-xs font-semibold text-gray-400 uppercase tracking-wider">Operational Mechanism & Storage Policy</h4>
+                        <p id="sov-node-desc" class="text-sm text-gray-300 leading-relaxed">
+                            DESIGN description only. OBI-WAN is 963 Hz (not 285 Hz). This specimen does not write audit.log, compute hashes, or seal records. Claims of a live immutable witness stream remain HOLD.
+                        </p>
+                        <div id="sov-node-code" class="bg-gray-950 p-4 rounded-xl border border-gray-800 text-xs font-mono text-cyan-300 overflow-x-auto">
+                            <!-- Code snippet -->
+                        </div>
+                    </div>
+
+                    <div class="space-y-3">
+                        <h4 class="text-xs font-semibold text-gray-400 uppercase tracking-wider">Native OS Tool & Governance Rules</h4>
+                        <div id="sov-node-rules" class="bg-gray-900 p-4 rounded-xl border border-gray-800 text-xs text-gray-300 space-y-2">
+                            <!-- Rules & Native apps -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================================================= -->
+        <!-- TAB 3: L1-L4 SACRED STRUCTURE & NATIVE MAC OS STACK -->
+        <!-- ========================================================================= -->
+        <section id="tab-l1l4" class="tab-content hidden space-y-6">
+            <div class="inline-flex items-center gap-2 text-[10px] font-mono tracking-wide px-2 py-1 rounded border mb-3 bg-amber-950/70 text-amber-300 border-amber-800">PANEL: DESIGN</div>
+
+            <div class="glass-panel rounded-2xl p-6 border-l-4 border-l-amber-500">
+                <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4">
+                    <div>
+                        <div class="inline-flex items-center gap-2 text-xs font-mono text-amber-400 bg-amber-950/60 px-2.5 py-1 rounded-full border border-amber-800 mb-2">
+                            <i class="fa-solid fa-apple"></i> 80/20 Sovereign Playbook
+                        </div>
+                        <h2 class="text-xl font-bold text-white">Native macOS Tool Selection & L1–L4 Layered Architecture</h2>
+                        <p class="text-sm text-gray-300 mt-1 max-w-4xl leading-relaxed">
+                            Prioritizes local native tools to achieve 80–90% of core operational requirements without third-party vendor lock-in. Any external SaaS is treated as untrusted "Influence" gated through DOJO.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- L1-L4 Layers Matrix -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <div class="glass-panel p-5 rounded-2xl border-t-4 border-t-cyan-500 space-y-2">
+                    <div class="text-xs font-mono text-cyan-400">LAYER 1</div>
+                    <h3 class="text-base font-bold text-white">Sacred Memory</h3>
+                    <p class="text-xs text-gray-300 leading-relaxed">
+                        DESIGN / HOLD: L1 is a proposed memory layer in this specimen. It is not an claimed-immutable (HOLD in this file) live record and does not store FIELD truth.
+                    </p>
+                </div>
+                <div class="glass-panel p-5 rounded-2xl border-t-4 border-t-purple-500 space-y-2">
+                    <div class="text-xs font-mono text-purple-400">LAYER 2</div>
+                    <h3 class="text-base font-bold text-white">Symbolic Alignment</h3>
+                    <p class="text-xs text-gray-300 leading-relaxed">
+                        DESIGN: current vertices are ● OBI-WAN, ▼ TATA, ▲ ATLAS, ◼︎ DOJO, ◻ AKRON, ◉ ARKADAŞ, plus ◎ King’s Chamber as infrastructure. Soma / SomaLink is illustrative, not a chamber.
+                    </p>
+                </div>
+                <div class="glass-panel p-5 rounded-2xl border-t-4 border-t-emerald-500 space-y-2">
+                    <div class="text-xs font-mono text-emerald-400">LAYER 3</div>
+                    <h3 class="text-base font-bold text-white">Geometric Cleanliness</h3>
+                    <p class="text-xs text-gray-300 leading-relaxed">
+                        Zero duplicated processes, no rogue launch agents, all binaries mapped to explicit symbolic functions.
+                    </p>
+                </div>
+                <div class="glass-panel p-5 rounded-2xl border-t-4 border-t-rose-500 space-y-2">
+                    <div class="text-xs font-mono text-rose-400">LAYER 4</div>
+                    <h3 class="text-base font-bold text-white">Biological Analogy</h3>
+                    <p class="text-xs text-gray-300 leading-relaxed">
+                        Inhale (clean sync) ──► Exhale (validated execution, clean logs) ──► Immune Shield (protected system paths).
+                    </p>
+                </div>
+            </div>
+
+            <!-- Native Stack Table -->
+            <div class="glass-panel rounded-2xl p-6 space-y-4">
+                <h3 class="text-sm font-semibold text-gray-200 uppercase tracking-wider flex items-center gap-2">
+                    <i class="fa-solid fa-list-check text-amber-400"></i> Recommended macOS Native Stack (80/20 Rule)
+                </h3>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-xs text-left text-gray-300 border-collapse">
+                        <thead class="bg-gray-950 text-gray-400 font-mono border-b border-gray-800">
+                            <tr>
+                                <th class="p-3">Trident Node</th>
+                                <th class="p-3">Minimum Native macOS App</th>
+                                <th class="p-3">Operational Rationale</th>
+                                <th class="p-3">Local Fallback</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-800">
+                            <tr class="hover:bg-gray-900/50">
+                                <td class="p-3 font-mono text-cyan-400">OBI-WAN (Observe)</td>
+                                <td class="p-3 font-semibold text-white">Mail.app, Notes.app</td>
+                                <td class="p-3">Fast signal capture, local sovereign storage, zero cloud lock-in.</td>
+                                <td class="p-3 text-gray-400">Thunderbird (Open-source)</td>
+                            </tr>
+                            <tr class="hover:bg-gray-900/50">
+                                <td class="p-3 font-mono text-amber-400">TATA (Validate)</td>
+                                <td class="p-3 font-semibold text-white">Preview.app, Shortcuts.app</td>
+                                <td class="p-3">PDF signing, annotation, and automated SHA-256 provenance tagging.</td>
+                                <td class="p-3 text-gray-400">Skim, Hazel</td>
+                            </tr>
+                            <tr class="hover:bg-gray-900/50">
+                                <td class="p-3 font-mono text-purple-400">ATLAS (Align)</td>
+                                <td class="p-3 font-semibold text-white">Finder.app, Spotlight, SQLite</td>
+                                <td class="p-3">Tag-based indexing, smart folders, lightweight metadata databases.</td>
+                                <td class="p-3 text-gray-400">Obsidian (Local Vault)</td>
+                            </tr>
+                            <tr class="hover:bg-gray-900/50">
+                                <td class="p-3 font-mono text-rose-400">DOJO (Manifest)</td>
+                                <td class="p-3 font-semibold text-white">Terminal.app, zsh, Shortcuts</td>
+                                <td class="p-3">CLI execution surface, repository integration, automated zsh scripts.</td>
+                                <td class="p-3 text-gray-400">iTerm2</td>
+                            </tr>
+                            <tr class="hover:bg-gray-900/50">
+                                <td class="p-3 font-mono text-emerald-400">Soma (Embodied)</td>
+                                <td class="p-3 font-semibold text-white">Stage Manager, Safari</td>
+                                <td class="p-3">ILLUSTRATIVE: a living-canvas idea. This file does not render live system state.</td>
+                                <td class="p-3 text-gray-400">Firefox / Arc</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- SaaS Influence Gating Decision Tree -->
+            <div class="glass-panel rounded-2xl p-6 space-y-4">
+                <h3 class="text-sm font-semibold text-gray-200 uppercase tracking-wider flex items-center gap-2">
+                    <i class="fa-solid fa-code-branch text-purple-400"></i> SaaS Influence Gating Decision Tree
+                </h3>
+                <div class="bg-gray-950 p-4 rounded-xl border border-gray-800 font-mono text-xs text-purple-300 space-y-2">
+                    <p>1. Is macOS Native App ≥ 80% of spec?</p>
+                    <p class="pl-4 text-emerald-400">└─► YES: Use Native App ──► Add YAML sidecar tag (field_node: OBI-WAN) ──► DONE</p>
+                    <p class="pl-4 text-amber-400">└─► NO: Is there a well-known open-source local-first alternative?</p>
+                    <p class="pl-8 text-cyan-400">└─► YES: Adopt local alternative ──► Sandbox data locally ──► DONE</p>
+                    <p class="pl-8 text-rose-400">└─► NO: Treat SaaS as "Influence" (influence: true) ──► Gate via DOJO API Proxy ──► Strip PII</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================================================= -->
+        <!-- TAB 4: MLOPS MODEL FIELD & RESONANCE ARCHAEOLOGY -->
+        <!-- ========================================================================= -->
+        <section id="tab-mlops" class="tab-content hidden space-y-6">
+            <div class="inline-flex items-center gap-2 text-[10px] font-mono tracking-wide px-2 py-1 rounded border mb-3 bg-gray-900 text-gray-300 border-gray-700">PANEL: ILLUSTRATIVE</div>
+
+            <div class="glass-panel rounded-2xl p-6 border-l-4 border-l-rose-500">
+                <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4">
+                    <div>
+                        <div class="inline-flex items-center gap-2 text-xs font-mono text-rose-400 bg-rose-950/60 px-2.5 py-1 rounded-full border border-rose-800 mb-2">
+                            <i class="fa-solid fa-brain"></i> Flat Hub-Inspired Model Structure
+                        </div>
+                        <h2 class="text-xl font-bold text-white">Local MLOps Structure & Resonance Archaeology</h2>
+                        <p class="text-sm text-gray-300 mt-1 max-w-4xl leading-relaxed">
+                            ILLUSTRATIVE only — does not replace live FIELD model storage. Replaces deep, subjective hierarchies ("Fractal Fields") with a flat, objective Hugging Face-inspired model field structure, paired with the environmental and biological logging protocols of Resonance Archaeology.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Model Field Directory Browser -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+                <div class="glass-panel p-5 rounded-2xl space-y-4 border border-gray-800">
+                    <h3 class="text-sm font-semibold text-gray-200 uppercase tracking-wider flex items-center gap-2">
+                        <i class="fa-solid fa-folder-tree text-rose-400"></i> Interactive `/model_field/` Explorer
+                    </h3>
+
+                    <div class="bg-gray-950 p-4 rounded-xl border border-gray-800 font-mono text-xs space-y-2 max-h-80 overflow-y-auto">
+                        <div class="text-gray-400">model_field/</div>
+                        <div class="pl-4 text-gray-500">├── README.md (Root schema & naming rules)</div>
+                        <div class="pl-4 text-cyan-400 cursor-pointer hover:underline" onclick="inspectModel('llama')">├── gguf/meta-llama/Llama-2-7b-chat-hf-v1.0/</div>
+                        <div class="pl-8 text-gray-400">├── model-q4_K_M.gguf</div>
+                        <div class="pl-8 text-gray-400">├── tokenizer.json</div>
+                        <div class="pl-8 text-gray-400">└── metadata.json</div>
+                        <div class="pl-4 text-amber-400 cursor-pointer hover:underline" onclick="inspectModel('onnx')">├── onnx/microsoft/gpt2-medium-v1.2/</div>
+                        <div class="pl-8 text-gray-400">├── model.onnx</div>
+                        <div class="pl-8 text-gray-400">└── metadata.json</div>
+                        <div class="pl-4 text-purple-400 cursor-pointer hover:underline" onclick="inspectModel('safetensors')">└── safetensors/stabilityai/stablelm-zephyr-3b-v1.1/</div>
+                        <div class="pl-8 text-gray-400">├── model.safetensors</div>
+                        <div class="pl-8 text-gray-400">└── metadata.json</div>
+                    </div>
+                </div>
+
+                <!-- Model Metadata Viewer -->
+                <div class="glass-panel p-5 rounded-2xl space-y-4 border border-gray-800">
+                    <h3 class="text-sm font-semibold text-gray-200 uppercase tracking-wider flex items-center gap-2">
+                        <i class="fa-solid fa-file-code text-cyan-400"></i> Selected Model `metadata.json`
+                    </h3>
+                    <pre id="model-json-viewer" class="bg-gray-950 p-4 rounded-xl border border-gray-800 font-mono text-xs text-cyan-300 overflow-x-auto max-h-80">
+// Click a model directory on the left to inspect its metadata.json...
+                    </pre>
+                </div>
+            </div>
+
+            <!-- Resonance Archaeology Pipeline -->
+            <div class="glass-panel rounded-2xl p-6 space-y-4">
+                <h3 class="text-sm font-semibold text-gray-200 uppercase tracking-wider flex items-center gap-2">
+                    <i class="fa-solid fa-wave-square text-emerald-400"></i> Resonance Archaeology Protocol
+                </h3>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="bg-gray-900 p-4 rounded-xl border border-gray-800 space-y-2">
+                        <div class="text-xs font-mono text-cyan-400">1. ENVIRONMENTAL SENSORS</div>
+                        <p class="text-xs text-gray-300">
+                            Deploy EM spectrum, acoustic (infrasound), and atmospheric ion sensors to build baseline physical field datasets.
+                        </p>
+                    </div>
+                    <div class="bg-gray-900 p-4 rounded-xl border border-gray-800 space-y-2">
+                        <div class="text-xs font-mono text-purple-400">2. PSYCHO-GEOGRAPHICAL LOGS</div>
+                        <p class="text-xs text-gray-300">
+                            Record wearable biofeedback (EEG, HRV, GSR) synchronized with GPS coordinates during site observations.
+                        </p>
+                    </div>
+                    <div class="bg-gray-900 p-4 rounded-xl border border-gray-800 space-y-2">
+                        <div class="text-xs font-mono text-emerald-400">3. LIVE EMBODIMENT</div>
+                        <p class="text-xs text-gray-300">
+                            PROPOSED / ILLUSTRATIVE: sonification and haptics are not implemented in this static file.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- ========================================================================= -->
+        <!-- TAB 5: INTERACTIVE SIMULATORS & CALCULATORS -->
+        <!-- ========================================================================= -->
+        <section id="tab-labs" class="tab-content hidden space-y-8">
+            <div class="inline-flex items-center gap-2 text-[10px] font-mono tracking-wide px-2 py-1 rounded border mb-3 bg-emerald-950/70 text-emerald-300 border-emerald-800">PANEL: SIMULATION</div>
+
+            <!-- LAB 1: Landing Ramp Simulator -->
+            <div class="glass-panel rounded-2xl p-6 space-y-6">
+                <div class="flex flex-col md:flex-row justify-between md:items-center gap-4 border-b border-gray-800 pb-4">
+                    <div>
+                        <div class="text-xs font-mono text-emerald-400">SIMULATOR LAB 01</div>
+                        <h3 class="text-lg font-bold text-white">The Flexible-to-Deterministic "Landing Ramp" Visualizer</h3>
+                        <p class="text-xs text-gray-400">Simulate how design flexibility decreases while determinism and cost-of-change lock in over project timeline.</p>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <label for="ramp-slider" class="text-xs text-gray-300 font-mono">Project Phase ($T$):</label>
+                        <input type="range" id="ramp-slider" min="0" max="100" value="40" oninput="updateLandingRampSim(this.value)" class="w-32 accent-emerald-500 cursor-pointer">
+                        <span id="ramp-percent" class="text-sm font-mono font-bold text-emerald-400 w-12">40%</span>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 items-center">
+                    <div class="lg:col-span-2 bg-gray-950/80 p-4 rounded-xl border border-gray-800 h-64 relative">
+                        <canvas id="rampChart"></canvas>
+                    </div>
+
+                    <div class="space-y-4">
+                        <div class="bg-gray-900 p-4 rounded-xl border border-gray-800 space-y-2">
+                            <div class="text-xs text-gray-400 font-mono">CURRENT PHASE STATE</div>
+                            <div id="ramp-state-name" class="text-base font-bold text-emerald-400">Phase 2: The Landing Ramp</div>
+                            <div id="ramp-state-desc" class="text-xs text-gray-300 leading-relaxed">
+                                CAD freeze approaching. Software continues in parallel HIL testing while chassis geometry locks.
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-3 text-center">
+                            <div class="bg-gray-900/90 p-3 rounded-lg border border-gray-800">
+                                <div class="text-[10px] text-gray-400 uppercase">Flexibility Index</div>
+                                <div id="ramp-flex-val" class="text-lg font-bold text-cyan-400">60%</div>
+                            </div>
+                            <div class="bg-gray-900/90 p-3 rounded-lg border border-gray-800">
+                                <div class="text-[10px] text-gray-400 uppercase">Late Change Penalty</div>
+                                <div id="ramp-cost-val" class="text-lg font-bold text-rose-400">2.5x</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- LAB 2: Economic Gradient of Attraction Calculator -->
+            <div class="glass-panel rounded-2xl p-6 space-y-6">
+                <div class="border-b border-gray-800 pb-4">
+                    <div class="text-xs font-mono text-rose-400">SIMULATOR LAB 02</div>
+                    <h3 class="text-lg font-bold text-white">Multi-Tier Economic Gradient of Attraction Calculator</h3>
+                    <p class="text-xs text-gray-400">Verify if downstream design modifications respect upstream supplier margins or induce supplier friction/rejection.</p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <div class="space-y-4 bg-gray-900/80 p-5 rounded-xl border border-gray-800">
+                        <h4 class="text-xs font-semibold text-gray-300 uppercase">Parameter Controls</h4>
+
+                        <p class="text-[10px] font-mono text-amber-300 border border-amber-800 rounded p-2">HOLD: OEM target control removed. It was displayed but did not enter the margin formula. No supported OEM scenario is defined in this specimen.</p>
+
+                        <div>
+                            <label class="text-xs text-gray-400 flex justify-between">
+                                <span>Design Complexity Factor</span>
+                                <span id="val-complexity" class="font-mono text-amber-400">1.2x</span>
+                            </label>
+                            <input type="range" min="1.0" max="2.0" step="0.1" value="1.2" oninput="calcGradient()" id="in-complexity" class="w-full accent-amber-500">
+                        </div>
+
+                        <div>
+                            <label class="text-xs text-gray-400 flex justify-between">
+                                <span>Tier 2 Battery Cell Scrap Rate (%)</span>
+                                <span id="val-scrap" class="font-mono text-rose-400">8%</span>
+                            </label>
+                            <input type="range" min="2" max="25" step="1" value="8" oninput="calcGradient()" id="in-scrap" class="w-full accent-rose-500">
+                        </div>
+                    </div>
+
+                    <div class="lg:col-span-2 grid grid-cols-1 sm:grid-cols-3 gap-4">
+                        <!-- Tier 1 -->
+                        <div id="card-tier1" class="bg-gray-950 p-4 rounded-xl border border-gray-800 space-y-3">
+                            <div class="text-xs font-mono text-cyan-400">TIER 1 (Pack Integrator)</div>
+                            <div class="text-xl font-bold text-white" id="margin-tier1">14.2% Margin</div>
+                            <p class="text-xs text-gray-400">Integrates battery module & cooling plates.</p>
+                            <div id="status-tier1" class="text-[10px] font-bold px-2 py-1 rounded bg-emerald-950 text-emerald-400 border border-emerald-800 inline-block">
+                                Alignment: HIGH
+                            </div>
+                        </div>
+
+                        <!-- Tier 2 -->
+                        <div id="card-tier2" class="bg-gray-950 p-4 rounded-xl border border-gray-800 space-y-3">
+                            <div class="text-xs font-mono text-amber-400">TIER 2 (Cell Mfr)</div>
+                            <div class="text-xl font-bold text-white" id="margin-tier2">8.5% Margin</div>
+                            <p class="text-xs text-gray-400">Roll-to-roll cathode coating & formation.</p>
+                            <div id="status-tier2" class="text-[10px] font-bold px-2 py-1 rounded bg-emerald-950 text-emerald-400 border border-emerald-800 inline-block">
+                                Alignment: SAFE
+                            </div>
+                        </div>
+
+                        <!-- Tier 3 -->
+                        <div id="card-tier3" class="bg-gray-950 p-4 rounded-xl border border-gray-800 space-y-3">
+                            <div class="text-xs font-mono text-purple-400">TIER 3 (Refiner)</div>
+                            <div class="text-xl font-bold text-white" id="margin-tier3">5.1% Margin</div>
+                            <p class="text-xs text-gray-400">Lithium Hydroxide & precursor refining.</p>
+                            <div id="status-tier3" class="text-[10px] font-bold px-2 py-1 rounded bg-amber-950 text-amber-400 border border-amber-800 inline-block">
+                                Alignment: TIGHT
+                            </div>
+                        </div>
+
+                        <div class="sm:col-span-3 bg-gray-900/90 p-4 rounded-xl border border-gray-800 text-xs text-gray-300">
+                            <span class="font-bold text-white">Gradient Insight:</span> <span id="gradient-summary">All supply chain tiers preserve positive operating margins. Design parameters reside inside the Gradient of Attraction Zone.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- LAB 3: Trident 2-of-3 Quorum & Influence Simulator -->
+            <div class="glass-panel rounded-2xl p-6 space-y-6">
+                <div class="border-b border-gray-800 pb-4">
+                    <div class="text-xs font-mono text-purple-400">SIMULATOR LAB 03</div>
+                    <h3 class="text-lg font-bold text-white">Trident 2-of-3 Quorum & Influence Gate Tester</h3>
+                    <p class="text-xs text-gray-400">Simulate incoming payload consensus across OBI-WAN, TATA, and ATLAS before promotion to DOJO.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="space-y-4 bg-gray-900 p-4 rounded-xl border border-gray-800">
+                        <h4 class="text-xs font-semibold text-gray-300 uppercase">Simulate Request Ingress</h4>
+
+                        <div>
+                            <label class="text-xs text-gray-400 block mb-1">Payload Source</label>
+                            <select id="sim-source" class="w-full bg-gray-950 border border-gray-800 text-xs rounded-lg p-2.5 text-white">
+                                <option value="native">Native macOS System Script (influence: false)</option>
+                                <option value="external">External SaaS Integration (influence: true)</option>
+                                <option value="tampered">Manipulated Payload (Simulated Attack)</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="text-xs text-gray-400 block mb-1">HTTP Verb / Action</label>
+                            <select id="sim-verb" class="w-full bg-gray-950 border border-gray-800 text-xs rounded-lg p-2.5 text-white">
+                                <option value="READ">GET / READ (Query state)</option>
+                                <option value="WRITE">POST / CREATE — SIMULATED ONLY; no write is performed</option>
+                                <option value="MUTATE">DELETE / UPDATE — SIMULATED ONLY; blocked; no mutation is performed</option>
+                            </select>
+                        </div>
+
+                        <button onclick="runQuorumTest()" class="w-full py-2.5 bg-purple-600 hover:bg-purple-500 text-white font-bold text-xs rounded-lg transition-all shadow-lg shadow-purple-600/30">
+                            Run Trident Triangulation
+                        </button>
+                    </div>
+
+                    <div class="bg-gray-950 p-4 rounded-xl border border-gray-800 space-y-3 font-mono text-xs">
+                        <div class="text-gray-400 border-b border-gray-800 pb-2 flex justify-between">
+                            <span>TRIANGULATION LOG</span>
+                            <span id="quorum-status-badge" class="text-gray-500">READY</span>
+                        </div>
+                        <div id="quorum-output" class="space-y-1.5 text-gray-300">
+                            <p class="text-gray-600">// SIMULATION: click to print a fake log. No quorum, hash, signature, or write occurs.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="border-t border-gray-800 py-4 bg-gray-950 text-center text-xs text-gray-500">
+        FIELD matrix specimen © 2026 | DESIGN / SIMULATION | not not sealed | no observation protocol in this file
+    </footer>
+
+    <!-- JAVASCRIPT APPLICATION LOGIC -->
+    <script>
+
+        // --- TAB SWITCHING LOGIC ---
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active', 'text-white', 'bg-gray-800', 'shadow');
+                btn.classList.add('text-gray-400');
+            });
+
+            document.getElementById(tabId).classList.remove('hidden');
+            const activeBtn = document.getElementById('btn-' + tabId);
+            activeBtn.classList.add('active', 'text-white', 'bg-gray-800', 'shadow');
+            activeBtn.classList.remove('text-gray-400');
+
+            if (tabId === 'tab-labs' && !window.rampChartInitialized) {
+                initRampChart();
+            }
+        }
+
+        // --- PM MATRIX INSPECTION DATA ---
+        const pmData = {
+            1: {
+                title: "STAGE 01: Contemporary Operating Context (2026 Realities)",
+                badge: "STAGE 01",
+                desc: "Modern project management operates in a volatile, AI-augmented, and cyber-threatened industrial landscape. Rather than a brand-new standalone methodology, modern PM represents the adaptation of established standards (PMI PMBOK 7, PRINCE2 7) to extreme supply-chain volatility and software-defined platforms.",
+                extra: `<strong>Key Realities:</strong><br>
+                        • AI handles analysis & status summaries; humans remain legally accountable.<br>
+                        • Cybersecurity supply-chain risk managed via NIST SP 800-161 guidelines.<br>
+                        • Multi-speed teams balancing hardware stability with software agility.`,
+                ev: "<strong>EV Application:</strong> Designing a custom EV requires managing long lead-time battery chemistry R&D alongside fast-paced OTA software updates."
+            },
+            2: {
+                title: "STAGE 02: Project Definition & Value Realization",
+                badge: "STAGE 02",
+                desc: "A project is defined by PMI as a temporary endeavor to create a unique product, service, or result. Modern PM shifts focus from mere outputs (delivering a physical car) to outcomes and strategic business value (zero-emission platform leadership, subscription software revenues).",
+                extra: `<strong>PRINCE2 7 Value Principle:</strong><br>
+                        • Business Case must remain viable throughout the entire lifecycle.<br>
+                        • Ongoing validation against battery mineral price shocks and competitor releases.`,
+                ev: "<strong>EV Application:</strong> Scope encompasses modular skateboard chassis, Battery Management System (BMS), and autonomous driver-assist integration."
+            },
+            3: {
+                title: "STAGE 03: The Flexible-to-Deterministic Landing Ramp",
+                badge: "STAGE 03",
+                desc: "Projects begin in flexible exploration (customisation, architectural trade-offs, software sprints) but must transition down a structured 'Landing Ramp' to reach hard freeze points where CAD geometry, tooling, and supplier costs become strictly deterministic.",
+                extra: `<strong>The Landing Ramp Rule:</strong><br>
+                        • $T_0 \\rightarrow T_{\\text{freeze}}$: High flexibility, low late-change penalty.<br>
+                        • $T_{\\text{freeze}} \\rightarrow T_{\\text{prod}}$: Zero CAD changes allowed without executive board sign-off.<br>
+                        • Late changes after $T_{\\text{freeze}}$ incur exponential CapEx penalties.`,
+                ev: "<strong>EV Application:</strong> Infotainment UI stays fluid until T=70%, but battery pack structural stamping geometry freezes at T=40% to allow Giga-factory tooling."
+            },
+            4: {
+                title: "STAGE 04: Hybrid Methodology Spectrum (PRINCE2 7 + Agile)",
+                badge: "STAGE 04",
+                desc: "Deconstructs the false binary of Predictive vs Agile. Agile is not 'no planning or documentation'—the Agile Manifesto values working software while acknowledging essential planning. PRINCE2 7 explicitly mandates tailoring for hybrid delivery.",
+                extra: `<strong>Hybrid Formula:</strong><br>
+                        • Structural Core (Chassis, Crash Safety) = Predictive Waterfall.<br>
+                        • Subsystems (Infotainment, BMS, Mobile App) = Agile Sprints.<br>
+                        • Interface Gate = Hardware-in-the-Loop (HIL) simulation checkpoints.`,
+                ev: "<strong>EV Application:</strong> Crash testing follows rigid stage gates; energy efficiency software updates deploy in 2-week sprint cycles."
+            },
+            5: {
+                title: "STAGE 05: Multi-Channel Communication & AI Governance",
+                badge: "STAGE 05",
+                desc: "Communication is structured across Synchronous (workshops, stand-ups), Asynchronous (decision logs, specs), and Digital Collaboration platforms. Per PeopleCert PRINCE2 guidance, AI assists drafting and status tracking, but humans retain decision accountability.",
+                extra: `<strong>Governance Matrix:</strong><br>
+                        • AI Risk Scans $\\rightarrow$ Project Manager approval required.<br>
+                        • Asynchronous decision logs prevent meeting fatigue across distributed time zones.<br>
+                        • Clear escalation pathways for technical impasses.`,
+                ev: "<strong>EV Application:</strong> Cross-disciplinary workshops between battery electrochemists and vehicle safety engineers prevent siloed assumptions."
+            },
+            6: {
+                title: "STAGE 06: Supply Chain & Economic Gradient of Attraction",
+                badge: "STAGE 06",
+                desc: "Multi-tier supply chains require managing the Economic Gradient of Attraction. Suppliers cannot be forced into unviable changes—every link (OEM, Tier 1, Tier 2, Tier 3) must maintain operating margins, or quality degrades and supply halts.",
+                extra: `<strong>NIST & Gradient Principles:</strong><br>
+                        • Software Bill of Materials (SBOM) enforced for embedded firmwares.<br>
+                        • Upstream chemical refiners must see predictable order volume.<br>
+                        • Margin alignment prevents tier-2 supplier defaults.`,
+                ev: "<strong>EV Application:</strong> OEM shares pack design simplification cost savings with Tier 2 battery cell manufacturers to absorb raw lithium price fluctuations."
+            },
+            7: {
+                title: "STAGE 07: OOOGST Conceptual Lens & Empirical Synthesis",
+                badge: "STAGE 07",
+                desc: "Applies the Object-Oriented Conceptual Lens (Objects, States, Relationships) to track components, risks, documents, and orders. Synthesizes lessons learned into systemic governance improvements.",
+                extra: `<strong>OOOGST Traceability:</strong><br>
+                        • Object: Battery Module #B-8812.<br>
+                        • State: QA-Tested $\\rightarrow$ Installed.<br>
+                        • Relationship: Linked to Cell Batch #C-042 & Homologation Gate #3.`,
+                ev: "<strong>EV Application:</strong> Post-project review proves that integrated hardware-software governance eliminated 90% of assembly line integration delays."
+            }
+        };
+
+        function inspectPmNode(id) {
+            const data = pmData[id];
+            document.getElementById('pm-node-badge').innerText = data.badge;
+            document.getElementById('pm-node-title').innerText = data.title;
+            document.getElementById('pm-node-desc').innerText = data.desc;
+            document.getElementById('pm-node-extra').innerHTML = data.extra;
+            document.getElementById('pm-node-ev').innerHTML = data.ev;
+        }
+
+        // Initialize default view
+        inspectPmNode(1);
+
+        // --- SOVEREIGN TOPOLOGY INSPECTION DATA ---
+        const sovData = {
+            obiwan: {
+                title: "● OBI-WAN (Observer / living memory)",
+                tag: "963 Hz | port 9630 | model vertex | DESIGN display",
+                desc: "Current FIELD definition: observer consciousness. The Downloads original labelled this 285 Hz — that was wrong. This specimen still does not write audit.log or compute hashes.",
+                code: `// DESIGN display only — not executed
+// OBI-WAN freq=963 port=9630
+// HOLD: no witness stream is attached to this HTML file.`,
+                rules: "<strong>Status:</strong> DESIGN.<br><strong>Not:</strong> a live observer, claimed-immutable (HOLD in this file) log, or not sealed protocol."
+            },
+            tata: {
+                title: "▼ TATA (Temporal truth)",
+                tag: "432 Hz | port 4320 | model vertex | DESIGN display",
+                desc: "Current FIELD definition: temporal truth / what actually happened. Quorum language in the original is a diagram, not a verifier.",
+                code: `// DESIGN display only — not executed
+// TATA freq=432 port=4320
+// HOLD: no signature or hash check runs here.`,
+                rules: "<strong>Status:</strong> DESIGN.<br><strong>Not:</strong> a live law engine."
+            },
+            atlas: {
+                title: "▲ ATLAS (Pattern / crystalline validation)",
+                tag: "528 Hz | port 5280 | model vertex | DESIGN display",
+                desc: "Current FIELD definition: validator / structural truth. /model_field paths and hashes in this file are examples, not witnessed artifacts.",
+                code: `// DESIGN display only — not executed
+// ATLAS freq=528 port=5280`,
+                rules: "<strong>Status:</strong> DESIGN.<br><strong>Not:</strong> ontology.yaml runtime."
+            },
+            dojo: {
+                title: "◼︎ DOJO (Manifestation apex)",
+                tag: "741 Hz | port 7410 | model vertex | DESIGN display",
+                desc: "Current FIELD definition: manifestation / master professor. The original tagged DOJO as 963 Hz — that was OBI-WAN's frequency. This page is not the DOJO runtime and does not gate SaaS.",
+                code: `// DESIGN display only — not executed
+// DOJO freq=741 port=7410
+// Existing /sovereign route is a different surface and was not changed.`,
+                rules: "<strong>Status:</strong> DESIGN.<br><strong>Not:</strong> execution authority."
+            },
+            akron: {
+                title: "◻ AKRON (Archive / gateway)",
+                tag: "396 Hz | port 3960 | model vertex | DESIGN display",
+                desc: "Was absent from the Downloads original. Current FIELD definition: archive sovereignty / permanent record. Lives on the AKRON volume when operational; this card is display only.",
+                code: `// DESIGN display only — not executed
+// AKRON freq=396 port=3960`,
+                rules: "<strong>Status:</strong> DESIGN.<br><strong>Not:</strong> a live gateway."
+            },
+            arkadas: {
+                title: "◉ ARKADAŞ (Embodiment bridge / SPIN)",
+                tag: "717 Hz | port 7170 | model vertex | DESIGN display",
+                desc: "Was absent from the Downloads original. ◉ belongs to ARKADAŞ. The original used ◉ for Soma — that collapse is rejected here.",
+                code: `// DESIGN display only — not executed
+// ARKADAS freq=717 port=7170`,
+                rules: "<strong>Status:</strong> DESIGN.<br><strong>Not:</strong> live homeostasis."
+            },
+            kings: {
+                title: "◎ King’s Chamber (deterministic infrastructure)",
+                tag: "852 Hz | port 8520 | infrastructure | DESIGN display",
+                desc: "Was absent from the Downloads original. Not a model-bearing vertex. Aligns and arbitrates; does not become a sixth/seventh LLM. Symbol shown as ◎ matching DOJO-suite/web/lib/chambers.ts. FIELD home canon also writes ⊗ for this chamber — both names, one infrastructure role; this specimen does not pick a new symbol.",
+                code: `// DESIGN display only — not executed
+// Kings Chamber freq=852 port=8520
+// Not a model vertex.`,
+                rules: "<strong>Status:</strong> DESIGN.<br><strong>Not:</strong> a live arbiter session."
+            },
+            soma: {
+                title: "◇ Soma (illustrative living canvas — NOT a chamber)",
+                tag: "ILLUSTRATIVE | no frequency | no port",
+                desc: "Keep Soma as an illustrative concept for a living operator canvas. It is not a canonical FIELD chamber, must not use ◉ (ARKADAŞ), and must not use 741 Hz (DOJO).",
+                code: `// ILLUSTRATIVE only
+// no chamberUrl, no MCP, no runtime`,
+                rules: "<strong>Status:</strong> ILLUSTRATIVE.<br><strong>Not:</strong> a seventh vertex."
+            }
+        };
+
+        function inspectSovereignNode(key) {
+            const data = sovData[key];
+            document.getElementById('sov-node-title').innerText = data.title;
+            document.getElementById('sov-node-tag').innerText = data.tag;
+            document.getElementById('sov-node-desc').innerText = data.desc;
+            document.getElementById('sov-node-code').innerText = data.code;
+            document.getElementById('sov-node-rules').innerHTML = data.rules;
+        }
+
+        // Initialize default sovereign view
+        inspectSovereignNode('obiwan');
+
+        // --- MODEL FIELD INSPECTION ---
+        const modelData = {
+            llama: {
+                model_name: "Llama-2-7b-chat-hf",
+                version: "v1.0_20260830",
+                format: "gguf",
+                namespace: "meta-llama",
+                quantization: "q4_K_M",
+                provenance_status: "UNKNOWN / EXAMPLE ONLY",
+                provenance_hash: "UNKNOWN — example display only; empty SHA-256 is not evidence",
+                illustrative_hash_not_witnessed: "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                influence: false,
+                license: "llama2"
+            },
+            onnx: {
+                model_name: "gpt2-medium",
+                version: "v1.2_20260830",
+                format: "onnx",
+                namespace: "microsoft",
+                quantization: "fp16",
+                provenance_status: "UNKNOWN / EXAMPLE ONLY",
+                provenance_hash: "UNKNOWN — example display only",
+                illustrative_hash_not_witnessed: "8f434346648f6b96df89dda901c5176b10a6d83961dd3c1ac88b59b2dc327aa4",
+                influence: false,
+                license: "mit"
+            },
+            safetensors: {
+                model_name: "stablelm-zephyr-3b",
+                version: "v1.1_20260830",
+                format: "safetensors",
+                namespace: "stabilityai",
+                quantization: "bf16",
+                provenance_status: "UNKNOWN / EXAMPLE ONLY",
+                provenance_hash: "UNKNOWN — example display only",
+                illustrative_hash_not_witnessed: "c79c8d5c957827e852d7e909564883d63b0a70f2f3e8f80479e008ff77a835fa",
+                influence: false,
+                license: "apache-2.0"
+            }
+        };
+
+        function inspectModel(key) {
+            const jsonStr = JSON.stringify(modelData[key], null, 2);
+            document.getElementById('model-json-viewer').innerText = jsonStr;
+        }
+
+        inspectModel('llama');
+
+        // --- LAB 1: LANDING RAMP SIMULATOR ---
+        let rampChartInstance = null;
+        window.rampChartInitialized = false;
+
+        function initRampChart() {
+            const ctx = document.getElementById('rampChart').getContext('2d');
+            rampChartInstance = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['T=0% (Concept)', 'T=20% (Design)', 'T=40% (Freeze)', 'T=60% (Tooling)', 'T=80% (Pilot)', 'T=100% (Mass Prod)'],
+                    datasets: [
+                        {
+                            label: 'Design Flexibility (%)',
+                            data: [100, 85, 60, 30, 10, 0],
+                            borderColor: '#38bdf8',
+                            backgroundColor: 'rgba(56, 189, 248, 0.1)',
+                            fill: true,
+                            tension: 0.3
+                        },
+                        {
+                            label: 'Production Determinism (%)',
+                            data: [0, 15, 40, 70, 90, 100],
+                            borderColor: '#22c55e',
+                            backgroundColor: 'rgba(34, 197, 94, 0.1)',
+                            fill: true,
+                            tension: 0.3
+                        },
+                        {
+                            label: 'Late Change Cost Penalty (x)',
+                            data: [1, 1.2, 2.5, 6.0, 15.0, 50.0],
+                            borderColor: '#f43f5e',
+                            borderDash: [5, 5],
+                            tension: 0.3,
+                            yAxisID: 'y1'
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                            ticks: { color: '#9ca3af' },
+                            title: { display: true, text: 'Percentage (%)', color: '#9ca3af' }
+                        },
+                        y1: {
+                            position: 'right',
+                            grid: { drawOnChartArea: false },
+                            ticks: { color: '#f43f5e' },
+                            title: { display: true, text: 'Cost Penalty Multiple (x)', color: '#f43f5e' }
+                        },
+                        x: {
+                            grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                            ticks: { color: '#9ca3af' }
+                        }
+                    },
+                    plugins: {
+                        legend: { labels: { color: '#e5e7eb' } }
+                    }
+                }
+            });
+            window.rampChartInitialized = true;
+        }
+
+        function updateLandingRampSim(val) {
+            document.getElementById('ramp-percent').innerText = val + '%';
+
+            let flex = Math.max(0, 100 - (val * 1.0)).toFixed(0);
+            let cost = (1 + Math.pow(val / 15, 2.2)).toFixed(1);
+
+            document.getElementById('ramp-flex-val').innerText = flex + '%';
+            document.getElementById('ramp-cost-val').innerText = cost + 'x';
+
+            let stateName = "Phase 1: Open Exploration";
+            let stateDesc = "High flexibility. Customisation trade-offs and agile software sprints active.";
+
+            if (val >= 35 && val < 60) {
+                stateName = "Phase 2: The Landing Ramp (Freeze Horizon)";
+                stateDesc = "CAD freeze enforced for structural stamping. Software continues in parallel HIL testing.";
+            } else if (val >= 60 && val < 85) {
+                stateName = "Phase 3: Tooling & Pre-Production Lock";
+                stateDesc = "Giga-factory cell tooling locked. High penalty for engineering change orders (ECOs).";
+            } else if (val >= 85) {
+                stateName = "Phase 4: Deterministic Mass Production";
+                stateDesc = "Strict statistical process control. Zero physical modifications. Software OTA locks baseline.";
+            }
+
+            document.getElementById('ramp-state-name').innerText = stateName;
+            document.getElementById('ramp-state-desc').innerText = stateDesc;
+        }
+
+        // --- LAB 2: ECONOMIC GRADIENT CALCULATOR ---
+        function calcGradient() {
+            const complexity = parseFloat(document.getElementById('in-complexity').value);
+            const scrap = parseFloat(document.getElementById('in-scrap').value);
+
+            document.getElementById('val-complexity').innerText = complexity.toFixed(1) + 'x';
+            document.getElementById('val-scrap').innerText = scrap + '%';
+
+            // Calculated Margins
+            let mTier1 = (18 - (complexity * 2.5) - (scrap * 0.1)).toFixed(1);
+            let mTier2 = (14 - (complexity * 1.8) - (scrap * 0.4)).toFixed(1);
+            let mTier3 = (10 - (complexity * 1.2) - (scrap * 0.2)).toFixed(1);
+
+            document.getElementById('margin-tier1').innerText = mTier1 + '% Margin';
+            document.getElementById('margin-tier2').innerText = mTier2 + '% Margin';
+            document.getElementById('margin-tier3').innerText = mTier3 + '% Margin';
+
+            // Alignment Status updates
+            updateTierCard('card-tier1', 'status-tier1', mTier1);
+            updateTierCard('card-tier2', 'status-tier2', mTier2);
+            updateTierCard('card-tier3', 'status-tier3', mTier3);
+
+            if (mTier1 > 5 && mTier2 > 5 && mTier3 > 5) {
+                document.getElementById('gradient-summary').innerText = "All supply chain tiers preserve positive operating margins. Design parameters reside inside the Gradient of Attraction Zone.";
+                document.getElementById('gradient-summary').className = "text-emerald-400 font-semibold";
+            } else {
+                document.getElementById('gradient-summary').innerText = "WARNING: Uncompensated complexity or scrap rate places one or more tiers in negative margin territory. Risk of supplier rejection or quality degradation!";
+                document.getElementById('gradient-summary').className = "text-rose-400 font-bold";
+            }
+        }
+
+        function updateTierCard(cardId, statusId, margin) {
+            const statusEl = document.getElementById(statusId);
+            if (margin >= 8) {
+                statusEl.innerText = "Alignment: SAFE";
+                statusEl.className = "text-[10px] font-bold px-2 py-1 rounded bg-emerald-950 text-emerald-400 border border-emerald-800 inline-block";
+            } else if (margin >= 3) {
+                statusEl.innerText = "Alignment: TIGHT";
+                statusEl.className = "text-[10px] font-bold px-2 py-1 rounded bg-amber-950 text-amber-400 border border-amber-800 inline-block";
+            } else {
+                statusEl.innerText = "Alignment: FRICTION / REJECTION";
+                statusEl.className = "text-[10px] font-bold px-2 py-1 rounded bg-rose-950 text-rose-400 border border-rose-800 inline-block";
+            }
+        }
+
+        // --- LAB 3: TRIDENT QUORUM TESTER ---
+        function runQuorumTest() {
+            const source = document.getElementById('sim-source').value;
+            const verb = document.getElementById('sim-verb').value;
+            const output = document.getElementById('quorum-output');
+            const badge = document.getElementById('quorum-status-badge');
+
+            output.innerHTML = '';
+            const time = new Date().toISOString().substring(11, 19);
+            const sim = (cls, msg) => { output.innerHTML += `<p class="${cls}">[${time}] SIMULATION (no I/O): ${msg}</p>`; };
+
+            sim("text-amber-300 font-bold", "No hash, signature, quorum, transport, or filesystem write is performed.");
+
+            if (verb === 'WRITE' || verb === 'MUTATE') {
+                badge.innerText = "SIMULATION — WRITE NOT PERFORMED";
+                badge.className = "text-rose-400 font-bold";
+                sim("text-rose-400 font-bold", `External or local '${verb}' is not permitted in this specimen. No append, no mutation, no POST.`);
+                return;
+            }
+
+            if (source === 'native') {
+                badge.innerText = "SIMULATION — DISPLAY ONLY";
+                badge.className = "text-amber-300 font-bold";
+                sim("text-gray-400", "origin=native (pretend).");
+                sim("text-cyan-400", "OBI-WAN line printed only. No audit.log append.");
+                sim("text-amber-400", "TATA line printed only. No signature check.");
+                sim("text-purple-400", "ATLAS line printed only. No ontology write.");
+                sim("text-gray-300", `DOJO line printed only. Action '${verb}' was NOT manifested.`);
+            } else if (source === 'external') {
+                badge.innerText = "SIMULATION — READ DISPLAY ONLY";
+                badge.className = "text-cyan-400 font-bold";
+                sim("text-gray-400", "origin=external (pretend). influence flag is a label, not a gate.");
+                sim("text-cyan-400", "No proxy call. No permission granted. READ is shown as text only.");
+            } else {
+                badge.innerText = "SIMULATION — TAMPER STORY";
+                badge.className = "text-rose-500 font-bold";
+                sim("text-gray-400", "Hash mismatch story only. No quarantine queue exists here.");
+            }
+        }
+    </script>
+</body>
+</html>

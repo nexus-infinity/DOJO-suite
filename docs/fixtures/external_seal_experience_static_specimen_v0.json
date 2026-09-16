@@ -1,0 +1,48 @@
+{
+  "schema": "DOJO.ExternalSealExperience.StaticSpecimen.V0",
+  "specimen_status": "HYPOTHESIS.NOT_RUNTIME_EVIDENCE",
+  "seal_status": "intentionally_unsealed",
+  "reason": "Static specimen and offline fixture only; independent External Seal Experience not human-run",
+  "candidate": {
+    "candidate_id": "candidate.voice_capture.settings.mac.v0",
+    "predecessor_run_id": "run.observer_aligned_assistance.ontology_seat",
+    "subject_object_ids": ["dojo.settings.voice_capture", "VoiceCaptureSettingsModel"],
+    "declared_outcome": "Mac Settings → Voice & capture exposes mic permission, preferred input/output, and Test capture without claiming speech-to-text success.",
+    "expected_manifestation": "In DOJO Today Settings, Voice & capture section shows permission status, device pickers, live level test message.",
+    "acceptance_criteria": [
+      "Permission status is visible",
+      "System default appears in input and output pickers",
+      "Test capture completes with a level message",
+      "Enhanced hearing section absent unless a capable device is connected"
+    ],
+    "forbidden_changes": [
+      "Originator self-seal",
+      "Fake STT success from Test capture",
+      "Collapse sensing mic with assistance speakers in one channel object"
+    ],
+    "evidence_anchor_pointers": [
+      "docs/EXTERNAL_SEAL_EXPERIENCE_REFINEMENT_HANDOFF_V0.md",
+      "Sources/DOJOApp/Services/VoiceCaptureSettingsModel.swift",
+      "Sources/DOJOShared/Contracts/ExternalSealExperienceContracts.swift"
+    ],
+    "known_unknowns": [
+      "Live Hermen dock not verified",
+      "iPhone/iPad Voice Settings not shipped"
+    ],
+    "known_holds": [
+      "HOLD.NOT_IMPLEMENTED_OR_VERIFIED live physical seal",
+      "HOLD.NO_CONTROLLED_WITNESS independent human seal"
+    ],
+    "originating_surface": "DOJOApp.Settings.VoiceCapture",
+    "originating_weaver": "grok-oaw"
+  },
+  "seven_stage_labels": [
+    "Arrival",
+    "Identification",
+    "Declared state",
+    "Participatory calibration",
+    "Actual manifestation",
+    "Guided comparison and judgement",
+    "Return"
+  ]
+}

@@ -29,6 +29,15 @@ interface Lane {
 
 const LANES: Lane[] = [
   {
+    ref: 'FIELD-ANZ-20260714-001',
+    subject: 'ANZ Bank Response Pattern Mapper — coordinated account/card/pension/POA line set',
+    status: 'PENDING',
+    nextMove:
+      'Map first: pin AKRON evidence + ANZ contact channel, then DOJO draft from question_map only (no narrative dump).',
+    triangle: { fact: 'confirmed', document: 'pending', ledger: 'absent' },
+    color: '#00A3E0',
+  },
+  {
     ref: 'FIELD-HF-20260422-001',
     subject: 'H200/A100 platform complaint — HuggingFace training infrastructure',
     status: 'PENDING',

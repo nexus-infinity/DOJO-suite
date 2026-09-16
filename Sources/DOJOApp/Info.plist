@@ -3,7 +3,13 @@
 <plist version="1.0">
 <dict>
     <key>CFBundleIdentifier</key>
-    <string>au.com.berjak.DOJOApp</string>
+    <string>org.field.dojo</string>
+    <key>CFBundleExecutable</key>
+    <string>$(EXECUTABLE_NAME)</string>
+    <key>CFBundleInfoDictionaryVersion</key>
+    <string>6.0</string>
+    <key>LSApplicationCategoryType</key>
+    <string>public.app-category.productivity</string>
     <key>CFBundleName</key>
     <string>DOJOApp</string>
     <key>CFBundleDisplayName</key>
@@ -24,6 +30,8 @@
     <true/>
     <key>NSMicrophoneUsageDescription</key>
     <string>DOJO G6 Hardware Gate requires microphone access for voice capture</string>
+    <key>NSSpeechRecognitionUsageDescription</key>
+    <string>DOJO uses speech recognition to evaluate the bounded HAL voice-input pipeline</string>
     <key>NSAppTransportSecurity</key>
     <dict>
         <key>NSAllowsLocalNetworking</key>

@@ -1,0 +1,48 @@
+{
+  "receipt_version": "V0",
+  "receipt_type": "IMPLEMENTATION_RECEIPT",
+  "mission_identity": "AIKIDO_OPTICS_PROJECT_RUNTIME_REGISTRATION_V0_3",
+  "recorded_at": "2026-08-26T03:05:15+10:00",
+  "source_surface": "Codex",
+  "lawful_execution_home": "/Users/field/DOJO-suite",
+  "preflight_receipt": "/Users/field/◎Kings-Chamber/chronicle/KC_REENTRY_20260825T170202Z_AIKIDO_OPTICS_PROJECT_IDENTITY_REGISTRATION_V0_2.receipt.json",
+  "decision": "IMPLEMENTED_LOCALLY",
+  "canon_status": "RUNTIME_REGISTRATION_PRESENT_OPTICAL_RUNTIME_UNPROVEN",
+  "observer_seal": "INTENTIONALLY_UNSEALED",
+  "result_class": "PASS.AIKIDO_PROJECT_RUNTIME_IDENTITY_REGISTERED_TEST_EXECUTION_BLOCKED",
+  "implemented": {
+    "registration": "Sources/DOJOShared/OOO/AikidoOpticsProjectRegistration.swift",
+    "tests": "Tests/DOJOSharedTests/AikidoOpticsProjectRegistrationTests.swift",
+    "object_id": "project.aikido-optics",
+    "object_class": "AutonomousSubProject",
+    "parent_project": "project.dojo-suite",
+    "mirror_portal_id": "portal.dojo-suite.aikido-optics",
+    "authority_ceiling": "PROJECT_REGISTRATION_ONLY",
+    "can_execute_optical_action": false
+  },
+  "boundary": {
+    "notion_written": false,
+    "google_drive_written": false,
+    "linear_written": false,
+    "physical_optics_changed": false,
+    "dojo_source_ontology_owned": false,
+    "dojo_manifestation_authority_owned": false,
+    "external_observer_seal": false
+  },
+  "verification": {
+    "focused_command": "swift test --package-path /Users/field/DOJO-suite --scratch-path /private/tmp/codex-aikido-swift-scratch --filter AikidoOpticsProjectRegistrationTests",
+    "focused_tests_expected": 6,
+    "focused_tests_executed": 0,
+    "focused_failures": "NOT_RUN",
+    "source_compile_observation": "AikidoOpticsProjectRegistration.swift compiled during the package build at step 79/121.",
+    "blocked_reason": "ENOSPC.NoSpaceLeftOnDevice while linking unrelated package app targets; only approximately 119 MiB was available.",
+    "temporary_test_artifacts_removed": true
+  },
+  "remaining_holds": [
+    "HOLD.RuntimeOpticalPhenotypeUnproven",
+    "HOLD.PhysicalExperimentReceiptMissing",
+    "HOLD.ExternalObserverSealMissing",
+    "Unknown.DirectGoogleDriveLineage"
+  ],
+  "next_lawful_move": "Add the first bounded project charter and experiment receipt, then implement only the next witnessed optical seam."
+}

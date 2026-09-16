@@ -1,5 +1,5 @@
 import SwiftUI
-import FieldKit
+import DOJOShared
 
 struct PacketDetailView: View {
     let packet: Packet

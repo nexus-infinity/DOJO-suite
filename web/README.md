@@ -10,19 +10,30 @@ Tier 2 services shown in the MCP panel are routed by sacred chamber ownership. T
 
 ## Modes
 
-| Mode | Description |
-|------|-------------|
-| ◈ Chat | NIAMA conversation, streaming from DOJO :7410, solo mode if offline |
-| ⟨/⟩ Code | Split artifact view — code generation + live preview |
-| ⬡ Collaborate | Projects / persistent context workspaces |
+| Mode          | Description                                                         |
+| ------------- | ------------------------------------------------------------------- |
+| ◈ Chat        | NIAMA conversation, streaming from DOJO :7410, solo mode if offline |
+| ⟨/⟩ Code      | Split artifact view — code generation + live preview                |
+| ⬡ Collaborate | Projects / persistent context workspaces                            |
 
 ## Development
 
 ```bash
 cd web
 npm install
-npm run dev          # http://localhost:3000
+npm run dev          # http://localhost:3000 — ad hoc only
 ```
+
+**FIELD-managed pin (preferred):** this app is the ◼︎ DOJO overview **manifestation** space, not the DOJO chamber MCP.
+
+```bash
+bash /Users/field/scripts/install_dojo_web_manifestation.sh   # LaunchAgent com.field.dojo.web → 127.0.0.1:3000
+bash /Users/field/scripts/verify_dojo_web_manifestation.sh
+```
+
+Do not collapse with `com.field.mcp.dojo` on port 7410.
+
+`next.config.ts` pins `turbopack.root` to this folder so FIELD home’s lockfile is not treated as the app root.
 
 ## Environment variables (`.env.local`)
 
@@ -44,6 +55,7 @@ FIELD_AKRON_URL=http://FIELD-Mac-Studio.local:3960
 4. Deploy — Vercel auto-detects Next.js
 
 For local tunnel during development (so Vercel preview can reach Mac Studio):
+
 ```bash
 # Option A — Cloudflare tunnel (recommended, free)
 cloudflared tunnel --url http://localhost:7410

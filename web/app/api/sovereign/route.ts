@@ -3,6 +3,7 @@
 // Returns: live crypto market tickers + Kings-Chamber trade ledger + active friction diagnoses.
 
 import { readFile } from 'node:fs/promises'
+import path from 'node:path'
 import { type NextRequest, NextResponse } from 'next/server'
 
 export const dynamic = 'force-dynamic'
@@ -46,8 +47,8 @@ async function fetchLedger() {
   // The ledger lives at: ~/◎memorycore/databases/kingschamber_state.db
   // For the web API we read a companion JSON export that the MCP writes on each trade.
   const candidates = [
-    '/Users/field/◎memorycore/databases/kingschamber_trade_ledger.json',
-    '/Users/field/◎Kings-Chamber/◎trainingdata/trade_ledger_export.json',
+    path.join(/*turbopackIgnore: true*/ '/Users/field', '◎memorycore/databases/kingschamber_trade_ledger.json'),
+    path.join(/*turbopackIgnore: true*/ '/Users/field', '◎Kings-Chamber/◎trainingdata/trade_ledger_export.json'),
   ]
   for (const p of candidates) {
     try {
@@ -67,8 +68,8 @@ async function fetchLedger() {
 // ── Active friction diagnoses (C-M-O-F) ─────────────────────────────────────
 async function fetchFriction() {
   const candidates = [
-    '/Users/field/◎Kings-Chamber/friction_registry.json',
-    '/Users/field/◼︎DOJO/friction_registry.json',
+    path.join(/*turbopackIgnore: true*/ '/Users/field', '◎Kings-Chamber/friction_registry.json'),
+    path.join(/*turbopackIgnore: true*/ '/Users/field', '◼︎DOJO/friction_registry.json'),
   ]
   for (const p of candidates) {
     try {

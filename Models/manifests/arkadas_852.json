@@ -1,9 +1,10 @@
 {
-  "app": "Arkadaš",
+  "app": "King's Chamber",
   "frequency": 852,
   "port": 8520,
   "symbol": "⊗",
   "chamber": "King's Chamber (38.2% from base)",
+  "spelling_note": "Filename arkadas_852.json is a DELAYED ASCII alias. Display name is King's Chamber, not Arkadaş. Arkadaş is 717 Hz / ◉.",
   "role": "THE BRAIN",
   "models": {
     "primary": {

@@ -1,6 +1,16 @@
 import Foundation
 import AVFoundation
 import Combine
+import CryptoKit
+
+@MainActor
+public protocol CoordinatorObserverState: AnyObject {
+    var alignment: Double { get }
+    func recordObservation(_ event: String)
+    func setPhase(_ newPhase: Int)
+}
+
+extension OBIWANState: CoordinatorObserverState {}
 
 @MainActor
 public final class DOJOFieldCoordinator: NSObject, ObservableObject, AVSpeechSynthesizerDelegate {
@@ -13,7 +23,8 @@ public final class DOJOFieldCoordinator: NSObject, ObservableObject, AVSpeechSyn
     @Published public private(set) var keeperVerdict: KeeperVerdict = .initialising
 
     private let engine: CopilotEngine
-    private let observer: OBIWANState
+    private let observer: any CoordinatorObserverState
+    private let conversationAuthorityVerifier: any CockpitAuthorityVerifying
     public let micBridge: VADMicBridge
     public let envMonitor: HALEnvironmentMonitor
 
@@ -26,26 +37,34 @@ public final class DOJOFieldCoordinator: NSObject, ObservableObject, AVSpeechSyn
     private let synthesizer = AVSpeechSynthesizer()
     private var activeSpeechUtterance: AVSpeechUtterance?
 
-    public init(engine: CopilotEngine, observer: OBIWANState, micBridge: VADMicBridge, envMonitor: HALEnvironmentMonitor) {
+    public init(
+        engine: CopilotEngine,
+        observer: any CoordinatorObserverState,
+        micBridge: VADMicBridge,
+        envMonitor: HALEnvironmentMonitor,
+        conversationAuthorityVerifier: any CockpitAuthorityVerifying =
+            KingsChamberAuthorityVerifier()
+    ) {
         self.engine = engine
         self.observer = observer
         self.micBridge = micBridge
         self.envMonitor = envMonitor
+        self.conversationAuthorityVerifier = conversationAuthorityVerifier
         super.init()
-        
+
         self.synthesizer.delegate = self
 
         engine.onMessageAppended = { [weak self] message in
-            self?.handleMessage(message)
+            self?.handlePresentationMessage(message)
         }
-        
+
         // Wire the VAD into the CopilotEngine
         micBridge.onUtterance = { [weak self] transcript in
             Task { @MainActor [weak self] in
                 await self?.engine.process(input: transcript)
             }
         }
-        
+
         // Wire the Environment Monitor into the Profile Switcher
         envMonitor.$isBluetoothAudioConnected
             .dropFirst()
@@ -53,7 +72,7 @@ public final class DOJOFieldCoordinator: NSObject, ObservableObject, AVSpeechSyn
                 Task { @MainActor [weak self] in self?.evaluateProfileSwitch() }
             }
             .store(in: &cancellables)
-            
+
         envMonitor.$isWifiConnected
             .dropFirst()
             .sink { [weak self] _ in
@@ -117,7 +136,56 @@ public final class DOJOFieldCoordinator: NSObject, ObservableObject, AVSpeechSyn
         activePhase = .orient
     }
 
-    private func handleMessage(_ message: ConversationMessage) {
+    /// Presentation-only chat consumption. Speech is permitted; observer,
+    /// coordinator and routing authority are deliberately untouched.
+    func handlePresentationMessage(_ message: ConversationMessage) {
+        if !message.isUser, let character = message.character {
+            speakResponse(message.text, as: character)
+        }
+    }
+
+    /// Exact deterministic scope for one conversation-to-state proposal.
+    public static func conversationAuthorityScope(
+        for message: ConversationMessage,
+        correlationID: UUID
+    ) -> String {
+        let digest = SHA256.hash(data: Data(message.text.utf8))
+            .map { String(format: "%02x", $0) }
+            .joined()
+        return [
+            "copilot_conversation_state_v0",
+            correlationID.uuidString.lowercased(),
+            message.id.uuidString.lowercased(),
+            String(Int(message.timestamp.timeIntervalSince1970 * 1_000)),
+            message.character?.rawValue ?? "user",
+            digest,
+        ].joined(separator: ":")
+    }
+
+    /// Apply a conversation-derived observer/coordinator transition only when
+    /// King's Chamber (or an injected fixture verifier) accepts an exact,
+    /// correlated deterministic proof. Missing or mismatched proof fails
+    /// closed without changing observer or coordinator state.
+    @discardableResult
+    public func applyAuthorityBearingConversationEvent(
+        _ message: ConversationMessage,
+        correlationID: UUID,
+        authorityProof: CockpitAuthorityProof?
+    ) async -> Bool {
+        let scope = Self.conversationAuthorityScope(
+            for: message,
+            correlationID: correlationID
+        )
+        guard let authorityProof,
+              authorityProof.toolName == scope,
+              await conversationAuthorityVerifier.permits(
+                  authorityProof,
+                  toolName: scope,
+                  correlationID: correlationID
+              ) else {
+            return false
+        }
+
         let tag = message.isUser ? "user: \(message.text.prefix(60))" : "\(message.character?.rawValue ?? "system"): \(message.text.prefix(60))"
         observer.recordObservation(tag)
 
@@ -137,10 +205,7 @@ public final class DOJOFieldCoordinator: NSObject, ObservableObject, AVSpeechSyn
         case .operate, .idle: teslaPhase = 9
         }
         observer.setPhase(teslaPhase)
-
-        if !message.isUser, let character = message.character {
-            speakResponse(message.text, as: character)
-        }
+        return true
     }
 
     private func evaluateInvariant() {
@@ -169,7 +234,7 @@ public final class DOJOFieldCoordinator: NSObject, ObservableObject, AVSpeechSyn
 
     private func dispatchActCommand(_ command: ActCommand) {
         print("◆ Coordinator → \(command.rawValue)")
-        
+
         let newMode: FieldAudioMode
         switch command {
         case .indicateCoherent: newMode = .full
@@ -178,7 +243,7 @@ public final class DOJOFieldCoordinator: NSObject, ObservableObject, AVSpeechSyn
         case .indicateBreached: newMode = .silent
         default: return
         }
-        
+
         applyTransition(mode: newMode, profile: activeProfile)
     }
 
@@ -193,13 +258,13 @@ public final class DOJOFieldCoordinator: NSObject, ObservableObject, AVSpeechSyn
             setProfile(.intimate)
             return
         }
-        
+
         // 2. Wi-Fi connection or known Home anchor heavily implies Broadcast/Fallback
         let hasHomeAnchor = registry.values.contains {
             ($0.identity.deviceClass == .mac || $0.identity.deviceClass == .appleTV) &&
             $0.identity.state == .active
         }
-        
+
         if hasHomeAnchor {
             setProfile(.broadcast)
         } else if envMonitor.isWifiConnected {
@@ -208,25 +273,25 @@ public final class DOJOFieldCoordinator: NSObject, ObservableObject, AVSpeechSyn
             setProfile(.fallback) // Conservative default
         }
     }
-    
+
     // MARK: - Unified Transition Gate
-    
+
     public func applyTransition(mode: FieldAudioMode, profile: HALOutputProfile) {
         let previousMode = audioMode
         let previousProfile = activeProfile
-        
+
         audioMode = mode
         activeProfile = profile
         updateKeeperVerdict()
 
         if mode != previousMode || profile != previousProfile {
             print("◆ HAL Audio: Mode [\(mode.rawValue)] | Profile [\(profile.rawValue)]")
-            
+
             // 1. Tear down / Pause output if needed
             if mode == .silent || mode == .passthrough {
                 synthesizer.stopSpeaking(at: mode == .silent ? .immediate : .word)
             }
-            
+
             // 2. Reconfigure AVAudioSession and MicBridge
             do {
                 if mode == .full || mode == .passthrough {
@@ -272,7 +337,7 @@ public final class DOJOFieldCoordinator: NSObject, ObservableObject, AVSpeechSyn
         AVSpeechSynthesisVoice.speechVoices().first { $0.name == character.macOSVoice }
             ?? AVSpeechSynthesisVoice(language: "en-AU")
     }
-    
+
     nonisolated public func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didStart utterance: AVSpeechUtterance) {
         Task { @MainActor [weak self] in
             guard let self else { return }
@@ -280,7 +345,7 @@ public final class DOJOFieldCoordinator: NSObject, ObservableObject, AVSpeechSyn
             micBridge.pauseForOutput()
         }
     }
-    
+
     nonisolated public func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didFinish utterance: AVSpeechUtterance) {
         Task { @MainActor [weak self] in
             guard let self else { return }
@@ -289,7 +354,7 @@ public final class DOJOFieldCoordinator: NSObject, ObservableObject, AVSpeechSyn
             activeSpeechUtterance = nil
         }
     }
-    
+
     nonisolated public func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didCancel utterance: AVSpeechUtterance) {
         Task { @MainActor [weak self] in
             guard let self else { return }

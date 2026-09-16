@@ -1,0 +1,50 @@
+{
+  "schema": "DOJO.ObserverAlignedAssistance.OntologySeatReceipt.V0",
+  "sealed_at": "2026-08-07T06:15:58Z",
+  "ontology_path": "/Users/field/DOJO-suite/docs/OBSERVER_ALIGNED_ASSISTANCE_ONTOLOGY_V0.jsonl",
+  "mapping_path": "/Users/field/DOJO-suite/docs/OBSERVER_ALIGNED_ASSISTANCE_ATTRIBUTE_MAPPING_V0.md",
+  "physical_records": 32,
+  "record_kinds": {
+    "ontology_header": 1,
+    "alignment_axis_definition": 6,
+    "class_definition": 12,
+    "relation_definition": 6,
+    "constraint": 5,
+    "design_specimen": 1,
+    "handoff_contract": 1
+  },
+  "checks": {
+    "physical_records_32": true,
+    "json_parsing": true,
+    "has_header": true,
+    "axes_6": true,
+    "classes_12": true,
+    "relations_6": true,
+    "constraints_5": true,
+    "specimen_labelled": true,
+    "handoff_present": true,
+    "mapping_doc_exists": true,
+    "runtime_status_hold": true,
+    "sensing_and_assistance_classes": true,
+    "intention_class": true
+  },
+  "failed_checks": [],
+  "validation": "PASS",
+  "runtime_status": "HOLD.NOT_IMPLEMENTED_OR_VERIFIED",
+  "specimen_status": "HYPOTHESIS.NOT_RUNTIME_EVIDENCE",
+  "action_class": "PRESERVE",
+  "swift_types": "Sources/DOJOShared/Contracts/ObserverAlignedAssistanceOntology.swift",
+  "next_bounded": [
+    "consent_UX",
+    "restrained_attention_test",
+    "rejection_path_runtime",
+    "receipt_for_cue_dry_run",
+    "external_observer_seal"
+  ],
+  "non_claims": [
+    "No live camera",
+    "No live cue engine",
+    "No medical efficacy",
+    "No runtime authority"
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "seal_version": "V0",
+  "seal_type": "EXTERNAL_ORBITING_OBSERVER_SEAL",
+  "mission_identity": "SAME_PACKAGE_TWO_DEVICE_CAPABILITY_COHERENCE_SPECIMEN_V0",
+  "sealed_at": "2026-08-14T02:07:48Z",
+  "status": "sealed",
+  "observer_surface": "Codex filesystem and focused test recheck",
+  "comparison": {
+    "declared_intention": "One immutable package produces capability-shaped expressions for two devices without layer collapse.",
+    "authorised_boundaries": "Local deterministic DOJOShared contract and tests only.",
+    "observed_outcome": "The same package value remained byte-field identical while the base profile exposed layers available/unavailable/available and the expanded profile exposed available/available/available. Four focused tests passed with zero failures."
+  },
+  "decision": "PROMOTE",
+  "result_class": "COHERENT_DIFFERENT_PHENOTYPES",
+  "replay": {
+    "command": "swift test --package-path /Users/field/DOJO-suite --skip-build --filter CapabilityShapedPackageTests",
+    "expected": "Executed 4 tests, with 0 failures"
+  },
+  "implementation_receipt": "/Users/field/DOJO-suite/receipts/SAME_PACKAGE_TWO_DEVICE_CAPABILITY_COHERENCE_SPECIMEN_V0.implementation.receipt.json",
+  "remaining_holds": [
+    "HOLD.LiveDeviceTransportNotTested",
+    "HOLD.DojoLinkAppCodeSigningSurfaceUnsealed",
+    "HOLD.PULSECarrierIntegrationNotInScope",
+    "HOLD.SOMAPeerGeometryNotInScope",
+    "HOLD.DynamicSpinningTopTest"
+  ]
+}

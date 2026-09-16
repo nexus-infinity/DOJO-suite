@@ -43,13 +43,13 @@ public struct ChamberStatus: Identifiable {
 // Mirrors the actual pyramid geometry: apex at top, base anchors below.
 
 private let pyramidLayout: [(chamber: Chamber, unit: CGPoint)] = [
-    (.kings,   CGPoint(x: 0.5,   y: 0.04)),  // ◎ apex — Kings Chamber
-    (.dojo,    CGPoint(x: 0.5,   y: 0.22)),  // ◼︎ sub-apex — DOJO
+    (.dojo,    CGPoint(x: 0.5,   y: 0.04)),  // ◼︎ apex — DOJO conductor
+    (.kings,   CGPoint(x: 0.82,  y: 0.22)),  // ◎ orthogonal translation bridge
     (.obiwan,  CGPoint(x: 0.12,  y: 0.56)),  // ● front-left vertex
     (.atlas,   CGPoint(x: 0.88,  y: 0.56)),  // ▲ front-right vertex
     (.tata,    CGPoint(x: 0.5,   y: 0.72)),  // ▼ front-center
     (.akron,   CGPoint(x: 0.5,   y: 0.92)),  // ◻ base gateway
-    (.arkadas, CGPoint(x: 0.5,   y: 0.40)),  // ◉ King's Bridge — inside geometry
+    (.arkadas, CGPoint(x: 0.5,   y: 0.40)),  // ◉ embodiment bridge / SPIN
 ]
 
 // ── Main dashboard ───────────────────────────────────────────────────────────
@@ -240,8 +240,7 @@ private struct PyramidWireframe: Shape {
         func pt(_ ux: Double, _ uy: Double) -> CGPoint {
             CGPoint(x: ux * size.width, y: uy * size.height)
         }
-        let apex   = pt(0.5,  0.04)
-        let dojo   = pt(0.5,  0.22)
+        let dojo   = pt(0.5,  0.04)
         let obi    = pt(0.12, 0.56)
         let atlas  = pt(0.88, 0.56)
         let tata   = pt(0.5,  0.72)
@@ -249,7 +248,7 @@ private struct PyramidWireframe: Shape {
 
         var p = Path()
         // Spine
-        p.move(to: apex); p.addLine(to: akron)
+        p.move(to: dojo); p.addLine(to: akron)
         // Base quad
         p.move(to: obi);  p.addLine(to: tata)
         p.move(to: tata); p.addLine(to: atlas)

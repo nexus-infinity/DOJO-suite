@@ -227,10 +227,14 @@ DOJO-suite/
 
 ### King's Chamber Components
 
-1. **Train Station** (Frequency Conversion):
+1. **Train Station** (Frequency Conversion — SOMA-facing package name **locked**):
+   - Role: Named package/interface for DOJO ↔ SOMA movement; frequency-conversion gateway
+   - Host: ◎ King’s Chamber constrains the gateway; does **not** replace the package name
+   - Dynamics: ◉ Arkadaş / SPIN is continuity/wobble — **not** this package
    - Input: Arbitrary frequency signal
    - Process: Normalize to solfeggio frequency
    - Output: 852 Hz (Third Eye) aligned signal
+   - Canon: `◎Kings-Chamber/config/TRAIN_STATION_SOMA_PACKAGE_RULE_V0.md`
 
 2. **Metatron Cube** (Dimensional Translation):
    - Input: 3D geometric coordinates
@@ -480,8 +484,8 @@ jobs:
 
 ---
 
-**Architecture Version**: 1.0.0  
-**Last Updated**: 2025-12-20  
+**Architecture Version**: 1.0.0
+**Last Updated**: 2025-12-20
 **Maintained By**: nexus-infinity
 
 🔺●◼︎

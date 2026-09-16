@@ -1,6 +1,6 @@
 import Foundation
 
-/// HTTP transport to sovereign hub (OBI-WAN ingest, ARKADAŠ quality, TATA receipt).
+/// HTTP transport to sovereign hub (OBI-WAN ingest, ARKADAŞ quality, TATA receipt).
 /// Tailnet-perimeter auth in v0; X-Signature header wired but unsigned.
 public final class MurmurTransport: Sendable {
 

@@ -19,7 +19,7 @@ Rationale:
 
 ## Unknowns
 - Exact source file names and symbol locations: whether `ContentView` currently lives in `Sources/DOJOMacApp/` (and needs to be moved) or is already in `Sources/DOJOUI/`.
-- Whether any other executable targets (e.g., `ArkadašApp`, `OB1LinkApp`) also reference the same UI files and would need to depend on `DOJOUI`.
+- Whether any other executable targets (e.g., `ArkadasApp`, `OB1LinkApp`) also reference the same UI files and would need to depend on `DOJOUI`.
 - Any additional SPM product constraints or older CI wiring that assumes the current target layout.
 
 ---
@@ -113,7 +113,7 @@ feat(package): add DOJOUI library target to host UI & previews; make DOJOApp dep
 ---
 
 ## Next steps I can perform now (pick one)
-1. Make the small `Package.swift` edit and run `swift build` and `swift test` (I can apply the edit and verify locally here). 
+1. Make the small `Package.swift` edit and run `swift build` and `swift test` (I can apply the edit and verify locally here).
 2. Create `Sources/DOJOUI/` and move `ContentView.swift` into it, update file headers with sacred geometry comments, and re-run build & preview checks.
 3. Prepare a patch and leave it for your review (non-destructive), so you can apply and push.
 

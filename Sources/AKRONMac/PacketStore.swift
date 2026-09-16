@@ -1,5 +1,6 @@
 import Foundation
-import FieldKit
+import DOJOPersistence
+import DOJOShared
 
 @MainActor
 final class PacketStore: ObservableObject {

@@ -1,10 +1,12 @@
 import SwiftUI
 import DOJOUI
+import DOJOShared
 
 // MARK: - Cockpit Alpha — Truthful Packet Lifecycle Surface
 // COCKPIT-ALPHA-001 · 2026-07-13
 // Snapshot: what is promoted, what is pending, what must not be overclaimed.
 // All state is hardcoded truth at time of build — no live polling.
+// 2026-08-06: Boundary Capacity glance (read-only stubs) — Can this vessel drive now?
 
 // MARK: - State Model
 
@@ -77,7 +79,7 @@ struct CockpitAlphaView: View {
                 glyph: "◻",
                 label: "Packet boundary",
                 state: .safe,
-                detail: "direction: FieldKit → DOJOShared  ✓",
+                detail: "authority: DOJOShared  ✓",
                 subDetail: "naming not canon · PACKET-BOUNDARY-DECISION-001 observed"
             ),
         ]),
@@ -111,6 +113,8 @@ struct CockpitAlphaView: View {
             VStack(alignment: .leading, spacing: 0) {
                 header
                 separator
+                capacityGlance
+                separator
                 ForEach(sections, id: \.0) { title, sectionState, entries in
                     sectionBlock(title: title, sectionState: sectionState, entries: entries)
                 }
@@ -120,6 +124,16 @@ struct CockpitAlphaView: View {
         }
         .background(FieldPalette.void)
         .frame(minWidth: 560, minHeight: 440)
+    }
+
+    /// Read-only: can this vessel drive right now? Stubs only — no live Home probe.
+    private var capacityGlance: some View {
+        BoundaryCapacityGlanceView.reportingStubGlance(
+            queueDepth: 0,
+            modeLabel: "cockpit alpha · reporting stubs · not live probe"
+        )
+        .padding(.horizontal, 24)
+        .padding(.vertical, 12)
     }
 
     // MARK: - Header

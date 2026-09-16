@@ -1,6 +1,9 @@
 import Foundation
-#if canImport(FieldKit)
-import FieldKit
+#if canImport(DOJOPersistence)
+import DOJOPersistence
+#endif
+#if canImport(DOJOTransport)
+import DOJOTransport
 #endif
 #if canImport(DOJOShared)
 import DOJOShared
@@ -27,7 +30,6 @@ final class PacketQueue: ObservableObject {
     func load() async {
         packets = (try? await store.loadAll()) ?? []
         await ensureProofPacket()
-        drainQueue()
     }
 
     func enqueue(textNotes: String, mediaRefs: [String] = [], voiceRef: String? = nil) async {
@@ -45,10 +47,10 @@ final class PacketQueue: ObservableObject {
         )
         try? await store.save(packet)
         packets.insert(packet, at: 0)
-        drainQueue()
     }
 
-    /// MFC-01: enqueue from sealed voice object. Evidence = media path + audio hash; voiceRef is UI pointer only.
+    /// MFC-01: enqueue from sealed voice object into local FIELD circulation.
+    /// Evidence = internal media path + audio hash; voiceRef is UI pointer only.
     /// Does not set AKRON_CONFIRMED; akron_receipt_id on sealed object must remain null until real receipt.
     func enqueueSealedVoice(_ sealed: SealedVoiceObject) async {
         let summary = """
@@ -71,16 +73,18 @@ final class PacketQueue: ObservableObject {
         )
     }
 
-    func drainQueue() {
+    /// Explicit AKRON boundary crossing.
+    /// Internal enqueue/load/reset are local DOJOShared circulation.
+    /// This method represents a boundary promotion for receipt/seal/HOLD
+    /// after Arkadas/SPIN policy authorization or a temporary placeholder gate.
+    func promoteToAKRON(packetID: UUID) {
         uploadTask?.cancel()
         uploadTask = Task { [weak self] in
-            guard let self else { return }
-            for i in packets.indices where packets[i].state.isUploadable {
-                await upload(packetID: packets[i].id)
-            }
+            await self?.upload(packetID: packetID)
         }
     }
 
+    /// Local retry reset only. Promotion remains an explicit Arkadas/SPIN boundary decision.
     func resetFailed() {
         for i in packets.indices where packets[i].state == .failed {
             packets[i].state = .queued
@@ -92,12 +96,12 @@ final class PacketQueue: ObservableObject {
                 try? await store.save(packet)
             }
         }
-        drainQueue()
     }
 
     private func upload(packetID: UUID) async {
         guard let idx = packets.firstIndex(where: { $0.id == packetID }) else { return }
         guard !Task.isCancelled else { return }
+        guard packets[idx].state.isUploadable else { return }
 
         packets[idx].state = .uploading
         try? await store.save(packets[idx])

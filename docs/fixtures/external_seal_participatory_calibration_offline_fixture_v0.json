@@ -1,0 +1,24 @@
+{
+  "schema": "DOJO.ExternalSealExperience.ParticipatoryCalibrationFixture.V0",
+  "fixture_status": "OFFLINE.NOT_RUNTIME_EVIDENCE",
+  "plan": {
+    "plan_id": "cal.voice_output_identification.v0",
+    "candidate_id": "candidate.voice_capture.settings.mac.v0",
+    "tied_acceptance_criterion": "Test capture reports measurable level without claiming STT success",
+    "observer_action_description": "Speak once during Test capture and confirm the level readout moves above silence.",
+    "sensory_modalities": ["calibration_stimulus", "audio_input"],
+    "contributes_to_measurement": true,
+    "reversible": true,
+    "accessible": true
+  },
+  "sensory_non_collapse": {
+    "audio_input": "microphone path under test",
+    "calibration_stimulus": "operator speech during Test capture",
+    "assistance_output": "not used in this fixture",
+    "observer_acknowledgement": "operator notes MATCHES / DIFFERS / CANNOT_VERIFY"
+  },
+  "forbidden": [
+    "Decorative chime with no measurement link",
+    "Auto-pass without observer judgement"
+  ]
+}

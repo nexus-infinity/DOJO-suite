@@ -1,0 +1,39 @@
+{
+  "receipt_version": "V0",
+  "receipt_type": "IMPLEMENTATION_RECEIPT",
+  "mission_identity": "ARKADAS_SPELLING_CEDILLA_U015F",
+  "recorded_at": "2026-08-25T19:35:31Z",
+  "source_surface": "Cursor",
+  "lawful_execution_home": "/Users/field/DOJO-suite",
+  "preflight_receipts": [
+    "/Users/field/logs/state_patches/EDITOR_PREFLIGHT_20260825T192951Z.receipt.json",
+    "/Users/field/logs/state_patches/EDITOR_PREFLIGHT_20260825T193353Z.receipt.json"
+  ],
+  "decision": "IMPLEMENTED_LOCALLY",
+  "canon_status": "NOT_CANON",
+  "observer_seal": "INTENTIONALLY_UNSEALED",
+  "result_class": "PASS.ARKADAS_DISPLAY_CEDILLA",
+  "spelling_lock": {
+    "display": "Arkadaş",
+    "codepoint": "U+015F",
+    "unicode_name": "LATIN SMALL LETTER S WITH CEDILLA",
+    "ascii_slug": "arkadas",
+    "incorrect_caron": "Arkadaš / ARKADAŠ (U+0161 / U+0160)"
+  },
+  "implemented": {
+    "dojo_suite_live_source": "caron š/Š stripped from live Swift/docs; display Arkadaş; module slug ArkadasApp",
+    "ooo_split": "OOOEntity.arkadas = 717 ◉; OOOEntity.kingsChamber = 852 ⊗; no longer aliased",
+    "agents_md_display": "⊗ARKADAŞ (SPIN) table/prose; Grand Gallery disk path unchanged",
+    "lineage_display": "ARKADAS_INSTANCE_LINEAGE_V0 I0 name uses Ş"
+  },
+  "verification": {
+    "focused_command": "swift test --package-path /Users/field/DOJO-suite --filter OOOTests --filter AttractorTests",
+    "exit_code": 0,
+    "tests_executed": 32,
+    "failures": 0
+  },
+  "remaining_holds": [
+    "HOLD.GrandGalleryDiskFolderCaronAlias — 🎭ARKADAŞ-Grand-Gallery remains the disk home; symlink ⊗ARKADAŞ already points at it; path rename still deferred per 20260715 spelling note",
+    "HOLD.HarvestWitnessPathsRetainCaron — jbear_harvest_manifest quotes historical filenames"
+  ]
+}

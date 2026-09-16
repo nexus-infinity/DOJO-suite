@@ -16,7 +16,7 @@ import Foundation
 
 // MARK: - CopilotEngine
 
-/// Observable engine that drives the Arkadaš GeometricCognitive conversation UI.
+/// Observable engine that drives the Arkadaş GeometricCognitive conversation UI.
 /// Thread-safe via `@MainActor` isolation — all state mutations happen on the main thread.
 @MainActor
 public final class CopilotEngine: ObservableObject {
@@ -32,8 +32,12 @@ public final class CopilotEngine: ObservableObject {
 
     private static let contextWindow = 8    // last N messages sent to MCP
 
-    /// Called after every message append (user or character).
-    /// DOJOFieldCoordinator sets this to feed the observer pipeline.
+    /// Presentation-only notification after every message append.
+    ///
+    /// Consumers may render or speak the message. They must not treat this
+    /// callback as routing, observer, coordinator, promotion, or other machine
+    /// authority. Authority-bearing conversation effects use the separately
+    /// verified coordinator admission method.
     public var onMessageAppended: ((ConversationMessage) -> Void)?
 
     // MARK: Private
@@ -42,10 +46,12 @@ public final class CopilotEngine: ObservableObject {
 
     // MARK: Init
 
-    public init() {
-        Task {
-            await router.refreshTopology()
-            await self.emitWelcome()
+    public init(performStartup: Bool = true) {
+        if performStartup {
+            Task {
+                await router.refreshTopology()
+                await self.emitWelcome()
+            }
         }
     }
 
@@ -78,17 +84,19 @@ public final class CopilotEngine: ObservableObject {
         }
 
         do {
-            if !dojoConnected { await router.refreshTopology() }
             let client = router.client(for: character)
             let response = try await client.sendMessage(trimmed, character: character.rawValue, context: context)
+            // Presentation-only connectivity. A chat/model outcome cannot
+            // populate or demote ChamberRouter authority.
             dojoConnected = true
-            router.recordSuccess(for: character)
             responseText = response.response.isEmpty
                 ? generateLocalResponse(character: character, userMessage: trimmed)
                 : response.response
         } catch {
+            // A transport or model-render failure may change only the UI
+            // connectivity indicator and fallback presentation. It cannot
+            // mutate an authority-admitted route.
             dojoConnected = false
-            router.recordFailure(for: character)
             responseText = generateLocalResponse(character: character, userMessage: trimmed)
         }
 

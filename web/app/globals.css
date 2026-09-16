@@ -2,39 +2,57 @@
 @tailwind components;
 @tailwind utilities;
 
+/*
+ * FIELD Brand Kit — Sacred Geometry Visual System (Canonical v1.0.0-GOLDEN)
+ * Source: Notion d24e9b49a37c428c8ccafb7b63ef0f1b
+ * Surface: ◼︎ DOJO manifestation phenotype only — not chamber authority.
+ * Profile: Default Surface Profile — Dark Teal “Future Path”
+ */
+
 :root {
-  --void:    #05050A;
-  --surface: #0F0F1A;
-  --raised:  #1A1A2E;
-  --border:  #2A2A40;
-  --text:    #F1F5F9;
-  --muted:   #64748B;
-  --dim:     #334155;
+  /* Base canvas (always-on) */
+  --void:    #0A1A1A;
+  --canvas:  #0A1A1A;
+  --surface: #0D4D4D;
+  --raised:  #123838;
+  --border:  #1A7A7A;
+  --structure: #1A7A7A;
 
-  /* chamber glow variables — overridden per-chamber */
-  --chamber-color: #7C3AED;
-  --chamber-glow:  #7C3AED66;
+  /* Text */
+  --text:    #FAFAFA;
+  --muted:   #CCCCCC;
+  --dim:     #1A7A7A;
+
+  /* Evaluation / Future Path overlays */
+  --wireframe: #6B4D9B;
+  --active-energy: #00D9D9;
+  --wisdom-dot: #FFD700;
+
+  /* Chamber glow — overridden per-chamber; default = DOJO Accent Base */
+  --chamber-color: #0066CC;
+  --chamber-glow:  #0066CC66;
 }
 
-/* ─── Void body — grain + radial aurora ─── */
+/* ─── Void body — quiet Future Path canvas ─── */
 body {
-  background: var(--void);
+  background: var(--canvas);
   color: var(--text);
-  /* Grain: a faint noise layer over the void */
+  /* Structure traces: subtle teal grain only — no idle glow */
   background-image:
-    url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-  background-size: 256px 256px;
+    radial-gradient(ellipse 80% 60% at 50% 120%, color-mix(in srgb, var(--structure) 10%, transparent) 0%, transparent 70%),
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+  background-size: auto, 256px 256px;
 }
 
-/* Radial aurora behind main content — bleeds DOJO purple upward from bottom-center */
+/* Soft structure aurora — Brand Kit structure + DOJO active energy, low opacity */
 .void-aurora::before {
   content: '';
   pointer-events: none;
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(ellipse 70% 50% at 50% 110%, #7C3AED18 0%, transparent 70%),
-    radial-gradient(ellipse 40% 30% at 20% 90%,  #06B6D408 0%, transparent 60%);
+    radial-gradient(ellipse 70% 50% at 50% 110%, color-mix(in srgb, var(--chamber-color) 12%, transparent) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 30% at 20% 90%, color-mix(in srgb, var(--active-energy) 8%, transparent) 0%, transparent 60%);
   z-index: 0;
 }
 
@@ -73,7 +91,8 @@ body {
 .header-shimmer {
   border-bottom: 1px solid transparent;
   background-clip: padding-box;
-  box-shadow: 0 1px 0 0 #2A2A40, 0 2px 20px 0 #7C3AED14;
+  box-shadow: 0 1px 0 0 color-mix(in srgb, var(--structure) 35%, transparent),
+              0 2px 20px 0 color-mix(in srgb, var(--chamber-color) 8%, transparent);
 }
 
 /* ─── Input field — field-glow on focus ─── */
@@ -84,5 +103,5 @@ body {
 
 /* ─── Scrollbar — minimal ─── */
 ::-webkit-scrollbar        { width: 4px; }
-::-webkit-scrollbar-track  { background: var(--surface); }
-::-webkit-scrollbar-thumb  { background: var(--border); border-radius: 2px; }
+::-webkit-scrollbar-track  { background: var(--canvas); }
+::-webkit-scrollbar-thumb  { background: color-mix(in srgb, var(--structure) 55%, transparent); border-radius: 2px; }

@@ -7,7 +7,7 @@ public struct PromotionGateReceipt: Codable, Equatable, Sendable {
     public let pazDisciplinePassed: Bool
     public let replayTestPassed: Bool
     public let degradationRulePassed: Bool
-    
+
     public init(timestamp: Date = Date(), identityPinPassed: Bool, witnessChainPassed: Bool, pazDisciplinePassed: Bool, replayTestPassed: Bool, degradationRulePassed: Bool) {
         self.timestamp = timestamp
         self.identityPinPassed = identityPinPassed
@@ -16,13 +16,13 @@ public struct PromotionGateReceipt: Codable, Equatable, Sendable {
         self.replayTestPassed = replayTestPassed
         self.degradationRulePassed = degradationRulePassed
     }
-    
+
     public var isPass: Bool {
         identityPinPassed && witnessChainPassed && pazDisciplinePassed && replayTestPassed && degradationRulePassed
     }
 }
 
-public enum AuthorityLevel: Int, Codable, Equatable, Sendable {
+public enum PromotionLevel: Int, Codable, Equatable, Sendable {
     case level0_interfaces = 0
     case level1_notionPrimary = 1
     case level2_runtimePrimary = 2
@@ -30,11 +30,11 @@ public enum AuthorityLevel: Int, Codable, Equatable, Sendable {
 }
 
 public struct AuthorityState: Codable, Equatable, Sendable {
-    public var currentLevel: AuthorityLevel
+    public var currentLevel: PromotionLevel
     public var consecutivePasses: Int
     public var lastReceipt: PromotionGateReceipt?
-    
-    public init(currentLevel: AuthorityLevel = .level1_notionPrimary, consecutivePasses: Int = 0, lastReceipt: PromotionGateReceipt? = nil) {
+
+    public init(currentLevel: PromotionLevel = .level1_notionPrimary, consecutivePasses: Int = 0, lastReceipt: PromotionGateReceipt? = nil) {
         self.currentLevel = currentLevel
         self.consecutivePasses = consecutivePasses
         self.lastReceipt = lastReceipt
@@ -44,13 +44,13 @@ public struct AuthorityState: Codable, Equatable, Sendable {
 @MainActor
 public final class AuthorityManager: ObservableObject {
     public static let shared = AuthorityManager()
-    
+
     @Published public private(set) var state: AuthorityState
-    
+
     private init() {
         self.state = AuthorityState()
     }
-    
+
     public func submitReceipt(_ receipt: PromotionGateReceipt) {
         if receipt.isPass {
             state.consecutivePasses += 1
@@ -65,12 +65,12 @@ public final class AuthorityManager: ObservableObject {
         }
         state.lastReceipt = receipt
     }
-    
-    private func promote(to level: AuthorityLevel) {
+
+    private func promote(to level: PromotionLevel) {
         print("◆ AUTHORITY PROMOTION: Level \(state.currentLevel.rawValue) → Level \(level.rawValue)")
         state.currentLevel = level
     }
-    
+
     private func demote() {
         print("◆ AUTHORITY DEMOTION: Level \(state.currentLevel.rawValue) → Level 1 (Notion Primary)")
         state.currentLevel = .level1_notionPrimary

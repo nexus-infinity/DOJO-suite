@@ -1,0 +1,55 @@
+{
+  "schema": "DOJO.ExternalSealExperience.WeaveReceipt.V0",
+  "sealed_at": "2026-08-07T06:37:00Z",
+  "object": "DOJO.ExternalSealExperience",
+  "weave_role": "successor_integration_from_kodex_handoff",
+  "handoff_path": "docs/EXTERNAL_SEAL_EXPERIENCE_REFINEMENT_HANDOFF_V0.md",
+  "predecessor_preserved": {
+    "ontology": "docs/OBSERVER_ALIGNED_ASSISTANCE_ONTOLOGY_V0.jsonl",
+    "mapping": "docs/OBSERVER_ALIGNED_ASSISTANCE_ATTRIBUTE_MAPPING_V0.md",
+    "swift_oaa": "Sources/DOJOShared/Contracts/ObserverAlignedAssistanceOntology.swift",
+    "validator": "scripts/validate_observer_aligned_assistance_ontology.py",
+    "ontology_seat_receipt": "logs/state_patches/observer_aligned_assistance_ontology_seat_20260807T061558Z.json",
+    "ontology_modified": false,
+    "ontology_records": 32
+  },
+  "files_changed": [
+    "Sources/DOJOShared/Contracts/ExternalSealExperienceContracts.swift",
+    "Tests/DOJOSharedTests/ExternalSealExperienceTests.swift",
+    "docs/EXTERNAL_SEAL_EXPERIENCE_CONTRACT_V0.md",
+    "docs/fixtures/external_seal_experience_static_specimen_v0.json",
+    "docs/fixtures/external_seal_participatory_calibration_offline_fixture_v0.json",
+    "logs/state_patches/external_seal_experience_weave_receipt_20260807T063700Z.json"
+  ],
+  "tests": {
+    "suite": "DOJOSharedTests/ExternalSealExperienceTests",
+    "result": "TEST SUCCEEDED",
+    "cases": 12
+  },
+  "declared_vs_actual": {
+    "typed_contracts": "PRESENT",
+    "state_machine": "PRESENT",
+    "static_specimen": "PRESENT",
+    "offline_calibration_fixture": "PRESENT",
+    "material_change_tests": "PRESENT",
+    "live_ui_seal_experience": "ABSENT",
+    "independent_human_external_seal": "ABSENT"
+  },
+  "deltas": [
+    "Handoff requested UI surface; this Weave seats contracts+tests only — UI still HOLD"
+  ],
+  "external_seal_of_this_weave": {
+    "status": "intentionally_unsealed",
+    "reason": "Independent External Seal Experience not human-run; design Weave cannot self-seal",
+    "return_point": "External Seal Experience Arrival against submitted Seal Candidate",
+    "resume_condition": "Observer completes seven stages with independent judgement and required anchors"
+  },
+  "runtime_status": "HOLD.NOT_IMPLEMENTED_OR_VERIFIED",
+  "non_claims": [
+    "No live camera",
+    "No live participatory UI",
+    "No medical claims",
+    "No ConfigurationEpoch production seal",
+    "No self-seal of this Weave"
+  ]
+}

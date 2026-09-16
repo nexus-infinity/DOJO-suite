@@ -1,0 +1,108 @@
+{
+  "object": "The Voice — Apple-only baseline observation packet",
+  "packet_id": "VOICE-APPLE-ONLY-BASELINE-OBSERVATION-V0",
+  "source_surface": "Codex",
+  "observed_at": "2026-08-31T04:16:07Z",
+  "status": "OBSERVATION_PACKET_BUILT",
+  "authority_ceiling": "EVALUATION_ONLY",
+  "mutations": {
+    "settings_changed": false,
+    "processes_started": false,
+    "processes_stopped": false,
+    "provider_switched": false,
+    "notion_changed": false,
+    "code_runtime_changed": false
+  },
+  "device": {
+    "model_name": "Mac Studio",
+    "model_identifier": "Mac14,13",
+    "chip": "Apple M2 Max",
+    "memory_gb": 32,
+    "os": "macOS 26.6.2",
+    "build": "25G83"
+  },
+  "intended_provider": "Apple Voice Control",
+  "provider_state": {
+    "apple_voice_control": {
+      "role": "system-wide command and dictation candidate",
+      "last_direct_ui_witness": "enabled, with Swift Coding Mode enabled",
+      "current_cli_preference_witness": "not directly available",
+      "status": "BASELINE_CANDIDATE_REQUIRES_LIVE_UTTERANCE_TEST"
+    },
+    "standard_macos_dictation": {
+      "role": "Apple input-method substrate; not a parallel provider while Voice Control is active",
+      "AppleDictationAutoEnable": 1,
+      "status": "NOT_SELECTED_SEPARATELY"
+    },
+    "dojo_speech": {
+      "role": "local application candidate",
+      "runtime_process_witness": false,
+      "code_paths_present": [
+        "Sources/DOJOShared/Services/VADMicBridge.swift",
+        "Sources/DOJOShared/HAL/DOJOFieldCoordinator.swift",
+        "Sources/DOJOApp/Views/DOJOChatView.swift"
+      ],
+      "status": "DORMANT_CANDIDATE_NOT_RUN"
+    },
+    "whisper": {
+      "role": "local batch transcription candidate",
+      "runtime_process_witness": false,
+      "status": "DORMANT_CANDIDATE_NOT_RUN"
+    }
+  },
+  "input_surface": {
+    "default_input_name": "USB PnP Sound Device",
+    "manufacturer": "C-Media Electronics Inc.",
+    "input_channels": 1,
+    "status": "WITNESSED"
+  },
+  "apple_voice_stack_process_witness": [
+    {"pid": 468, "name": "corespeechd_system", "cpu_percent": 0.0, "rss_kb": 1568, "started": "2026-08-29T01:33:34Z"},
+    {"pid": 926, "name": "SpeechRecognitionCore.brokerd", "cpu_percent": 0.0, "rss_kb": 6544, "started": "2026-08-29T01:33:40Z"},
+    {"pid": 961, "name": "corespeechd", "cpu_percent": 0.2, "rss_kb": 8720, "started": "2026-08-29T01:33:42Z"},
+    {"pid": 22286, "name": "SpeechRecognitionCore.speechrecognitiond", "cpu_percent": 9.1, "rss_kb": 78496, "started": "2026-08-31T03:23:25Z"},
+    {"pid": 22287, "name": "localspeechrecognition", "cpu_percent": 3.5, "rss_kb": 81600, "started": "2026-08-31T03:23:25Z"},
+    {"pid": 52267, "name": "DictationIM", "cpu_percent": 5.2, "rss_kb": 63024, "started": "2026-08-31T03:49:52Z"},
+    {"pid": 55980, "name": "localspeechrecognition", "cpu_percent": 0.0, "rss_kb": 6288, "started": "2026-08-31T03:53:26Z"},
+    {"pid": 56460, "name": "SpeechRecognitionCore.speechrecognitiond", "cpu_percent": 0.1, "rss_kb": 16304, "started": "2026-08-29T03:00:20Z"},
+    {"pid": 56461, "name": "localspeechrecognition", "cpu_percent": 0.0, "rss_kb": 4496, "started": "2026-08-29T03:00:21Z"},
+    {"pid": 56520, "name": "VoiceControlUIService", "cpu_percent": 0.0, "rss_kb": 35104, "started": "2026-08-31T03:53:59Z"}
+  ],
+  "interpretation_boundaries": [
+    "Multiple Apple helper processes are implementation components and do not by themselves prove multiple independent recognition tasks.",
+    "The older speechrecognitiond and localspeechrecognition generations are resource observations only; no cleanup action is authorised by this packet.",
+    "No Whisper process was witnessed in the sampled process list.",
+    "DOJO VAD is a code-level competing path, not a witnessed active microphone owner in this snapshot.",
+    "The Apple Voice Control preference state needs a direct UI recheck before the baseline is called complete."
+  ],
+  "continuity_anchor": {
+    "owner": "DOJO spinning top",
+    "provider": "Apple Voice Control",
+    "active_surface": "UNKNOWN — direct target application not captured",
+    "recognition_lease": "NOT_IMPLEMENTED",
+    "heartbeat": "NOT_IMPLEMENTED",
+    "last_acknowledged_utterance": "NONE — no live phrase test performed",
+    "status": "OBSERVED_PROVIDER_STACK_WITHOUT_DOJO_ZERO_POINT"
+  },
+  "baseline_test": {
+    "mode": "Apple-only",
+    "live_utterance_run": "NOT_STARTED",
+    "audio_capture": "NOT_STARTED",
+    "fidelity_metrics": "UNKNOWN",
+    "latency_metrics": "UNKNOWN",
+    "continuity_metrics": "UNKNOWN",
+    "resource_metrics": "PROCESS_SNAPSHOT_ONLY",
+    "test_phrases": [
+      "ordinary Australian English sentence",
+      "punctuation and new line",
+      "Swift code with symbols and camel case",
+      "FIELD proper names including Arkadaş",
+      "correction and replacement command",
+      "short pause followed by continuation"
+    ],
+    "rule": "Run this provider alone; do not start DOJO Speech or Whisper during the Apple baseline."
+  },
+  "next_lawful_move": "Recheck Apple Voice Control directly, select one visible text target, and run the bounded Apple-only phrase set while recording acknowledgement, fidelity, continuity, and resource results.",
+  "decision": "HOLD.PROVIDER_PROMOTION_PENDING_LIVE_APPLE_BASELINE",
+  "receipt": "Not a seal. This packet is a local observation instrument and remains intentionally unsealed."
+}

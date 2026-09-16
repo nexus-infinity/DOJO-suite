@@ -21,6 +21,8 @@ Models/CoreML/*.mlmodelc
 *.app
 *.ipa
 DerivedData/
+.codex-runtime-*/
+*.profraw
 
 # Web / Next.js
 web/node_modules/

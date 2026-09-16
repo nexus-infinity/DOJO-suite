@@ -12,19 +12,24 @@ final class MurmurController: ObservableObject {
 
     let captureService: MurmurCaptureService
 
+    @Published private(set) var murmurPendingCount: Int? = nil
+
     /// Legacy session ref (UI/session id only — NOT evidence). Prefer `lastSealedVoiceObject`.
     @Published private(set) var completedSessionRef: String? = nil
 
     /// MFC-01 sealed offline voice object from the last completed capture (evidence spine).
     @Published private(set) var lastSealedVoiceObject: SealedVoiceObject? = nil
 
+    private let queue: MurmurQueue
     private let deviceID: String
 
     init() {
         deviceID = Self.resolveDeviceID()
         let transport = MurmurTransport(deviceID: deviceID)
         let queue = MurmurQueue(transport: transport)
+        self.queue = queue
         captureService = MurmurCaptureService(deviceID: deviceID, queue: queue)
+        refreshPendingCount()
     }
 
     func toggle() {
@@ -45,10 +50,20 @@ final class MurmurController: ObservableObject {
         finishCapture()
     }
 
+    func refreshPendingCount() {
+        Task {
+            let count = await queue.pendingCount
+            await MainActor.run {
+                murmurPendingCount = count
+            }
+        }
+    }
+
     // MARK: - Private
 
     private func finishCapture() {
         captureService.stop()
+        refreshPendingCount()
         // Prefer sealed object from capture service (original bytes + SHA-256).
         if let sealed = captureService.lastSealedVoiceObject {
             lastSealedVoiceObject = sealed
