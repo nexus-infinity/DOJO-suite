@@ -20,4 +20,11 @@ This pointer is on draft PR #8 (`cursor/murmuration-apple-attractor-a502`). It i
 - `Sources/DOJOUI/DesignSystem/MurmorOrbitView.swift` — `#Preview` body did not return a `View` (AppKit vs SwiftUI `Preview` ambiguity)
 - `Sources/DOJOUI/DesignSystem/ParticleBoardView.swift` — `@retroactive` is Swift 5.10+; Xcode 15.2 CI is Swift 5.9. `ForEach(..., id: \.self)` instead of a cross-module Identifiable conformance
 
-Do **not** merge this draft while that job is red. Linux cloud cannot run `swift build`. This is not Xcode/device/G6 proof.
+Product GitHub Actions on commit `c4a06a0`:
+
+- `Build and Test` / `test` (macos-14, Xcode 15.2, `swift build --configuration release`) — **green** (run `35093751140`)
+- `CI` / `build-and-test` — **green** (run `35093751258`)
+
+Linux cloud cannot run `swift`. That is CI evidence only — not Xcode/device/G6 proof.
+
+Remaining UNSTABLE: Vercel project `v0-dojo-suite` preview still fails. That is a web deploy, not Apple production. Do not drive-by refactor Swift for it. Keep this PR **draft**. Human merges FIELD PR #27 first; Mac `git pull` only after both default branches have the commits.
