@@ -75,8 +75,9 @@ final class PacketQueue: ObservableObject {
         uploadTask?.cancel()
         uploadTask = Task { [weak self] in
             guard let self else { return }
-            for i in packets.indices where packets[i].state.isUploadable {
-                await upload(packetID: packets[i].id)
+            let uploadableIDs = packets.compactMap { $0.state.isUploadable ? $0.id : nil }
+            for packetID in uploadableIDs {
+                await upload(packetID: packetID)
             }
         }
     }
@@ -100,10 +101,11 @@ final class PacketQueue: ObservableObject {
         guard !Task.isCancelled else { return }
 
         packets[idx].state = .uploading
-        try? await store.save(packets[idx])
+        let uploading = packets[idx]
+        try? await store.save(uploading)
 
         do {
-            let receipt = try await client.upload(packets[idx])
+            let receipt = try await client.upload(uploading)
             let newState: PacketState = receipt.validationResult == "VALIDATED" ? .validated
                         : receipt.validationResult == "HOLD"      ? .hold
                         : .acknowledged
@@ -114,7 +116,8 @@ final class PacketQueue: ObservableObject {
             if retries < 5 {
                 packets[idx].state = .retrying
                 packets[idx].retryCount += 1
-                try? await store.save(packets[idx])
+                let retrying = packets[idx]
+                try? await store.save(retrying)
                 let delay = UInt64(min(pow(2.0, Double(retries)), 60)) * 1_000_000_000
                 try? await Task.sleep(nanoseconds: delay)
                 await upload(packetID: packetID)
@@ -123,7 +126,8 @@ final class PacketQueue: ObservableObject {
                 packets[idx].state = .failed
             }
         }
-        try? await store.save(packets[idx])
+        let finished = packets[idx]
+        try? await store.save(finished)
     }
 
     private func ensureProofPacket() async {

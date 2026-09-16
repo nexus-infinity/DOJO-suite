@@ -206,7 +206,7 @@ private struct MurmorNode: View {
         }()
     ]
 
-    ZStack {
+    return ZStack {
         FieldPalette.void.ignoresSafeArea()
         MurmorOrbitView(murmors: murmors)
             .padding(24)
