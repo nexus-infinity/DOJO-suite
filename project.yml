@@ -6,6 +6,8 @@ options:
   deploymentTarget:
     macOS: "14.0"
     iOS: "17.0"
+    watchOS: "10.0"
+    tvOS: "17.0"
 
 workspace:
   name: DOJO
@@ -171,6 +173,40 @@ targets:
     settings:
       PRODUCT_BUNDLE_IDENTIFIER: au.com.berjak.DOJOiOSApp
       INFOPLIST_FILE: Sources/DOJOiOSApp/Info.plist
+      GENERATE_INFOPLIST_FILE: YES
+      SWIFT_VERSION: "5.0"
+      DEVELOPMENT_TEAM: KQPY9CSK58
+      CODE_SIGN_IDENTITY: "Apple Development"
+      CODE_SIGN_STYLE: Automatic
+      PROVISIONING_PROFILE_SPECIFIER: ""
+
+  DOJOWatchApp:
+    type: application
+    platform: watchOS
+    deploymentTarget: "10.0"
+    sources:
+      - path: Sources/DOJOWatchApp
+        excludes:
+          - OBIWANFaceView.swift
+    settings:
+      PRODUCT_BUNDLE_IDENTIFIER: org.field.dojo.watch
+      PRODUCT_NAME: DOJO Watch
+      GENERATE_INFOPLIST_FILE: YES
+      SWIFT_VERSION: "5.0"
+      DEVELOPMENT_TEAM: KQPY9CSK58
+      CODE_SIGN_IDENTITY: "Apple Development"
+      CODE_SIGN_STYLE: Automatic
+      PROVISIONING_PROFILE_SPECIFIER: ""
+
+  DOJOTVApp:
+    type: application
+    platform: tvOS
+    deploymentTarget: "17.0"
+    sources:
+      - path: Sources/DOJOTVApp
+    settings:
+      PRODUCT_BUNDLE_IDENTIFIER: org.field.dojo.tv
+      PRODUCT_NAME: DOJO TV
       GENERATE_INFOPLIST_FILE: YES
       SWIFT_VERSION: "5.0"
       DEVELOPMENT_TEAM: KQPY9CSK58

@@ -197,6 +197,8 @@
 		952E49C328675B9A6F3937F4 /* TodayAttentionCartography.swift in Sources */ = {isa = PBXBuildFile; fileRef = 085CEB06AEEE89FD6F585024 /* TodayAttentionCartography.swift */; };
 		9752033B7D44CCFA4A4AE4A9 /* GeometricalParticleFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1770DDD4B7170B24B1E84D94 /* GeometricalParticleFieldView.swift */; };
 		98370FCC82196EE9FD44D279 /* HALOutputProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E92BB0BA05B971DA95C3F5 /* HALOutputProfile.swift */; };
+		9881BB989847C7E841230206 /* CarPlayPortalScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DDB640ADC0D68EC9E1C5893 /* CarPlayPortalScene.swift */; };
+		98EEB9D57141D0F7AABB1741 /* DOJOTVApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC777E49741266B75DD872BB /* DOJOTVApp.swift */; };
 		9953D6DC6CF7F7CFB81ADC91 /* DOJOiOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E07793E2B4769E12792BC28 /* DOJOiOSApp.swift */; };
 		99636BD4365B1B725C32326C /* HandoffWitnessSnapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78F7F958E36B73A11C12E878 /* HandoffWitnessSnapshot.swift */; };
 		9A175589EA4E634E4F3A4D54 /* LocalCaptureReceiptJournal.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEC1F42106D8A30BE70A1A0E /* LocalCaptureReceiptJournal.swift */; };
@@ -240,6 +242,7 @@
 		B70BBA211AF3913C4EFC2E9E /* ArkadasContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C1C398570E91AA0D373C019 /* ArkadasContentView.swift */; };
 		B8AD43572B2492A5CAF847D1 /* CapabilityBoundary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C839CB5B7B4FCAAC44DDB9B /* CapabilityBoundary.swift */; };
 		B977B424150256A6F51307BC /* SacredGeometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F961D9BDC99BB36FDB05D45 /* SacredGeometry.swift */; };
+		B9FB892CF2C744ACF460C7C1 /* AppleSurfaceMatrixCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ECF8C335C35A434249CB010 /* AppleSurfaceMatrixCard.swift */; };
 		BA3636DE55394BD2626F440E /* WatchMurmor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44CA6F55DBD7727DE05B5BC9 /* WatchMurmor.swift */; };
 		BAEE9520E85A73B2B5F76EE7 /* CockpitReceiptStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79013CB5827E1DB174F1FDE /* CockpitReceiptStore.swift */; };
 		BB4542F6FF7FE3F74E97F8CD /* DOJOShared.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB68CC7B91C0F2241632A84F /* DOJOShared.framework */; };
@@ -343,6 +346,7 @@
 		FDB4F79985CA4208CB7B0BCD /* AIServicePresentationAsStructuredResultBoundaryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F848FE5DACD1CA85035386F0 /* AIServicePresentationAsStructuredResultBoundaryTests.swift */; };
 		FE0D9599B3A9801503B71E04 /* ChamberRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33CEA87A975A5A237853E675 /* ChamberRouter.swift */; };
 		FE83A9D63216F8F1417CBE2C /* iPhoneMurmor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F9B41B548C61921ABF1BA25 /* iPhoneMurmor.swift */; };
+		FF00C0B5B8A2446E95468081 /* DOJOWatchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF471480AEDFC5C161699E5 /* DOJOWatchApp.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -519,6 +523,7 @@
 		272374DC4F9AB6E443404C63 /* AikidoOpticsProjectRegistrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AikidoOpticsProjectRegistrationTests.swift; sourceTree = "<group>"; };
 		2D0C8A6D0D958063EF52B390 /* CategorySchema.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategorySchema.swift; sourceTree = "<group>"; };
 		2D0E09814E59344AC17D87A2 /* ARKADASHomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARKADASHomeView.swift; sourceTree = "<group>"; };
+		2F703D6152C0285D31DDBA92 /* DOJOWatchApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DOJOWatchApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		30D0F18F11629F5648F16664 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3202625FD91B1A9B041C5E85 /* ObservationFeedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservationFeedView.swift; sourceTree = "<group>"; };
 		320508E05F124124ED4A4D25 /* DOJOiOSApp.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = DOJOiOSApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -529,6 +534,7 @@
 		35B5EBB48D9CFB95AA1C4A92 /* DojoRenderProjectionV1Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DojoRenderProjectionV1Tests.swift; sourceTree = "<group>"; };
 		368B30CA3F3B1C8D462E2C9B /* VoiceCaptureSettingsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceCaptureSettingsModel.swift; sourceTree = "<group>"; };
 		38FCFD5D2E64B5D2D25B9C12 /* ArkadasCorrespondence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArkadasCorrespondence.swift; sourceTree = "<group>"; };
+		3AF471480AEDFC5C161699E5 /* DOJOWatchApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DOJOWatchApp.swift; sourceTree = "<group>"; };
 		3B0D054EABFB28E49DD4E987 /* LiveSpecializedRouteRoundTripTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveSpecializedRouteRoundTripTests.swift; sourceTree = "<group>"; };
 		3D718563E9F999955781C1B1 /* PacketFileStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PacketFileStore.swift; sourceTree = "<group>"; };
 		3E07793E2B4769E12792BC28 /* DOJOiOSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DOJOiOSApp.swift; sourceTree = "<group>"; };
@@ -544,6 +550,7 @@
 		42F129A1407674ABB1D3DF43 /* CapabilityBoundaryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CapabilityBoundaryTests.swift; sourceTree = "<group>"; };
 		43EE033DC8123C1A062BE886 /* GPBSpecimenDriver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GPBSpecimenDriver.swift; sourceTree = "<group>"; };
 		44CA6F55DBD7727DE05B5BC9 /* WatchMurmor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchMurmor.swift; sourceTree = "<group>"; };
+		453E2D05AB00247862479485 /* DOJOTVApp.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = DOJOTVApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		46ED5F31DDB7E4727A3A6D48 /* InteractionContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InteractionContext.swift; sourceTree = "<group>"; };
 		49F55F4C0CB5B1DB29844D4B /* BiometricStatePolicyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BiometricStatePolicyTests.swift; sourceTree = "<group>"; };
 		4D2B1766AE5009EAFEB2D0D8 /* PEPPhenotypeStyleResolverTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PEPPhenotypeStyleResolverTests.swift; sourceTree = "<group>"; };
@@ -577,6 +584,7 @@
 		675AEF9A928CC98CCD39ACE2 /* BluetoothTransportContractTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BluetoothTransportContractTests.swift; sourceTree = "<group>"; };
 		6C1C398570E91AA0D373C019 /* ArkadasContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArkadasContentView.swift; sourceTree = "<group>"; };
 		6C839CB5B7B4FCAAC44DDB9B /* CapabilityBoundary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CapabilityBoundary.swift; sourceTree = "<group>"; };
+		6ECF8C335C35A434249CB010 /* AppleSurfaceMatrixCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleSurfaceMatrixCard.swift; sourceTree = "<group>"; };
 		6FA7934566B8613AC24CE1C6 /* ChannelLineageContract.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelLineageContract.swift; sourceTree = "<group>"; };
 		719E478513212F6257E91D14 /* G6Core.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = G6Core.swift; sourceTree = "<group>"; };
 		721EFE51EAAE33132DF3E26C /* ObserverAlignedAssistanceOntology.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObserverAlignedAssistanceOntology.swift; sourceTree = "<group>"; };
@@ -626,6 +634,7 @@
 		9BF9222152A051FAF0B770BA /* HALAudioPipelineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HALAudioPipelineTests.swift; sourceTree = "<group>"; };
 		9D0A2561B6A8FBFBF5670BB0 /* DojoLinkApp.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = DojoLinkApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9DABB638ED8B4F0347E14BA0 /* SurfaceSelectionSnapshot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurfaceSelectionSnapshot.swift; sourceTree = "<group>"; };
+		9DDB640ADC0D68EC9E1C5893 /* CarPlayPortalScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarPlayPortalScene.swift; sourceTree = "<group>"; };
 		9EE6378BF7971FD28989360D /* SystemInspectorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemInspectorView.swift; sourceTree = "<group>"; };
 		9F8A8E8000FEFC105D950ED6 /* VADMicBridge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VADMicBridge.swift; sourceTree = "<group>"; };
 		A3D383BB928BF2C21F1ABDB3 /* CockpitLiveIntegrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CockpitLiveIntegrationTests.swift; sourceTree = "<group>"; };
@@ -637,6 +646,7 @@
 		AAA0F09D21DD9E8CEF05BEB9 /* DOJOMurmorProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DOJOMurmorProtocol.swift; sourceTree = "<group>"; };
 		AB81393DEE9E63E1E02CBE1B /* PromotionGate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromotionGate.swift; sourceTree = "<group>"; };
 		AC6BBC36E24653D7F9E88B80 /* OOOTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OOOTests.swift; sourceTree = "<group>"; };
+		AC777E49741266B75DD872BB /* DOJOTVApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DOJOTVApp.swift; sourceTree = "<group>"; };
 		B0A6039921F4DB58B89D774D /* MacMurmor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacMurmor.swift; sourceTree = "<group>"; };
 		B10577EECB618011B81452ED /* TailscaleDNSChamberRouterIntegrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TailscaleDNSChamberRouterIntegrationTests.swift; sourceTree = "<group>"; };
 		B22D52906AD4833AF999912A /* CockpitAlphaView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CockpitAlphaView.swift; sourceTree = "<group>"; };
@@ -811,7 +821,9 @@
 				9847278703F9081F285D0FBE /* DOJOShared */,
 				7FF6CDEA807A897067197FBB /* DOJOSharedTests */,
 				FDA9D4BE2A49130D03493ECB /* DOJOTransport */,
+				68DAC4A8F9E9608B802C089C /* DOJOTVApp */,
 				7E5EBA4F4CF2A93B401876FA /* DOJOUI */,
+				DD76DE84A167243882F00FF6 /* DOJOWatchApp */,
 				A401EC66D380D924B597DCB1 /* OB1LinkApp */,
 				DA3F0C47D9901D85B78DEF7A /* Products */,
 			);
@@ -822,8 +834,10 @@
 		37B8F52C5F8C9EFAFB3BA8FB /* DOJOiOSApp */ = {
 			isa = PBXGroup;
 			children = (
+				6ECF8C335C35A434249CB010 /* AppleSurfaceMatrixCard.swift */,
 				30D0F18F11629F5648F16664 /* Assets.xcassets */,
 				4FBDF8F83838F0FBC00D29EF /* CaptureView.swift */,
+				9DDB640ADC0D68EC9E1C5893 /* CarPlayPortalScene.swift */,
 				3E07793E2B4769E12792BC28 /* DOJOiOSApp.swift */,
 				A9E7098B132E7AF82FAEFBD3 /* Info.plist */,
 				D3F5523F53CECB08D0356D6E /* MurmurController.swift */,
@@ -957,6 +971,15 @@
 			);
 			name = DOJOApp;
 			path = Sources/DOJOApp;
+			sourceTree = "<group>";
+		};
+		68DAC4A8F9E9608B802C089C /* DOJOTVApp */ = {
+			isa = PBXGroup;
+			children = (
+				AC777E49741266B75DD872BB /* DOJOTVApp.swift */,
+			);
+			name = DOJOTVApp;
+			path = Sources/DOJOTVApp;
 			sourceTree = "<group>";
 		};
 		6B228F87D9BFC4E4854806E7 /* GeometricalParticleBoard */ = {
@@ -1275,10 +1298,21 @@
 				E6D7B1090CEAB1394B1AA183 /* DOJOPersistence.framework */,
 				EB68CC7B91C0F2241632A84F /* DOJOShared.framework */,
 				D6C0F7E2FFB8D23437CB6F14 /* DOJOSharedTests.xctest */,
+				453E2D05AB00247862479485 /* DOJOTVApp.app */,
 				99E3E3BFD7D1344F3A5748D7 /* DOJOUI.framework */,
+				2F703D6152C0285D31DDBA92 /* DOJOWatchApp.app */,
 				1EE39709C30C445BCB2647F1 /* OB1LinkApp.app */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		DD76DE84A167243882F00FF6 /* DOJOWatchApp */ = {
+			isa = PBXGroup;
+			children = (
+				3AF471480AEDFC5C161699E5 /* DOJOWatchApp.swift */,
+			);
+			name = DOJOWatchApp;
+			path = Sources/DOJOWatchApp;
 			sourceTree = "<group>";
 		};
 		E89351A3425C86EE453ADBC6 /* Models */ = {
@@ -1427,6 +1461,23 @@
 			productReference = 9D0A2561B6A8FBFBF5670BB0 /* DojoLinkApp.app */;
 			productType = "com.apple.product-type.application";
 		};
+		66374E8B1485BF49E30FC580 /* DOJOWatchApp */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8342814F1FE2439E26360B1F /* Build configuration list for PBXNativeTarget "DOJOWatchApp" */;
+			buildPhases = (
+				4713AC8FCE2E8CCDD344F5F6 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = DOJOWatchApp;
+			packageProductDependencies = (
+			);
+			productName = DOJOWatchApp;
+			productReference = 2F703D6152C0285D31DDBA92 /* DOJOWatchApp.app */;
+			productType = "com.apple.product-type.application";
+		};
 		BF6B72E8103317D4FE72EF13 /* ArkadasApp */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = AA8A62DEC5A6925CD4D6166A /* Build configuration list for PBXNativeTarget "ArkadasApp" */;
@@ -1466,6 +1517,23 @@
 			productName = DOJOUI;
 			productReference = 99E3E3BFD7D1344F3A5748D7 /* DOJOUI.framework */;
 			productType = "com.apple.product-type.framework";
+		};
+		D0A42734300387FB40E66969 /* DOJOTVApp */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 873C2919FC790C06FED5E370 /* Build configuration list for PBXNativeTarget "DOJOTVApp" */;
+			buildPhases = (
+				B64BD55CEE7B656D3B303286 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = DOJOTVApp;
+			packageProductDependencies = (
+			);
+			productName = DOJOTVApp;
+			productReference = 453E2D05AB00247862479485 /* DOJOTVApp.app */;
+			productType = "com.apple.product-type.application";
 		};
 		EAE5DC6CDF0476E9A8932543 /* OB1LinkApp */ = {
 			isa = PBXNativeTarget;
@@ -1513,7 +1581,15 @@
 						DevelopmentTeam = KQPY9CSK58;
 						ProvisioningStyle = Automatic;
 					};
+					66374E8B1485BF49E30FC580 = {
+						DevelopmentTeam = KQPY9CSK58;
+						ProvisioningStyle = Automatic;
+					};
 					BF6B72E8103317D4FE72EF13 = {
+						DevelopmentTeam = KQPY9CSK58;
+						ProvisioningStyle = Automatic;
+					};
+					D0A42734300387FB40E66969 = {
 						DevelopmentTeam = KQPY9CSK58;
 						ProvisioningStyle = Automatic;
 					};
@@ -1542,7 +1618,9 @@
 				612A9CD9D5904FEA6C3BE807 /* DOJOPersistence */,
 				563347DB469C9F06F3EAD703 /* DOJOShared */,
 				1F5F69BB37A2BF8B53433646 /* DOJOSharedTests */,
+				D0A42734300387FB40E66969 /* DOJOTVApp */,
 				C658A9F1275A7AFE87E96AE9 /* DOJOUI */,
+				66374E8B1485BF49E30FC580 /* DOJOWatchApp */,
 				36441F0929B73C1734C1E48B /* DOJOiOSApp */,
 				65A51CCC8B70C69A7805AC14 /* DojoLinkApp */,
 				EAE5DC6CDF0476E9A8932543 /* OB1LinkApp */,
@@ -1701,6 +1779,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		4713AC8FCE2E8CCDD344F5F6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FF00C0B5B8A2446E95468081 /* DOJOWatchApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		5434DA0CA960329EFA4D6BFD /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1806,6 +1892,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		B64BD55CEE7B656D3B303286 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				98EEB9D57141D0F7AABB1741 /* DOJOTVApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C39C1AD79B1FA9B098914ADE /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1822,6 +1916,7 @@
 				B0697806A87874BF6A936875 /* AKRONClient.swift in Sources */,
 				EAD11E107FF35C22560A78F1 /* AikidoOpticsCodec.swift in Sources */,
 				2D873CAE6C82A5C865EF1CD2 /* AikidoOpticsProjectRegistration.swift in Sources */,
+				B9FB892CF2C744ACF460C7C1 /* AppleSurfaceMatrixCard.swift in Sources */,
 				CD423508B4221F944B6795E5 /* ArkadasCorrespondence.swift in Sources */,
 				4387B0B13F0BD8500783302F /* ArtifactTypes.swift in Sources */,
 				D3FCF5DC64889461ACB60C2D /* AuthorityCeilingSnapshot.swift in Sources */,
@@ -1832,6 +1927,7 @@
 				B8AD43572B2492A5CAF847D1 /* CapabilityBoundary.swift in Sources */,
 				142FC21B6D6FAB841B0F0275 /* CapabilityShapedPackage.swift in Sources */,
 				9CAD24633A9C15A76AC1153F /* CaptureView.swift in Sources */,
+				9881BB989847C7E841230206 /* CarPlayPortalScene.swift in Sources */,
 				C82B593587F88C8450D49B3F /* CategorySchema.swift in Sources */,
 				64645AAB195A50CF9131693A /* ChamberRouteAdmission.swift in Sources */,
 				3E5CBC866D856EA84BA27365 /* ChamberRouter.swift in Sources */,
@@ -2035,6 +2131,29 @@
 			};
 			name = Debug;
 		};
+		0F32950CADDB406C96AE8C8B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = KQPY9CSK58;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = org.field.dojo.tv;
+				PRODUCT_NAME = "DOJO TV";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SDKROOT = appletvos;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 17.0;
+			};
+			name = Release;
+		};
 		0F361ECBA55D92D2CE2EF324 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -2052,6 +2171,29 @@
 				PRODUCT_BUNDLE_IDENTIFIER = org.field.ob1link;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		176F8491078AEFB5151E276F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = KQPY9CSK58;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = org.field.dojo.tv;
+				PRODUCT_NAME = "DOJO TV";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SDKROOT = appletvos;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 17.0;
 			};
 			name = Debug;
 		};
@@ -2100,6 +2242,25 @@
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = Release;
+		};
+		6686B00322B248FDDDA57AC9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = KQPY9CSK58;
+				GENERATE_INFOPLIST_FILE = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = org.field.dojo.watch;
+				PRODUCT_NAME = "DOJO Watch";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
 			};
 			name = Release;
 		};
@@ -2177,6 +2338,8 @@
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 5.0;
+				TVOS_DEPLOYMENT_TARGET = 17.0;
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
 			};
 			name = Release;
 		};
@@ -2383,6 +2546,8 @@
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
+				TVOS_DEPLOYMENT_TARGET = 17.0;
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
 			};
 			name = Debug;
 		};
@@ -2519,6 +2684,25 @@
 			};
 			name = Debug;
 		};
+		E84DAE8FA2FA559CF242D643 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = KQPY9CSK58;
+				GENERATE_INFOPLIST_FILE = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = org.field.dojo.watch;
+				PRODUCT_NAME = "DOJO Watch";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
+			};
+			name = Debug;
+		};
 		EBAC15A1617723583B808E61 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -2561,11 +2745,29 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
+		8342814F1FE2439E26360B1F /* Build configuration list for PBXNativeTarget "DOJOWatchApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E84DAE8FA2FA559CF242D643 /* Debug */,
+				6686B00322B248FDDDA57AC9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
 		84F6F801BCF2797EA2612905 /* Build configuration list for PBXNativeTarget "DOJOUI" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				8AE8231DEA7B2D6E44BE88F1 /* Debug */,
 				ACFC6179A4308E939D823333 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		873C2919FC790C06FED5E370 /* Build configuration list for PBXNativeTarget "DOJOTVApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				176F8491078AEFB5151E276F /* Debug */,
+				0F32950CADDB406C96AE8C8B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;

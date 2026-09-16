@@ -1,17 +1,37 @@
-// ◎ Kings-Chamber — DOJOWatchApp.swift
-// Frequency: 963 Hz  |  OBI-WAN ambient observer — watchOS entry point.
-// Deploys OBIWANWatchFace to physical Apple Watch for in-context evaluation.
-
 import SwiftUI
-import DOJOShared
 
 @main
 struct DOJOWatchApp: App {
-    @StateObject private var obiState = OBIWANState.shared
-
     var body: some Scene {
         WindowGroup {
-            OBIWANFaceView(state: obiState)
+            WatchPortalView()
         }
+    }
+}
+
+private struct WatchPortalView: View {
+    var body: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Image(systemName: "applewatch")
+                .font(.title2)
+
+            Text("DOJO Watch")
+                .font(.headline)
+
+            Text("CUE SURFACE")
+                .font(.caption2.monospaced().weight(.bold))
+                .foregroundStyle(.purple)
+
+            Text("Later · portal parked")
+                .font(.caption)
+
+            Text("No biometric or decision authority.")
+                .font(.caption2)
+                .foregroundStyle(.secondary)
+        }
+        .padding()
+        .containerBackground(.black.gradient, for: .navigation)
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel("DOJO Watch cue surface. Parked. No biometric or decision authority.")
     }
 }

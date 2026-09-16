@@ -54,6 +54,9 @@ struct PacketListView: View {
                                 .padding(.horizontal, 16)
                                 .padding(.top, 16)
 
+                            AppleSurfaceMatrixCard()
+                                .padding(.horizontal, 16)
+
                             FieldOrb()
                                 .containerRelativeFrame([.horizontal]) { size, _ in size * 0.72 }
                                 .aspectRatio(1, contentMode: .fit)
@@ -62,6 +65,10 @@ struct PacketListView: View {
                 } else {
                     List {
                         capacityGlance
+                            .listRowBackground(Color(hex: "#111113"))
+                            .listRowSeparatorTint(Color(hex: "#1F1F23"))
+
+                        AppleSurfaceMatrixCard()
                             .listRowBackground(Color(hex: "#111113"))
                             .listRowSeparatorTint(Color(hex: "#1F1F23"))
 
