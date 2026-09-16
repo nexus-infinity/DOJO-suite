@@ -16,6 +16,7 @@ This packet seats ideas from the 2026-09-17 sitting so they can be checked for c
 3. PULSE is house signalling. Murmur is coordination packets. MDM is return-to-known-good on the Apple plane. They are three objects.
 4. Alignment is always geometry first, then translation into a field of *technology* or a field of *person*. Person is not a device. Device is not the top.
 5. Full stack on a body means full *understanding and lawful lock* of that body's surfaces — not full power.
+6. Deterministic infrastructure is judged by *experience represented*, not by cloning a vendor. How did Notion get built, and can we host that experience more efficiently — not how do we build Notion.
 
 ```text
 hardware genotype
@@ -30,6 +31,20 @@ Software weather (Apple Intelligence, Foundation Models, new watchOS APIs) is a 
 
 ---
 
+## Test — deterministic infrastructure vs Notion experience
+
+Wrong test: How do we build Notion?
+Right test: How did Notion get built? What experience did that produce? How do we represent the same experience, or a better one, with less tax on attention and money?
+
+Experience-surface named by the operator: look-at-it page + living database + work retained in a user-fronted workspace (including while looking at the page).
+
+Infra **passes** only if that experience can be hosted on LSF / suite portals without becoming a Notion rebuild, a credit meter, or a Settings mall.
+Infra **fails** if it answers “blocks / RAG / MCP implemented” while the operator cannot recreate the page in view, keep the work, or leave without a hook.
+
+This test applies to Watch, MDM, and every later target on this branch. Implementation details are translation. The experience is geometry.
+
+---
+
 ## Translation — what already exists (do not rebuild)
 
 | Object | Home | State |
@@ -40,7 +55,7 @@ Software weather (Apple Intelligence, Foundation Models, new watchOS APIs) is a 
 | MDM / murmur treaty | Notion *Dojo Field Protocol — Managed Devices* | design seated; loop not live |
 | Watch law | Notion APPle-001-watchOS v1.1 + local `WATCH_ULTRA_MURMUR_ARCHITECTURE_SPEC_V0.md` | Ultra 2 host; ceiling `HAPTIC_CUE_ONLY` |
 | Watch sources | `Sources/DOJOWatchApp` | two files; **not** in the eight passing schemes |
-| Linear | Field-MacOS-DOJO-suite | atRisk; issues stale vs convergence |
+| Linear | Field-MacOS-DOJO-suite | BER-69 witness seated 2026-09-17 |
 
 `main` passing schemes: DOJOApp, ArkadasApp, DOJOiOSApp, DojoLinkApp, OB1LinkApp, DOJOShared, DOJOUI, DOJOPersistence. No Watch, tvOS, or CarPlay scene in that list.
 
@@ -91,6 +106,7 @@ Attributes plug under the hood. No Settings mall. Copartner holds the difference
 4. Old iPad still PULSE L0? Or did we install current suite on dead silicon?
 5. Person field still distinct from tech field?
 6. Held software channels still named, not deleted because unused?
+7. Infra still judged by Notion-*experience* represented, not by Notion-*clone* completeness?
 
 Fail any → HOLD. Do not add files to paper over the fail.
 
