@@ -5,13 +5,13 @@ import XCTest
 @MainActor
 final class OperationalRouteAdmissionReceiptIssuanceTests: XCTestCase {
     private let correlationID = UUID(
-        uuidString: "09d6cdf3-41be-4cbd-9c87-c5e8f57c996f"
+        uuidString: "2a96b49f-a403-44aa-821d-6208934c7d25"
     )!
-    private let issuedAt = Date(timeIntervalSince1970: 1_784_960_368)
-    private let expiresAt = Date(timeIntervalSince1970: 1_784_960_668)
-    private let fixtureNow = Date(timeIntervalSince1970: 1_784_960_400)
+    private let issuedAt = Date(timeIntervalSince1970: 1_789_848_598)
+    private let expiresAt = Date(timeIntervalSince1970: 1_789_848_898)
+    private let fixtureNow = Date(timeIntervalSince1970: 1_789_848_599)
     private let receiptID =
-        "KC-ROUTE-4d9913f3-e7cd-4692-885a-1ac945fb6b97.receipt.json"
+        "KC-ROUTE-39898cef-5df1-4381-b046-1ee633efc2d4.receipt.json"
     private func receipt(
         id: String? = nil,
         correlationID: UUID? = nil,
@@ -75,7 +75,7 @@ final class OperationalRouteAdmissionReceiptIssuanceTests: XCTestCase {
         XCTAssertNotNil(snapshot?.entries[receiptID])
     }
 
-    func testFallbackForAbsentInvalidExpiredUncorrelatedAndImproperIssuance() async {
+    func testFallbackForAbsentInvalidExpiredUncorrelatedAndImproperIssuance() async throws {
         let absentRouter = ChamberRouter(now: { self.fixtureNow })
         XCTAssertEqual(
             absentRouter.routingDisposition(for: .arkadas),
@@ -108,19 +108,19 @@ final class OperationalRouteAdmissionReceiptIssuanceTests: XCTestCase {
 
         let legacyNow = Date(timeIntervalSince1970: 1_784_951_100)
         let improperRouter = ChamberRouter(now: { legacyNow })
-        let improper = await improperRouter.admitSpecializedRoute(
+        let improper = try await improperRouter.admitSpecializedRoute(
             for: .arkadas,
             receipt: receipt(
                 id: "KC-ROUTE-ARKADAS-LIVE-V0.receipt.json",
-                correlationID: UUID(
+                correlationID: XCTUnwrap(UUID(
                     uuidString: "f6db30c3-4964-4eed-9930-21e6d6b88fd1"
-                )!,
+                )),
                 issuedAt: Date(timeIntervalSince1970: 1_784_950_620),
                 expiresAt: Date(timeIntervalSince1970: 1_784_952_420)
             ),
-            correlationID: UUID(
+            correlationID: XCTUnwrap(UUID(
                 uuidString: "f6db30c3-4964-4eed-9930-21e6d6b88fd1"
-            )!
+            ))
         )
         XCTAssertFalse(improper)
 

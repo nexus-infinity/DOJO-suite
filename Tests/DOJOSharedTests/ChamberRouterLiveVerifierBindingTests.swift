@@ -3,13 +3,13 @@ import XCTest
 
 @MainActor
 final class ChamberRouterLiveVerifierBindingTests: XCTestCase {
-    private let correlationID = UUID(uuidString: "f6db30c3-4964-4eed-9930-21e6d6b88fd1")!
-    private let issuedAt = Date(timeIntervalSince1970: 1_784_950_620)
-    private let expiresAt = Date(timeIntervalSince1970: 1_784_952_420)
-    private let fixtureNow = Date(timeIntervalSince1970: 1_784_951_100)
+    private let correlationID = UUID(uuidString: "2a96b49f-a403-44aa-821d-6208934c7d25")!
+    private let issuedAt = Date(timeIntervalSince1970: 1_789_848_598)
+    private let expiresAt = Date(timeIntervalSince1970: 1_789_848_898)
+    private let fixtureNow = Date(timeIntervalSince1970: 1_789_848_599)
 
     private func receipt(
-        id: String = "KC-ROUTE-ARKADAS-LIVE-V0.receipt.json",
+        id: String = "KC-ROUTE-39898cef-5df1-4381-b046-1ee633efc2d4.receipt.json",
         correlationID: UUID? = nil,
         issuedAt: Date? = nil,
         expiresAt: Date? = nil
@@ -55,7 +55,7 @@ final class ChamberRouterLiveVerifierBindingTests: XCTestCase {
         XCTAssertFalse(replayed)
         XCTAssertEqual(
             router.routingDisposition(for: .arkadas),
-            .receiptAdmittedSpecializedRoute
+            .canonicalDOJOFallback
         )
         XCTAssertEqual(
             router.routingDisposition(for: .obiWan),

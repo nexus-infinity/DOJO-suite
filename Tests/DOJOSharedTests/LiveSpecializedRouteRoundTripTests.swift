@@ -4,13 +4,13 @@ import XCTest
 
 @MainActor
 final class LiveSpecializedRouteRoundTripTests: XCTestCase {
-    private let correlationID = UUID(uuidString: "833f90e9-0b1e-4811-9122-550045ffd715")!
-    private let issuedAt = Date(timeIntervalSince1970: 1_784_955_912)
-    private let expiresAt = Date(timeIntervalSince1970: 1_784_957_712)
-    private let fixtureNow = Date(timeIntervalSince1970: 1_784_956_200)
+    private let correlationID = UUID(uuidString: "2a96b49f-a403-44aa-821d-6208934c7d25")!
+    private let issuedAt = Date(timeIntervalSince1970: 1_789_848_598)
+    private let expiresAt = Date(timeIntervalSince1970: 1_789_848_898)
+    private let fixtureNow = Date(timeIntervalSince1970: 1_789_848_599)
 
     private func receipt(
-        id: String = "KC-ROUTE-ARKADAS-ROUNDTRIP-V0.receipt.json",
+        id: String = "KC-ROUTE-39898cef-5df1-4381-b046-1ee633efc2d4.receipt.json",
         correlationID: UUID? = nil,
         issuedAt: Date? = nil,
         expiresAt: Date? = nil
@@ -142,7 +142,7 @@ final class LiveSpecializedRouteRoundTripTests: XCTestCase {
                 "transport_http_status": transportReceipt.httpStatus,
                 "response": response,
                 "replay_rejected": true,
-                "post_replay_disposition": "canonicalDOJOFallback"
+                "post_replay_disposition": "canonicalDOJOFallback",
             ],
             options: [.sortedKeys]
         )
